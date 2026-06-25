@@ -1,0 +1,117 @@
+<TaskerData sr="" dvi="1" tv="5.15.10">
+	<Task sr="task" ve="2">
+		<cdate>1719070000</cdate>
+		<edate>1719070000</edate>
+		<id>Sig_init</id>
+		<nme>Sig_init</nme>
+
+		<Action sr="act" ve="7">
+			<code>547</code>
+			<Str sr="arg" ve="3">%SIG_NoiseRaw</Str>
+			<Str sr="arg" ve="3">0</Str>
+		</Action>
+
+		<Action sr="act" ve="7">
+			<code>547</code>
+			<Str sr="arg" ve="3">%SIG_Noise</Str>
+			<Str sr="arg" ve="3">0</Str>
+		</Action>
+
+		<Action sr="act" ve="7">
+			<code>547</code>
+			<Str sr="arg" ve="3">%SIG_NoiseTier</Str>
+			<Str sr="arg" ve="3">quiet</Str>
+		</Action>
+
+		<Action sr="act" ve="7">
+			<code>547</code>
+			<Str sr="arg" ve="3">%SIG_Mode</Str>
+			<Str sr="arg" ve="3">quiet</Str>
+		</Action>
+
+		<Action sr="act" ve="7">
+			<code>547</code>
+			<Str sr="arg" ve="3">%SIG_LastMode</Str>
+			<Str sr="arg" ve="3">quiet</Str>
+		</Action>
+
+		<Action sr="act" ve="7">
+			<code>547</code>
+			<Str sr="arg" ve="3">%SIG_Freeze</Str>
+			<Str sr="arg" ve="3">0</Str>
+		</Action>
+
+		<Action sr="act" ve="7">
+			<code>547</code>
+			<Str sr="arg" ve="3">%SIG_ProgramQuiet</Str>
+			<Str sr="arg" ve="3">0</Str>
+		</Action>
+
+		<Action sr="act" ve="7">
+			<code>547</code>
+			<Str sr="arg" ve="3">%SIG_ProgramMedium</Str>
+			<Str sr="arg" ve="3">0</Str>
+		</Action>
+
+		<Action sr="act" ve="7">
+			<code>547</code>
+			<Str sr="arg" ve="3">%SIG_ProgramLoud</Str>
+			<Str sr="arg" ve="3">0</Str>
+		</Action>
+
+		<Action sr="act" ve="7">
+			<code>547</code>
+			<Str sr="arg" ve="3">%SIG_LastNoise</Str>
+			<Str sr="arg" ve="3">0</Str>
+		</Action>
+
+		<Action sr="act" ve="7">
+			<code>547</code>
+			<Str sr="arg" ve="3">%SIG_NoiseTrend</Str>
+			<Str sr="arg" ve="3">stable</Str>
+		</Action>
+
+		<Action sr="act" ve="7">
+			<code>547</code>
+			<Str sr="arg" ve="3">%SIG_NoiseDelta</Str>
+			<Str sr="arg" ve="3">0</Str>
+		</Action>
+
+		<Action sr="act" ve="7">
+			<code>547</code>
+			<Str sr="arg" ve="3">%SIG_OverrideTimer</Str>
+			<Str sr="arg" ve="3">0</Str>
+		</Action>
+
+		<Action sr="act" ve="7">
+			<code>547</code>
+			<Str sr="arg" ve="3">%SIG_OverrideMode</Str>
+			<Str sr="arg" ve="3">none</Str>
+		</Action>
+
+		<Action sr="act" ve="7">
+			<code>547</code>
+			<Str sr="arg" ve="3">%SIG_Debug</Str>
+			<Str sr="arg" ve="3">0</Str>
+		</Action>
+
+		<Action sr="act" ve="7">
+			<code>547</code>
+			<Str sr="arg" ve="3">%SIG_Log</Str>
+			<Str sr="arg" ve="3">0</Str>
+		</Action>
+
+		<Action sr="act" ve="7">
+			<code>547</code>
+			<Str sr="arg" ve="3">%SIG_ChangeCount</Str>
+			<Str sr="arg" ve="3">0</Str>
+		</Action>
+
+		<Action sr="act" ve="7">
+			<code>547</code>
+			<Str sr="arg" ve="3">%SIG_LastTier</Str>
+			<Str sr="arg" ve="3">quiet</Str>
+		</Action>
+
+	</Task>
+</TaskerData>
