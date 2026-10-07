@@ -231,16 +231,6 @@
 			<Int sr="arg6" val="1" />
 		</Action>
 		<Action sr="act4" ve="7">
-			<code>547</code>
-			<Str sr="arg0" ve="3">%SIG2_Error</Str>
-			<Str sr="arg1" ve="3" />
-			<Int sr="arg2" val="0" />
-			<Int sr="arg3" val="0" />
-			<Int sr="arg4" val="0" />
-			<Int sr="arg5" val="3" />
-			<Int sr="arg6" val="1" />
-		</Action>
-		<Action sr="act5" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -251,7 +241,31 @@
 				</Condition>
 			</ConditionList>
 		</Action>
+		<Action sr="act5" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG2_Error</Str>
+			<Str sr="arg1" ve="3" />
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
 		<Action sr="act6" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act7" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%par1</lhs>
+					<op>3</op>
+					<rhs>query_only</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act8" ve="7">
 			<code>130</code>
 			<Str sr="arg0" ve="3">SIG2_AppLaunch</Str>
 			<Int sr="arg1">
@@ -267,7 +281,7 @@
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act7" ve="7">
+		<Action sr="act9" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -278,7 +292,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act8" ve="7">
+		<Action sr="act10" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -288,7 +302,7 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act9" ve="7">
+		<Action sr="act11" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_Error</Str>
 			<Str sr="arg1" ve="3">Signia launch did not complete</Str>
@@ -298,15 +312,15 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act10" ve="7">
+		<Action sr="act12" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act11" ve="7">
+		<Action sr="act13" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act12" ve="7">
+		<Action sr="act14" ve="7">
 			<code>107361459</code>
 			<se>true</se>
 			<Bundle sr="arg0">
@@ -346,7 +360,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg3" val="10" />
 			<Int sr="arg4" val="1" />
 		</Action>
-		<Action sr="act13" ve="7">
+		<Action sr="act15" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -357,7 +371,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act14" ve="7">
+		<Action sr="act16" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -367,7 +381,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act15" ve="7">
+		<Action sr="act17" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_Error</Str>
 			<Str sr="arg1" ve="3">AutoInput/launch failed: %errmsg</Str>
@@ -377,15 +391,15 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act16" ve="7">
+		<Action sr="act18" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act17" ve="7">
+		<Action sr="act19" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act18" ve="7">
+		<Action sr="act20" ve="7">
 			<code>30</code>
 			<Int sr="arg0" val="300" />
 			<Int sr="arg1" val="0" />
@@ -393,10 +407,10 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg3" val="0" />
 			<Int sr="arg4" val="0" />
 		</Action>
-		<Action sr="act19" ve="7">
+		<Action sr="act21" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act20" ve="7">
+		<Action sr="act22" ve="7">
 			<code>15355</code>
 			<se>true</se>
 			<Bundle sr="arg0">
@@ -422,7 +436,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg3" val="10" />
 			<Int sr="arg4" val="1" />
 		</Action>
-		<Action sr="act21" ve="7">
+		<Action sr="act23" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -433,7 +447,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act22" ve="7">
+		<Action sr="act24" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -443,7 +457,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act23" ve="7">
+		<Action sr="act25" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_Error</Str>
 			<Str sr="arg1" ve="3">AutoInput/launch failed: %errmsg</Str>
@@ -453,15 +467,15 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act24" ve="7">
+		<Action sr="act26" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act25" ve="7">
+		<Action sr="act27" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act26" ve="7">
+		<Action sr="act28" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -472,7 +486,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act27" ve="7">
+		<Action sr="act29" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -482,7 +496,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act28" ve="7">
+		<Action sr="act30" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_Error</Str>
 			<Str sr="arg1" ve="3">Signia is not foreground</Str>
@@ -492,15 +506,15 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act29" ve="7">
+		<Action sr="act31" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act30" ve="7">
+		<Action sr="act32" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act31" ve="7">
+		<Action sr="act33" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -511,7 +525,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act32" ve="7">
+		<Action sr="act34" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -521,7 +535,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act33" ve="7">
+		<Action sr="act35" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_Error</Str>
 			<Str sr="arg1" ve="3">Empty UI Query text array</Str>
@@ -531,15 +545,15 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act34" ve="7">
+		<Action sr="act36" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act35" ve="7">
+		<Action sr="act37" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act36" ve="7">
+		<Action sr="act38" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_QueryData</Str>
 			<Str sr="arg1" ve="3" />
@@ -549,13 +563,13 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act37" ve="7">
+		<Action sr="act39" ve="7">
 			<code>39</code>
 			<Str sr="arg0" ve="3">%sig2_dump_i</Str>
 			<Str sr="arg1" ve="3">1:%aitext(#)</Str>
 			<Int sr="arg2" val="1" />
 		</Action>
-		<Action sr="act38" ve="7">
+		<Action sr="act40" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_QueryData</Str>
 			<Str sr="arg1" ve="3">%SIG2_QueryData%sig2_dump_i | %aitext(%sig2_dump_i) | %aiid(%sig2_dump_i) | %aicoordinates(%sig2_dump_i)
@@ -566,34 +580,13 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act39" ve="7">
-			<code>40</code>
-		</Action>
-		<Action sr="act40" ve="7">
-			<code>547</code>
-			<Str sr="arg0" ve="3">%sig2_mode</Str>
-			<Str sr="arg1" ve="3">id</Str>
-			<Int sr="arg2" val="0" />
-			<Int sr="arg3" val="0" />
-			<Int sr="arg4" val="0" />
-			<Int sr="arg5" val="3" />
-			<Int sr="arg6" val="1" />
-		</Action>
 		<Action sr="act41" ve="7">
-			<code>37</code>
-			<coll>false</coll>
-			<ConditionList sr="if">
-				<Condition sr="c0" ve="3">
-					<lhs>%SIG2_KnobId</lhs>
-					<op>13</op>
-					<rhs />
-				</Condition>
-			</ConditionList>
+			<code>40</code>
 		</Action>
 		<Action sr="act42" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig2_mode</Str>
-			<Str sr="arg1" ve="3">region</Str>
+			<Str sr="arg1" ve="3">id</Str>
 			<Int sr="arg2" val="0" />
 			<Int sr="arg3" val="0" />
 			<Int sr="arg4" val="0" />
@@ -605,13 +598,34 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<coll>false</coll>
 			<ConditionList sr="if">
 				<Condition sr="c0" ve="3">
+					<lhs>%SIG2_KnobId</lhs>
+					<op>13</op>
+					<rhs />
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act44" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%sig2_mode</Str>
+			<Str sr="arg1" ve="3">region</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act45" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
 					<lhs>%SIG2_KnobXMin</lhs>
 					<op>5</op>
 					<rhs>^[0-9]+$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act44" ve="7">
+		<Action sr="act46" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -621,7 +635,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act45" ve="7">
+		<Action sr="act47" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_Error</Str>
 			<Str sr="arg1" ve="3">Configure SIG2_KnobId or all four knob region bounds first</Str>
@@ -631,15 +645,15 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act46" ve="7">
+		<Action sr="act48" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act47" ve="7">
+		<Action sr="act49" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act48" ve="7">
+		<Action sr="act50" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -650,7 +664,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act49" ve="7">
+		<Action sr="act51" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -660,7 +674,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act50" ve="7">
+		<Action sr="act52" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_Error</Str>
 			<Str sr="arg1" ve="3">Configure SIG2_KnobId or all four knob region bounds first</Str>
@@ -670,15 +684,15 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act51" ve="7">
+		<Action sr="act53" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act52" ve="7">
+		<Action sr="act54" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act53" ve="7">
+		<Action sr="act55" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -689,7 +703,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act54" ve="7">
+		<Action sr="act56" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -699,7 +713,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act55" ve="7">
+		<Action sr="act57" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_Error</Str>
 			<Str sr="arg1" ve="3">Configure SIG2_KnobId or all four knob region bounds first</Str>
@@ -709,15 +723,15 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act56" ve="7">
+		<Action sr="act58" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act57" ve="7">
+		<Action sr="act59" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act58" ve="7">
+		<Action sr="act60" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -728,7 +742,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act59" ve="7">
+		<Action sr="act61" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -738,7 +752,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act60" ve="7">
+		<Action sr="act62" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_Error</Str>
 			<Str sr="arg1" ve="3">Configure SIG2_KnobId or all four knob region bounds first</Str>
@@ -748,15 +762,15 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act61" ve="7">
+		<Action sr="act63" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act62" ve="7">
+		<Action sr="act64" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act63" ve="7">
+		<Action sr="act65" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -767,7 +781,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act64" ve="7">
+		<Action sr="act66" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -777,7 +791,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act65" ve="7">
+		<Action sr="act67" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_Error</Str>
 			<Str sr="arg1" ve="3">Invalid knob X region</Str>
@@ -787,15 +801,15 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act66" ve="7">
+		<Action sr="act68" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act67" ve="7">
+		<Action sr="act69" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act68" ve="7">
+		<Action sr="act70" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -806,7 +820,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act69" ve="7">
+		<Action sr="act71" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -816,7 +830,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act70" ve="7">
+		<Action sr="act72" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_Error</Str>
 			<Str sr="arg1" ve="3">Invalid knob Y region</Str>
@@ -826,18 +840,18 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act71" ve="7">
+		<Action sr="act73" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act72" ve="7">
-			<code>38</code>
-		</Action>
-		<Action sr="act73" ve="7">
-			<code>38</code>
-		</Action>
 		<Action sr="act74" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act75" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act76" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig2_count</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -847,7 +861,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act75" ve="7">
+		<Action sr="act77" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -858,7 +872,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act76" ve="7">
+		<Action sr="act78" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -868,7 +882,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act77" ve="7">
+		<Action sr="act79" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_Error</Str>
 			<Str sr="arg1" ve="3">Empty UI Query text array</Str>
@@ -878,15 +892,15 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act78" ve="7">
+		<Action sr="act80" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act79" ve="7">
+		<Action sr="act81" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act80" ve="7">
+		<Action sr="act82" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -897,7 +911,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act81" ve="7">
+		<Action sr="act83" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -907,7 +921,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act82" ve="7">
+		<Action sr="act84" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_Error</Str>
 			<Str sr="arg1" ve="3">UI Query text/coordinate arrays are not aligned</Str>
@@ -917,15 +931,15 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act83" ve="7">
+		<Action sr="act85" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act84" ve="7">
+		<Action sr="act86" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act85" ve="7">
+		<Action sr="act87" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -936,7 +950,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act86" ve="7">
+		<Action sr="act88" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -947,7 +961,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act87" ve="7">
+		<Action sr="act89" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -957,7 +971,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act88" ve="7">
+		<Action sr="act90" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_Error</Str>
 			<Str sr="arg1" ve="3">UI Query text/id arrays are not aligned</Str>
@@ -967,48 +981,27 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act89" ve="7">
+		<Action sr="act91" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act90" ve="7">
-			<code>38</code>
-		</Action>
-		<Action sr="act91" ve="7">
-			<code>38</code>
-		</Action>
 		<Action sr="act92" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act93" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act94" ve="7">
 			<code>39</code>
 			<Str sr="arg0" ve="3">%sig2_i</Str>
 			<Str sr="arg1" ve="3">1:%aitext(#)</Str>
 			<Int sr="arg2" val="1" />
 		</Action>
-		<Action sr="act93" ve="7">
+		<Action sr="act95" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig2_text</Str>
 			<Str sr="arg1" ve="3">%aitext(%sig2_i)</Str>
-			<Int sr="arg2" val="0" />
-			<Int sr="arg3" val="0" />
-			<Int sr="arg4" val="0" />
-			<Int sr="arg5" val="3" />
-			<Int sr="arg6" val="1" />
-		</Action>
-		<Action sr="act94" ve="7">
-			<code>37</code>
-			<coll>false</coll>
-			<ConditionList sr="if">
-				<Condition sr="c0" ve="3">
-					<lhs>%sig2_text</lhs>
-					<op>4</op>
-					<rhs>^(?:[0-9]|1[0-5])$</rhs>
-				</Condition>
-			</ConditionList>
-		</Action>
-		<Action sr="act95" ve="7">
-			<code>547</code>
-			<Str sr="arg0" ve="3">%sig2_point</Str>
-			<Str sr="arg1" ve="3">%aicoordinates(%sig2_i)</Str>
 			<Int sr="arg2" val="0" />
 			<Int sr="arg3" val="0" />
 			<Int sr="arg4" val="0" />
@@ -1020,19 +1013,40 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<coll>false</coll>
 			<ConditionList sr="if">
 				<Condition sr="c0" ve="3">
+					<lhs>%sig2_text</lhs>
+					<op>4</op>
+					<rhs>^(?:[0-9]|1[0-5])$</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act97" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%sig2_point</Str>
+			<Str sr="arg1" ve="3">%aicoordinates(%sig2_i)</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act98" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
 					<lhs>%sig2_point</lhs>
 					<op>4</op>
 					<rhs>^[0-9]+,[0-9]+$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act97" ve="7">
+		<Action sr="act99" ve="7">
 			<code>590</code>
 			<Str sr="arg0" ve="3">%sig2_point</Str>
 			<Str sr="arg1" ve="3">,</Str>
 			<Int sr="arg2" val="0" />
 		</Action>
-		<Action sr="act98" ve="7">
+		<Action sr="act100" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig2_selected</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -1042,7 +1056,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act99" ve="7">
+		<Action sr="act101" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -1053,7 +1067,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act100" ve="7">
+		<Action sr="act102" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -1064,7 +1078,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act101" ve="7">
+		<Action sr="act103" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig2_selected</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -1073,14 +1087,14 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg4" val="0" />
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
-		</Action>
-		<Action sr="act102" ve="7">
-			<code>38</code>
-		</Action>
-		<Action sr="act103" ve="7">
-			<code>43</code>
 		</Action>
 		<Action sr="act104" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act105" ve="7">
+			<code>43</code>
+		</Action>
+		<Action sr="act106" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig2_selected</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -1090,7 +1104,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act105" ve="7">
+		<Action sr="act107" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -1101,7 +1115,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act106" ve="7">
+		<Action sr="act108" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig2_selected</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -1111,10 +1125,10 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act107" ve="7">
+		<Action sr="act109" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act108" ve="7">
+		<Action sr="act110" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -1125,7 +1139,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act109" ve="7">
+		<Action sr="act111" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig2_selected</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -1135,10 +1149,10 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act110" ve="7">
+		<Action sr="act112" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act111" ve="7">
+		<Action sr="act113" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -1149,7 +1163,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act112" ve="7">
+		<Action sr="act114" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig2_selected</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -1159,10 +1173,10 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act113" ve="7">
+		<Action sr="act115" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act114" ve="7">
+		<Action sr="act116" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -1173,7 +1187,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act115" ve="7">
+		<Action sr="act117" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig2_selected</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -1183,13 +1197,13 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act116" ve="7">
-			<code>38</code>
-		</Action>
-		<Action sr="act117" ve="7">
-			<code>38</code>
-		</Action>
 		<Action sr="act118" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act119" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act120" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -1200,7 +1214,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act119" ve="7">
+		<Action sr="act121" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig2_count</Str>
 			<Str sr="arg1" ve="3">%sig2_count + 1</Str>
@@ -1210,7 +1224,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act120" ve="7">
+		<Action sr="act122" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig2_level</Str>
 			<Str sr="arg1" ve="3">%sig2_text</Str>
@@ -1220,7 +1234,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act121" ve="7">
+		<Action sr="act123" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig2_x</Str>
 			<Str sr="arg1" ve="3">%sig2_point1</Str>
@@ -1230,7 +1244,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act122" ve="7">
+		<Action sr="act124" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig2_y</Str>
 			<Str sr="arg1" ve="3">%sig2_point2</Str>
@@ -1240,19 +1254,19 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act123" ve="7">
-			<code>38</code>
-		</Action>
-		<Action sr="act124" ve="7">
-			<code>38</code>
-		</Action>
 		<Action sr="act125" ve="7">
 			<code>38</code>
 		</Action>
 		<Action sr="act126" ve="7">
-			<code>40</code>
+			<code>38</code>
 		</Action>
 		<Action sr="act127" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act128" ve="7">
+			<code>40</code>
+		</Action>
+		<Action sr="act129" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -1263,7 +1277,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act128" ve="7">
+		<Action sr="act130" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -1273,7 +1287,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act129" ve="7">
+		<Action sr="act131" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_Error</Str>
 			<Str sr="arg1" ve="3">Knob selector matched zero or multiple numeric elements; inspect aligned UI Query data</Str>
@@ -1283,15 +1297,15 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act130" ve="7">
+		<Action sr="act132" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act131" ve="7">
+		<Action sr="act133" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act132" ve="7">
+		<Action sr="act134" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_Level</Str>
 			<Str sr="arg1" ve="3">%sig2_level</Str>
@@ -1301,7 +1315,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act133" ve="7">
+		<Action sr="act135" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_VolumeX</Str>
 			<Str sr="arg1" ve="3">%sig2_x</Str>
@@ -1311,7 +1325,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act134" ve="7">
+		<Action sr="act136" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_VolumeY</Str>
 			<Str sr="arg1" ve="3">%sig2_y</Str>
@@ -1321,7 +1335,17 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act135" ve="7">
+		<Action sr="act137" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG2_Error</Str>
+			<Str sr="arg1" ve="3" />
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act138" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_VolumeOK</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -1378,7 +1402,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 		<Action sr="act3" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_Error</Str>
-			<Str sr="arg1" ve="3">Current readback failed: %SIG2_Error</Str>
+			<Str sr="arg1" ve="3">VolumeUp initial readback failed: %SIG2_Error</Str>
 			<Int sr="arg2" val="0" />
 			<Int sr="arg3" val="0" />
 			<Int sr="arg4" val="0" />
@@ -1415,57 +1439,24 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			</ConditionList>
 		</Action>
 		<Action sr="act8" ve="7">
-			<code>137</code>
-			<Int sr="arg0" val="0" />
-			<Str sr="arg1" ve="3" />
-		</Action>
-		<Action sr="act9" ve="7">
-			<code>38</code>
-		</Action>
-		<Action sr="act10" ve="7">
 			<code>547</code>
-			<Str sr="arg0" ve="3">%sig2_target</Str>
-			<Str sr="arg1" ve="3">%sig2_start + (1)</Str>
+			<Str sr="arg0" ve="3">%SIG2_MoveStage</Str>
+			<Str sr="arg1" ve="3">upper-boundary</Str>
 			<Int sr="arg2" val="0" />
-			<Int sr="arg3" val="1" />
+			<Int sr="arg3" val="0" />
 			<Int sr="arg4" val="0" />
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
+		<Action sr="act9" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
+		</Action>
+		<Action sr="act10" ve="7">
+			<code>38</code>
+		</Action>
 		<Action sr="act11" ve="7">
-			<code>39</code>
-			<Str sr="arg0" ve="3">%sig2_attempt</Str>
-			<Str sr="arg1" ve="3">1:20</Str>
-			<Int sr="arg2" val="1" />
-		</Action>
-		<Action sr="act12" ve="7">
-			<code>130</code>
-			<Str sr="arg0" ve="3">SIG2_VolumeCurrent</Str>
-			<Int sr="arg1">
-				<var>%priority</var>
-			</Int>
-			<Int sr="arg10" val="1" />
-			<Str sr="arg2" ve="3">query_only</Str>
-			<Str sr="arg3" ve="3" />
-			<Str sr="arg4" ve="3" />
-			<Int sr="arg5" val="0" />
-			<Int sr="arg6" val="0" />
-			<Str sr="arg7" ve="3" />
-			<Int sr="arg8" val="0" />
-			<Int sr="arg9" val="0" />
-		</Action>
-		<Action sr="act13" ve="7">
-			<code>37</code>
-			<coll>false</coll>
-			<ConditionList sr="if">
-				<Condition sr="c0" ve="3">
-					<lhs>%SIG2_VolumeOK</lhs>
-					<op>3</op>
-					<rhs>1</rhs>
-				</Condition>
-			</ConditionList>
-		</Action>
-		<Action sr="act14" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -1475,10 +1466,40 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act15" ve="7">
+		<Action sr="act12" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG2_MoveStage</Str>
+			<Str sr="arg1" ve="3">prepare</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act13" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_Error</Str>
-			<Str sr="arg1" ve="3">Current readback failed: %SIG2_Error</Str>
+			<Str sr="arg1" ve="3">VolumeUp stopped while preparing the 40 px upward gesture</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act14" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%sig2_target</Str>
+			<Str sr="arg1" ve="3">%sig2_start + 1</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="1" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act15" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%sig2_x</Str>
+			<Str sr="arg1" ve="3">%SIG2_VolumeX</Str>
 			<Int sr="arg2" val="0" />
 			<Int sr="arg3" val="0" />
 			<Int sr="arg4" val="0" />
@@ -1486,25 +1507,47 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg6" val="1" />
 		</Action>
 		<Action sr="act16" ve="7">
-			<code>137</code>
-			<Int sr="arg0" val="0" />
-			<Str sr="arg1" ve="3" />
+			<code>547</code>
+			<Str sr="arg0" ve="3">%sig2_y</Str>
+			<Str sr="arg1" ve="3">%SIG2_VolumeY</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
 		</Action>
 		<Action sr="act17" ve="7">
-			<code>38</code>
+			<code>547</code>
+			<Str sr="arg0" ve="3">%sig2_end_y</Str>
+			<Str sr="arg1" ve="3">%sig2_y - 40</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="1" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
 		</Action>
 		<Action sr="act18" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG2_Gesture</Str>
+			<Str sr="arg1" ve="3">tap %sig2_x,%sig2_y; swipe %sig2_x,%sig2_y -&gt; %sig2_x,%sig2_end_y; 40 px up; 300 ms</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act19" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
 				<Condition sr="c0" ve="3">
-					<lhs>%SIG2_Level</lhs>
-					<op>9</op>
-					<rhs>%sig2_start</rhs>
+					<lhs>%sig2_end_y</lhs>
+					<op>6</op>
+					<rhs>0</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act19" ve="7">
+		<Action sr="act20" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -1514,25 +1557,55 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act20" ve="7">
+		<Action sr="act21" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_Error</Str>
-			<Str sr="arg1" ve="3">Volume changed before gesture; stopped</Str>
+			<Str sr="arg1" ve="3">VolumeUp endpoint above screen: %SIG2_Gesture</Str>
 			<Int sr="arg2" val="0" />
 			<Int sr="arg3" val="0" />
 			<Int sr="arg4" val="0" />
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act21" ve="7">
+		<Action sr="act22" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act22" ve="7">
+		<Action sr="act23" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act23" ve="7">
+		<Action sr="act24" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG2_VolumeOK</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act25" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG2_MoveStage</Str>
+			<Str sr="arg1" ve="3">tap</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act26" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG2_Error</Str>
+			<Str sr="arg1" ve="3">VolumeUp AutoInput tap did not complete: %SIG2_Gesture</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act27" ve="7">
 			<code>107361459</code>
 			<se>true</se>
 			<Bundle sr="arg0">
@@ -1572,7 +1645,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg3" val="10" />
 			<Int sr="arg4" val="1" />
 		</Action>
-		<Action sr="act24" ve="7">
+		<Action sr="act28" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -1583,7 +1656,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act25" ve="7">
+		<Action sr="act29" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -1593,25 +1666,25 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act26" ve="7">
+		<Action sr="act30" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_Error</Str>
-			<Str sr="arg1" ve="3">AutoInput/launch failed: %errmsg</Str>
+			<Str sr="arg1" ve="3">VolumeUp AutoInput tap failed: code=%err message=%errmsg; %SIG2_Gesture</Str>
 			<Int sr="arg2" val="0" />
 			<Int sr="arg3" val="0" />
 			<Int sr="arg4" val="0" />
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act27" ve="7">
+		<Action sr="act31" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act28" ve="7">
+		<Action sr="act32" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act29" ve="7">
+		<Action sr="act33" ve="7">
 			<code>30</code>
 			<Int sr="arg0" val="100" />
 			<Int sr="arg1" val="0" />
@@ -1619,34 +1692,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg3" val="0" />
 			<Int sr="arg4" val="0" />
 		</Action>
-		<Action sr="act30" ve="7">
-			<code>130</code>
-			<Str sr="arg0" ve="3">SIG2_VolumeCurrent</Str>
-			<Int sr="arg1">
-				<var>%priority</var>
-			</Int>
-			<Int sr="arg10" val="1" />
-			<Str sr="arg2" ve="3">query_only</Str>
-			<Str sr="arg3" ve="3" />
-			<Str sr="arg4" ve="3" />
-			<Int sr="arg5" val="0" />
-			<Int sr="arg6" val="0" />
-			<Str sr="arg7" ve="3" />
-			<Int sr="arg8" val="0" />
-			<Int sr="arg9" val="0" />
-		</Action>
-		<Action sr="act31" ve="7">
-			<code>37</code>
-			<coll>false</coll>
-			<ConditionList sr="if">
-				<Condition sr="c0" ve="3">
-					<lhs>%SIG2_VolumeOK</lhs>
-					<op>3</op>
-					<rhs>1</rhs>
-				</Condition>
-			</ConditionList>
-		</Action>
-		<Action sr="act32" ve="7">
+		<Action sr="act34" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -1655,154 +1701,28 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg4" val="0" />
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
-		</Action>
-		<Action sr="act33" ve="7">
-			<code>547</code>
-			<Str sr="arg0" ve="3">%SIG2_Error</Str>
-			<Str sr="arg1" ve="3">Current readback failed: %SIG2_Error</Str>
-			<Int sr="arg2" val="0" />
-			<Int sr="arg3" val="0" />
-			<Int sr="arg4" val="0" />
-			<Int sr="arg5" val="3" />
-			<Int sr="arg6" val="1" />
-		</Action>
-		<Action sr="act34" ve="7">
-			<code>137</code>
-			<Int sr="arg0" val="0" />
-			<Str sr="arg1" ve="3" />
 		</Action>
 		<Action sr="act35" ve="7">
-			<code>38</code>
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG2_MoveStage</Str>
+			<Str sr="arg1" ve="3">gesture</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
 		</Action>
 		<Action sr="act36" ve="7">
-			<code>37</code>
-			<coll>false</coll>
-			<ConditionList sr="if">
-				<Condition sr="c0" ve="3">
-					<lhs>%SIG2_Level</lhs>
-					<op>9</op>
-					<rhs>%sig2_start</rhs>
-				</Condition>
-			</ConditionList>
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG2_Error</Str>
+			<Str sr="arg1" ve="3">VolumeUp AutoInput gesture did not complete: %SIG2_Gesture</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
 		</Action>
 		<Action sr="act37" ve="7">
-			<code>547</code>
-			<Str sr="arg0" ve="3">%SIG2_VolumeOK</Str>
-			<Str sr="arg1" ve="3">0</Str>
-			<Int sr="arg2" val="0" />
-			<Int sr="arg3" val="0" />
-			<Int sr="arg4" val="0" />
-			<Int sr="arg5" val="3" />
-			<Int sr="arg6" val="1" />
-		</Action>
-		<Action sr="act38" ve="7">
-			<code>547</code>
-			<Str sr="arg0" ve="3">%SIG2_Error</Str>
-			<Str sr="arg1" ve="3">Volume changed during knob tap; stopped</Str>
-			<Int sr="arg2" val="0" />
-			<Int sr="arg3" val="0" />
-			<Int sr="arg4" val="0" />
-			<Int sr="arg5" val="3" />
-			<Int sr="arg6" val="1" />
-		</Action>
-		<Action sr="act39" ve="7">
-			<code>137</code>
-			<Int sr="arg0" val="0" />
-			<Str sr="arg1" ve="3" />
-		</Action>
-		<Action sr="act40" ve="7">
-			<code>38</code>
-		</Action>
-		<Action sr="act41" ve="7">
-			<code>547</code>
-			<Str sr="arg0" ve="3">%sig2_x</Str>
-			<Str sr="arg1" ve="3">%SIG2_VolumeX</Str>
-			<Int sr="arg2" val="0" />
-			<Int sr="arg3" val="0" />
-			<Int sr="arg4" val="0" />
-			<Int sr="arg5" val="3" />
-			<Int sr="arg6" val="1" />
-		</Action>
-		<Action sr="act42" ve="7">
-			<code>547</code>
-			<Str sr="arg0" ve="3">%sig2_y</Str>
-			<Str sr="arg1" ve="3">%SIG2_VolumeY</Str>
-			<Int sr="arg2" val="0" />
-			<Int sr="arg3" val="0" />
-			<Int sr="arg4" val="0" />
-			<Int sr="arg5" val="3" />
-			<Int sr="arg6" val="1" />
-		</Action>
-		<Action sr="act43" ve="7">
-			<code>547</code>
-			<Str sr="arg0" ve="3">%sig2_distance</Str>
-			<Str sr="arg1" ve="3">%sig2_attempt * 8</Str>
-			<Int sr="arg2" val="0" />
-			<Int sr="arg3" val="1" />
-			<Int sr="arg4" val="0" />
-			<Int sr="arg5" val="3" />
-			<Int sr="arg6" val="1" />
-		</Action>
-		<Action sr="act44" ve="7">
-			<code>547</code>
-			<Str sr="arg0" ve="3">%sig2_end_y</Str>
-			<Str sr="arg1" ve="3">%sig2_y - (1) * %sig2_distance</Str>
-			<Int sr="arg2" val="0" />
-			<Int sr="arg3" val="1" />
-			<Int sr="arg4" val="0" />
-			<Int sr="arg5" val="3" />
-			<Int sr="arg6" val="1" />
-		</Action>
-		<Action sr="act45" ve="7">
-			<code>37</code>
-			<coll>false</coll>
-			<ConditionList sr="if">
-				<Condition sr="c0" ve="3">
-					<lhs>%sig2_end_y</lhs>
-					<op>6</op>
-					<rhs>0</rhs>
-				</Condition>
-			</ConditionList>
-		</Action>
-		<Action sr="act46" ve="7">
-			<code>547</code>
-			<Str sr="arg0" ve="3">%SIG2_VolumeOK</Str>
-			<Str sr="arg1" ve="3">0</Str>
-			<Int sr="arg2" val="0" />
-			<Int sr="arg3" val="0" />
-			<Int sr="arg4" val="0" />
-			<Int sr="arg5" val="3" />
-			<Int sr="arg6" val="1" />
-		</Action>
-		<Action sr="act47" ve="7">
-			<code>547</code>
-			<Str sr="arg0" ve="3">%SIG2_Error</Str>
-			<Str sr="arg1" ve="3">Gesture would leave screen</Str>
-			<Int sr="arg2" val="0" />
-			<Int sr="arg3" val="0" />
-			<Int sr="arg4" val="0" />
-			<Int sr="arg5" val="3" />
-			<Int sr="arg6" val="1" />
-		</Action>
-		<Action sr="act48" ve="7">
-			<code>137</code>
-			<Int sr="arg0" val="0" />
-			<Str sr="arg1" ve="3" />
-		</Action>
-		<Action sr="act49" ve="7">
-			<code>38</code>
-		</Action>
-		<Action sr="act50" ve="7">
-			<code>547</code>
-			<Str sr="arg0" ve="3">%SIG2_VolumeOK</Str>
-			<Str sr="arg1" ve="3">0</Str>
-			<Int sr="arg2" val="0" />
-			<Int sr="arg3" val="0" />
-			<Int sr="arg4" val="0" />
-			<Int sr="arg5" val="3" />
-			<Int sr="arg6" val="1" />
-		</Action>
-		<Action sr="act51" ve="7">
 			<code>778682267</code>
 			<se>true</se>
 			<Bundle sr="arg0">
@@ -1840,7 +1760,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg3" val="10" />
 			<Int sr="arg4" val="1" />
 		</Action>
-		<Action sr="act52" ve="7">
+		<Action sr="act38" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -1851,7 +1771,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act53" ve="7">
+		<Action sr="act39" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -1861,25 +1781,25 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act54" ve="7">
+		<Action sr="act40" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_Error</Str>
-			<Str sr="arg1" ve="3">AutoInput/launch failed: %errmsg</Str>
+			<Str sr="arg1" ve="3">VolumeUp AutoInput gesture failed: code=%err message=%errmsg; %SIG2_Gesture</Str>
 			<Int sr="arg2" val="0" />
 			<Int sr="arg3" val="0" />
 			<Int sr="arg4" val="0" />
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act55" ve="7">
+		<Action sr="act41" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act56" ve="7">
+		<Action sr="act42" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act57" ve="7">
+		<Action sr="act43" ve="7">
 			<code>30</code>
 			<Int sr="arg0" val="300" />
 			<Int sr="arg1" val="0" />
@@ -1887,7 +1807,37 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg3" val="0" />
 			<Int sr="arg4" val="0" />
 		</Action>
-		<Action sr="act58" ve="7">
+		<Action sr="act44" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG2_VolumeOK</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act45" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG2_MoveStage</Str>
+			<Str sr="arg1" ve="3">readback</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act46" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG2_Error</Str>
+			<Str sr="arg1" ve="3">VolumeUp post-gesture query did not complete: %SIG2_Gesture</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act47" ve="7">
 			<code>130</code>
 			<Str sr="arg0" ve="3">SIG2_VolumeCurrent</Str>
 			<Int sr="arg1">
@@ -1903,7 +1853,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act59" ve="7">
+		<Action sr="act48" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -1914,7 +1864,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act60" ve="7">
+		<Action sr="act49" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -1924,109 +1874,161 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act61" ve="7">
+		<Action sr="act50" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_Error</Str>
-			<Str sr="arg1" ve="3">Post-gesture readback failed: %SIG2_Error</Str>
+			<Str sr="arg1" ve="3">VolumeUp post-gesture readback failed: %SIG2_Error; %SIG2_Gesture</Str>
 			<Int sr="arg2" val="0" />
 			<Int sr="arg3" val="0" />
 			<Int sr="arg4" val="0" />
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act62" ve="7">
+		<Action sr="act51" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act63" ve="7">
+		<Action sr="act52" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act64" ve="7">
+		<Action sr="act53" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG2_VolumeOK</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act54" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG2_MoveStage</Str>
+			<Str sr="arg1" ve="3">verify</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act55" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG2_Error</Str>
+			<Str sr="arg1" ve="3">VolumeUp stopped while verifying readback: %SIG2_Gesture</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act56" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
 				<Condition sr="c0" ve="3">
 					<lhs>%SIG2_Level</lhs>
 					<op>8</op>
-					<rhs>%sig2_target</rhs>
+					<rhs>%sig2_start</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act65" ve="7">
+		<Action sr="act57" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG2_VolumeOK</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act58" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG2_Error</Str>
+			<Str sr="arg1" ve="3">VolumeUp unchanged: level=%SIG2_Level expected=%sig2_target; %SIG2_Gesture</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act59" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act66" ve="7">
+		<Action sr="act60" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act67" ve="7">
+		<Action sr="act61" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
 				<Condition sr="c0" ve="3">
 					<lhs>%SIG2_Level</lhs>
 					<op>9</op>
-					<rhs>%sig2_start</rhs>
+					<rhs>%sig2_target</rhs>
 				</Condition>
 			</ConditionList>
+		</Action>
+		<Action sr="act62" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG2_VolumeOK</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act63" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG2_Error</Str>
+			<Str sr="arg1" ve="3">VolumeUp unexpected level=%SIG2_Level expected=%sig2_target; %SIG2_Gesture</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act64" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
+		</Action>
+		<Action sr="act65" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act66" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG2_MoveStage</Str>
+			<Str sr="arg1" ve="3">complete</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act67" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG2_Error</Str>
+			<Str sr="arg1" ve="3" />
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
 		</Action>
 		<Action sr="act68" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG2_VolumeOK</Str>
-			<Str sr="arg1" ve="3">0</Str>
+			<Str sr="arg1" ve="3">1</Str>
 			<Int sr="arg2" val="0" />
 			<Int sr="arg3" val="0" />
 			<Int sr="arg4" val="0" />
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
-		</Action>
-		<Action sr="act69" ve="7">
-			<code>547</code>
-			<Str sr="arg0" ve="3">%SIG2_Error</Str>
-			<Str sr="arg1" ve="3">Gesture skipped a level; stopped without retry</Str>
-			<Int sr="arg2" val="0" />
-			<Int sr="arg3" val="0" />
-			<Int sr="arg4" val="0" />
-			<Int sr="arg5" val="3" />
-			<Int sr="arg6" val="1" />
-		</Action>
-		<Action sr="act70" ve="7">
-			<code>137</code>
-			<Int sr="arg0" val="0" />
-			<Str sr="arg1" ve="3" />
-		</Action>
-		<Action sr="act71" ve="7">
-			<code>38</code>
-		</Action>
-		<Action sr="act72" ve="7">
-			<code>40</code>
-		</Action>
-		<Action sr="act73" ve="7">
-			<code>547</code>
-			<Str sr="arg0" ve="3">%SIG2_VolumeOK</Str>
-			<Str sr="arg1" ve="3">0</Str>
-			<Int sr="arg2" val="0" />
-			<Int sr="arg3" val="0" />
-			<Int sr="arg4" val="0" />
-			<Int sr="arg5" val="3" />
-			<Int sr="arg6" val="1" />
-		</Action>
-		<Action sr="act74" ve="7">
-			<code>547</code>
-			<Str sr="arg0" ve="3">%SIG2_Error</Str>
-			<Str sr="arg1" ve="3">Volume unchanged after 20 gestures</Str>
-			<Int sr="arg2" val="0" />
-			<Int sr="arg3" val="0" />
-			<Int sr="arg4" val="0" />
-			<Int sr="arg5" val="3" />
-			<Int sr="arg6" val="1" />
-		</Action>
-		<Action sr="act75" ve="7">
-			<code>137</code>
-			<Int sr="arg0" val="0" />
-			<Str sr="arg1" ve="3" />
 		</Action>
 	</Task>
 	<Task sr="task204">

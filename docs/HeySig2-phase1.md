@@ -65,21 +65,32 @@ verified move, otherwise 0. `%SIG2_AppOK` reports launch verification.
 
 Only internal readbacks use parameter 1 `query_only`, which skips launching
 and clicking the tab but still checks the foreground package. Normal Current
-opens the app and Volume Tab. Up/Down reads fresh state before each attempt,
-taps by point rather than ambiguous numeric text, checks the level after the
-tap, then swipes from fresh knob coordinates. Distances increase from 8 to 160
-pixels over at most 20 attempts, each lasting 300 ms. Each swipe is followed by
-fresh readback. Exact one-step change succeeds; skipped levels, invalid readback,
-external changes, or plugin errors stop. An unchanged slider exhausts its budget
-and fails. It does not automatically reverse an overshoot. Up at 15 and Down at
-0 succeed without gestures. Run tasks one at a time; Phase 1 does not coordinate
-simultaneous requests or external manual changes.
+opens the app and Volume Tab. Up performs one point tap at the selected knob
+and one 40 px upward swipe lasting 300 ms, then reads back and requires exactly
+one level of increase. The distance comes from observed knob centers: level 7
+at 541,1701 and level 8 at 541,1661. An Up from that level 8 sends the tap at
+541,1661 and swipe to 541,1621. No tap result coordinates replace the selected
+knob center. There are no upward retries or increasingly long swipes. Unchanged
+and unexpected levels fail immediately, retaining the observed readback.
+
+Down retains its previous adaptive 8–160 px, at-most-20-attempt implementation;
+this Up repair does not establish Down's physical reliability. Up at 15 and
+Down at 0 succeed without gestures. Run tasks one at a time.
+
+Up sets `%SIG2_MoveStage` and a pending `%SIG2_Error` before tap, gesture,
+and post-gesture readback. `%SIG2_Gesture` records actual start/end coordinates,
+direction, distance, and duration. Explicit AutoInput failure messages include
+stage, error code, plugin message, and gesture details. An action halt retains
+a pending diagnostic. Only verified success clears the error. Current's
+`query_only` entry preserves that pending error while its query runs, then
+clears it on successful readback; normal Current still resets its error at entry.
+The selector, index alignment, and literal ID comparison are unchanged.
 
 ## Phone gate before Phase 2
 
 1. Import on Tasker 6.6.20 with HeySig still present. Confirm HeySig2 and all
    four SIG2_ tasks appear, with their complete final actions. Expected counts:
-   AppLaunch 19, Current 136, Up 76, Down 76. Confirm no existing SIG_ task is
+   AppLaunch 19, Current 139, Up 69, Down 76. Confirm no existing SIG_ task is
    replaced. Re-export HeySig2 from the phone and compare action/control-flow
    structure if Tasker reports any import problem.
 2. Verify installed AutoInput configuration activities and accessibility
@@ -145,3 +156,25 @@ KnobId, and run Current on the captured screen. Expect `%SIG2_Level=7`,
 repeat real-device Current at 0 and 15 before proceeding to movement tests.
 Up/Down continue to consume Current's selected coordinates; their exports
 require no action changes.
+
+## Level-8 Up runtime repair
+
+The phone now confirms Current returns 8,541,1661 with VolumeOK=1. The previous
+Up returned unchanged level 8, VolumeOK=0, and an empty error. The new Up removes
+the escalating swipe loop and records a measured 40 px upward gesture. Generated
+AutoInput tap uses `click(point,%SIG2_VolumeX\,%SIG2_VolumeY)`; the escaped comma
+keeps x,y together as the point argument. Gesture Type remains Swipe (0), with
+`initialPoint` and `endPoint` JSON, duration 300, variable replacement of
+`parameters`, matching plugin activities, and Continue After Error enabled.
+Tests now inspect the expanded plugin JSON, rather than inferring motion solely
+from Tasker math variables. Correct settings still require phone execution.
+
+Reimport Current (diagnostic reset behavior only) and Up, or the whole HeySig2
+project. Retain `%SIG2_KnobId`. At level 8, run Up once. Expected readback: 9,
+541,approximately1621 and VolumeOK=1. On failure, copy `%SIG2_Error`,
+`%SIG2_MoveStage`, `%SIG2_Gesture`, and AutoInput's error/run log. An unchanged
+result must explicitly say unchanged and expected=9. Tap/gesture failures must
+identify their stage even if the action halts before its error guard. A failed
+post-gesture query must retain its pending diagnostic. The mock confirms generated
+coordinates/configuration and error propagation; movement to level 9 still needs
+real-device confirmation. No old HeySig project/task was modified.

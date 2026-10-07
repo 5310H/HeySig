@@ -126,7 +126,8 @@ launch = [setvar('%SIG2_AppOK', 0), setvar('%SIG2_Error', ''), plugin(20),
           setvar('%SIG2_AppOK', 1)]
 
 current = [setvar('%SIG2_VolumeOK', 0), setvar('%SIG2_Level', -1),
-           setvar('%SIG2_VolumeX', -1), setvar('%SIG2_VolumeY', -1), setvar('%SIG2_Error', ''),
+           setvar('%SIG2_VolumeX', -1), setvar('%SIG2_VolumeY', -1),
+           condition('%par1', 3, 'query_only'), setvar('%SIG2_Error', ''), action(38),
            condition('%par1', 3, 'query_only'), call('SIG2_AppLaunch'),
            *guard('%SIG2_AppOK', 3, 1, 'Signia launch did not complete'),
            *checked_plugin(107361459, 'click(text,Volume Tab)'), wait(), action(38),
@@ -162,10 +163,46 @@ current += [action(38), condition('%sig2_selected', 8, 1),
             action(38), action(38), action(38), action(40),
             *guard('%sig2_count', 9, 1, 'Knob selector matched zero or multiple numeric elements; inspect aligned UI Query data'),
             setvar('%SIG2_Level', '%sig2_level'), setvar('%SIG2_VolumeX', '%sig2_x'),
-            setvar('%SIG2_VolumeY', '%sig2_y'), setvar('%SIG2_VolumeOK', 1)]
+            setvar('%SIG2_VolumeY', '%sig2_y'), setvar('%SIG2_Error', ''), setvar('%SIG2_VolumeOK', 1)]
+
+
+def move_up():
+    # One measured step: current 8 at y=1661 -> desired 9 near y=1621.
+    # Keep a pending diagnostic before operations which can halt Tasker.
+    def pending(stage, message):
+        return [setvar('%SIG2_VolumeOK', 0), setvar('%SIG2_MoveStage', stage),
+                setvar('%SIG2_Error', message)]
+    aa = [call('SIG2_VolumeCurrent'),
+          *guard('%SIG2_VolumeOK', 3, 1, 'VolumeUp initial readback failed: %SIG2_Error'),
+          setvar('%sig2_start', '%SIG2_Level'),
+          condition('%sig2_start', 8, 15), setvar('%SIG2_MoveStage', 'upper-boundary'), stop(), action(38),
+          *pending('prepare', 'VolumeUp stopped while preparing the 40 px upward gesture'),
+          setvar('%sig2_target', '%sig2_start + 1', True),
+          setvar('%sig2_x', '%SIG2_VolumeX'), setvar('%sig2_y', '%SIG2_VolumeY'),
+          setvar('%sig2_end_y', '%sig2_y - 40', True),
+          setvar('%SIG2_Gesture', 'tap %sig2_x,%sig2_y; swipe %sig2_x,%sig2_y -> %sig2_x,%sig2_end_y; 40 px up; 300 ms'),
+          *guard('%sig2_end_y', 6, 0, 'VolumeUp endpoint above screen: %SIG2_Gesture'),
+          *pending('tap', 'VolumeUp AutoInput tap did not complete: %SIG2_Gesture'),
+          plugin(107361459, r'click(point,%SIG2_VolumeX\,%SIG2_VolumeY)'),
+          *guard('%err', 12, '', 'VolumeUp AutoInput tap failed: code=%err message=%errmsg; %SIG2_Gesture'),
+          wait(100),
+          *pending('gesture', 'VolumeUp AutoInput gesture did not complete: %SIG2_Gesture'),
+          plugin(778682267, 'swipe'),
+          *guard('%err', 12, '', 'VolumeUp AutoInput gesture failed: code=%err message=%errmsg; %SIG2_Gesture'),
+          wait(),
+          *pending('readback', 'VolumeUp post-gesture query did not complete: %SIG2_Gesture'),
+          call('SIG2_VolumeCurrent', 'query_only'),
+          *guard('%SIG2_VolumeOK', 3, 1, 'VolumeUp post-gesture readback failed: %SIG2_Error; %SIG2_Gesture'),
+          *pending('verify', 'VolumeUp stopped while verifying readback: %SIG2_Gesture'),
+          *guard('%SIG2_Level', 8, '%sig2_start', 'VolumeUp unchanged: level=%SIG2_Level expected=%sig2_target; %SIG2_Gesture'),
+          *guard('%SIG2_Level', 9, '%sig2_target', 'VolumeUp unexpected level=%SIG2_Level expected=%sig2_target; %SIG2_Gesture'),
+          setvar('%SIG2_MoveStage', 'complete'), setvar('%SIG2_Error', ''), setvar('%SIG2_VolumeOK', 1)]
+    return aa
 
 
 def move(delta):
+    if delta == 1:
+        return move_up()
     aa = [call('SIG2_VolumeCurrent'), *guard('%SIG2_VolumeOK', 3, 1, 'Current readback failed: %SIG2_Error'),
           setvar('%sig2_start', '%SIG2_Level'),
           condition('%sig2_start', 8, 15 if delta == 1 else 0), stop(), action(38),

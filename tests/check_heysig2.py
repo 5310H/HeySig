@@ -135,3 +135,36 @@ for name,t in TASKS.items():
             if params: json.loads(params)
     assert not stack
 print('Passed: captured 7/541/1701, slash-ID regression, literal IDs, all 16 values in all query orders; four isolated exports, import structure, project parity, all 16 values in both selector modes, endpoint duplicates, array ordering, failure paths and verified one-step moves.')
+
+# Runtime geometry: 7=1701, 8=1661, desired 9=1621.
+p = phone(8, 'id')
+p.knob_x, p.knob_y0 = 541, 1981
+p.run('SIG2_VolumeUp')
+assert p.level == 9 and p.globals['SIG2_VolumeOK'] == '1'
+assert p.globals['SIG2_VolumeX'] == '541' and p.globals['SIG2_VolumeY'] == '1621'
+assert p.drags == [40] and p.taps == ['541,1661']
+assert p.gestures == [('Start X: 541\nStart Y: 1661', 'End X: 541\nEnd Y: 1621', '300')]
+assert p.globals['SIG2_Error'] == '' and p.globals['SIG2_MoveStage'] == 'complete'
+for stage in ('number', 'gesture', 'halt_number', 'halt_gesture'):
+    p = phone(8, 'id', fail_stage=stage); p.run('SIG2_VolumeUp')
+    assert p.globals['SIG2_VolumeOK'] == '0'
+    assert ('tap' if 'number' in stage else 'gesture') in p.globals['SIG2_Error'], p.globals
+for opts, fragment in [(dict(threshold=1000), 'unchanged'), (dict(jump=2), 'unexpected level')]:
+    p = phone(8, 'id', **opts); p.run('SIG2_VolumeUp')
+    assert p.globals['SIG2_VolumeOK'] == '0' and fragment in p.globals['SIG2_Error'], p.globals
+    assert len(p.drags) == 1
+print('Passed: actual gesture payload 541,1661 -> 541,1621, 40 px up, 300 ms; tap/gesture failures, halted actions, unchanged and overshoot diagnostics.')
+
+class FailedPostQuery(Phone):
+    def run(self, name, param='', param2=''):
+        if name == 'SIG2_VolumeCurrent' and param == 'query_only' and self.drags:
+            self.fail_stage = 'halt_query'
+        super().run(name, param, param2)
+p = FailedPostQuery(8)
+p.globals['SIG2_KnobId'] = 'volume-knob'
+p.run('SIG2_VolumeUp')
+assert p.globals['SIG2_VolumeOK'] == '0' and 'query did not complete' in p.globals['SIG2_Error']
+for stage in ('launch', 'query', 'tab', 'number', 'gesture'):
+    p = phone(8, 'id', fail_stage=stage); p.run('SIG2_VolumeUp')
+    assert p.globals['SIG2_VolumeOK'] == '0' and p.globals['SIG2_Error'].strip(), (stage,p.globals)
+print('Passed: post-gesture query halt retains a useful error; every injected Up failure leaves a diagnostic.')

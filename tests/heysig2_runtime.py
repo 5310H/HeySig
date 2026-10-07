@@ -15,6 +15,7 @@ class Phone:
         self.programs = ['Universal', 'Music', 'Outdoor', 'TV', 'Car', 'Speech']
         self.program = self.programs[0]
         self.globals, self.drags, self.taps = {}, [], []
+        self.knob_x, self.knob_y0, self.gestures = 500, 1000, []
     def run(self, name, param='', param2=''):
         local = {'par1': param, 'par2': param2, 'priority': '10'}
         if name == 'SIG_VoiceRouter': local['avcomm'] = getattr(self, 'voice_event', param)
@@ -74,6 +75,8 @@ class Phone:
                 if code == 107361459:
                     params = a.findtext('./Bundle/Vals/parameters', '')
                     stage = 'tab' if 'Tab)' in params else 'number'
+                if self.fail_stage == 'halt_' + str(stage):
+                    return  # Emulate a plugin/Tasker halt before its error guard.
                 if stage == self.fail_stage:
                     assert a.findtext('se') == 'true'
                     local['err'], local['errmsg'] = '1', 'Injected plugin failure'
@@ -101,14 +104,14 @@ class Phone:
                 default_text = f'Volume Tab,15,{self.level},0' if self.readable else 'Volume Tab'
                 local['aitext'] = self.texts if self.texts is not None else default_text
                 local['aitext_array'] = local['aitext'].split(',')
-                local['aicoordinates_array'] = list(self.coordinates if self.coordinates is not None else (['100,200', '650,400', f'500,{1000-self.level*40}', '650,1000'] if self.readable else ['100,200']))
+                local['aicoordinates_array'] = list(self.coordinates if self.coordinates is not None else (['100,200', '650,400', f'{self.knob_x},{self.knob_y0-self.level*40}', '650,1000'] if self.readable else ['100,200']))
                 local['aiid_array'] = list(self.ids if self.ids is not None else (['tab', 'maximum-label', 'volume-knob', 'minimum-label'] if self.readable else ['tab']))
             elif code == 107361459:
                 local['ailastcoordinates'] = '500,800'
                 action = expand(json.loads(a.findtext('./Bundle/Vals/parameters'))['_action'])
                 if action.startswith('click(point,'):
                     point = action[len('click(point,'):-1].replace('\\', '')
-                    assert point == f'500,{1000-self.level*40}', ('Tapped endpoint instead of knob', point, self.level)
+                    assert point == f'{self.knob_x},{self.knob_y0-self.level*40}', ('Tapped endpoint instead of knob', point, self.level)
                     self.taps.append(point)
                 if action.startswith('click(text,'):
                     value = action[len('click(text,'):-1]
@@ -116,6 +119,9 @@ class Phone:
                     elif '%requested_program' in a.findtext('./Bundle/Vals/parameters'):
                         local['err'], local['errmsg'] = '1', 'Program not found'
             elif code == 778682267:
+                params = json.loads(a.findtext('Bundle/Vals/parameters'))
+                self.gestures.append((expand(params['initialPoint']), expand(params['endPoint']), expand(params['duration'])))
+                assert self.gestures[-1] == (f"Start X: {get('sig2_x')}\nStart Y: {get('sig2_y')}", f"End X: {get('sig2_x')}\nEnd Y: {get('sig2_end_y')}", '300')
                 distance = float(get('sig2_y')) - float(get('sig2_end_y'))
                 self.drags.append(distance)
                 if abs(distance) >= self.threshold: self.level = max(self.bounds[0], min(self.bounds[1], self.level + (self.jump if distance > 0 else -self.jump)))
