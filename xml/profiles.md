@@ -13,28 +13,20 @@ This profile listens for any command captured by AutoVoice (via Google Assistant
 1.  Go to the **Profiles** tab in Tasker.
 2.  Tap the `+` button -> **Event** -> **Plugin** -> **AutoVoice** -> **Recognized**.
 3.  Tap the pencil icon to configure the AutoVoice plugin:
-    *   **Command Filter:** Leave this blank (or set it to capture everything if required by your specific AutoVoice version). 
+    *   **Command Filter:** Leave this blank (or set it to capture everything if required by your specific AutoVoice version).
     *   *Note: If you want to require a wake word like "Hearing Aids", you can set the filter to `hearing aids (?<command>.+)` and use regex.*
     *   Tap the checkmark to save and exit the plugin config.
 4.  Tasker will ask you to link a Task. Choose **`SIG_VoiceRouter`**.
-5.  **Crucial Step:** We need to pass the spoken text into the router. 
+5.  **Crucial Step:** We need to pass the spoken text into the router.
     *   Open the `SIG_VoiceRouter` task.
-    *   If you don't already have one, ensure the first action looks at the built-in AutoVoice variable: **`%avcommnofilter`** (which contains the exact words you spoke). 
-    *   *Alternatively*, if you linked it using `Perform Task` from another intermediate task, you would set `%par1` to `%avcommnofilter`.
+    *   If you don't already have one, ensure the first action looks at the built-in AutoVoice variable: **`%avcomm`** (which contains the exact words you spoke).
+    *   *Alternatively*, if you linked it using `Perform Task` from another intermediate task, you would set `%par1` to the actual recognized command text.
 
 ---
 
-## 2. AutoWear Integration (Smartwatch Voice)
+## 2. AutoWear Integration (Pixel Watch 3)
 
-If you are using AutoWear to trigger commands from your wrist, the setup is nearly identical.
-
-1.  Go to the **Profiles** tab.
-2.  Tap `+` -> **Event** -> **Plugin** -> **AutoWear** -> **Command**.
-3.  Tap the pencil icon to configure:
-    *   **Command Filter:** This depends on how you set up your AutoWear Voice Screen. Usually, it passes a specific prefix like `&AP&` followed by the text.
-    *   Tap the checkmark to save.
-4.  Link the task: **`SIG_VoiceRouter`**.
-5.  Inside your `SIG_VoiceRouter`, you will need to parse the AutoWear variable (usually **`%awmessage`** or **`%awcomm`**) to figure out what was spoken.
+Use the phone task `SIG_WatchCommand` to forward AutoWear text into the shared router. Follow the [AutoWear setup guide](../docs/AutoWear-setup.md) for the `heysig=:=` command namespace, event profile, buttons, and feedback. VoiceRouter now accepts explicit command text through Parameter 1 and falls back to `%avcomm` for AutoVoice.
 
 ---
 
@@ -54,7 +46,7 @@ This profile runs silently in the background to handle your automatic environmen
 
 ### How it all comes together:
 
-By keeping your Profiles this simple, all of the "brainpower" is kept inside `SIG_VoiceRouter`. 
+By keeping your Profiles this simple, all of the "brainpower" is kept inside `SIG_VoiceRouter`.
 
 When you say *"Turn volume up"*:
 1. The **AutoVoice Profile** triggers.

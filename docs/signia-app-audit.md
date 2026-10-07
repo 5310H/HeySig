@@ -1,0 +1,23 @@
+# Signia app audit — 2026-10-06
+
+Scope: VolumeSet, Current, Up, Down, Max, Mute and related dispatcher/balance routing. This is a source and simulation audit; no installed Android app, accessibility dump, or hearing aids were available.
+
+## Findings
+
+1. **Fixed: BalanceSet routed through volume.** It opens Balance Tab, then calls SIG_VolumeCurrent (which selects Volume Tab), computes steps from SIG_TargetVolume, and calls SIG_VolumeDown/Up. A balance request can therefore change microphone volume. The calls and target references now use the balance equivalents in both exports. The subsequent slider fix uses the user-confirmed Balance −8–7 range, independent state, passive reading, and verified movement. See [balance-tinnitus-fix.md](balance-tinnitus-fix.md) for changes and device checks.
+2. **High: numeric text is not a control identity.** VolumeCurrent checks the package, then accepts any single standalone integer 0–15 across the queried screen. Before the subsequent refactor, it did not check tab-selection errors or identify a volume node by ID/bounds. A failed tab selection with another single numeric control can produce a false reading. Up/Down then click by numeric text. The refactor now checks tab-selection errors before reading and checks the foreground package before clicks. Binding the read/click to a specific control identity still requires an accessibility dump from the installed app.
+3. **Fixed: Set ignored keep_open on success.** Actions act26 and act45 close Signia unconditionally, including the already-at-target branch. Simulation confirms both Set(7→7) and Set(7→9) close the app with keep_open. Max and Mute have the same unconditional close pattern. The subsequent refactor uses shared AppClose/AppError tasks and forwards keep_open through endpoint wrappers.
+4. **Fixed: Set had no reliable task-level result.** It does not initialize SIG_VolumeOK. Invalid input, unreadable current volume, and already-at-target exits can leave a stale or unset result. Helper success describes the latest one-step move; Set also does not verify its requested target after the complete loop. The refactor initializes failure status, snapshots the target locally, and verifies the final displayed value before reporting success. This isolates a request target but does not serialize concurrent UI operations.
+5. **Compatibility risk: gestures and navigation are assumptions.** Exact English text `Volume Tab`, a generated activity class, numeric accessibility text, and 8–160 pixel vertical swipes require verification on the installed version, language, and display. Gesture endpoints are not checked against screen bounds. An overshoot is detected after movement and is not reversed. Fixed delays do not verify connection readiness.
+
+## Comparison with official Signia documentation
+
+[Signia app support](https://www.signia.net/en/support/app/) documents default microphone volume 8 and balance 0, separate microphone and streaming levels, and model-dependent tinnitus/direction features. The code does not distinguish microphone volume from streaming volume through an explicit UI identity. A displayed number changing confirms UI state, not delivery to connected hearing aids.
+
+[Signia quick guide (2019)](https://www.signia.net/-/media/signia/global/files/app---telecare/quickguide_signia-app_2019-09.pdf) describes a vertical volume slider. That is consistent with the gesture direction, but this older guide does not establish current accessibility labels, exact pixel distances, or plugin compatibility. The repository's 0–15 range and tap-number workflow are recorded as prior user observations, not independently verified here.
+
+## Validation
+
+`python3 tests/check_volume.py` passes 32 Up/Down cases, 256 Set transitions, 32 Max/Mute cases, and existing helper failure cases. Additional in-memory simulations confirm Set stops on unchanged, overshoot, and unreadable results, and reproduce the keep_open issue. The subsequent routing fix updates BalanceSet and the project export; `python3 tests/check_balance_routing.py` verifies those references and export equality.
+
+The simulator supplies a correct package, successful clicks, fixed coordinates, and a synthetic volume number. It does not test wrong-tab reads, actual accessibility nodes, plugin errors, connection state, or physical gestures. Device acceptance should cover those cases plus endpoints, already-at-target, keep_open, streaming, and separate left/right controls if enabled. Record installed Signia/AutoInput versions and capture AutoInput UI Query output on the volume screen before claiming app compatibility.

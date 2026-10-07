@@ -1,0 +1,25 @@
+<TaskerData sr="" dvi="1" tv="6.6.20">
+	<Task sr="task31">
+		<id>31</id>
+		<nme>SIG_AppClose</nme>
+		<pri>100</pri>
+		<Action ve="7" sr="act0">
+			<code>37</code>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%par1</lhs>
+					<op>3</op>
+					<rhs>keep_open</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act1" ve="7">
+			<code>25</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
+		</Action>
+		<Action ve="7" sr="act2">
+			<code>38</code>
+		</Action>
+	</Task>
+</TaskerData>

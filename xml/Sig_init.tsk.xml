@@ -1,117 +1,268 @@
 <TaskerData sr="" dvi="1" tv="5.15.10">
-	<Task sr="task" ve="2">
+	<Task sr="task45" ve="2">
 		<cdate>1719070000</cdate>
 		<edate>1719070000</edate>
-		<id>Sig_init</id>
+		<id>45</id>
 		<nme>Sig_init</nme>
-
-		<Action sr="act" ve="7">
+		<Action sr="act0" ve="7">
 			<code>547</code>
-			<Str sr="arg" ve="3">%SIG_NoiseRaw</Str>
-			<Str sr="arg" ve="3">0</Str>
+			<Str sr="arg0" ve="3">%SIG_NoiseRaw</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
 		</Action>
-
-		<Action sr="act" ve="7">
+		<Action sr="act1" ve="7">
 			<code>547</code>
-			<Str sr="arg" ve="3">%SIG_Noise</Str>
-			<Str sr="arg" ve="3">0</Str>
+			<Str sr="arg0" ve="3">%SIG_Noise</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
 		</Action>
-
-		<Action sr="act" ve="7">
+		<Action sr="act2" ve="7">
 			<code>547</code>
-			<Str sr="arg" ve="3">%SIG_NoiseTier</Str>
-			<Str sr="arg" ve="3">quiet</Str>
+			<Str sr="arg0" ve="3">%SIG_NoiseTier</Str>
+			<Str sr="arg1" ve="3">quiet</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
 		</Action>
-
-		<Action sr="act" ve="7">
+		<Action sr="act3" ve="7">
 			<code>547</code>
-			<Str sr="arg" ve="3">%SIG_Mode</Str>
-			<Str sr="arg" ve="3">quiet</Str>
+			<Str sr="arg0" ve="3">%SIG_Mode</Str>
+			<Str sr="arg1" ve="3">normal</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
 		</Action>
-
-		<Action sr="act" ve="7">
+		<Action sr="act4" ve="7">
 			<code>547</code>
-			<Str sr="arg" ve="3">%SIG_LastMode</Str>
-			<Str sr="arg" ve="3">quiet</Str>
+			<Str sr="arg0" ve="3">%SIG_LastMode</Str>
+			<Str sr="arg1" ve="3">normal</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
 		</Action>
-
-		<Action sr="act" ve="7">
+		<Action sr="act5" ve="7">
 			<code>547</code>
-			<Str sr="arg" ve="3">%SIG_Freeze</Str>
-			<Str sr="arg" ve="3">0</Str>
+			<Str sr="arg0" ve="3">%SIG_Freeze</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
 		</Action>
-
-		<Action sr="act" ve="7">
+		<Action sr="act6" ve="7">
 			<code>547</code>
-			<Str sr="arg" ve="3">%SIG_ProgramQuiet</Str>
-			<Str sr="arg" ve="3">0</Str>
+			<Str sr="arg0" ve="3">%SIG_ProgramQuiet</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
 		</Action>
-
-		<Action sr="act" ve="7">
+		<Action sr="act7" ve="7">
 			<code>547</code>
-			<Str sr="arg" ve="3">%SIG_ProgramMedium</Str>
-			<Str sr="arg" ve="3">0</Str>
+			<Str sr="arg0" ve="3">%SIG_ProgramMedium</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
 		</Action>
-
-		<Action sr="act" ve="7">
+		<Action sr="act8" ve="7">
 			<code>547</code>
-			<Str sr="arg" ve="3">%SIG_ProgramLoud</Str>
-			<Str sr="arg" ve="3">0</Str>
+			<Str sr="arg0" ve="3">%SIG_ProgramLoud</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
 		</Action>
-
-		<Action sr="act" ve="7">
+		<Action sr="act9" ve="7">
 			<code>547</code>
-			<Str sr="arg" ve="3">%SIG_LastNoise</Str>
-			<Str sr="arg" ve="3">0</Str>
+			<Str sr="arg0" ve="3">%SIG_LastNoise</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
 		</Action>
-
-		<Action sr="act" ve="7">
+		<Action sr="act10" ve="7">
 			<code>547</code>
-			<Str sr="arg" ve="3">%SIG_NoiseTrend</Str>
-			<Str sr="arg" ve="3">stable</Str>
+			<Str sr="arg0" ve="3">%SIG_NoiseTrend</Str>
+			<Str sr="arg1" ve="3">stable</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
 		</Action>
-
-		<Action sr="act" ve="7">
+		<Action sr="act11" ve="7">
 			<code>547</code>
-			<Str sr="arg" ve="3">%SIG_NoiseDelta</Str>
-			<Str sr="arg" ve="3">0</Str>
+			<Str sr="arg0" ve="3">%SIG_NoiseDelta</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
 		</Action>
-
-		<Action sr="act" ve="7">
+		<Action sr="act12" ve="7">
 			<code>547</code>
-			<Str sr="arg" ve="3">%SIG_OverrideTimer</Str>
-			<Str sr="arg" ve="3">0</Str>
+			<Str sr="arg0" ve="3">%SIG_OverrideTimer</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
 		</Action>
-
-		<Action sr="act" ve="7">
+		<Action sr="act13" ve="7">
 			<code>547</code>
-			<Str sr="arg" ve="3">%SIG_OverrideMode</Str>
-			<Str sr="arg" ve="3">none</Str>
+			<Str sr="arg0" ve="3">%SIG_OverrideMode</Str>
+			<Str sr="arg1" ve="3">none</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
 		</Action>
-
-		<Action sr="act" ve="7">
+		<Action sr="act14" ve="7">
 			<code>547</code>
-			<Str sr="arg" ve="3">%SIG_Debug</Str>
-			<Str sr="arg" ve="3">0</Str>
+			<Str sr="arg0" ve="3">%SIG_Debug</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
 		</Action>
-
-		<Action sr="act" ve="7">
+		<Action sr="act15" ve="7">
 			<code>547</code>
-			<Str sr="arg" ve="3">%SIG_Log</Str>
-			<Str sr="arg" ve="3">0</Str>
+			<Str sr="arg0" ve="3">%SIG_Log</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
 		</Action>
-
-		<Action sr="act" ve="7">
+		<Action sr="act16" ve="7">
 			<code>547</code>
-			<Str sr="arg" ve="3">%SIG_ChangeCount</Str>
-			<Str sr="arg" ve="3">0</Str>
+			<Str sr="arg0" ve="3">%SIG_ChangeCount</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
 		</Action>
-
-		<Action sr="act" ve="7">
+		<Action sr="act17" ve="7">
 			<code>547</code>
-			<Str sr="arg" ve="3">%SIG_LastTier</Str>
-			<Str sr="arg" ve="3">quiet</Str>
+			<Str sr="arg0" ve="3">%SIG_LastTier</Str>
+			<Str sr="arg1" ve="3">quiet</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
 		</Action>
-
+		<Action sr="act18" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG_NoiseHigh</Str>
+			<Str sr="arg1" ve="3">75</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act19" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG_NoiseLow</Str>
+			<Str sr="arg1" ve="3">60</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act20" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG_StrikeLimit</Str>
+			<Str sr="arg1" ve="3">3</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act21" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG_MonitorFreq</Str>
+			<Str sr="arg1" ve="3">2</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act22" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG_HighStrikes</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act23" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG_LowStrikes</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act24" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG_ProgNoisy</Str>
+			<Str sr="arg1" ve="3">noisy</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act25" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG_ProgNormal</Str>
+			<Str sr="arg1" ve="3">normal</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
 	</Task>
 </TaskerData>

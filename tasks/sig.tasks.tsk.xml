@@ -1,307 +1,699 @@
 <TaskerData sr="" dvi="1" tv="6.3.13">
-
-	<Task sr="task0" ve="2">
+	<Task sr="task33" ve="2">
 		<cdate>1714552000000</cdate>
 		<edate>0</edate>
-		<id>20</id>
-		<nme>SIG_Dispatcher</nme>
-		<Action sr="act0" ve="7">
-			<code>547</code>
-			<Str sr="arg0" ve="3">%SIG_STATE</Str>
+		<id>33</id>
+		<nme>SIG_StateDispatcher</nme>
+		<Action ve="7" sr="act0">
+			<code>37</code>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%SIG_STATE</lhs>
+					<op>2</op>
+					<rhs>NOISE</rhs>
+				</Condition>
+			</ConditionList>
 		</Action>
 		<Action sr="act1" ve="7">
-			<code>6</code>
-			<Str sr="arg0" ve="3">%SIG_STATE</Str>
-			<Str sr="arg1" ve="3">NOISE</Str>
-			<Int sr="arg2" val="0"/>
-			<Int sr="arg3" val="0"/>
-			<Str sr="arg4" ve="3">SIG_NoiseEngine</Str>
+			<code>130</code>
+			<Str sr="arg0" ve="3">SIG_NoiseEngine</Str>
+			<Int sr="arg1">
+				<var>%priority</var>
+			</Int>
+			<Int sr="arg10" val="1" />
+			<Str sr="arg2" ve="3" />
+			<Str sr="arg3" ve="3">Signia volume action failed. Check the AutoInput error log.</Str>
+			<Str sr="arg4" ve="3" />
+			<Int sr="arg5" val="0" />
+			<Int sr="arg6" val="0" />
+			<Str sr="arg7" ve="3" />
+			<Int sr="arg8" val="0" />
+			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act2" ve="7">
-			<code>6</code>
-			<Str sr="arg0" ve="3">%SIG_STATE</Str>
-			<Str sr="arg1" ve="3">SLEEP</Str>
-			<Int sr="arg2" val="0"/>
-			<Int sr="arg3" val="0"/>
-			<Str sr="arg4" ve="3">SIG_SleepEngine</Str>
+		<Action ve="7" sr="act2">
+			<code>38</code>
 		</Action>
-		<Action sr="act3" ve="7">
-			<code>6</code>
-			<Str sr="arg0" ve="3">%SIG_STATE</Str>
-			<Str sr="arg1" ve="3">WATCH_CMD</Str>
-			<Int sr="arg2" val="0"/>
-			<Int sr="arg3" val="0"/>
-			<Str sr="arg4" ve="3">SIG_WatchCommand</Str>
+		<Action ve="7" sr="act3">
+			<code>37</code>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%SIG_STATE</lhs>
+					<op>2</op>
+					<rhs>SLEEP</rhs>
+				</Condition>
+			</ConditionList>
 		</Action>
 		<Action sr="act4" ve="7">
-			<code>6</code>
-			<Str sr="arg0" ve="3">%SIG_STATE</Str>
-			<Str sr="arg1" ve="3">VOICE</Str>
-			<Int sr="arg2" val="0"/>
-			<Int sr="arg3" val="0"/>
-			<Str sr="arg4" ve="3">SIG_VoiceHandler</Str>
+			<code>130</code>
+			<Str sr="arg0" ve="3">SIG_SleepEngine</Str>
+			<Int sr="arg1">
+				<var>%priority</var>
+			</Int>
+			<Int sr="arg10" val="1" />
+			<Str sr="arg2" ve="3" />
+			<Str sr="arg3" ve="3">Signia volume action failed. Check the AutoInput error log.</Str>
+			<Str sr="arg4" ve="3" />
+			<Int sr="arg5" val="0" />
+			<Int sr="arg6" val="0" />
+			<Str sr="arg7" ve="3" />
+			<Int sr="arg8" val="0" />
+			<Int sr="arg9" val="0" />
+		</Action>
+		<Action ve="7" sr="act5">
+			<code>38</code>
+		</Action>
+		<Action ve="7" sr="act6">
+			<code>37</code>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%SIG_STATE</lhs>
+					<op>2</op>
+					<rhs>WATCH_CMD</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act7" ve="7">
+			<code>130</code>
+			<Str sr="arg0" ve="3">SIG_StateWatchCommand</Str>
+			<Int sr="arg1">
+				<var>%priority</var>
+			</Int>
+			<Int sr="arg10" val="1" />
+			<Str sr="arg2" ve="3" />
+			<Str sr="arg3" ve="3">Signia volume action failed. Check the AutoInput error log.</Str>
+			<Str sr="arg4" ve="3" />
+			<Int sr="arg5" val="0" />
+			<Int sr="arg6" val="0" />
+			<Str sr="arg7" ve="3" />
+			<Int sr="arg8" val="0" />
+			<Int sr="arg9" val="0" />
+		</Action>
+		<Action ve="7" sr="act8">
+			<code>38</code>
+		</Action>
+		<Action ve="7" sr="act9">
+			<code>37</code>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%SIG_STATE</lhs>
+					<op>2</op>
+					<rhs>VOICE</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act10" ve="7">
+			<code>130</code>
+			<Str sr="arg0" ve="3">SIG_VoiceHandler</Str>
+			<Int sr="arg1">
+				<var>%priority</var>
+			</Int>
+			<Int sr="arg10" val="1" />
+			<Str sr="arg2" ve="3" />
+			<Str sr="arg3" ve="3">Signia volume action failed. Check the AutoInput error log.</Str>
+			<Str sr="arg4" ve="3" />
+			<Int sr="arg5" val="0" />
+			<Int sr="arg6" val="0" />
+			<Str sr="arg7" ve="3" />
+			<Int sr="arg8" val="0" />
+			<Int sr="arg9" val="0" />
+		</Action>
+		<Action ve="7" sr="act11">
+			<code>38</code>
 		</Action>
 	</Task>
-
-	<Task sr="task1" ve="2">
+	<Task sr="task34" ve="2">
 		<cdate>1714552001000</cdate>
 		<edate>0</edate>
-		<id>21</id>
+		<id>34</id>
 		<nme>SIG_NoiseEngine</nme>
-		<Action sr="act0" ve="7">
-			<code>547</code>
-			<Str sr="arg0" ve="3">%SIG_DB_PHONE</Str>
+		<Action ve="7" sr="act0">
+			<code>37</code>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%SIG_OVERRIDE</lhs>
+					<op>2</op>
+					<rhs>1</rhs>
+				</Condition>
+			</ConditionList>
 		</Action>
 		<Action sr="act1" ve="7">
-			<code>547</code>
-			<Str sr="arg0" ve="3">%SIG_DB_WATCH</Str>
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act2" ve="7">
-			<code>547</code>
-			<Str sr="arg0" ve="3">%SIG_DB_ACTIVE</Str>
+		<Action ve="7" sr="act2">
+			<code>38</code>
 		</Action>
-		<Action sr="act3" ve="7">
-			<code>6</code>
-			<Str sr="arg0" ve="3">%SIG_OVERRIDE</Str>
-			<Str sr="arg1" ve="3">1</Str>
-			<Int sr="arg2" val="0"/>
-			<Int sr="arg3" val="0"/>
-			<Str sr="arg4" ve="3"></Str>
+		<Action ve="7" sr="act3">
+			<code>37</code>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%SIG_DB_ACTIVE</lhs>
+					<op>6</op>
+					<rhs>%SIG_THRESH_VNOISY</rhs>
+				</Condition>
+			</ConditionList>
 		</Action>
-		<Action sr="act4" ve="7">
-			<code>6</code>
-			<Str sr="arg0" ve="3">%SIG_DB_ACTIVE</Str>
-			<Str sr="arg1" ve="3">&gt;=%SIG_THRESH_VNOISY</Str>
-			<Int sr="arg2" val="0"/>
-			<Int sr="arg3" val="0"/>
-			<Str sr="arg4" ve="3">SIG_SetMode_VeryNoisy</Str>
+		<Action ve="7" sr="act4">
+			<code>43</code>
 		</Action>
 		<Action sr="act5" ve="7">
-			<code>6</code>
-			<Str sr="arg0" ve="3">%SIG_DB_ACTIVE</Str>
-			<Str sr="arg1" ve="3">&gt;=%SIG_THRESH_NOISY</Str>
-			<Int sr="arg2" val="0"/>
-			<Int sr="arg3" val="0"/>
-			<Str sr="arg4" ve="3">SIG_SetMode_Noisy</Str>
+			<code>130</code>
+			<Str sr="arg0" ve="3">SIG_SetMode_VeryNoisy</Str>
+			<Int sr="arg1">
+				<var>%priority</var>
+			</Int>
+			<Int sr="arg10" val="1" />
+			<Str sr="arg2" ve="3" />
+			<Str sr="arg3" ve="3">Signia volume action failed. Check the AutoInput error log.</Str>
+			<Str sr="arg4" ve="3" />
+			<Int sr="arg5" val="0" />
+			<Int sr="arg6" val="0" />
+			<Str sr="arg7" ve="3" />
+			<Int sr="arg8" val="0" />
+			<Int sr="arg9" val="0" />
 		</Action>
 		<Action sr="act6" ve="7">
-			<code>6</code>
-			<Str sr="arg0" ve="3">%SIG_DB_ACTIVE</Str>
-			<Str sr="arg1" ve="3">&lt;%SIG_THRESH_CONV</Str>
-			<Int sr="arg2" val="0"/>
-			<Int sr="arg3" val="0"/>
-			<Str sr="arg4" ve="3">SIG_SetMode_Conversation</Str>
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
+		</Action>
+		<Action ve="7" sr="act7">
+			<code>38</code>
+		</Action>
+		<Action ve="7" sr="act8">
+			<code>37</code>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%SIG_DB_ACTIVE</lhs>
+					<op>6</op>
+					<rhs>%SIG_THRESH_NOISY</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action ve="7" sr="act9">
+			<code>43</code>
+		</Action>
+		<Action sr="act10" ve="7">
+			<code>130</code>
+			<Str sr="arg0" ve="3">SIG_SetMode_Noisy</Str>
+			<Int sr="arg1">
+				<var>%priority</var>
+			</Int>
+			<Int sr="arg10" val="1" />
+			<Str sr="arg2" ve="3" />
+			<Str sr="arg3" ve="3">Signia volume action failed. Check the AutoInput error log.</Str>
+			<Str sr="arg4" ve="3" />
+			<Int sr="arg5" val="0" />
+			<Int sr="arg6" val="0" />
+			<Str sr="arg7" ve="3" />
+			<Int sr="arg8" val="0" />
+			<Int sr="arg9" val="0" />
+		</Action>
+		<Action sr="act11" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
+		</Action>
+		<Action ve="7" sr="act12">
+			<code>38</code>
+		</Action>
+		<Action ve="7" sr="act13">
+			<code>37</code>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%SIG_DB_ACTIVE</lhs>
+					<op>6</op>
+					<rhs>%SIG_THRESH_CONV</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act14" ve="7">
+			<code>130</code>
+			<Str sr="arg0" ve="3">SIG_SetMode_Conversation</Str>
+			<Int sr="arg1">
+				<var>%priority</var>
+			</Int>
+			<Int sr="arg10" val="1" />
+			<Str sr="arg2" ve="3" />
+			<Str sr="arg3" ve="3">Signia volume action failed. Check the AutoInput error log.</Str>
+			<Str sr="arg4" ve="3" />
+			<Int sr="arg5" val="0" />
+			<Int sr="arg6" val="0" />
+			<Str sr="arg7" ve="3" />
+			<Int sr="arg8" val="0" />
+			<Int sr="arg9" val="0" />
+		</Action>
+		<Action sr="act15" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
+		</Action>
+		<Action ve="7" sr="act16">
+			<code>38</code>
 		</Action>
 	</Task>
-
-	<Task sr="task2" ve="2">
+	<Task sr="task35" ve="2">
 		<cdate>1714552002000</cdate>
 		<edate>0</edate>
-		<id>22</id>
+		<id>35</id>
 		<nme>SIG_SleepEngine</nme>
-		<Action sr="act0" ve="7">
-			<code>547</code>
-			<Str sr="arg0" ve="3">%sleep_state</Str>
+		<Action ve="7" sr="act0">
+			<code>37</code>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%sleep_state</lhs>
+					<op>2</op>
+					<rhs>ASLEEP</rhs>
+				</Condition>
+			</ConditionList>
 		</Action>
 		<Action sr="act1" ve="7">
-			<code>6</code>
-			<Str sr="arg0" ve="3">%sleep_state</Str>
-			<Str sr="arg1" ve="3">ASLEEP</Str>
-			<Int sr="arg2" val="0"/>
-			<Int sr="arg3" val="0"/>
-			<Str sr="arg4" ve="3">SIG_SetMode_Sleep</Str>
+			<code>130</code>
+			<Str sr="arg0" ve="3">SIG_SetMode_Sleep</Str>
+			<Int sr="arg1">
+				<var>%priority</var>
+			</Int>
+			<Int sr="arg10" val="1" />
+			<Str sr="arg2" ve="3" />
+			<Str sr="arg3" ve="3">Signia volume action failed. Check the AutoInput error log.</Str>
+			<Str sr="arg4" ve="3" />
+			<Int sr="arg5" val="0" />
+			<Int sr="arg6" val="0" />
+			<Str sr="arg7" ve="3" />
+			<Int sr="arg8" val="0" />
+			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act2" ve="7">
-			<code>6</code>
-			<Str sr="arg0" ve="3">%sleep_state</Str>
-			<Str sr="arg1" ve="3">AWAKE</Str>
-			<Int sr="arg2" val="0"/>
-			<Int sr="arg3" val="0"/>
-			<Str sr="arg4" ve="3">SIG_ExitSleep</Str>
+		<Action ve="7" sr="act2">
+			<code>38</code>
+		</Action>
+		<Action ve="7" sr="act3">
+			<code>37</code>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%sleep_state</lhs>
+					<op>2</op>
+					<rhs>AWAKE</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act4" ve="7">
+			<code>130</code>
+			<Str sr="arg0" ve="3">SIG_ExitSleep</Str>
+			<Int sr="arg1">
+				<var>%priority</var>
+			</Int>
+			<Int sr="arg10" val="1" />
+			<Str sr="arg2" ve="3" />
+			<Str sr="arg3" ve="3">Signia volume action failed. Check the AutoInput error log.</Str>
+			<Str sr="arg4" ve="3" />
+			<Int sr="arg5" val="0" />
+			<Int sr="arg6" val="0" />
+			<Str sr="arg7" ve="3" />
+			<Int sr="arg8" val="0" />
+			<Int sr="arg9" val="0" />
+		</Action>
+		<Action ve="7" sr="act5">
+			<code>38</code>
 		</Action>
 	</Task>
-
-	<Task sr="task3" ve="2">
+	<Task sr="task36" ve="2">
 		<cdate>1714552003000</cdate>
 		<edate>0</edate>
-		<id>23</id>
-		<nme>SIG_WatchCommand</nme>
-		<Action sr="act0" ve="7">
-			<code>547</code>
-			<Str sr="arg0" ve="3">%awcomm</Str>
+		<id>36</id>
+		<nme>SIG_StateWatchCommand</nme>
+		<Action ve="7" sr="act0">
+			<code>37</code>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%awcomm</lhs>
+					<op>2</op>
+					<rhs>mode noisy</rhs>
+				</Condition>
+			</ConditionList>
 		</Action>
 		<Action sr="act1" ve="7">
-			<code>6</code>
-			<Str sr="arg0" ve="3">%awcomm</Str>
-			<Str sr="arg1" ve="3">mode noisy</Str>
-			<Int sr="arg2" val="0"/>
-			<Int sr="arg3" val="0"/>
-			<Str sr="arg4" ve="3">SIG_SetMode_Noisy</Str>
+			<code>130</code>
+			<Str sr="arg0" ve="3">SIG_SetMode_Noisy</Str>
+			<Int sr="arg1">
+				<var>%priority</var>
+			</Int>
+			<Int sr="arg10" val="1" />
+			<Str sr="arg2" ve="3" />
+			<Str sr="arg3" ve="3">Signia volume action failed. Check the AutoInput error log.</Str>
+			<Str sr="arg4" ve="3" />
+			<Int sr="arg5" val="0" />
+			<Int sr="arg6" val="0" />
+			<Str sr="arg7" ve="3" />
+			<Int sr="arg8" val="0" />
+			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act2" ve="7">
-			<code>6</code>
-			<Str sr="arg0" ve="3">%awcomm</Str>
-			<Str sr="arg1" ve="3">mode conversation</Str>
-			<Int sr="arg2" val="0"/>
-			<Int sr="arg3" val="0"/>
-			<Str sr="arg4" ve="3">SIG_SetMode_Conversation</Str>
+		<Action ve="7" sr="act2">
+			<code>38</code>
 		</Action>
-		<Action sr="act3" ve="7">
-			<code>6</code>
-			<Str sr="arg0" ve="3">%awcomm</Str>
-			<Str sr="arg1" ve="3">mode vnoisy</Str>
-			<Int sr="arg2" val="0"/>
-			<Int sr="arg3" val="0"/>
-			<Str sr="arg4" ve="3">SIG_SetMode_VeryNoisy</Str>
+		<Action ve="7" sr="act3">
+			<code>37</code>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%awcomm</lhs>
+					<op>2</op>
+					<rhs>mode conversation</rhs>
+				</Condition>
+			</ConditionList>
 		</Action>
 		<Action sr="act4" ve="7">
-			<code>6</code>
-			<Str sr="arg0" ve="3">%awcomm</Str>
-			<Str sr="arg1" ve="3">override toggle</Str>
-			<Int sr="arg2" val="0"/>
-			<Int sr="arg3" val="0"/>
-			<Str sr="arg4" ve="3">SIG_OverrideToggle</Str>
+			<code>130</code>
+			<Str sr="arg0" ve="3">SIG_SetMode_Conversation</Str>
+			<Int sr="arg1">
+				<var>%priority</var>
+			</Int>
+			<Int sr="arg10" val="1" />
+			<Str sr="arg2" ve="3" />
+			<Str sr="arg3" ve="3">Signia volume action failed. Check the AutoInput error log.</Str>
+			<Str sr="arg4" ve="3" />
+			<Int sr="arg5" val="0" />
+			<Int sr="arg6" val="0" />
+			<Str sr="arg7" ve="3" />
+			<Int sr="arg8" val="0" />
+			<Int sr="arg9" val="0" />
+		</Action>
+		<Action ve="7" sr="act5">
+			<code>38</code>
+		</Action>
+		<Action ve="7" sr="act6">
+			<code>37</code>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%awcomm</lhs>
+					<op>2</op>
+					<rhs>mode vnoisy</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act7" ve="7">
+			<code>130</code>
+			<Str sr="arg0" ve="3">SIG_SetMode_VeryNoisy</Str>
+			<Int sr="arg1">
+				<var>%priority</var>
+			</Int>
+			<Int sr="arg10" val="1" />
+			<Str sr="arg2" ve="3" />
+			<Str sr="arg3" ve="3">Signia volume action failed. Check the AutoInput error log.</Str>
+			<Str sr="arg4" ve="3" />
+			<Int sr="arg5" val="0" />
+			<Int sr="arg6" val="0" />
+			<Str sr="arg7" ve="3" />
+			<Int sr="arg8" val="0" />
+			<Int sr="arg9" val="0" />
+		</Action>
+		<Action ve="7" sr="act8">
+			<code>38</code>
+		</Action>
+		<Action ve="7" sr="act9">
+			<code>37</code>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%awcomm</lhs>
+					<op>2</op>
+					<rhs>override toggle</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act10" ve="7">
+			<code>130</code>
+			<Str sr="arg0" ve="3">SIG_OverrideToggle</Str>
+			<Int sr="arg1">
+				<var>%priority</var>
+			</Int>
+			<Int sr="arg10" val="1" />
+			<Str sr="arg2" ve="3" />
+			<Str sr="arg3" ve="3">Signia volume action failed. Check the AutoInput error log.</Str>
+			<Str sr="arg4" ve="3" />
+			<Int sr="arg5" val="0" />
+			<Int sr="arg6" val="0" />
+			<Str sr="arg7" ve="3" />
+			<Int sr="arg8" val="0" />
+			<Int sr="arg9" val="0" />
+		</Action>
+		<Action ve="7" sr="act11">
+			<code>38</code>
 		</Action>
 	</Task>
-
-	<Task sr="task4" ve="2">
+	<Task sr="task37" ve="2">
 		<cdate>1714552004000</cdate>
 		<edate>0</edate>
-		<id>24</id>
+		<id>37</id>
 		<nme>SIG_VoiceHandler</nme>
-		<Action sr="act0" ve="7">
-			<code>547</code>
-			<Str sr="arg0" ve="3">%avcomm</Str>
+		<Action ve="7" sr="act0">
+			<code>37</code>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%avcomm</lhs>
+					<op>2</op>
+					<rhs>sig noisy</rhs>
+				</Condition>
+			</ConditionList>
 		</Action>
 		<Action sr="act1" ve="7">
-			<code>6</code>
-			<Str sr="arg0" ve="3">%avcomm</Str>
-			<Str sr="arg1" ve="3">sig noisy</Str>
-			<Int sr="arg2" val="0"/>
-			<Int sr="arg3" val="0"/>
-			<Str sr="arg4" ve="3">SIG_SetMode_Noisy</Str>
+			<code>130</code>
+			<Str sr="arg0" ve="3">SIG_SetMode_Noisy</Str>
+			<Int sr="arg1">
+				<var>%priority</var>
+			</Int>
+			<Int sr="arg10" val="1" />
+			<Str sr="arg2" ve="3" />
+			<Str sr="arg3" ve="3">Signia volume action failed. Check the AutoInput error log.</Str>
+			<Str sr="arg4" ve="3" />
+			<Int sr="arg5" val="0" />
+			<Int sr="arg6" val="0" />
+			<Str sr="arg7" ve="3" />
+			<Int sr="arg8" val="0" />
+			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act2" ve="7">
-			<code>6</code>
-			<Str sr="arg0" ve="3">%avcomm</Str>
-			<Str sr="arg1" ve="3">sig conversation</Str>
-			<Int sr="arg2" val="0"/>
-			<Int sr="arg3" val="0"/>
-			<Str sr="arg4" ve="3">SIG_SetMode_Conversation</Str>
+		<Action ve="7" sr="act2">
+			<code>38</code>
 		</Action>
-		<Action sr="act3" ve="7">
-			<code>6</code>
-			<Str sr="arg0" ve="3">%avcomm</Str>
-			<Str sr="arg1" ve="3">sig vnoisy</Str>
-			<Int sr="arg2" val="0"/>
-			<Int sr="arg3" val="0"/>
-			<Str sr="arg4" ve="3">SIG_SetMode_VeryNoisy</Str>
+		<Action ve="7" sr="act3">
+			<code>37</code>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%avcomm</lhs>
+					<op>2</op>
+					<rhs>sig conversation</rhs>
+				</Condition>
+			</ConditionList>
 		</Action>
 		<Action sr="act4" ve="7">
-			<code>6</code>
-			<Str sr="arg0" ve="3">%avcomm</Str>
-			<Str sr="arg1" ve="3">sig sleep</Str>
-			<Int sr="arg2" val="0"/>
-			<Int sr="arg3" val="0"/>
-			<Str sr="arg4" ve="3">SIG_SetMode_Sleep</Str>
+			<code>130</code>
+			<Str sr="arg0" ve="3">SIG_SetMode_Conversation</Str>
+			<Int sr="arg1">
+				<var>%priority</var>
+			</Int>
+			<Int sr="arg10" val="1" />
+			<Str sr="arg2" ve="3" />
+			<Str sr="arg3" ve="3">Signia volume action failed. Check the AutoInput error log.</Str>
+			<Str sr="arg4" ve="3" />
+			<Int sr="arg5" val="0" />
+			<Int sr="arg6" val="0" />
+			<Str sr="arg7" ve="3" />
+			<Int sr="arg8" val="0" />
+			<Int sr="arg9" val="0" />
+		</Action>
+		<Action ve="7" sr="act5">
+			<code>38</code>
+		</Action>
+		<Action ve="7" sr="act6">
+			<code>37</code>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%avcomm</lhs>
+					<op>2</op>
+					<rhs>sig vnoisy</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act7" ve="7">
+			<code>130</code>
+			<Str sr="arg0" ve="3">SIG_SetMode_VeryNoisy</Str>
+			<Int sr="arg1">
+				<var>%priority</var>
+			</Int>
+			<Int sr="arg10" val="1" />
+			<Str sr="arg2" ve="3" />
+			<Str sr="arg3" ve="3">Signia volume action failed. Check the AutoInput error log.</Str>
+			<Str sr="arg4" ve="3" />
+			<Int sr="arg5" val="0" />
+			<Int sr="arg6" val="0" />
+			<Str sr="arg7" ve="3" />
+			<Int sr="arg8" val="0" />
+			<Int sr="arg9" val="0" />
+		</Action>
+		<Action ve="7" sr="act8">
+			<code>38</code>
+		</Action>
+		<Action ve="7" sr="act9">
+			<code>37</code>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%avcomm</lhs>
+					<op>2</op>
+					<rhs>sig sleep</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act10" ve="7">
+			<code>130</code>
+			<Str sr="arg0" ve="3">SIG_SetMode_Sleep</Str>
+			<Int sr="arg1">
+				<var>%priority</var>
+			</Int>
+			<Int sr="arg10" val="1" />
+			<Str sr="arg2" ve="3" />
+			<Str sr="arg3" ve="3">Signia volume action failed. Check the AutoInput error log.</Str>
+			<Str sr="arg4" ve="3" />
+			<Int sr="arg5" val="0" />
+			<Int sr="arg6" val="0" />
+			<Str sr="arg7" ve="3" />
+			<Int sr="arg8" val="0" />
+			<Int sr="arg9" val="0" />
+		</Action>
+		<Action ve="7" sr="act11">
+			<code>38</code>
 		</Action>
 	</Task>
-
-	<Task sr="task5" ve="2">
+	<Task sr="task38" ve="2">
 		<cdate>1714552005000</cdate>
 		<edate>0</edate>
-		<id>25</id>
+		<id>38</id>
 		<nme>SIG_SetMode_Conversation</nme>
 		<Action sr="act0" ve="7">
 			<code>547</code>
-			<Str sr="arg0" ve="3">CONVERSATION</Str>
-		</Action>
-		<Action sr="act1" ve="7">
-			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG_MODE</Str>
+			<Str sr="arg1" ve="3">CONVERSATION</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
 		</Action>
 	</Task>
-
-	<Task sr="task6" ve="2">
+	<Task sr="task39" ve="2">
 		<cdate>1714552006000</cdate>
 		<edate>0</edate>
-		<id>26</id>
+		<id>39</id>
 		<nme>SIG_SetMode_Noisy</nme>
 		<Action sr="act0" ve="7">
 			<code>547</code>
-			<Str sr="arg0" ve="3">NOISY</Str>
-		</Action>
-		<Action sr="act1" ve="7">
-			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG_MODE</Str>
+			<Str sr="arg1" ve="3">NOISY</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
 		</Action>
 	</Task>
-
-	<Task sr="task7" ve="2">
+	<Task sr="task40" ve="2">
 		<cdate>1714552007000</cdate>
 		<edate>0</edate>
-		<id>27</id>
+		<id>40</id>
 		<nme>SIG_SetMode_VeryNoisy</nme>
 		<Action sr="act0" ve="7">
 			<code>547</code>
-			<Str sr="arg0" ve="3">VERYNOISY</Str>
-		</Action>
-		<Action sr="act1" ve="7">
-			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG_MODE</Str>
+			<Str sr="arg1" ve="3">VERYNOISY</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
 		</Action>
 	</Task>
-
-	<Task sr="task8" ve="2">
+	<Task sr="task41" ve="2">
 		<cdate>1714552008000</cdate>
 		<edate>0</edate>
-		<id>28</id>
+		<id>41</id>
 		<nme>SIG_SetMode_Sleep</nme>
 		<Action sr="act0" ve="7">
 			<code>547</code>
-			<Str sr="arg0" ve="3">SLEEP</Str>
-		</Action>
-		<Action sr="act1" ve="7">
-			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG_MODE</Str>
+			<Str sr="arg1" ve="3">SLEEP</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
 		</Action>
 	</Task>
-
-	<Task sr="task9" ve="2">
+	<Task sr="task42" ve="2">
 		<cdate>1714552009000</cdate>
 		<edate>0</edate>
-		<id>29</id>
+		<id>42</id>
 		<nme>SIG_ExitSleep</nme>
 		<Action sr="act0" ve="7">
 			<code>547</code>
-			<Str sr="arg0" ve="3">CONVERSATION</Str>
+			<Str sr="arg0" ve="3">%SIG_MODE</Str>
+			<Str sr="arg1" ve="3">CONVERSATION</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+	</Task>
+	<Task sr="task43" ve="2">
+		<cdate>1714552010000</cdate>
+		<edate>0</edate>
+		<id>43</id>
+		<nme>SIG_OverrideToggle</nme>
+		<Action ve="7" sr="act0">
+			<code>37</code>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%SIG_OVERRIDE</lhs>
+					<op>5</op>
+					<rhs>^[01]$</rhs>
+				</Condition>
+			</ConditionList>
 		</Action>
 		<Action sr="act1" ve="7">
 			<code>547</code>
-			<Str sr="arg0" ve="3">%SIG_MODE</Str>
+			<Str sr="arg0" ve="3">%SIG_OVERRIDE</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
 		</Action>
-	</Task>
-
-	<Task sr="task10" ve="2">
-		<cdate>1714552010000</cdate>
-		<edate>0</edate>
-		<id>30</id>
-		<nme>SIG_OverrideToggle</nme>
-		<Action sr="act0" ve="7">
+		<Action ve="7" sr="act2">
+			<code>38</code>
+		</Action>
+		<Action sr="act3" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG_OVERRIDE</Str>
+			<Str sr="arg1" ve="3">1 - %SIG_OVERRIDE</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="1" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
 		</Action>
 	</Task>
-
-	<Task sr="task11" ve="2">
+	<Task sr="task44" ve="2">
 		<cdate>1714552011000</cdate>
 		<edate>0</edate>
-		<id>31</id>
+		<id>44</id>
 		<nme>SIG_ApplyEQ</nme>
 		<Action sr="act0" ve="7">
-			<code>547</code>
-			<Str sr="arg0" ve="3">PLACEHOLDER: AutoInput actions go here</Str>
+			<code>548</code>
+			<Str sr="arg0" ve="3">SIG_ApplyEQ has no configured Signia EQ actions.</Str>
+			<Int sr="arg1" val="1" />
+		</Action>
+		<Action sr="act1" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
 		</Action>
 	</Task>
-
 </TaskerData>
