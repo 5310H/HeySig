@@ -93,6 +93,11 @@ def plugin(code, command=None):
                 if command == 'swipe_up':
                     # Installed AutoInput Point(String) splits two numbers on ','.
                     params.update(initialPoint='%sig2_x,%sig2_y', endPoint='%sig2_x,%sig2_end_y')
+                    params = {k: params[k] for k in ('initialPoint', 'endPoint', 'duration')}
+                    for key in ('EnableDisableAccessibilityService', 'Password'):
+                        for tag in (key, key + '-type'):
+                            child = vals.find(tag)
+                            if child is not None: vals.remove(child)
                 vals.find('com.twofortyfouram.locale.intent.extra.BLURB').text = 'Swipe from %sig2_x,%sig2_y to %sig2_x,%sig2_end_y (300 ms)'
             vals.find('parameters').text = json.dumps(params, separators=(',', ':'))
     se = a.find('se')
@@ -195,8 +200,12 @@ def move_up():
           wait(100),
           *pending('gesture', 'VolumeUp AutoInput gesture did not complete: %SIG2_Gesture'),
           setvar('%SIG2_GestureErr', 'not returned (action halted)'), setvar('%SIG2_GestureErrMsg', 'not returned (action halted)'),
+          setvar('%SIG2_GestureReturned', 0),
           plugin(778682267, 'swipe_up'),
           setvar('%SIG2_GestureErr', '%err'), setvar('%SIG2_GestureErrMsg', '%errmsg'),
+          setvar('%SIG2_GestureReturned', 1),
+          condition('%err', 13), setvar('%SIG2_GestureErr', 'not supplied by returned action'), action(38),
+          condition('%errmsg', 13), setvar('%SIG2_GestureErrMsg', 'not supplied by returned action'), action(38),
           *guard('%err', 12, '', 'VolumeUp AutoInput gesture failed: code=%SIG2_GestureErr message=%SIG2_GestureErrMsg; %SIG2_Gesture'),
           wait(),
           *pending('readback', 'VolumeUp post-gesture query did not complete: %SIG2_Gesture'),

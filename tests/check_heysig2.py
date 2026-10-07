@@ -229,3 +229,17 @@ try:
 finally:
     TASKS['SIG2_VolumeUp'] = original_up
 print('Passed: old display-summary payload fails installed-parser model and retains Points are invalid as the native diagnostic.')
+
+swipe = next(a for a in TASKS['SIG2_VolumeUp'].findall('Action') if a.findtext('code') == '778682267')
+vals = swipe.find('Bundle/Vals')
+assert set(json.loads(vals.findtext('parameters'))) == {'initialPoint', 'endPoint', 'duration'}
+assert vals.find('Password') is None and vals.find('EnableDisableAccessibilityService') is None
+for stage, returned in [('gesture', '1'), ('halt_gesture', '0')]:
+    p = phone(8, 'id', fail_stage=stage); p.run('SIG2_VolumeUp')
+    assert p.globals['SIG2_GestureReturned'] == returned
+p = phone(8, 'id', threshold=1000); p.run('SIG2_VolumeUp')
+assert p.globals['SIG2_GestureReturned'] == '1'
+assert p.globals['SIG2_GestureErr'] == 'not supplied by returned action'
+assert p.globals['SIG2_GestureErrMsg'] == 'not supplied by returned action'
+assert p.drags == [40] and 'unchanged' in p.globals['SIG2_Error']
+print('Passed: minimal swipe input, returned-versus-halted diagnostics and explicit missing-native-error values.')

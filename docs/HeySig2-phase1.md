@@ -90,7 +90,7 @@ The selector, index alignment, and literal ID comparison are unchanged.
 
 1. Import on Tasker 6.6.20 with HeySig still present. Confirm HeySig2 and all
    four SIG2_ tasks appear, with their complete final actions. Expected counts:
-   AppLaunch 19, Current 139, Up 81, Down 76. Confirm no existing SIG_ task is
+   AppLaunch 19, Current 139, Up 89, Down 76. Confirm no existing SIG_ task is
    replaced. Re-export HeySig2 from the phone and compare action/control-flow
    structure if Tasker reports any import problem.
 2. Verify installed AutoInput configuration activities and accessibility
@@ -217,7 +217,7 @@ values. Subsequent Current queries cannot erase these separate snapshots.
 The pending stage error remains when no plugin result is returned; no code can
 capture a native result which AutoInput never delivers.
 
-Reimport Up (81 actions) or HeySig2, keep the working KnobId, and retry once at
+Reimport Up (89 actions) or HeySig2, keep the working KnobId, and retry once at
 level 8. Expect the same 541,1661→541,1621 payload and readback 9 if the plugin
 executes successfully. If it still fails, send the MoveStage, Gesture, Error,
 GestureErr, GestureErrMsg, TapErr, and TapErrMsg globals plus the AutoInput log.
@@ -231,3 +231,35 @@ Regression tests reject display-label point inputs, verify expanded comma-pair
 payloads and unchanged distance, check immediate capture placement, and exercise
 native failure snapshots and interrupted-action diagnostics. These checks do not
 execute gestures against Signia on the emulator.
+
+## Minimal gesture bundle after the 5dd6efb phone test
+
+The phone still stopped at gesture with empty native error snapshots. Further
+inspection of AutoInput 3.0.12 confirms GestureType=0 selects Swipe, the point
+fields accept comma pairs, duration is parsed as milliseconds, and the executor
+checks accessibility and dispatches a gesture. It can return native messages
+such as `No gesture selected`, `Duration is invalid`, or `Couldn't perform
+gesture: ...`. The cause of this second phone failure is not established by
+the available result; empty error variables do not identify that cause.
+
+Up now uses only `initialPoint`, `endPoint`, and `duration` in its input JSON,
+with the existing required Tasker/plugin metadata. Inherited optional Password
+and EnableDisableAccessibilityService placeholders are omitted. The dynamic
+input class lazily initializes its generated-values map, so an explicit empty
+`generatedValues` field is unnecessary. Start/end remain fresh query coordinates,
+40 pixels upward, 300 ms. No larger swipe or selector change was introduced.
+
+`%SIG2_GestureReturned` is 0 immediately before the plugin and 1 after its native
+error snapshots are copied. Missing `%err` or `%errmsg` is recorded explicitly
+as `not supplied by returned action` rather than leaving diagnostic globals
+empty. Actual returned native errors are preserved. A halt before the snapshot
+retains `not returned (action halted)` and Returned=0. These are diagnostic
+changes and a configuration simplification, not confirmation that the phone
+now completes gestures. Static tests pass; Signia runtime confirmation is pending.
+
+Before reimporting, verify the new commit message supplied in chat. Then import
+Up or HeySig2, retry once at 8, and send GestureReturned, GestureErr,
+GestureErrMsg, MoveStage, Gesture, and Error if the swipe still fails. If
+Returned=0 persists, export the gesture action directly from the phone's Tasker
+and retain the AutoInput log; that exact phone-generated bundle is necessary
+to resolve the remaining Tasker/plugin handoff discrepancy.
