@@ -5,7 +5,7 @@ backup/reference implementation. Phase 1 contains exactly four tasks:
 
 - `SIG2_AppLaunch`: launch `com.signia.rta`, wait, query, and verify foreground package.
 - `SIG2_VolumeCurrent`: open Volume Tab, query aligned accessibility data, select the knob, and publish level and coordinates. No volume gesture.
-- `SIG2_VolumeUp`: read current state, tap the selected knob coordinates, swipe upward, and verify exactly one level of change.
+- `SIG2_VolumeUp`: read current state, drag continuously from the selected knob coordinates, and verify exactly one level of increase.
 - `SIG2_VolumeDown`: the corresponding downward operation.
 
 Import `projects/HeySig2.prj.xml` into Tasker 6.6.20, or import the four
@@ -65,11 +65,11 @@ verified move, otherwise 0. `%SIG2_AppOK` reports launch verification.
 
 Only internal readbacks use parameter 1 `query_only`, which skips launching
 and clicking the tab but still checks the foreground package. Normal Current
-opens the app and Volume Tab. Up performs one point tap at the selected knob
-and one 40 px upward swipe lasting 300 ms, then reads back and requires exactly
+opens the app and Volume Tab. Up performs one continuous 40 px upward drag from the selected knob
+lasting 600 ms, then reads back and requires exactly
 one level of increase. The distance comes from observed knob centers: level 7
-at 541,1701 and level 8 at 541,1661. An Up from that level 8 sends the tap at
-541,1661 and swipe to 541,1621. No tap result coordinates replace the selected
+at 541,1701 and level 8 at 541,1661. An Up from that level 8 starts at
+541,1661 and ends at 541,1621. No tap result coordinates replace the selected
 knob center. There are no upward retries or increasingly long swipes. Unchanged
 and unexpected levels fail immediately, retaining the observed readback.
 
@@ -77,7 +77,7 @@ Down retains its previous adaptive 8–160 px, at-most-20-attempt implementation
 this Up repair does not establish Down's physical reliability. Up at 15 and
 Down at 0 succeed without gestures. Run tasks one at a time.
 
-Up sets `%SIG2_MoveStage` and a pending `%SIG2_Error` before tap, gesture,
+Up sets `%SIG2_MoveStage` and a pending `%SIG2_Error` before the gesture
 and post-gesture readback. `%SIG2_Gesture` records actual start/end coordinates,
 direction, distance, and duration. Explicit AutoInput failure messages include
 stage, error code, plugin message, and gesture details. An action halt retains
@@ -90,7 +90,7 @@ The selector, index alignment, and literal ID comparison are unchanged.
 
 1. Import on Tasker 6.6.20 with HeySig still present. Confirm HeySig2 and all
    four SIG2_ tasks appear, with their complete final actions. Expected counts:
-   AppLaunch 19, Current 139, Up 89, Down 76. Confirm no existing SIG_ task is
+   AppLaunch 19, Current 139, Up 75, Down 76. Confirm no existing SIG_ task is
    replaced. Re-export HeySig2 from the phone and compare action/control-flow
    structure if Tasker reports any import problem.
 2. Verify installed AutoInput configuration activities and accessibility
@@ -263,3 +263,35 @@ GestureErrMsg, MoveStage, Gesture, and Error if the swipe still fails. If
 Returned=0 persists, export the gesture action directly from the phone's Tasker
 and retain the AutoInput log; that exact phone-generated bundle is necessary
 to resolve the remaining Tasker/plugin handoff discrepancy.
+
+## Continuous-drag mechanics test
+
+Real-device geometry now confirms level 0 Y=1982, 7 Y=1701, 9 Y=1621,
+10 Y=1581, and 15 Y=1380: approximately 40 px per level. The phone reports
+that the separate tap and swipe both return successfully but leave the slider
+unchanged. This revision changes only Up's touch mechanics, not its selector,
+start coordinates, upward direction, or travel distance.
+
+Up now dispatches exactly one AutoInput Swipe stroke directly from the current
+knob center, with **no preliminary tap**. Duration is 600 ms, travel remains
+40 px. A stroke holds one pointer down throughout movement and releases at
+its end. Inspection of AutoInput 3.0.12's Swipe provider finds no stationary
+hold-before-movement parameter. Increasing duration slows movement; it does
+not create a true initial hold. No separate long press or fake zero-length
+path segment is used to claim touch continuity or a timed hold.
+
+Import Up (75 actions) or HeySig2 and test 8→9 once. Expected payload:
+continuous drag 541,1661→541,1621, 40 px up, 600 ms. Confirm the knob actually
+moves and Current verifies 9. Unchanged/overshoot checks and native gesture
+snapshots remain. Tap diagnostics explicitly say `not used: continuous drag`.
+If unchanged persists, record GestureReturned, GestureErr, GestureErrMsg, Error,
+and observed touch behavior. A true timed stationary hold would require a
+validated continuation-capable gesture mechanism; it is not implemented by
+this AutoInput Swipe configuration. The new mechanics remain a phone-test
+hypothesis; static simulations cannot establish Signia's touch response.
+
+Current, AppLaunch, Down, and old HeySig remain unchanged. Tests verify no tap
+action in Up, one stroke with the queried start point and a 40 px endpoint,
+600 ms duration, success at exactly one level, endpoint no-op, native error
+preservation, unchanged/overshoot failures, and standalone/project parity.
+Earlier repair sections above record historical configurations.

@@ -67,7 +67,8 @@ for mode in ('region', 'id'):
             assert p.level == max(0, min(15, level + delta)), (name, mode, level, p.globals)
             assert p.globals['SIG2_VolumeOK'] == '1', p.globals
             if level == (15 if delta == 1 else 0): assert not p.drags and not p.taps
-            else: assert p.taps
+            elif delta == -1: assert p.taps
+            else: assert not p.taps
 
 # Accessibility ordering is immaterial; positions remain aligned.
 for level in (0, 7, 15):
@@ -88,7 +89,7 @@ for opts in [dict(coordinates=[]), dict(coordinates=['100,200']),
     assert p.globals['SIG2_Level'] == '-1' and p.globals['SIG2_VolumeX'] == '-1'
 
 for mode in ('region', 'id'):
-    for stage in ('launch', 'query', 'tab', 'number', 'gesture'):
+    for stage in ('launch', 'query', 'tab', 'gesture'):
         p = phone(7, mode, fail_stage=stage); p.run('SIG2_VolumeUp')
         assert p.globals['SIG2_VolumeOK'] == '0' and not p.drags, (mode,stage)
     for opts in (dict(threshold=1000), dict(jump=2)):
@@ -142,10 +143,10 @@ p.knob_x, p.knob_y0 = 541, 1981
 p.run('SIG2_VolumeUp')
 assert p.level == 9 and p.globals['SIG2_VolumeOK'] == '1'
 assert p.globals['SIG2_VolumeX'] == '541' and p.globals['SIG2_VolumeY'] == '1621'
-assert p.drags == [40] and p.taps == ['541,1661']
-assert p.gestures == [('541,1661', '541,1621', '300')]
+assert p.drags == [40] and not p.taps
+assert p.gestures == [('541,1661', '541,1621', '600')]
 assert p.globals['SIG2_Error'] == '' and p.globals['SIG2_MoveStage'] == 'complete'
-for stage in ('number', 'gesture', 'halt_number', 'halt_gesture'):
+for stage in ('gesture', 'halt_gesture'):
     p = phone(8, 'id', fail_stage=stage); p.run('SIG2_VolumeUp')
     assert p.globals['SIG2_VolumeOK'] == '0'
     assert ('tap' if 'number' in stage else 'gesture') in p.globals['SIG2_Error'], p.globals
@@ -153,7 +154,7 @@ for opts, fragment in [(dict(threshold=1000), 'unchanged'), (dict(jump=2), 'unex
     p = phone(8, 'id', **opts); p.run('SIG2_VolumeUp')
     assert p.globals['SIG2_VolumeOK'] == '0' and fragment in p.globals['SIG2_Error'], p.globals
     assert len(p.drags) == 1
-print('Passed: actual gesture payload 541,1661 -> 541,1621, 40 px up, 300 ms; tap/gesture failures, halted actions, unchanged and overshoot diagnostics.')
+print('Passed: actual gesture payload 541,1661 -> 541,1621, 40 px up, 600 ms; gesture failures, halted actions, unchanged and overshoot diagnostics.')
 
 class FailedPostQuery(Phone):
     def run(self, name, param='', param2=''):
@@ -164,17 +165,17 @@ p = FailedPostQuery(8)
 p.globals['SIG2_KnobId'] = 'volume-knob'
 p.run('SIG2_VolumeUp')
 assert p.globals['SIG2_VolumeOK'] == '0' and 'query did not complete' in p.globals['SIG2_Error']
-for stage in ('launch', 'query', 'tab', 'number', 'gesture'):
+for stage in ('launch', 'query', 'tab', 'gesture'):
     p = phone(8, 'id', fail_stage=stage); p.run('SIG2_VolumeUp')
     assert p.globals['SIG2_VolumeOK'] == '0' and p.globals['SIG2_Error'].strip(), (stage,p.globals)
 print('Passed: post-gesture query halt retains a useful error; every injected Up failure leaves a diagnostic.')
 
-for stage, prefix in [('number', 'Tap'), ('gesture', 'Gesture')]:
+for stage, prefix in [('gesture', 'Gesture')]:
     p = phone(8, 'id', fail_stage=stage); p.run('SIG2_VolumeUp')
     assert p.globals[f'SIG2_{prefix}Err'] == '1'
     assert p.globals[f'SIG2_{prefix}ErrMsg'] == 'Injected plugin failure'
     assert 'code=1 message=Injected plugin failure' in p.globals['SIG2_Error']
-for stage, prefix in [('halt_number', 'Tap'), ('halt_gesture', 'Gesture')]:
+for stage, prefix in [('halt_gesture', 'Gesture')]:
     p = phone(8, 'id', fail_stage=stage); p.run('SIG2_VolumeUp')
     assert p.globals[f'SIG2_{prefix}Err'] == 'not returned (action halted)'
 
@@ -207,7 +208,7 @@ for a in TASKS['SIG2_VolumeUp'].findall('Action'):
     params = json.loads(vals.findtext('parameters'))
     assert params['initialPoint'] == '%sig2_x,%sig2_y'
     assert params['endPoint'] == '%sig2_x,%sig2_end_y'
-    assert params['duration'] == '300'
+    assert params['duration'] == '600'
 p = phone(8, 'id', fail_stage='gesture'); p.run('SIG2_VolumeUp')
 p.fail_stage = None; p.run('SIG2_VolumeCurrent', 'query_only')
 assert p.globals['SIG2_GestureErr'] == '1' and p.globals['SIG2_GestureErrMsg'] == 'Injected plugin failure'
@@ -243,3 +244,9 @@ assert p.globals['SIG2_GestureErr'] == 'not supplied by returned action'
 assert p.globals['SIG2_GestureErrMsg'] == 'not supplied by returned action'
 assert p.drags == [40] and 'unchanged' in p.globals['SIG2_Error']
 print('Passed: minimal swipe input, returned-versus-halted diagnostics and explicit missing-native-error values.')
+
+assert all(a.findtext('code') != '107361459' for a in TASKS['SIG2_VolumeUp'].findall('Action'))
+for level in range(15):
+    p = phone(level, 'id'); p.run('SIG2_VolumeUp')
+    assert not p.taps and len(p.gestures) == 1 and p.drags == [40]
+print('Passed: one continuous knob drag, no separate tap, unchanged 40 px travel, 600 ms duration and verified one-level readback.')

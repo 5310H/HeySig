@@ -125,7 +125,7 @@ class Phone:
                     if any(not re.fullmatch(r'[0-9]+,[0-9]+', point) for point in self.gestures[-1][:2]):
                         local['err'], local['errmsg'] = '1', 'Points are invalid'
                         pc += 1; continue
-                    assert self.gestures[-1] == (f"{get('sig2_x')},{get('sig2_y')}", f"{get('sig2_x')},{get('sig2_end_y')}", '300')
+                    assert self.gestures[-1] == (f"{get('sig2_x')},{get('sig2_y')}", f"{get('sig2_x')},{get('sig2_end_y')}", '600')
                     # Mirror installed Point(String): exactly two comma-separated integers.
                     for point in self.gestures[-1][:2]:
                         assert len(point.split(',')) == 2
