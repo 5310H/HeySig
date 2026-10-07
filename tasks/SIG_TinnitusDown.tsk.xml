@@ -18,6 +18,7 @@
 		</Action>
 		<Action sr="act1" ve="7">
 			<code>20</code>
+			<se>true</se>
 			<App sr="arg0">
 				<appClass>crc6451513a1ba22eb348.MainActivity</appClass>
 				<appPkg>com.signia.rta</appPkg>
@@ -26,10 +27,10 @@
 			<Str sr="arg1" ve="3" />
 			<Int sr="arg2" val="0" />
 			<Int sr="arg3" val="1" />
-			<se>true</se>
 		</Action>
-		<Action ve="7" sr="act2">
+		<Action sr="act2" ve="7">
 			<code>37</code>
+			<coll>false</coll>
 			<ConditionList sr="if">
 				<Condition sr="c0" ve="3">
 					<lhs>%err</lhs>
@@ -79,7 +80,7 @@
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action ve="7" sr="act7">
+		<Action sr="act7" ve="7">
 			<code>38</code>
 		</Action>
 		<Action sr="act8" ve="7">
@@ -121,6 +122,7 @@
 		</Action>
 		<Action sr="act12" ve="7">
 			<code>37</code>
+			<coll>false</coll>
 			<ConditionList sr="if">
 				<Condition sr="c0" ve="3">
 					<lhs>%SIG_TinnitusLevel</lhs>
@@ -185,6 +187,7 @@
 		</Action>
 		<Action sr="act19" ve="7">
 			<code>37</code>
+			<coll>false</coll>
 			<ConditionList sr="if">
 				<Condition sr="c0" ve="3">
 					<lhs>%sig_start</lhs>
@@ -201,6 +204,7 @@
 		</Action>
 		<Action sr="act21" ve="7">
 			<code>37</code>
+			<coll>false</coll>
 			<ConditionList sr="if">
 				<Condition sr="c0" ve="3">
 					<lhs>%SIG_TinnitusLevel</lhs>
@@ -211,6 +215,7 @@
 		</Action>
 		<Action sr="act22" ve="7">
 			<code>15355</code>
+			<se>true</se>
 			<Bundle sr="arg0">
 				<Vals sr="val">
 					<ActionTimeout>&lt;null&gt;</ActionTimeout>
@@ -233,10 +238,10 @@
 			<Str sr="arg2" ve="3">com.joaomgcd.autoinput.activity.ActivityConfigUIQuery</Str>
 			<Int sr="arg3" val="10" />
 			<Int sr="arg4" val="1" />
-			<se>true</se>
 		</Action>
-		<Action ve="7" sr="act23">
+		<Action sr="act23" ve="7">
 			<code>37</code>
+			<coll>false</coll>
 			<ConditionList sr="if">
 				<Condition sr="c0" ve="3">
 					<lhs>%err</lhs>
@@ -286,11 +291,12 @@
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action ve="7" sr="act28">
+		<Action sr="act28" ve="7">
 			<code>38</code>
 		</Action>
-		<Action ve="7" sr="act29">
+		<Action sr="act29" ve="7">
 			<code>37</code>
+			<coll>false</coll>
 			<ConditionList sr="if">
 				<Condition sr="c0" ve="3">
 					<lhs>%aipackage</lhs>
@@ -340,11 +346,12 @@
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action ve="7" sr="act34">
+		<Action sr="act34" ve="7">
 			<code>38</code>
 		</Action>
 		<Action sr="act35" ve="7">
 			<code>107361459</code>
+			<se>true</se>
 			<Bundle sr="arg0">
 				<Vals sr="val">
 					<EnableDisableAccessibilityService>&lt;null&gt;</EnableDisableAccessibilityService>
@@ -385,10 +392,10 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Str sr="arg2" ve="3">com.joaomgcd.autoinput.activity.ActivityConfigActionv2</Str>
 			<Int sr="arg3" val="10" />
 			<Int sr="arg4" val="1" />
-			<se>true</se>
 		</Action>
-		<Action ve="7" sr="act36">
+		<Action sr="act36" ve="7">
 			<code>37</code>
+			<coll>false</coll>
 			<ConditionList sr="if">
 				<Condition sr="c0" ve="3">
 					<lhs>%err</lhs>
@@ -438,7 +445,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action ve="7" sr="act41">
+		<Action sr="act41" ve="7">
 			<code>38</code>
 		</Action>
 		<Action sr="act42" ve="7">
@@ -479,6 +486,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 		</Action>
 		<Action sr="act46" ve="7">
 			<code>37</code>
+			<coll>false</coll>
 			<ConditionList sr="if">
 				<Condition sr="c0" ve="3">
 					<lhs>%sig_x</lhs>
@@ -523,6 +531,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 		</Action>
 		<Action sr="act51" ve="7">
 			<code>37</code>
+			<coll>false</coll>
 			<ConditionList sr="if">
 				<Condition sr="c0" ve="3">
 					<lhs>%sig_y</lhs>
@@ -575,8 +584,9 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action ve="7" sr="act57">
+		<Action sr="act57" ve="7">
 			<code>37</code>
+			<coll>false</coll>
 			<ConditionList sr="if">
 				<Condition sr="c0" ve="3">
 					<lhs>%sig_end_y</lhs>
@@ -626,7 +636,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action ve="7" sr="act62">
+		<Action sr="act62" ve="7">
 			<code>38</code>
 		</Action>
 		<Action sr="act63" ve="7">
@@ -672,8 +682,9 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg3" val="10" />
 			<Int sr="arg4" val="1" />
 		</Action>
-		<Action ve="7" sr="act64">
+		<Action sr="act64" ve="7">
 			<code>37</code>
+			<coll>false</coll>
 			<ConditionList sr="if">
 				<Condition sr="c0" ve="3">
 					<lhs>%err</lhs>
@@ -723,7 +734,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action ve="7" sr="act69">
+		<Action sr="act69" ve="7">
 			<code>38</code>
 		</Action>
 		<Action sr="act70" ve="7">
@@ -752,6 +763,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 		</Action>
 		<Action sr="act72" ve="7">
 			<code>37</code>
+			<coll>false</coll>
 			<ConditionList sr="if">
 				<Condition sr="c0" ve="3">
 					<lhs>%SIG_TinnitusLevel</lhs>
@@ -802,6 +814,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 		</Action>
 		<Action sr="act79" ve="7">
 			<code>37</code>
+			<coll>false</coll>
 			<ConditionList sr="if">
 				<Condition sr="c0" ve="3">
 					<lhs>%SIG_TinnitusLevel</lhs>

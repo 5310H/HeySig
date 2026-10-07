@@ -49,6 +49,13 @@ for path in files:
         indices = [int(a.get('sr')[3:]) for a in aa]
         if indices != list(range(len(aa))): issue(path, name, 'action numbers are not unique and contiguous')
         stack = []
+        for condition in t.findall('.//Condition'):
+            fields = [c.tag for c in condition]
+            allowed = [['lhs', 'op', 'rhs']]
+            if condition.findtext('op') in ('12', '13'):
+                allowed.append(['lhs', 'op'])  # Original exports omit unary RHS.
+            if fields not in allowed:
+                issue(path, name, 'Condition has an incompatible field layout')
         for a in aa:
             actions_count += 1
             where = name + '/' + a.get('sr')
@@ -87,9 +94,9 @@ for path in files:
                     except json.JSONDecodeError as ex: issue(path, where, f'plugin parameters JSON: {ex}')
         if stack: issue(path, name, 'unclosed control-flow blocks')
 
-report = '# Tasker XML static validation — 2026-10-06\n\n'
+report = '# Tasker XML static validation — 2026-10-07\n\n'
 report += f'Checked {len(files)} XML files and {actions_count} task actions. Found {len(issues)} failures.\n\n'
-report += 'Action numbers were compared with [Tasker’s official definitions](' + catalog['source'] + '). Checks include XML parsing, task IDs, action numbering, nested control flow, selected built-in argument layouts, plugin bundle presence, and JSON syntax.\n\n'
+report += 'Action numbers were compared with [Tasker’s official definitions](' + catalog['source'] + '). Checks include XML parsing, task IDs, action numbering, nested control flow, explicit condition fields, selected built-in argument layouts, plugin bundle presence, and JSON syntax.\n\n'
 report += 'This is not full schema certification. Tasker has not parsed or executed these files here. The selected argument layouts are repository-derived checks, not an official XSD. Plugin settings, Android components, scene/profile layouts, unresolved external task references, and all remaining action arguments need runtime or authoritative format verification.\n\n'
 report += '\n'.join('- ' + x for x in issues) + '\n'
 (ROOT / 'docs/tasker-xml-validation.md').write_text(report.rstrip() + '\n')

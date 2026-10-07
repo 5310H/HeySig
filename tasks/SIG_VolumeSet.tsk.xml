@@ -27,6 +27,7 @@
 		</Action>
 		<Action sr="act2" ve="7">
 			<code>37</code>
+			<coll>false</coll>
 			<ConditionList sr="if">
 				<Condition sr="c0" ve="3">
 					<lhs>%requested_target</lhs>
@@ -37,6 +38,7 @@
 		</Action>
 		<Action sr="act3" ve="7">
 			<code>37</code>
+			<coll>false</coll>
 			<ConditionList sr="if">
 				<Condition sr="c0" ve="3">
 					<lhs>%par1</lhs>
@@ -100,6 +102,7 @@
 		</Action>
 		<Action sr="act10" ve="7">
 			<code>20</code>
+			<se>true</se>
 			<App sr="arg0">
 				<appClass>crc6451513a1ba22eb348.MainActivity</appClass>
 				<appPkg>com.signia.rta</appPkg>
@@ -108,10 +111,10 @@
 			<Str sr="arg1" ve="3" />
 			<Int sr="arg2" val="0" />
 			<Int sr="arg3" val="1" />
-			<se>true</se>
 		</Action>
-		<Action ve="7" sr="act11">
+		<Action sr="act11" ve="7">
 			<code>37</code>
+			<coll>false</coll>
 			<ConditionList sr="if">
 				<Condition sr="c0" ve="3">
 					<lhs>%err</lhs>
@@ -161,7 +164,7 @@
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action ve="7" sr="act16">
+		<Action sr="act16" ve="7">
 			<code>38</code>
 		</Action>
 		<Action sr="act17" ve="7">
@@ -174,6 +177,7 @@
 		</Action>
 		<Action sr="act18" ve="7">
 			<code>15355</code>
+			<se>true</se>
 			<Bundle sr="arg0">
 				<Vals sr="val">
 					<ActionTimeout>&lt;null&gt;</ActionTimeout>
@@ -196,10 +200,10 @@
 			<Str sr="arg2" ve="3">com.joaomgcd.autoinput.activity.ActivityConfigUIQuery</Str>
 			<Int sr="arg3" val="10" />
 			<Int sr="arg4" val="1" />
-			<se>true</se>
 		</Action>
-		<Action ve="7" sr="act19">
+		<Action sr="act19" ve="7">
 			<code>37</code>
+			<coll>false</coll>
 			<ConditionList sr="if">
 				<Condition sr="c0" ve="3">
 					<lhs>%err</lhs>
@@ -249,11 +253,12 @@
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action ve="7" sr="act24">
+		<Action sr="act24" ve="7">
 			<code>38</code>
 		</Action>
-		<Action ve="7" sr="act25">
+		<Action sr="act25" ve="7">
 			<code>37</code>
+			<coll>false</coll>
 			<ConditionList sr="if">
 				<Condition sr="c0" ve="3">
 					<lhs>%aipackage</lhs>
@@ -303,11 +308,12 @@
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action ve="7" sr="act30">
+		<Action sr="act30" ve="7">
 			<code>38</code>
 		</Action>
 		<Action sr="act31" ve="7">
 			<code>107361459</code>
+			<se>true</se>
 			<Bundle sr="arg0">
 				<Vals sr="val">
 					<EnableDisableAccessibilityService>&lt;null&gt;</EnableDisableAccessibilityService>
@@ -348,10 +354,10 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Str sr="arg2" ve="3">com.joaomgcd.autoinput.activity.ActivityConfigActionv2</Str>
 			<Int sr="arg3" val="60" />
 			<Int sr="arg4" val="1" />
-			<se>true</se>
 		</Action>
-		<Action ve="7" sr="act32">
+		<Action sr="act32" ve="7">
 			<code>37</code>
+			<coll>false</coll>
 			<ConditionList sr="if">
 				<Condition sr="c0" ve="3">
 					<lhs>%err</lhs>
@@ -401,7 +407,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action ve="7" sr="act37">
+		<Action sr="act37" ve="7">
 			<code>38</code>
 		</Action>
 		<Action sr="act38" ve="7">
@@ -430,6 +436,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 		</Action>
 		<Action sr="act40" ve="7">
 			<code>37</code>
+			<coll>false</coll>
 			<ConditionList sr="if">
 				<Condition sr="c0" ve="3">
 					<lhs>%SIG_Level</lhs>
@@ -440,6 +447,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 		</Action>
 		<Action sr="act41" ve="7">
 			<code>37</code>
+			<coll>false</coll>
 			<ConditionList sr="if">
 				<Condition sr="c0" ve="3">
 					<lhs>%par1</lhs>
@@ -503,6 +511,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 		</Action>
 		<Action sr="act48" ve="7">
 			<code>37</code>
+			<coll>false</coll>
 			<ConditionList sr="if">
 				<Condition sr="c0" ve="3">
 					<lhs>%requested_target</lhs>
@@ -526,6 +535,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 		</Action>
 		<Action sr="act51" ve="7">
 			<code>37</code>
+			<coll>false</coll>
 			<ConditionList sr="if">
 				<Condition sr="c0" ve="3">
 					<lhs>%requested_target</lhs>
@@ -549,6 +559,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 		</Action>
 		<Action sr="act54" ve="7">
 			<code>37</code>
+			<coll>false</coll>
 			<ConditionList sr="if">
 				<Condition sr="c0" ve="3">
 					<lhs>%requested_target</lhs>
@@ -669,6 +680,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 		</Action>
 		<Action sr="act67" ve="7">
 			<code>37</code>
+			<coll>false</coll>
 			<ConditionList sr="if">
 				<Condition sr="c0" ve="3">
 					<lhs>%SIG_VolumeOK</lhs>
@@ -679,6 +691,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 		</Action>
 		<Action sr="act68" ve="7">
 			<code>37</code>
+			<coll>false</coll>
 			<ConditionList sr="if">
 				<Condition sr="c0" ve="3">
 					<lhs>%par1</lhs>
@@ -769,8 +782,9 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action ve="7" sr="act78">
+		<Action sr="act78" ve="7">
 			<code>37</code>
+			<coll>false</coll>
 			<ConditionList sr="if">
 				<Condition sr="c0" ve="3">
 					<lhs>%SIG_Level</lhs>
@@ -820,7 +834,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action ve="7" sr="act83">
+		<Action sr="act83" ve="7">
 			<code>38</code>
 		</Action>
 		<Action sr="act84" ve="7">
