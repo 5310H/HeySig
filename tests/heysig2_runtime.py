@@ -36,12 +36,21 @@ class Phone:
         def test(a):
             c = a.find('./ConditionList/Condition'); lhs, rhs = expand(c.findtext('lhs')), expand(c.findtext('rhs'))
             op = int(c.findtext('op'))
-            if op == 2: return lhs == rhs
+            if op in (2, 3):
+                # Tasker's simple Matches treats slash as OR, not a literal.
+                negate = rhs.startswith('!')
+                pattern = rhs[1:] if negate else rhs
+                flags = 0 if any(c.isupper() for c in pattern) else re.I
+                matched = not pattern or any(re.fullmatch(re.escape(part).replace(r'\*', '.*').replace(r'\+', '.+'), lhs, flags) for part in pattern.split('/'))
+                matched = not matched if negate else matched
+                return matched if op == 2 else not matched
             if op in (12, 13):
                 is_set = bool(lhs) and lhs != c.findtext('lhs')
                 return is_set if op == 12 else not is_set
-            if op == 3: return lhs != rhs
-            if op in (4, 5): return bool(re.search(rhs, lhs)) == (op == 4)
+            if op in (4, 5):
+                # Translate Java Pattern.quote sections for Python's regex engine.
+                rhs = re.sub(r'\\Q(.*?)\\E', lambda m: re.escape(m[1]), rhs)
+                return bool(re.search(rhs, lhs)) == (op == 4)
             if op == 6: return float(lhs) < float(rhs)
             if op == 7: return float(lhs) > float(rhs)
             if op == 8: return float(lhs) == float(rhs)

@@ -151,7 +151,7 @@ current += [action(38), setvar('%sig2_count', 0),
             setvar('%sig2_point', '%aicoordinates(%sig2_i)'),
             condition('%sig2_point', 4, r'^[0-9]+,[0-9]+$'), split('%sig2_point'),
             setvar('%sig2_selected', 0),
-            condition('%sig2_mode', 2, 'id'), condition('%aiid(%sig2_i)', 2, '%SIG2_KnobId'),
+            condition('%sig2_mode', 2, 'id'), condition('%aiid(%sig2_i)', 4, r'^\Q%SIG2_KnobId\E$'),
             setvar('%sig2_selected', 1), action(38), action(43), setvar('%sig2_selected', 1)]
 for lhs, op, rhs in [('%sig2_point1', 6, '%SIG2_KnobXMin'), ('%sig2_point1', 7, '%SIG2_KnobXMax'),
                      ('%sig2_point2', 6, '%SIG2_KnobYMin'), ('%sig2_point2', 7, '%SIG2_KnobYMax')]:

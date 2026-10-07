@@ -25,8 +25,10 @@ publishes that same element's coordinates. It never excludes 0 or 15 by value.
 A matching ID or spatial region must identify exactly one numeric element.
 Two endpoint labels alone cannot establish current volume.
 
-**The selector requires phone calibration.** No actual knob ID or bounds were
-provided by the real-device test. There is no fabricated device-specific
+**The selector requires phone calibration.** The current-value resource ID
+confirmed on the phone is `com.signia.rta:id/TA-SliderValue`; a volume-7
+capture reports its center as `541,1701`. Set `%SIG2_KnobId` to that exact
+ID. Coordinates are read afresh from the aligned query, never hardcoded. There is no fabricated device-specific
 coordinate or guessed default. Before calibration Current reports failure and
 Up/Down makes no volume gesture. The included mock geometry is test data,
 not a claim about Signia's actual layout.
@@ -117,3 +119,29 @@ tests all 16 levels in both selector modes, duplicate endpoints, reordered
 arrays, missing/invalid/ambiguous data, plugin errors, retry exhaustion, and
 overshoot. `tests/validate_tasker_xml.py` supplies broader static checks.
 Neither checker implements Android Tasker's importer or executes AutoInput.
+
+## Resource-ID matching repair
+
+The captured `7 | com.signia.rta:id/TA-SliderValue | 541,1701` exposed an
+operator bug rather than an array-index mismatch. Tasker's simple Matches
+operator treats `/` as OR, so comparing the ID with that operator did not
+match the complete resource ID. Current now uses Matches Regex (op 4) with
+`^\Q%SIG2_KnobId\E$`, quoting the ID literally and anchoring the full match.
+See [Tasker's pattern matching rules](https://tasker.joaoapps.com/userguide/en/matching.html).
+
+The same `%sig2_i` index still reads text, ID, and coordinates. Array length
+checks, numeric validation, duplicate-selection rejection, and region mode
+remain intact. No guessed coordinate is used. The previous simulator treated
+simple Matches as equality and missed the slash behavior; it now models
+Tasker's simple matching and Java quoted regex patterns. Regression checks
+reproduce the old selector failure and verify the captured level 7 and center
+541,1701, all array-order permutations, duplicate endpoint values 0 and 15,
+and literal/partial-ID rejection. Other levels and endpoint coordinates in the
+fixtures are synthetic; the real-device capture establishes level 7 only.
+
+Reimport the updated Current task or HeySig2 project, preserve the configured
+KnobId, and run Current on the captured screen. Expect `%SIG2_Level=7`,
+`%SIG2_VolumeX=541`, `%SIG2_VolumeY=1701`, and `%SIG2_VolumeOK=1`. Then
+repeat real-device Current at 0 and 15 before proceeding to movement tests.
+Up/Down continue to consume Current's selected coordinates; their exports
+require no action changes.

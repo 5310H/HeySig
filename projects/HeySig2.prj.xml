@@ -1059,8 +1059,8 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<ConditionList sr="if">
 				<Condition sr="c0" ve="3">
 					<lhs>%aiid(%sig2_i)</lhs>
-					<op>2</op>
-					<rhs>%SIG2_KnobId</rhs>
+					<op>4</op>
+					<rhs>^\Q%SIG2_KnobId\E$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
