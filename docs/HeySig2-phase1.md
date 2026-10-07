@@ -90,7 +90,7 @@ The selector, index alignment, and literal ID comparison are unchanged.
 
 1. Import on Tasker 6.6.20 with HeySig still present. Confirm HeySig2 and all
    four SIG2_ tasks appear, with their complete final actions. Expected counts:
-   AppLaunch 19, Current 139, Up 69, Down 76. Confirm no existing SIG_ task is
+   AppLaunch 19, Current 139, Up 81, Down 76. Confirm no existing SIG_ task is
    replaced. Re-export HeySig2 from the phone and compare action/control-flow
    structure if Tasker reports any import problem.
 2. Verify installed AutoInput configuration activities and accessibility
@@ -164,7 +164,8 @@ Up returned unchanged level 8, VolumeOK=0, and an empty error. The new Up remove
 the escalating swipe loop and records a measured 40 px upward gesture. Generated
 AutoInput tap uses `click(point,%SIG2_VolumeX\,%SIG2_VolumeY)`; the escaped comma
 keeps x,y together as the point argument. Gesture Type remains Swipe (0), with
-`initialPoint` and `endPoint` JSON, duration 300, variable replacement of
+`initialPoint="%sig2_x,%sig2_y"` and `endPoint="%sig2_x,%sig2_end_y"`
+JSON values, duration 300, variable replacement of
 `parameters`, matching plugin activities, and Continue After Error enabled.
 Tests now inspect the expanded plugin JSON, rather than inferring motion solely
 from Tasker math variables. Correct settings still require phone execution.
@@ -178,3 +179,55 @@ identify their stage even if the action halts before its error guard. A failed
 post-gesture query must retain its pending diagnostic. The mock confirms generated
 coordinates/configuration and error propagation; movement to level 9 still needs
 real-device confirmation. No old HeySig project/task was modified.
+
+## AutoInput gesture-format repair after c0cb180
+
+The phone reached MoveStage=gesture with correct start/end coordinates but the
+plugin did not complete. Inspection of **AutoInput 3.0.12 (version code 104)**
+installed on the available emulator establishes the input syntax:
+`OutputProviderSwipe.getGestureDescription` passes each point string to
+`OutputProviderGestures.Point(String)`. That constructor splits on a comma,
+requires exactly two components, and parses both as coordinates. Invalid points
+cause the swipe provider to raise `Points are invalid`. The generated c0cb180
+payload instead contained display-summary text such as
+`Start X: 541\nStart Y: 1661`, with no comma. It cannot pass this parser.
+The human-readable BLURB is separate and must not be used as the point input.
+
+Up now supplies raw comma pairs: initialPoint `541,1661`, endPoint `541,1621`
+after Tasker variable substitution. GestureType=0 maps to Swipe in the installed
+enum; duration remains 300 ms, timeout 10 seconds, Continue After Error enabled,
+JSON_ENCODED_KEYS includes parameters, and VARIABLE_REPLACE_KEYS includes
+parameters. The configuration activity remains ActivityConfigGestures and the
+plugin type remains IntentGestures. Distance stays **40 px**. Current and Down
+exports and the old HeySig project/tasks are unchanged by this repair. Down's
+legacy gesture format is outside this Up fix and is not certified by these tests.
+
+Immediately after the tap and gesture actions, before guards/waits/readback,
+Up copies the plugin-local native values into persistent globals:
+
+- `%SIG2_TapErr` and `%SIG2_TapErrMsg` for the tap.
+- `%SIG2_GestureErr` and `%SIG2_GestureErrMsg` for the swipe.
+
+They reset to `not run` for a new Up request. Before each plugin they become
+`not returned (action halted)` so a halt before the capture is distinguishable
+from an actual native error. If a plugin returns without supplying an error
+variable, Tasker's unresolved `%err`/`%errmsg` strings may appear in the raw
+snapshots; they are not invented native errors. Failure messages use the captured
+values. Subsequent Current queries cannot erase these separate snapshots.
+The pending stage error remains when no plugin result is returned; no code can
+capture a native result which AutoInput never delivers.
+
+Reimport Up (81 actions) or HeySig2, keep the working KnobId, and retry once at
+level 8. Expect the same 541,1661→541,1621 payload and readback 9 if the plugin
+executes successfully. If it still fails, send the MoveStage, Gesture, Error,
+GestureErr, GestureErrMsg, TapErr, and TapErrMsg globals plus the AutoInput log.
+The captured phone failure did not include a native plugin message, so the parser
+mismatch is established but the phone's exact native error remains unobserved.
+
+Inspection provenance: APK SHA-256
+`4f33f46c2a8b4ff7b4e7c54a93b0ae63fdfcc09f5b1654b185e2f6d2e4295b05`.
+The APK and disassembly stayed in /tmp; no APK or proprietary code is committed.
+Regression tests reject display-label point inputs, verify expanded comma-pair
+payloads and unchanged distance, check immediate capture placement, and exercise
+native failure snapshots and interrupted-action diagnostics. These checks do not
+execute gestures against Signia on the emulator.

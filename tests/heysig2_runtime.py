@@ -121,7 +121,17 @@ class Phone:
             elif code == 778682267:
                 params = json.loads(a.findtext('Bundle/Vals/parameters'))
                 self.gestures.append((expand(params['initialPoint']), expand(params['endPoint']), expand(params['duration'])))
-                assert self.gestures[-1] == (f"Start X: {get('sig2_x')}\nStart Y: {get('sig2_y')}", f"End X: {get('sig2_x')}\nEnd Y: {get('sig2_end_y')}", '300')
+                if name == 'SIG2_VolumeUp':
+                    if any(not re.fullmatch(r'[0-9]+,[0-9]+', point) for point in self.gestures[-1][:2]):
+                        local['err'], local['errmsg'] = '1', 'Points are invalid'
+                        pc += 1; continue
+                    assert self.gestures[-1] == (f"{get('sig2_x')},{get('sig2_y')}", f"{get('sig2_x')},{get('sig2_end_y')}", '300')
+                    # Mirror installed Point(String): exactly two comma-separated integers.
+                    for point in self.gestures[-1][:2]:
+                        assert len(point.split(',')) == 2
+                        tuple(int(part) for part in point.split(','))
+                else:
+                    assert self.gestures[-1] == (f"Start X: {get('sig2_x')}\nStart Y: {get('sig2_y')}", f"End X: {get('sig2_x')}\nEnd Y: {get('sig2_end_y')}", '300')
                 distance = float(get('sig2_y')) - float(get('sig2_end_y'))
                 self.drags.append(distance)
                 if abs(distance) >= self.threshold: self.level = max(self.bounds[0], min(self.bounds[1], self.level + (self.jump if distance > 0 else -self.jump)))

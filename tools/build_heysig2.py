@@ -90,6 +90,9 @@ def plugin(code, command=None):
             else:
                 params.update(initialPoint='Start X: %sig2_x\nStart Y: %sig2_y',
                               endPoint='End X: %sig2_x\nEnd Y: %sig2_end_y', duration='300')
+                if command == 'swipe_up':
+                    # Installed AutoInput Point(String) splits two numbers on ','.
+                    params.update(initialPoint='%sig2_x,%sig2_y', endPoint='%sig2_x,%sig2_end_y')
                 vals.find('com.twofortyfouram.locale.intent.extra.BLURB').text = 'Swipe from %sig2_x,%sig2_y to %sig2_x,%sig2_end_y (300 ms)'
             vals.find('parameters').text = json.dumps(params, separators=(',', ':'))
     se = a.find('se')
@@ -172,7 +175,9 @@ def move_up():
     def pending(stage, message):
         return [setvar('%SIG2_VolumeOK', 0), setvar('%SIG2_MoveStage', stage),
                 setvar('%SIG2_Error', message)]
-    aa = [call('SIG2_VolumeCurrent'),
+    aa = [setvar('%SIG2_TapErr', 'not run'), setvar('%SIG2_TapErrMsg', 'not run'),
+          setvar('%SIG2_GestureErr', 'not run'), setvar('%SIG2_GestureErrMsg', 'not run'),
+          call('SIG2_VolumeCurrent'),
           *guard('%SIG2_VolumeOK', 3, 1, 'VolumeUp initial readback failed: %SIG2_Error'),
           setvar('%sig2_start', '%SIG2_Level'),
           condition('%sig2_start', 8, 15), setvar('%SIG2_MoveStage', 'upper-boundary'), stop(), action(38),
@@ -183,12 +188,16 @@ def move_up():
           setvar('%SIG2_Gesture', 'tap %sig2_x,%sig2_y; swipe %sig2_x,%sig2_y -> %sig2_x,%sig2_end_y; 40 px up; 300 ms'),
           *guard('%sig2_end_y', 6, 0, 'VolumeUp endpoint above screen: %SIG2_Gesture'),
           *pending('tap', 'VolumeUp AutoInput tap did not complete: %SIG2_Gesture'),
+          setvar('%SIG2_TapErr', 'not returned (action halted)'), setvar('%SIG2_TapErrMsg', 'not returned (action halted)'),
           plugin(107361459, r'click(point,%SIG2_VolumeX\,%SIG2_VolumeY)'),
-          *guard('%err', 12, '', 'VolumeUp AutoInput tap failed: code=%err message=%errmsg; %SIG2_Gesture'),
+          setvar('%SIG2_TapErr', '%err'), setvar('%SIG2_TapErrMsg', '%errmsg'),
+          *guard('%err', 12, '', 'VolumeUp AutoInput tap failed: code=%SIG2_TapErr message=%SIG2_TapErrMsg; %SIG2_Gesture'),
           wait(100),
           *pending('gesture', 'VolumeUp AutoInput gesture did not complete: %SIG2_Gesture'),
-          plugin(778682267, 'swipe'),
-          *guard('%err', 12, '', 'VolumeUp AutoInput gesture failed: code=%err message=%errmsg; %SIG2_Gesture'),
+          setvar('%SIG2_GestureErr', 'not returned (action halted)'), setvar('%SIG2_GestureErrMsg', 'not returned (action halted)'),
+          plugin(778682267, 'swipe_up'),
+          setvar('%SIG2_GestureErr', '%err'), setvar('%SIG2_GestureErrMsg', '%errmsg'),
+          *guard('%err', 12, '', 'VolumeUp AutoInput gesture failed: code=%SIG2_GestureErr message=%SIG2_GestureErrMsg; %SIG2_Gesture'),
           wait(),
           *pending('readback', 'VolumeUp post-gesture query did not complete: %SIG2_Gesture'),
           call('SIG2_VolumeCurrent', 'query_only'),

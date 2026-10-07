@@ -143,7 +143,7 @@ p.run('SIG2_VolumeUp')
 assert p.level == 9 and p.globals['SIG2_VolumeOK'] == '1'
 assert p.globals['SIG2_VolumeX'] == '541' and p.globals['SIG2_VolumeY'] == '1621'
 assert p.drags == [40] and p.taps == ['541,1661']
-assert p.gestures == [('Start X: 541\nStart Y: 1661', 'End X: 541\nEnd Y: 1621', '300')]
+assert p.gestures == [('541,1661', '541,1621', '300')]
 assert p.globals['SIG2_Error'] == '' and p.globals['SIG2_MoveStage'] == 'complete'
 for stage in ('number', 'gesture', 'halt_number', 'halt_gesture'):
     p = phone(8, 'id', fail_stage=stage); p.run('SIG2_VolumeUp')
@@ -168,3 +168,64 @@ for stage in ('launch', 'query', 'tab', 'number', 'gesture'):
     p = phone(8, 'id', fail_stage=stage); p.run('SIG2_VolumeUp')
     assert p.globals['SIG2_VolumeOK'] == '0' and p.globals['SIG2_Error'].strip(), (stage,p.globals)
 print('Passed: post-gesture query halt retains a useful error; every injected Up failure leaves a diagnostic.')
+
+for stage, prefix in [('number', 'Tap'), ('gesture', 'Gesture')]:
+    p = phone(8, 'id', fail_stage=stage); p.run('SIG2_VolumeUp')
+    assert p.globals[f'SIG2_{prefix}Err'] == '1'
+    assert p.globals[f'SIG2_{prefix}ErrMsg'] == 'Injected plugin failure'
+    assert 'code=1 message=Injected plugin failure' in p.globals['SIG2_Error']
+for stage, prefix in [('halt_number', 'Tap'), ('halt_gesture', 'Gesture')]:
+    p = phone(8, 'id', fail_stage=stage); p.run('SIG2_VolumeUp')
+    assert p.globals[f'SIG2_{prefix}Err'] == 'not returned (action halted)'
+
+# Each raw error pair is copied immediately after its plugin, ahead of guards.
+aa = TASKS['SIG2_VolumeUp'].findall('Action')
+for i,a in enumerate(aa):
+    if a.findtext('code') == '778682267': prefix='Gesture'
+    elif a.findtext('code') == '107361459': prefix='Tap'
+    else: continue
+    assert aa[i+1].findtext("Str[@sr='arg0']") == f'%SIG2_{prefix}Err'
+    assert aa[i+1].findtext("Str[@sr='arg1']") == '%err'
+    assert aa[i+2].findtext("Str[@sr='arg0']") == f'%SIG2_{prefix}ErrMsg'
+    assert aa[i+2].findtext("Str[@sr='arg1']") == '%errmsg'
+
+# Legacy display summaries are invalid inputs to the installed point parser.
+for bad_point in ('Start X: 541\nStart Y: 1661', 'End X: 541\nEnd Y: 1621'):
+    assert len(bad_point.split(',')) != 2
+print('Passed: installed AutoInput comma-pair point format, display-label rejection, immediate native error snapshots and halted-action diagnostics.')
+
+for a in TASKS['SIG2_VolumeUp'].findall('Action'):
+    if a.findtext('code') != '778682267': continue
+    vals = a.find('Bundle/Vals')
+    assert a.findtext('se') == 'true'
+    assert a.find("Int[@sr='arg3']").get('val') == '10'
+    assert vals.findtext('GestureType') == '0'
+    assert vals.findtext('plugintypeid') == 'com.joaomgcd.autoinput.intent.IntentGestures'
+    assert a.findtext("Str[@sr='arg2']") == 'com.joaomgcd.autoinput.activity.ActivityConfigGestures'
+    assert 'parameters' in vals.findtext('net.dinglisch.android.tasker.JSON_ENCODED_KEYS').split()
+    assert 'parameters' in vals.findtext('net.dinglisch.android.tasker.extras.VARIABLE_REPLACE_KEYS').split()
+    params = json.loads(vals.findtext('parameters'))
+    assert params['initialPoint'] == '%sig2_x,%sig2_y'
+    assert params['endPoint'] == '%sig2_x,%sig2_end_y'
+    assert params['duration'] == '300'
+p = phone(8, 'id', fail_stage='gesture'); p.run('SIG2_VolumeUp')
+p.fail_stage = None; p.run('SIG2_VolumeCurrent', 'query_only')
+assert p.globals['SIG2_GestureErr'] == '1' and p.globals['SIG2_GestureErrMsg'] == 'Injected plugin failure'
+print('Passed: Swipe/timeout/continuation/replacement configuration; native snapshots survive subsequent queries.')
+
+original_up = TASKS['SIG2_VolumeUp']
+broken_up = deepcopy(original_up)
+a = next(a for a in broken_up.findall('Action') if a.findtext('code') == '778682267')
+params = json.loads(a.findtext('Bundle/Vals/parameters'))
+params.update(initialPoint='Start X: %sig2_x\nStart Y: %sig2_y',
+              endPoint='End X: %sig2_x\nEnd Y: %sig2_end_y')
+a.find('Bundle/Vals/parameters').text = json.dumps(params)
+try:
+    TASKS['SIG2_VolumeUp'] = broken_up
+    p = phone(8, 'id'); p.run('SIG2_VolumeUp')
+    assert p.level == 8 and not p.drags
+    assert p.globals['SIG2_GestureErrMsg'] == 'Points are invalid'
+    assert 'Points are invalid' in p.globals['SIG2_Error']
+finally:
+    TASKS['SIG2_VolumeUp'] = original_up
+print('Passed: old display-summary payload fails installed-parser model and retains Points are invalid as the native diagnostic.')
