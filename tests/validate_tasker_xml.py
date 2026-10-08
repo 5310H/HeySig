@@ -23,6 +23,7 @@ required = {
     39: {'arg0': 'Str', 'arg1': 'Str', 'arg2': 'Int'},
     130: {'arg0': 'Str', 'arg1': 'Int', 'arg2': 'Str', 'arg3': 'Str'},
     137: {'arg0': 'Int', 'arg1': 'Str'},
+    474: {'arg0': 'Str', 'arg1': 'Str', 'arg2': 'Int'},
     547: {'arg0': 'Str', 'arg1': 'Str', **{f'arg{i}': 'Int' for i in range(2, 7)}},
     548: {'arg0': 'Str', 'arg1': 'Int'},
     590: {'arg0': 'Str', 'arg1': 'Str'},

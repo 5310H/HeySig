@@ -69,14 +69,22 @@ class Phone:
             if code == 38:
                 if_stack.pop(); pc += 1; continue
             if not all(if_stack): pc += 1; continue
-            if code in (20, 15355, 107361459, 778682267):
+            if code in (20, 15355, 107361459, 778682267, 474):
                 local.pop('err', None)
-                stage = {20: 'launch', 15355: 'query', 778682267: 'gesture'}.get(code)
+                stage = {20: 'launch', 15355: 'query', 778682267: 'gesture', 474: 'gesture'}.get(code)
                 if code == 107361459:
                     params = a.findtext('./Bundle/Vals/parameters', '')
                     stage = 'tab' if 'Tab)' in params else 'number'
                 if self.fail_stage == 'halt_' + str(stage):
                     return  # Emulate a plugin/Tasker halt before its error guard.
+                if code == 474 and self.fail_stage in ('missing_service', 'hold_rejected', 'hold_cancelled', 'hold_timeout', 'move_rejected', 'move_cancelled', 'move_timeout'):
+                    phase = 'down-hold' if self.fail_stage.startswith('hold_') else 'move-up'
+                    reasons = {'missing_service': 'Enable Tasker in Android Settings > Accessibility > Installed apps',
+                               'rejected': 'dispatchGesture rejected', 'cancelled': 'Android cancelled gesture',
+                               'timeout': 'completion timed out after 3000 ms'}
+                    reason = reasons['missing_service'] if self.fail_stage == 'missing_service' else phase + ': ' + reasons[self.fail_stage.split('_')[1]]
+                    local['err'], local['errmsg'] = '1', reason
+                    pc += 1; continue
                 if stage == self.fail_stage:
                     assert a.findtext('se') == 'true'
                     local['err'], local['errmsg'] = '1', 'Injected plugin failure'
@@ -118,6 +126,16 @@ class Phone:
                     if value in self.programs: self.program = value
                     elif '%requested_program' in a.findtext('./Bundle/Vals/parameters'):
                         local['err'], local['errmsg'] = '1', 'Program not found'
+            elif code == 474:
+                # Model the touch result; Android/BeanShell execution is a separate check.
+                script = arg(a, 0)
+                assert 'holdStroke.continueStroke(movePath, 0, 300, false)' in script
+                self.gestures.append((f"{get('sig2_x')},{get('sig2_y')}", f"{get('sig2_x')},{get('sig2_end_y')}", '200+300'))
+                distance = float(get('sig2_y')) - float(get('sig2_end_y'))
+                assert distance == 40
+                self.drags.append(distance)
+                put('SIG2_TouchStage', 'released')
+                if abs(distance) >= self.threshold: self.level = max(self.bounds[0], min(self.bounds[1], self.level + self.jump))
             elif code == 778682267:
                 params = json.loads(a.findtext('Bundle/Vals/parameters'))
                 self.gestures.append((expand(params['initialPoint']), expand(params['endPoint']), expand(params['duration'])))

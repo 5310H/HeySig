@@ -264,34 +264,50 @@ Returned=0 persists, export the gesture action directly from the phone's Tasker
 and retain the AutoInput log; that exact phone-generated bundle is necessary
 to resolve the remaining Tasker/plugin handoff discrepancy.
 
-## Continuous-drag mechanics test
+## DOWN-HOLD-MOVE-UP using installed Tasker
 
-Real-device geometry now confirms level 0 Y=1982, 7 Y=1701, 9 Y=1621,
-10 Y=1581, and 15 Y=1380: approximately 40 px per level. The phone reports
-that the separate tap and swipe both return successfully but leave the slider
-unchanged. This revision changes only Up's touch mechanics, not its selector,
-start coordinates, upward direction, or travel distance.
+The 600 ms AutoInput Swipe returned successfully but Signia ignored it.
+Up now uses **Tasker Java Code**, action 474, to access Tasker's own
+accessibility service. No helper APK, root, ADB WiFi, or separate tap is used.
+Enable **Tasker** under Android Settings → Accessibility → Installed apps
+(the setting name varies by phone). AutoInput accessibility alone is insufficient.
+Android 8 or later is required.
 
-Up now dispatches exactly one AutoInput Swipe stroke directly from the current
-knob center, with **no preliminary tap**. Duration is 600 ms, travel remains
-40 px. A stroke holds one pointer down throughout movement and releases at
-its end. Inspection of AutoInput 3.0.12's Swipe provider finds no stationary
-hold-before-movement parameter. Increasing duration slows movement; it does
-not create a true initial hold. No separate long press or fake zero-length
-path segment is used to claim touch continuity or a timed hold.
+The implementation is embedded in Up's XML from `tools/sig2_hold_drag.java`:
 
-Import Up (75 actions) or HeySig2 and test 8→9 once. Expected payload:
-continuous drag 541,1661→541,1621, 40 px up, 600 ms. Confirm the knob actually
-moves and Current verifies 9. Unchanged/overshoot checks and native gesture
-snapshots remain. Tap diagnostics explicitly say `not used: continuous drag`.
-If unchanged persists, record GestureReturned, GestureErr, GestureErrMsg, Error,
-and observed touch behavior. A true timed stationary hold would require a
-validated continuation-capable gesture mechanism; it is not implemented by
-this AutoInput Swipe configuration. The new mechanics remain a phone-test
-hypothesis; static simulations cannot establish Signia's touch response.
+1. A stationary `StrokeDescription(path, 0, 200, true)` presses the exact
+   queried knob and holds it for 200 ms. `willContinue=true` prevents UP.
+2. After Android reports that segment complete, `holdStroke.continueStroke`
+   continues **the same pointer**, from the same coordinates, 40 px upward
+   over 300 ms. `willContinue=false` sends UP at the final point.
+3. After release, the existing readback must report old level + 1. A returned
+   gesture alone does not count as success.
 
-Current, AppLaunch, Down, and old HeySig remain unchanged. Tests verify no tap
-action in Up, one stroke with the queried start point and a 40 px endpoint,
-600 ms duration, success at exactly one level, endpoint no-op, native error
-preservation, unchanged/overshoot failures, and standalone/project parity.
-Earlier repair sections above record historical configurations.
+`%SIG2_Gesture` explicitly reports DOWN-HOLD-MOVE-UP, Tasker accessibility
+continued stroke, coordinates, 200 ms hold, and 300 ms move.
+`%SIG2_TouchStage` reports `down-hold`, `move-up`, or `released`.
+Android rejection, cancellation, missing accessibility service, and a 3-second
+callback timeout raise Tasker errors. `%err`/`%errmsg` are copied immediately
+into `%SIG2_GestureErr`/`%SIG2_GestureErrMsg`; pending/halted diagnostics and
+unchanged/overshoot verification remain. Failure attempts to release a held
+pointer with a final continuation stroke.
+
+The action schema was captured from a native Tasker **6.6.20** Java Code
+export: Str arg0 Code, Str arg1 Return, Int arg2=1. The installed APK also
+confirms `getAccessibilityService`, `implementClass`, and the service's
+`canPerformGestures=true`. Static tests and simulated control-flow tests
+cannot prove BeanShell callback execution or Signia's response on the phone.
+The gesture has not yet been verified in Signia; review this mechanism before
+importing.
+
+Before Phase 2, enable Tasker's accessibility service, then import Up or the
+updated project. At level 9, test once: DOWN at (541,1621), HOLD 200 ms,
+MOVE to (541,1581) over 300 ms, UP. Require level=10, VolumeOK=1,
+MoveStage=complete, TouchStage=released, and empty Error. Then test another
+adjacent level and the level-15 no-op. Record Gesture, TouchStage,
+GestureReturned, GestureErr, GestureErrMsg, MoveStage, Error, and final level
+for any failure. Do not change the 40 px distance to work around an execution
+failure. Current, AppLaunch, Down, and all old HeySig exports remain unchanged.
+
+References: [Tasker Java Code](https://tasker.joaoapps.com/userguide/en/help/ah_java_code.html)
+and [Android stroke continuation](https://developer.android.com/reference/android/accessibilityservice/GestureDescription.StrokeDescription#continueStroke(android.graphics.Path,%20long,%20long,%20boolean)).

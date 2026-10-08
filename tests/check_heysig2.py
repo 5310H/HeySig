@@ -144,7 +144,7 @@ p.run('SIG2_VolumeUp')
 assert p.level == 9 and p.globals['SIG2_VolumeOK'] == '1'
 assert p.globals['SIG2_VolumeX'] == '541' and p.globals['SIG2_VolumeY'] == '1621'
 assert p.drags == [40] and not p.taps
-assert p.gestures == [('541,1661', '541,1621', '600')]
+assert p.gestures == [('541,1661', '541,1621', '200+300')]
 assert p.globals['SIG2_Error'] == '' and p.globals['SIG2_MoveStage'] == 'complete'
 for stage in ('gesture', 'halt_gesture'):
     p = phone(8, 'id', fail_stage=stage); p.run('SIG2_VolumeUp')
@@ -154,7 +154,7 @@ for opts, fragment in [(dict(threshold=1000), 'unchanged'), (dict(jump=2), 'unex
     p = phone(8, 'id', **opts); p.run('SIG2_VolumeUp')
     assert p.globals['SIG2_VolumeOK'] == '0' and fragment in p.globals['SIG2_Error'], p.globals
     assert len(p.drags) == 1
-print('Passed: actual gesture payload 541,1661 -> 541,1621, 40 px up, 600 ms; gesture failures, halted actions, unchanged and overshoot diagnostics.')
+print('Passed: simulated gesture payload 541,1661 -> 541,1621, 40 px up, 200 ms hold + 300 ms move; gesture failures, halted actions, unchanged and overshoot diagnostics.')
 
 class FailedPostQuery(Phone):
     def run(self, name, param='', param2=''):
@@ -182,7 +182,7 @@ for stage, prefix in [('halt_gesture', 'Gesture')]:
 # Each raw error pair is copied immediately after its plugin, ahead of guards.
 aa = TASKS['SIG2_VolumeUp'].findall('Action')
 for i,a in enumerate(aa):
-    if a.findtext('code') == '778682267': prefix='Gesture'
+    if a.findtext('code') == '474': prefix='Gesture'
     elif a.findtext('code') == '107361459': prefix='Tap'
     else: continue
     assert aa[i+1].findtext("Str[@sr='arg0']") == f'%SIG2_{prefix}Err'
@@ -195,46 +195,24 @@ for bad_point in ('Start X: 541\nStart Y: 1661', 'End X: 541\nEnd Y: 1621'):
     assert len(bad_point.split(',')) != 2
 print('Passed: installed AutoInput comma-pair point format, display-label rejection, immediate native error snapshots and halted-action diagnostics.')
 
-for a in TASKS['SIG2_VolumeUp'].findall('Action'):
-    if a.findtext('code') != '778682267': continue
-    vals = a.find('Bundle/Vals')
-    assert a.findtext('se') == 'true'
-    assert a.find("Int[@sr='arg3']").get('val') == '10'
-    assert vals.findtext('GestureType') == '0'
-    assert vals.findtext('plugintypeid') == 'com.joaomgcd.autoinput.intent.IntentGestures'
-    assert a.findtext("Str[@sr='arg2']") == 'com.joaomgcd.autoinput.activity.ActivityConfigGestures'
-    assert 'parameters' in vals.findtext('net.dinglisch.android.tasker.JSON_ENCODED_KEYS').split()
-    assert 'parameters' in vals.findtext('net.dinglisch.android.tasker.extras.VARIABLE_REPLACE_KEYS').split()
-    params = json.loads(vals.findtext('parameters'))
-    assert params['initialPoint'] == '%sig2_x,%sig2_y'
-    assert params['endPoint'] == '%sig2_x,%sig2_end_y'
-    assert params['duration'] == '600'
+java_action = next(a for a in TASKS['SIG2_VolumeUp'].findall('Action') if a.findtext('code') == '474')
+assert java_action.findtext('se') == 'true'
+assert [(e.tag, e.get('sr')) for e in java_action if e.tag in ('Str', 'Int')] == [('Str', 'arg0'), ('Str', 'arg1'), ('Int', 'arg2')]
+assert java_action.find("Int[@sr='arg2']").get('val') == '1'
+script = java_action.findtext("Str[@sr='arg0']")
+assert script == (ROOT / 'tools/sig2_hold_drag.java').read_text()
+for required in ('tasker.getAccessibilityService()', 'StrokeDescription(holdPath, 0, 200, true)',
+                 'holdStroke.continueStroke(movePath, 0, 300, false)', 'movePath.moveTo(x, y)',
+                 'movePath.lineTo(x, endY)', 'onCompleted', 'onCancelled',
+                 'signal.await(3, TimeUnit.SECONDS)', 'dispatchGesture rejected',
+                 'finally', 'holdStroke.continueStroke(holdPath, 0, 1, false)'):
+    assert required in script, required
+assert all(a.findtext('code') != '778682267' for a in TASKS['SIG2_VolumeUp'].findall('Action'))
 p = phone(8, 'id', fail_stage='gesture'); p.run('SIG2_VolumeUp')
 p.fail_stage = None; p.run('SIG2_VolumeCurrent', 'query_only')
 assert p.globals['SIG2_GestureErr'] == '1' and p.globals['SIG2_GestureErrMsg'] == 'Injected plugin failure'
-print('Passed: Swipe/timeout/continuation/replacement configuration; native snapshots survive subsequent queries.')
+print('Passed: actual Tasker 6.6.20 Java Code schema, same-pointer continuation, completion diagnostics, release cleanup and snapshots.')
 
-original_up = TASKS['SIG2_VolumeUp']
-broken_up = deepcopy(original_up)
-a = next(a for a in broken_up.findall('Action') if a.findtext('code') == '778682267')
-params = json.loads(a.findtext('Bundle/Vals/parameters'))
-params.update(initialPoint='Start X: %sig2_x\nStart Y: %sig2_y',
-              endPoint='End X: %sig2_x\nEnd Y: %sig2_end_y')
-a.find('Bundle/Vals/parameters').text = json.dumps(params)
-try:
-    TASKS['SIG2_VolumeUp'] = broken_up
-    p = phone(8, 'id'); p.run('SIG2_VolumeUp')
-    assert p.level == 8 and not p.drags
-    assert p.globals['SIG2_GestureErrMsg'] == 'Points are invalid'
-    assert 'Points are invalid' in p.globals['SIG2_Error']
-finally:
-    TASKS['SIG2_VolumeUp'] = original_up
-print('Passed: old display-summary payload fails installed-parser model and retains Points are invalid as the native diagnostic.')
-
-swipe = next(a for a in TASKS['SIG2_VolumeUp'].findall('Action') if a.findtext('code') == '778682267')
-vals = swipe.find('Bundle/Vals')
-assert set(json.loads(vals.findtext('parameters'))) == {'initialPoint', 'endPoint', 'duration'}
-assert vals.find('Password') is None and vals.find('EnableDisableAccessibilityService') is None
 for stage, returned in [('gesture', '1'), ('halt_gesture', '0')]:
     p = phone(8, 'id', fail_stage=stage); p.run('SIG2_VolumeUp')
     assert p.globals['SIG2_GestureReturned'] == returned
@@ -243,10 +221,28 @@ assert p.globals['SIG2_GestureReturned'] == '1'
 assert p.globals['SIG2_GestureErr'] == 'not supplied by returned action'
 assert p.globals['SIG2_GestureErrMsg'] == 'not supplied by returned action'
 assert p.drags == [40] and 'unchanged' in p.globals['SIG2_Error']
-print('Passed: minimal swipe input, returned-versus-halted diagnostics and explicit missing-native-error values.')
+print('Passed: continued-touch action, returned-versus-halted diagnostics and explicit missing-native-error values.')
 
 assert all(a.findtext('code') != '107361459' for a in TASKS['SIG2_VolumeUp'].findall('Action'))
 for level in range(15):
     p = phone(level, 'id'); p.run('SIG2_VolumeUp')
     assert not p.taps and len(p.gestures) == 1 and p.drags == [40]
-print('Passed: one continuous knob drag, no separate tap, unchanged 40 px travel, 600 ms duration and verified one-level readback.')
+print('Passed: one continuous knob drag, no separate tap, unchanged 40 px travel, 200 ms hold + 300 ms move duration and verified one-level readback.')
+
+# Captured level 9 geometry: same contact reaches exactly level 10's stop.
+p = Phone(9)
+p.knob_x, p.knob_y0 = 541, 1981
+p.globals['SIG2_KnobId'] = 'volume-knob'
+p.run('SIG2_VolumeUp')
+assert p.gestures == [('541,1621', '541,1581', '200+300')]
+assert p.level == 10 and p.globals['SIG2_VolumeOK'] == '1'
+assert 'DOWN-HOLD-MOVE-UP' in p.globals['SIG2_Gesture']
+assert p.globals['SIG2_TouchStage'] == 'released'
+print('Passed: measured 9/541/1621 -> 10/541/1581, explicit DOWN-HOLD-MOVE-UP diagnostics and verified readback.')
+
+for stage in ('missing_service', 'hold_rejected', 'hold_cancelled', 'hold_timeout', 'move_rejected', 'move_cancelled', 'move_timeout'):
+    p = phone(9, 'id', fail_stage=stage); p.run('SIG2_VolumeUp')
+    assert p.level == 9 and not p.drags and p.globals['SIG2_VolumeOK'] == '0'
+    assert p.globals['SIG2_GestureErr'] == '1'
+    assert p.globals['SIG2_GestureErrMsg'] in p.globals['SIG2_Error']
+print('Passed: simulated missing-service, hold/move rejection, cancellation and timeout diagnostics.')

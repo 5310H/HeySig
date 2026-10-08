@@ -175,13 +175,23 @@ current += [action(38), condition('%sig2_selected', 8, 1),
             setvar('%SIG2_VolumeY', '%sig2_y'), setvar('%SIG2_Error', ''), setvar('%SIG2_VolumeOK', 1)]
 
 
+def hold_drag():
+    # Schema captured from an actual Tasker 6.6.20 Java Code export.
+    a = action(474)
+    E.SubElement(a, 'se').text = 'true'
+    string(a, 0, (ROOT / 'tools/sig2_hold_drag.java').read_text())
+    string(a, 1)
+    integer(a, 2, 1)
+    return a
+
+
 def move_up():
     # One measured step: current 8 at y=1661 -> desired 9 near y=1621.
     # Keep a pending diagnostic before operations which can halt Tasker.
     def pending(stage, message):
         return [setvar('%SIG2_VolumeOK', 0), setvar('%SIG2_MoveStage', stage),
                 setvar('%SIG2_Error', message)]
-    aa = [setvar('%SIG2_TapErr', 'not used: continuous drag'), setvar('%SIG2_TapErrMsg', 'not used: continuous drag'),
+    aa = [setvar('%SIG2_TouchStage', 'not run'), setvar('%SIG2_TapErr', 'not used: continuous drag'), setvar('%SIG2_TapErrMsg', 'not used: continuous drag'),
           setvar('%SIG2_GestureErr', 'not run'), setvar('%SIG2_GestureErrMsg', 'not run'),
           call('SIG2_VolumeCurrent'),
           *guard('%SIG2_VolumeOK', 3, 1, 'VolumeUp initial readback failed: %SIG2_Error'),
@@ -191,17 +201,17 @@ def move_up():
           setvar('%sig2_target', '%sig2_start + 1', True),
           setvar('%sig2_x', '%SIG2_VolumeX'), setvar('%sig2_y', '%SIG2_VolumeY'),
           setvar('%sig2_end_y', '%sig2_y - 40', True),
-          setvar('%SIG2_Gesture', 'continuous drag %sig2_x,%sig2_y -> %sig2_x,%sig2_end_y; 40 px up; 600 ms; no separate tap'),
+          setvar('%SIG2_Gesture', 'DOWN-HOLD-MOVE-UP / Tasker accessibility continued stroke: DOWN %sig2_x,%sig2_y; HOLD 200 ms; MOVE -> %sig2_x,%sig2_end_y 40 px up / 300 ms; UP'),
           *guard('%sig2_end_y', 6, 0, 'VolumeUp endpoint above screen: %SIG2_Gesture'),
-          *pending('gesture', 'VolumeUp AutoInput gesture did not complete: %SIG2_Gesture'),
+          *pending('gesture', 'VolumeUp Tasker hold-drag gesture did not complete: %SIG2_Gesture'),
           setvar('%SIG2_GestureErr', 'not returned (action halted)'), setvar('%SIG2_GestureErrMsg', 'not returned (action halted)'),
           setvar('%SIG2_GestureReturned', 0),
-          plugin(778682267, 'swipe_up'),
+          hold_drag(),
           setvar('%SIG2_GestureErr', '%err'), setvar('%SIG2_GestureErrMsg', '%errmsg'),
           setvar('%SIG2_GestureReturned', 1),
           condition('%err', 13), setvar('%SIG2_GestureErr', 'not supplied by returned action'), action(38),
           condition('%errmsg', 13), setvar('%SIG2_GestureErrMsg', 'not supplied by returned action'), action(38),
-          *guard('%err', 12, '', 'VolumeUp AutoInput gesture failed: code=%SIG2_GestureErr message=%SIG2_GestureErrMsg; %SIG2_Gesture'),
+          *guard('%err', 12, '', 'VolumeUp Tasker hold-drag gesture failed: code=%SIG2_GestureErr message=%SIG2_GestureErrMsg; %SIG2_Gesture'),
           wait(),
           *pending('readback', 'VolumeUp post-gesture query did not complete: %SIG2_Gesture'),
           call('SIG2_VolumeCurrent', 'query_only'),
