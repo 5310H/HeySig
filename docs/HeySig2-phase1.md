@@ -284,7 +284,9 @@ The implementation is embedded in Up's XML from `tools/sig2_hold_drag.java`:
    gesture alone does not count as success.
 
 `%SIG2_Gesture` explicitly reports DOWN-HOLD-MOVE-UP, Tasker accessibility
-continued stroke, coordinates, 200 ms hold, and 300 ms move.
+dispatchGesture + continueStroke mechanism, current knob coordinates, 200 ms
+hold with the pointer still DOWN, and 300 ms move with no intermediate UP.
+UP occurs only at the end of movement.
 `%SIG2_TouchStage` reports `down-hold`, `move-up`, or `released`.
 Android rejection, cancellation, missing accessibility service, and a 3-second
 callback timeout raise Tasker errors. `%err`/`%errmsg` are copied immediately

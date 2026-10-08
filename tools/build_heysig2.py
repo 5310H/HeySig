@@ -186,7 +186,7 @@ def hold_drag():
 
 
 def move_up():
-    # One measured step: current 8 at y=1661 -> desired 9 near y=1621.
+    # One measured step: current 9 at y=1621 -> desired 10 at y=1581.
     # Keep a pending diagnostic before operations which can halt Tasker.
     def pending(stage, message):
         return [setvar('%SIG2_VolumeOK', 0), setvar('%SIG2_MoveStage', stage),
@@ -201,7 +201,7 @@ def move_up():
           setvar('%sig2_target', '%sig2_start + 1', True),
           setvar('%sig2_x', '%SIG2_VolumeX'), setvar('%sig2_y', '%SIG2_VolumeY'),
           setvar('%sig2_end_y', '%sig2_y - 40', True),
-          setvar('%SIG2_Gesture', 'DOWN-HOLD-MOVE-UP / Tasker accessibility continued stroke: DOWN %sig2_x,%sig2_y; HOLD 200 ms; MOVE -> %sig2_x,%sig2_end_y 40 px up / 300 ms; UP'),
+          setvar('%SIG2_Gesture', 'DOWN-HOLD-MOVE-UP / ONE continuous touch via Tasker accessibility dispatchGesture + continueStroke: DOWN at current knob %sig2_x,%sig2_y; HOLD 200 ms (willContinue=true, pointer stays DOWN); MOVE -> %sig2_x,%sig2_end_y 40 px up / 300 ms (same pointer, no intermediate UP); UP only at move end (willContinue=false)'),
           *guard('%sig2_end_y', 6, 0, 'VolumeUp endpoint above screen: %SIG2_Gesture'),
           *pending('gesture', 'VolumeUp Tasker hold-drag gesture did not complete: %SIG2_Gesture'),
           setvar('%SIG2_GestureErr', 'not returned (action halted)'), setvar('%SIG2_GestureErrMsg', 'not returned (action halted)'),
