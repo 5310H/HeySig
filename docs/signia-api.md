@@ -127,6 +127,12 @@ A read-only next diagnostic would inspect the live seek node's class, resource I
 
 The user identifies the aids as Insio CIC and describes control as the same as Silk. Exact generation and firmware remain unconfirmed. [Signia's official Insio IX / Silk Charge&Go IX guide](https://www.signia.net/ja-jp/blog/local/ja-jp/silk-charge-go-ix-app/) explicitly describes high-frequency acoustic control and acoustic pairing for these small aids without Bluetooth. This supports prioritizing the acoustic implementation if the user's model is Insio IX CIC; it does not establish support for every command in the catalogue.
 
+### User-confirmed configuration
+
+The user confirms that their Insio CIC setup exposes **one common microphone-volume control for both aids together**, with **no separate left/right controls**. This is a user-reported runtime observation, distinct from static APK findings. For this user's Tasker workflow, target only the common slider and require its displayed level to become `old_level + 1` after the continuous gesture. Separate left/right controls described elsewhere in this document belong to other possible app configurations and do not apply to the user's observed setup.
+
+The common displayed level remains app-state verification; it is not independent receiver acknowledgement from either aid. Shared acoustic addressing is consistent with common control, but the user's actual stored addresses were not inspected and are not claimed as verified.
+
 ### Addressing and setup — confirmed code
 
 In `WSA.Foundation.Acoustic.dll`, `HearingSystem.Device` constructs the destination byte as `(brandIdentifier << 4) | ArcAddress`. `Brand.BrandParser.GetBrandIdentifier` (RVA `0x542c`) maps Signia to identifier zero. `HearingSystem.RandomArcAddressProvider.Create` (`0x3269`) uses `Random.Next(1,15)`, yielding addresses 1–14.
@@ -134,6 +140,25 @@ In `WSA.Foundation.Acoustic.dll`, `HearingSystem.Device` constructs the destinat
 `HearingSystem.HearingSystemFactory.CreateDeviceInformationAsync` (`0x2e5c`, async body `0x748c`) selects a random address, excludes the other device's address, creates device information, and calls `SendMfaPairingTone`. It rejects the older D8/D9/D10 platform branch. `SendMfaPairingTone` (`0x31fc`, async body `0x7ee0`) constructs the full brand/address byte and passes a two-element sequence containing pairing ID 105 and that byte to `IToneService.SendBroadcastTonesAsync`. This is a setup-specific broadcast path; ordinary volume writes use the selected device's address. No setup tones were generated or sent.
 
 `GetPersistedArcAddress` (`0x30f8`, async body `0x79c0`) accesses `HearingInstrumentParameterKeys.ConfiguredAcousticAddress`. A replacement app needs its own legitimate setup flow or an explicitly supplied known address. Access to Signia's private persisted state is not established under the no-root constraints. The complete onboarding conditions, hearing-aid pairing window, and platform identification remain to be traced; the factory alone is not a complete setup specification.
+
+### Pairing verification follow-up — 2026-10-07
+
+**Verified at the application-code level, not on the user's hearing aids.** The ordinary acoustic setup route is now traced through the UI, factory, encoder dispatch, and local persistence. It differs from the separately identified MFA pairing helper.
+
+| Build-specific evidence | Confirmed behavior |
+|---|---|
+| `RTA.Core.ViewModels.PairingSetup.Acoustic.AcousticConnectionInstructionViewModel.PairAcousticallyAsync`, RVA `0x87ec4`; async body `0x88568` in `RTA.Core.dll` | Ordinary branch calls `IHearingSystemFactory.CreateAsync(sides, brand, cancellationToken)` and navigates to the acoustic confirmation page. A separate configured-GUID branch handles QR setup. |
+| `WSA.Foundation.Acoustic.HearingSystem.HearingSystemFactory.CreateAsync`, RVA `0x2f30`; async body `0x6b40` in `WSA.Foundation.Acoustic.dll` | Generates **one random address shared by the requested sides**, creates local device objects, then calls `SendPairingTone`. Do not assume every setup assigns distinct left/right addresses; the MFA/device-information route above is different. |
+| `HearingSystemFactory.SendPairingTone`, RVA `0x31a0`; async body `0x7fe4` | Forms the brand/address byte and passes the sequence `[98, fullBrandAddress]` with sniff-suspend disabled to the broadcast tone service. This is distinct from MFA's `[105, fullBrandAddress]`. |
+| `WSA.Foundation.Audio.ToneService.SendBroadcastTonesAsync`, RVA `0x2cf0`; `<SendTonesAsync>b__0`, RVA `0x3c31`, in `WSA.Foundation.Audio.dll` | Broadcast destination is 255. Each sequence element is separately passed to `GenerateControlTone(commandId, destination)`. The address assignment value is therefore encoded as a second control tone, not appended as a raw PCM byte or used as the broadcast destination. |
+| `AcousticConnectionConfirmationViewModel.OnYesButtonClicked`, RVA `0x86dec`; async body `0x8745c` | User affirmation calls `SaveAcousticPairingAddresses` and proceeds with setup. `OnNoButtonClicked`, RVA `0x8701f`, navigates back. |
+| `AcousticConnectionConfirmationViewModel.SaveAcousticPairingAddresses`, RVA `0x86f74`; async body `0x87648` | Selects the hearing system and stores the available sides' addresses through `set_AcousticAddressLeft` and `set_AcousticAddressRight`. |
+| `WSA.Foundation.Acoustic.Extensions.AcousticAddressExtension.GetAsync`, RVA `0x32de` | Reads the locally constructed hearing system's `GetArcAddress`; **this is not an acoustic query or receiver acknowledgement**. |
+| `HearingSystemFactory.CreateDeviceAsync`, async body `0x724c` | Stores brand and `ConfiguredAcousticAddress` in app parameter persistence while constructing the device. These local records alone do not prove pairing succeeded at the aid. |
+
+The [official Signia app setup guide, October 2024, section 4](https://cdn.signia.net/-/media/signia/jp/files/document-library/howto-guide/21045078_signiaappguide-202410.pdf) independently describes restarting the aids, choosing the acoustic connection route, using the media stream on Android, and asking the user whether a confirmation sound was heard from the aids. It allows a ringtone-stream fallback and requires suitable phone audio volume with no connected headphones/Bluetooth output. These are documented setup prerequisites, not actions performed in this investigation.
+
+**Conclusion:** the ordinary pairing command sequence and manual confirmation mechanism are established for the examined app build. The exact aid-side pairing acceptance window, firmware-specific acceptance of the variants, complete waveform equivalence, and success on the user's Insio CIC remain unverified. No automatic acoustic acknowledgement reader was found in this traced flow. A custom app could reproduce the same user-confirmed setup architecture, but this finding does not yet certify a compatible implementation or justify replacing an existing pairing without a separately authorized test.
 
 ### Volume conversion — confirmed code, examples derived
 
@@ -164,11 +189,83 @@ These constants describe this build's defaults; they are not a phone-independent
 
 **There is enough information for an offline encoder and UI prototype, and a plausible standalone acoustic controller. A reliable replacement is not yet established.** The remaining work is to finish the ordinary onboarding/address lifecycle and framing analysis, identify the exact user's platform/range, and eventually validate playback and receipt with an explicitly authorized device test. Android speaker playback does not inherently require root, phone ADB, Tasker, or the Signia app. That architectural conclusion is an inference from the inspected AudioTrack implementation, not a tested replacement app.
 
+## Further Tasker-relevant findings — 2026-10-07
+
+### Acoustic readback is cached per program
+
+`Component.RemoteControl.Services.VolumeService.GetAsync` (RVA `0xd6bc`; async body `0x29d04`, `Component.RemoteControl.dll`) queries `IVolumeExtension.GetAsync` when Bluetooth is connected. Otherwise it obtains the current program and uses `Program.VcValueLeft` / `VcValueRight`, with a default-volume fallback. This **confirms cached app-state readback on the acoustic path**; it is not merely an absence of a discovered acoustic query.
+
+The service's `WriteAsync` async body (`0x2aab0`) awaits the selected transport write, aggregates results, and on success starts a background storage update and calls `NotifyVolumeChange`. Storage updating is fire-and-forget. The UI thumb itself may already have moved during dragging, so neither an immediate numeric label change nor later cached readback proves aid receipt. The exact live UI refresh delay remains unmeasured.
+
+**Tasker implication:** retain the old+1 UI verification, but describe success as “Signia displayed the requested level.” Take fresh readback after gesture completion, allow a bounded settling interval, and avoid overlapping requests. Program changes matter because acoustic values are stored per program. These are implementation recommendations; existing Tasker code has not been altered.
+
+### Phone audio checks and their limits
+
+In `WSA.Foundation.Audio.dll`, `Droid.Internal.SoundPlayManager` constructor (`0x3460`) initializes media stream (numeric Android stream 3), low threshold 50%, high threshold 90%, and check flags 31. These are **constructor defaults**, with public setters; the actual installed app configuration is not established as identical.
+
+`GetPlayStatus` (`0x3638`) checks, in order: in-call audio mode, DND/silent condition, selected external outputs, volume too low, and volume too high, subject to the corresponding enabled flags. `ToneService.ToneStatusSanityCheck` (`0x2dc8`) turns these statuses into `AudioCallInProgressException`, `DoNotDisturbModeActivatedException`, `ExternalAudioHeadsetConnectedException`, `VolumeTooLowException`, or `VolumeTooHighException`. Both single- and multiple-tone paths call this check before playback.
+
+`IsVolumeTooLow` (`0x3a74`) compares the chosen stream's current volume index against `maxIndex * lowPercent / 100`. `IsVolumeTooHigh` (`0x38b4`) compares against a rounded high-threshold index. This is Android stream volume, **not the hearing-aid microphone slider**. The two controls must remain distinct in diagnostics; do not hard-code these default percentages as universal device calibration.
+
+The external-output predicate (`0x4812`) explicitly checks device type IDs 4, 3, 22, and 11. It does not enumerate every Bluetooth/USB audio type. `IsCallInProgress` (`0x3736`) tests AudioManager mode 2; it is not an exhaustive detector of all VoIP/audio sessions. Consequently these guards should not be treated as proof that every interfering route or session was excluded. The separate speaker preference method selects built-in speaker type 2 (`0x439a`) and requests `AudioTrack.SetPreferredDevice`.
+
+**Tasker implication:** a failed volume operation may be an audio guard or routing problem even when the drag is correct. Useful diagnostics include selected Signia audio stream, phone stream volume, current audio route, visible Signia warning/dialog, old/new displayed level, and gesture completion. Preserve Signia's guards and surface its actual warning instead of repeatedly dragging.
+
+### Playback serialization
+
+`Droid.Internal.CommandPlayer` owns `_acousticSemaphore`; `PlayToneAsync` async body (`0x4428`) calls `SemaphoreSlim.WaitAsync` before playback and releases it afterward. Phone playback is serialized, but this does not establish that rapid UI requests are all accepted: `VolumeViewModel.SetVolume` separately has its `isUpdating` guard. Tasker should issue one volume operation at a time and finish verification before another. No fixed universal delay has been verified.
+
+## Failure handling and repeated slider requests — 2026-10-07
+
+### Hidden warnings can coexist with a blocked tone
+
+`RTA.Core.Services.Managers.AcousticCommandIssueCallback.DisplayToneStatusErrorAsync` (`0xb5090`, async body `0xb50dc`, `RTA.Core.dll`) maps acoustic exceptions to user messages. DND and external-headset conditions show confirmation dialogs. The call warning checks `IConfigurationManager.ShouldShowPhoneCallInProgressAlert` and can be suppressed; after showing it the code sets that flag false. The low-volume warning likewise checks `ShouldShowAcousticVolumeAlert` and can be suppressed. High-volume handling calls `INotificationHelper.ShowVolumeAlert` in the inspected branch.
+
+These flags affect **warning presentation**, not the earlier `ToneStatusSanityCheck` that throws before playback. Therefore an absent warning cannot certify tone transmission. This is a concrete reason to log phone audio conditions independently of visible Signia alerts.
+
+`Component.RemoteControl.Contracts.Internals.ExceptionHandler.SafeHandleHaExceptions` (`0xf6fc`, async body `0x2d18c`, `Component.RemoteControl.dll`) catches tone-status exceptions and calls the client helper's `DisplayToneStatusErrorAsync`. Its hearing-system-unavailable and app-base-exception branches log errors. Some failures can thus be handled inside Signia rather than appear as an external automation error.
+
+### Busy handling and catch-up behavior
+
+`VolumeViewModel.SetVolume` (`0x8bf8`, async body `0x1e7f4`) returns the supplied numeric volume immediately when `isUpdating` is already true, without invoking the write handler. After a normal handler return it clears the flag. The method's returned number alone is therefore **not a write-success result**. The false-result branch also reaches a return of `volumeToUpdate`; success separately controls tracking of the change.
+
+`VolumeViewModel.CommonSliderValueChangedCommandExecute` (`0x8bb4`, async body `0x1d9b8`) exits immediately if busy at entry. Otherwise it awaits the first common-volume write, compares the returned value against the **current** common-slider value, and can repeat up to three additional writes if the target changed in the meantime. This is target catch-up; it neither reads hearing-aid acknowledgement nor establishes a general retry policy for failed acoustic delivery. The left/right command entry points directly call `SetVolume` without this common-slider loop.
+
+**Tasker implication:** do not rely on rapid repeated gestures to deliver every intermediate stop. Finish one gesture and its verification before accepting another. A changed label, a returned internal number, and absence of warnings are each insufficient to certify aid receipt. Distinguish gesture completion, displayed target, and any user-observed aid confirmation in diagnostic wording.
+
+### Practical verification cases to perform later
+
+No device tests were performed. A useful authorized phone test matrix would cover: a single ordinary increment; requests arriving while the previous operation is busy; changing programs before readback; low phone volume with the warning enabled versus suppressed; media versus ringtone selection; and a connected external audio output. Record displayed level, program, selected stream, audio route, warning text, and whether the aid gives its confirmation sound. These cases follow specific code branches; they are not a request to alter existing Tasker code or hearing-aid pairing.
+
+## Coupled aids, common-slider meaning, and mute — 2026-10-07
+
+### Independent volume needs more than two slider labels
+
+In `WSA.Foundation.Acoustic.dll`, `Extensions.VolumeExtension.CanAdjustIndependentlyAsync` (`0x4fe8`, async body `0x11dd8`) delegates to `IsDecoupledAsync` (`0x503c`, async body `0x12068`). The latter returns false for a one-aid system, returns false when `HearingSystem.Utilities.HasSameAddresses` reports matching addresses, and otherwise obtains the persisted `VolumeControlDecoupled` parameter. Distinct addresses are therefore necessary but not sufficient for this code to report independent volume support.
+
+This connects directly to the ordinary acoustic pairing factory's shared-address behavior documented above. It also explains why the catalogue's existence of addressed commands does not automatically grant independent control of both aids. Actual user configuration and current screen layout still require runtime observation.
+
+In `Component.RemoteControl.dll`, `VolumeViewModel.get_CommonSliderValue` (`0x8963`) returns the master side's slider value, and `get_CommonSliderMaxValue` (`0x8947`) returns that side's maximum. The common number is **not an average or an independent measurement of both aids**. Seeing one common label is insufficient evidence that both receivers reached the same physical output.
+
+**Tasker implication for this user:** target the common slider only; the user confirms both aids are controlled together and no left/right controls are present. Record the program and common displayed level. Do not treat that label as independent confirmation from both receivers. Other slider configurations discussed here are general APK capabilities, not this user's setup. The measured 40-pixel movement remains the initial gesture distance for the user's observed layout; a different range/layout must be measured rather than inferred from command IDs.
+
+### Mute is not always a minimum-position write
+
+`Extensions.VolumeExtension.WriteVolumeAsync` (`0x50ec`, async body `0x127fc`) converts and validates the requested volume, then builds one of these sequences:
+
+- Explicit mute state: command 90 only; the branch skips the position-command append.
+- Explicit unmute state: command 91, then `16 + convertedPosition`.
+- Ordinary position state: `16 + convertedPosition` only.
+
+It passes the sequence to `IHearingSystemInternal.WriteTonesAsync` with sniff-suspend false. This corrects the earlier shorthand that mute could simply precede a position command. Which state applies depends on the converter's platform/firmware branch already documented. No tone sequence was produced or played.
+
+**Tasker implication:** an eventual decrement across the lowest stop and increment out of mute deserves its own test. A successful ordinary 9→10 gesture does not establish identical behavior at the zero/mute boundary. Existing volume tasks have not been modified.
+
 ## Acoustic command catalogue
 
 The following is the exact named enumeration catalogue found in `WSA.Foundation.Acoustic.dll`, namespace **`WSA.Foundation.Acoustic.Extensions`**. IDs are decimal. Enum presence is confirmed; use/support of every member on the user's hearing aids is not. These include configuration and fitting-related features as well as everyday remote controls. They are documented as static findings, not tested invocation instructions.
 
-For microphone volume, `VolumeCommand.Position00`–`Position15` are IDs **16–31**; `Increase=82`, `Decrease=83`. The absolute write method uses **16 + converted receiver position**, potentially preceded by `Receiver.Mute=90` or `Receiver.NotMute=91`. Displayed level and encoded receiver position should not be assumed identical for every device configuration.
+For microphone volume, `VolumeCommand.Position00`–`Position15` are IDs **16–31**; `Increase=82`, `Decrease=83`. The normal absolute write uses **16 + converted receiver position**. In the explicit-mute branch it sends only `Receiver.Mute=90`; the explicit-unmute branch sends `Receiver.NotMute=91` followed by the position command. Displayed level and encoded receiver position should not be assumed identical for every device configuration.
 
 ### `AmbisoundControl`
 
