@@ -1,0 +1,26 @@
+{
+  "source": "https://tasker.joaoapps.com/code/ActionCodes.java",
+  "checked": "2026-10-06",
+  "codes": {
+    "18": "KILL_APP",
+    "20": "LOAD_APP",
+    "25": "GO_HOME",
+    "30": "WAIT",
+    "37": "IF",
+    "38": "ENDIF",
+    "39": "FOR",
+    "40": "ENDFOR",
+    "43": "ELSE",
+    "47": "SHOW_SCENE",
+    "49": "DESTROY_SCENE",
+    "130": "RUN_TASK",
+    "137": "STOP",
+    "547": "SET_VARIABLE",
+    "548": "FLASH",
+    "590": "SPLIT_VARIABLE",
+    "596": "CONVERT_VARIABLE",
+    "903": "GET_VOICE",
+    "474": "JAVA_CODE"
+  },
+  "java_code_schema_source": "Native Tasker 6.6.20 SIG2_JavaProbe export (2026-10-07): Str arg0 Code, Str arg1 Return, Int arg2=1"
+}

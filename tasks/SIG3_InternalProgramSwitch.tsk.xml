@@ -1,0 +1,306 @@
+<TaskerData sr="" dvi="1" tv="6.6.20">
+	<Task sr="task472">
+		<cdate>1791396000000</cdate>
+		<edate>1791396000000</edate>
+		<id>472</id>
+		<nme>SIG3_InternalProgramSwitch</nme>
+		<pri>100</pri>
+		<Action sr="act0" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%TRUN</lhs>
+					<op>5</op>
+					<rhs>(^|,)SIG3_Worker(,|$)</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act1" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
+		</Action>
+		<Action sr="act2" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act3" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_ProgramOK</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act4" ve="7">
+			<code>130</code>
+			<se>true</se>
+			<Str sr="arg0" ve="3">SIG3_InternalAppLaunch</Str>
+			<Int sr="arg1">
+				<var>%priority+1</var>
+			</Int>
+			<Int sr="arg10" val="1" />
+			<Str sr="arg2" ve="3" />
+			<Str sr="arg3" ve="3" />
+			<Str sr="arg4" ve="3" />
+			<Int sr="arg5" val="0" />
+			<Int sr="arg6" val="0" />
+			<Str sr="arg7" ve="3" />
+			<Int sr="arg8" val="0" />
+			<Int sr="arg9" val="0" />
+		</Action>
+		<Action sr="act5" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%SIG3_AppOK</lhs>
+					<op>3</op>
+					<rhs>1</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act6" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_ProgramOK</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act7" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_Error</Str>
+			<Str sr="arg1" ve="3">Program launch failed: %SIG3_Error</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act8" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
+		</Action>
+		<Action sr="act9" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act10" ve="7">
+			<code>474</code>
+			<se>true</se>
+			<Str sr="arg0" ve="3">/* Read-only preflight: no volume, route, DND or lock settings are changed. */
+import android.app.KeyguardManager;
+import android.app.NotificationManager;
+import android.media.AudioManager;
+import android.media.AudioDeviceInfo;
+import android.os.PowerManager;
+import android.os.Build;
+import com.joaomgcd.taskerm.action.java.JavaCodeException;
+pm = context.getSystemService("power");
+km = context.getSystemService("keyguard");
+if (!pm.isInteractive() || km.isKeyguardLocked())
+    throw new JavaCodeException("Turn on and unlock the phone before controlling Signia");
+am = context.getSystemService("audio");
+nm = context.getSystemService("notification");
+streamName = tasker.getVariable("SIG3_AudioStream");
+if (!"media".equals(streamName) &amp;&amp; !"ring".equals(streamName))
+    throw new JavaCodeException("Set SIG3_AudioStream to Signia's selected media or ring stream");
+stream = "ring".equals(streamName) ? AudioManager.STREAM_RING : AudioManager.STREAM_MUSIC;
+volume = am.getStreamVolume(stream);
+maximum = am.getStreamMaxVolume(stream);
+mode = am.getMode();
+filter = nm.getCurrentInterruptionFilter();
+outputs = am.getDevices(AudioManager.GET_DEVICES_OUTPUTS);
+route = "";
+external = false;
+for (device : outputs) {
+    type = device.getType();
+    route = route + type + ":" + device.getProductName() + ";";
+    /* Known connected external outputs; presence is conservative, not an active-route claim. */
+    if (type == 3 || type == 4 || type == 7 || type == 8 || type == 11 || type == 12 || type == 22 || type == 23 || type == 26 || type == 27)
+        external = true;
+}
+tasker.setVariable("SIG3_AudioDiagnostics", "stream=" + streamName + " volume=" + volume + "/" + maximum + "; mode=" + mode + "; interruptionFilter=" + filter + "; outputs=" + route);
+if (volume == 0) throw new JavaCodeException("Selected phone audio stream is muted");
+if (mode == AudioManager.MODE_IN_CALL || mode == AudioManager.MODE_IN_COMMUNICATION)
+    throw new JavaCodeException("Phone call or communication audio is active");
+if (external) throw new JavaCodeException("Disconnect external audio outputs before acoustic control");
+if ("ring".equals(streamName) &amp;&amp; (am.getRingerMode() != AudioManager.RINGER_MODE_NORMAL || filter != NotificationManager.INTERRUPTION_FILTER_ALL))
+    throw new JavaCodeException("Ringtone acoustic control is blocked by silent/DND state");
+/* Media DND and Signia's configurable volume thresholds are recorded, not guessed. */
+return "ready";
+</Str>
+			<Str sr="arg1" ve="3" />
+			<Int sr="arg2" val="1" />
+		</Action>
+		<Action sr="act11" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%err</lhs>
+					<op>12</op>
+					<rhs />
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act12" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_ProgramOK</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act13" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_Error</Str>
+			<Str sr="arg1" ve="3">Program audio preflight failed: %errmsg</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act14" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
+		</Action>
+		<Action sr="act15" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act16" ve="7">
+			<code>474</code>
+			<se>true</se>
+			<Str sr="arg0" ve="3">/* Program selection through visible accessibility nodes, never fixed coordinates. */
+import android.view.accessibility.AccessibilityNodeInfo;
+import com.joaomgcd.taskerm.action.java.JavaCodeException;
+import android.os.SystemClock;
+visibleNodes(root, id) {
+    nodes = root.findAccessibilityNodeInfosByViewId(id);
+    result = new java.util.ArrayList();
+    for (node : nodes) if (node.isVisibleToUser() &amp;&amp; node.isEnabled()) result.add(node);
+    return result;
+}
+clickNode(node) {
+    for (int depth = 0; depth &lt; 5 &amp;&amp; node != null; depth++) {
+        if (node.isClickable()) {
+            if (!node.performAction(AccessibilityNodeInfo.ACTION_CLICK)) throw new JavaCodeException("Accessibility click rejected");
+            return;
+        }
+        node = node.getParent();
+    }
+    throw new JavaCodeException("No clickable ancestor for selected node");
+}
+readProgram(service, id) {
+    root = service.getRootInActiveWindow();
+    if (root == null || root.getPackageName() == null || !"com.signia.rta".contentEquals(root.getPackageName())) throw new JavaCodeException("Signia is not foreground");
+    nodes = visibleNodes(root, id);
+    if (nodes.size() != 1) throw new JavaCodeException("Current program is ambiguous; configure SIG3_ProgramId");
+    value = nodes.get(0).getText();
+    if (value == null || value.toString().trim().length() == 0) throw new JavaCodeException("Current program has no readable text");
+    return value.toString().trim();
+}
+service = tasker.getAccessibilityService();
+if (service == null) throw new JavaCodeException("Enable Tasker accessibility");
+requested = tasker.getVariable("par1");
+if (requested == null || !requested.matches("[1-6]")) throw new JavaCodeException("Program slot must be 1–6");
+target = tasker.getVariable("SIG3_ProgramName" + requested);
+if (target == null || target.trim().length() == 0) throw new JavaCodeException("Configure SIG3_ProgramName" + requested + " from the actual program list");
+id = tasker.getVariable("SIG3_ProgramId");
+previous = readProgram(service, id);
+tasker.setVariable("SIG3_Previous", previous);
+tasker.setVariable("SIG3_Expected", target);
+if (!previous.equals(target)) {
+    root = service.getRootInActiveWindow();
+    open = visibleNodes(root, tasker.getVariable("SIG3_ProgramOpenId"));
+    if (open.size() != 1) throw new JavaCodeException("Program opener missing/ambiguous; configure SIG3_ProgramOpenId");
+    clickNode(open.get(0));
+    selected = false;
+    for (int attempt = 0; attempt &lt; 20 &amp;&amp; !selected; attempt++) {
+        SystemClock.sleep(150);
+        root = service.getRootInActiveWindow();
+        if (root == null || root.getPackageName() == null || !"com.signia.rta".contentEquals(root.getPackageName())) throw new JavaCodeException("Program chooser not in Signia");
+        candidates = root.findAccessibilityNodeInfosByText(target);
+        exact = new java.util.ArrayList();
+        for (node : candidates) if (node.isVisibleToUser() &amp;&amp; node.isEnabled() &amp;&amp; node.getText() != null &amp;&amp; target.equals(node.getText().toString().trim())) exact.add(node);
+        if (exact.size() &gt; 1) throw new JavaCodeException("Program name matches multiple visible items");
+        if (exact.size() == 1) { clickNode(exact.get(0)); selected = true; }
+    }
+    if (!selected) throw new JavaCodeException("Configured program not found");
+}
+for (int attempt = 0; attempt &lt; 20; attempt++) {
+    SystemClock.sleep(150);
+    try {
+        observed = readProgram(service, id);
+        tasker.setVariable("SIG3_Observed", observed);
+        if (target.equals(observed)) {
+            tasker.setVariable("SIG3_Program", observed);
+            return "displayed";
+        }
+    } catch (JavaCodeException unavailable) { }
+}
+throw new JavaCodeException("Program did not become the configured target; inspect Signia before retrying");
+</Str>
+			<Str sr="arg1" ve="3" />
+			<Int sr="arg2" val="1" />
+		</Action>
+		<Action sr="act17" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%err</lhs>
+					<op>12</op>
+					<rhs />
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act18" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_ProgramOK</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act19" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_Error</Str>
+			<Str sr="arg1" ve="3">Program switch failed: %errmsg</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act20" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
+		</Action>
+		<Action sr="act21" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act22" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_ProgramOK</Str>
+			<Str sr="arg1" ve="3">1</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+	</Task>
+</TaskerData>
