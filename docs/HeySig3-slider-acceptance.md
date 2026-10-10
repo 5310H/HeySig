@@ -1,37 +1,46 @@
-wha# HeySig3 numeric slider phone acceptance
+# HeySig3 slider phone acceptance
 
-October 9, 2026. The new default Set path uses one `ACTION_SET_PROGRESS` for Volume, Balance and Tinnitus. Acoustic communication remains inside Signia. No BLE, root, ADB or helper app is used.
+Updated October 10, 2026. The measured Pixel 9a balance/tinnitus setup uses an explicitly selected Tasker gesture backend. The project-wide default remains native accessibility. [Completed and remaining tests](HeySig3-test-checklist.md) are the status record; [phone notes](HeySig3-verified-usb-drags.md) contain evidence.
 
-## First: inspect volume without changing it
+## Verified gesture setup
 
-1. Import the updated `projects/HeySig3.prj.xml`, preserving phone-side settings. Enable Tasker accessibility and use an unlocked phone.
-2. Keep the existing readback selector `%SIG3_KnobId=com.signia.rta:id/TA-SliderValue`. Common control and program IDs must match your actual UI; the defaults remain APK-derived.
-3. Clear `%SIG3_SliderBackend` or set it to `accessibility`. `legacy-gesture` is an explicit compatibility option only; it is never an automatic fallback.
-4. Run `SIG3_VolumeInspect`. This opens/reads the volume screen but sends no progress action. Record `%SIG3_SliderDiagnostics`, `%SIG3_QueryData` and `%SIG3_Result`.
+Balance and tinnitus passed Tasker **0 → 1 → 0** in Universal. The path sends one continuous 650 ms gesture, waits for Android completion, and verifies fresh displayed readback after each step. Gesture coordinates come from native progress and measured track endpoints, rather than the label bounds. The calibrated bounds check stops if the layout changes.
 
-The diagnostics include the actual node ID/class/bounds, action IDs, RangeInfo min/max/current and touch-exploration state. Expected set-progress action ID is 16908349. Do not confuse the numeric label with the actual slider node.
+The phone uses `SIG3_Pixel9aGestureSetup`, supplied as a [separate task](../tasks/SIG3_Pixel9aGestureSetup.tsk.xml). It sets `%SIG3_BalanceBackend` and `%SIG3_TinnitusBackend` to `legacy-gesture`, with the verified readback ID, StepPx=87, Direction=1, track Y endpoints 695/2000 and bounds `[501,652][580,2047]`. Use only for the measured portrait 1080×2424 Pixel 9a layout. It fills an unset audio stream with `media`, matching Signia's observed Media sound choice; it does not change Volume's backend or an existing stream setting.
 
-## Then: one adjacent numeric target
+## Next adjacent target checks
 
-The APK accessibility commit branch requires touch exploration. If diagnostics report false, Set stops without sending an action. Enabling ordinary Tasker accessibility alone does not satisfy this. A user-enabled TalkBack comparison can test the branch, but it changes phone interaction; this implementation does not enable it or alter accessibility settings.
+1. Open Signia Controls on an unlocked phone with Tasker accessibility enabled and no competing old slider profiles.
+2. Record the current program and value. Use public BalanceSet or TinnitusSet with a small numbered target, then restore the start value.
+3. Repeat the same target and confirm no new gesture. Check `%SIG3_CommandOK`, `%SIG3_Error`, `%SIG3_Result` and `%SIG3_Gesture`.
+4. Verify actual aid response separately from the app label. Stop on unexpected readback or an error; do not retry blindly.
 
-Before setting `%SIG3_VolumeRangeConfirmed=1`, confirm the displayed endpoints are 0 and 15 and that the actual slider uses an ascending linear native domain between its RangeInfo endpoints. Check native current versus displayed current at several manually selected levels. The code maps displayed target to that native range; native max can be 2147483647. Missing confirmation prevents transmission. Inspection does not automatically certify the mapping.
+Balance displays −8–7, with native step 8 displaying 0. Tinnitus displays 0–15 when available. Start with the [ordered checklist](HeySig3-test-checklist.md#next-phone-tests-in-order) before long jumps or endpoints.
 
-At displayed level 9, run `SIG3_VolumeSet` with Parameter 1 `10`, or route `change volume to 10`. Record:
+## Programs without tinnitus
 
-- `%SIG3_ProgressAccepted`: whether Android accepted the action.
-- `%SIG3_Observed` and `%SIG3_CommandOK`: fresh displayed readback result.
-- `%SIG3_SliderDiagnostics` and `%SIG3_Error`: native target and prerequisites/errors.
-- Whether the actual aid volume audibly changed.
+Current and inspection check the visible enabled Tinnitus Signal Tab (including its selected variant) before selecting it. Missing tabs stop with **Tinnitus unavailable for this program**. Set, Up/Down and endpoints obtain current state through that checked path. The control guard also rejects a missing tinnitus control during readback.
 
-There is exactly one action, then a 500 ms wait and fresh readback. An unchanged/mismatched readback fails without retries or gestures. A changed label can still be cached app state: acceptance/display success cannot prove acoustic command commit. Repeat the same target to confirm no additional action, then test 10→9. Leave mute/max boundaries until ordinary volume works.
+TV's missing tab was verified on the phone: TinnitusUp stopped with the unavailable message and an empty gesture diagnostic. No automatic switch to a different program is made. Other entry points have simulated missing-tab coverage; their TV phone checks remain on the checklist. Check the actual UI in each program instead of assuming availability from its name.
 
-If the label changes but aids do not, stop: Signia's rounding/listener order may suppress its accessibility commit. Capture diagnostics and pursue the acoustic encoder investigation; do not tune drags.
+## Read-only inspection
 
-## Reuse for balance and tinnitus
+Run VolumeInspect, BalanceInspect or TinnitusInspect through the public SIG3 tasks. Inspection selects the available family tab and records `%SIG3_SliderDiagnostics`, `%SIG3_QueryData` and `%SIG3_Result`; it sends no progress action. VolumeInspect and BalanceInspect passed on the phone. TinnitusInspect in an available program still needs an explicit live check.
 
-After volume works, run `SIG3_BalanceInspect` / `SIG3_TinnitusInspect`. Configure their actual readback/control IDs. Confirm the domain separately: Balance −8..7, Tinnitus 0..15, ascending linear native mapping. Set the corresponding `%SIG3_BalanceRangeConfirmed=1` / `%SIG3_TinnitusRangeConfirmed=1` only after checking. Then test one adjacent target through the corresponding Set task. Volume success alone does not certify another slider's mapping or commit behavior.
+Diagnostics include node ID/class/bounds, actions, RangeInfo min/max/current and touch-exploration state. Set-progress action ID is 16908349. Direct ID lookup failed on this phone, so inspection uses bounded tree traversal to find the exact visible enabled slider.
 
-## Repository validation
+## Native accessibility backend: separate unverified path
 
-`tests/check_sig3_progress.py` models inspection, missing range confirmation, touch exploration off, unsupported progress, an accepted action without displayed change, target success, repeated-target no-op and invalid targets for all three families. It does not run Android/BeanShell or verify acoustic reception. Older gesture simulations explicitly select `legacy-gesture` in their modeled Phone fixture; they do not validate the new backend.
+The general `accessibility` backend requests one absolute `ACTION_SET_PROGRESS`, waits 500 ms, and verifies fresh displayed readback. It does not fall back to gestures. Family-specific backends override the general setting, so changing `%SIG3_SliderBackend` alone does not override the Pixel setup's balance/tinnitus choices.
+
+Before using native Set, confirm the displayed/native mapping for that family and only then set its `%SIG3_VolumeRangeConfirmed`, `%SIG3_BalanceRangeConfirmed` or `%SIG3_TinnitusRangeConfirmed` flag to 1. The native maximum can be 2147483647. Volume/tinnitus targets map 0–15; balance maps −8–7. Inspection alone does not certify that mapping.
+
+Native Set also requires touch exploration. Captured inspection reported it **off**, so the code blocks that path before sending an action. Ordinary Tasker accessibility does not satisfy this gate. Any intentional TalkBack comparison changes phone interaction and must be separately chosen by the user; the code does not enable it.
+
+When prerequisites are intentionally satisfied, test one adjacent target and record `%SIG3_ProgressAccepted`, `%SIG3_Observed`, `%SIG3_CommandOK`, `%SIG3_Error` and the native diagnostics. Repeat the target, reverse the move and check aid response. Android acceptance or a changed label alone does not prove acoustic commit. An unchanged/mismatched readback fails without retry.
+
+## Distinguish the volume evidence
+
+ADB pointer drags 7 → 8, 8 → 9 and 9 → 0 were user-confirmed. Their guarded replay script is [sig3_verified_usb_drag.py](../tools/sig3_verified_usb_drag.py). These tests do not establish Tasker's Volume Set backend. Tasker balance/tinnitus gestures run on the phone without an ongoing ADB connection, root, BLE or a helper app; ADB was used during inspection/import/testing only.
+
+Repository simulations and static XML checks pass; their scope and pending phone checks are listed in the [checklist](HeySig3-test-checklist.md).

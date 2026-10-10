@@ -1,62 +1,73 @@
-# HeySig3 numeric voice controls
+# HeySig3 user manual
 
-Latest: [completion, restored workflows and event wiring](HeySig3-completion.md). Numeric sliders now default to direct accessibility actions; older gesture/calibration paragraphs describe only the explicit compatibility backend.
+Updated October 10, 2026. Use this manual for operation, the [test checklist](HeySig3-test-checklist.md) for completed and remaining checks, and the [phone verification notes](HeySig3-verified-usb-drags.md) for measured results. [Completion and event wiring](HeySig3-completion.md) covers profiles and optional automation.
 
-The current HeySig3 export now includes numeric Volume, Balance, and Tinnitus controls. Import [HeySig3.prj.xml](../projects/HeySig3.prj.xml) as a new, separate project. The original HeySig project remains unchanged. `SIG3_VolumeCurrent` copies the proven HeySig2 reader into the isolated project; no HeySig2 export is modified.
+## Current verified setup
 
-Run `SIG3_VoiceRouter` with Parameter 1 containing the spoken text, or call it from an AutoVoice recognition task that provides `%avcomm`. Existing recognition profiles are not rewired automatically.
+The Pixel 9a passed Tasker balance **0 → 1 → 0** and tinnitus **0 → 1 → 0** in Universal. Both finished at 0, and Universal was restored after testing TV. TV has no tinnitus tab: a tinnitus request now stops with **Tinnitus unavailable for this program** before selecting a tab or sending a gesture. Availability is checked from the actual visible tab, not a list of program names.
 
-Use absolute targets: `change volume to 10`, `change balance to minus 3`, and `change tinnitus to 5`. Short forms such as `volume 10`, `balance 0`, and `tinnitus five` also work. Supported ranges are volume/tinnitus 0–15 and balance −8–7. Max/mute and balance sharp/soft phrases also route to numeric targets. Repeating the same number is a no-op after a fresh current query.
+Balance displays **−8 through 0 through +7**. Native step 0 maps to −8, step 8 to 0, and step 15 to +7. Volume and tinnitus display 0–15. Signia app readback does not independently acknowledge receipt by the hearing aids.
 
-`SIG3_VolumeSet`, `SIG3_BalanceSet`, and `SIG3_TinnitusSet` accept an integer in Parameter 1. Out-of-range input fails rather than clamps. Use these three Set tasks as the supported manual controls; no Up/Down commands are needed. Existing Up/Down tasks remain compatibility wrappers around Set for older phone shortcuts. Endpoint voice aliases also dispatch directly to numeric Set targets. Volume/tinnitus mute requests zero; balance soft/sharp request −8/7.
+Balance and tinnitus use the explicitly configured `legacy-gesture` backend on this phone. It now sends one continuous 650 ms stroke, locates the thumb from native progress and calibrated track endpoints, and checks the displayed result after each step. Despite its compatibility name, this is the path that passed the Tasker phone tests. It needs no ongoing ADB connection or helper app.
 
-All public commands enter `SIG3_Worker`. Tasker’s default **Abort New Task** collision policy keeps one worker active; commands arriving while it runs are rejected, not queued. Child tasks run at higher priority. Confirm the worker’s collision setting after import; do not change it to Run Both or Abort Existing. No persistent busy flag needs resetting after failure or manual Stop. Internal tasks are not user entry points.
+The general project default remains `accessibility`, which uses one `ACTION_SET_PROGRESS`. That path requires confirmed native/display mapping and touch exploration. Inspection reported touch exploration off on this phone, so native Set remains gated and has not passed a live movement test. Backend selection never falls back automatically. Per-family settings let balance/tinnitus use gestures without changing the Volume backend.
 
-Each Set now reads the current level, requests the absolute target once through Android `ACTION_SET_PROGRESS`, and verifies fresh displayed readback. There is no automatic gesture fallback. All three families use [the shared slider implementation](../tools/sig3_slider_progress.java). See [volume acceptance steps](HeySig3-slider-acceptance.md) before sending the first command. A successful displayed target still requires separate audible confirmation.
+Volume inspection passed on the phone. The separate ADB volume tests **7 → 8**, **8 → 9**, and **9 → 0** worked and were user-confirmed; they do not certify Tasker's Volume Set backend.
 
-## Readback setup before use
+## Import and setup
 
-Set `%SIG3_KnobId` to the phone-confirmed current-value ID `com.signia.rta:id/TA-SliderValue`, or use the four `%SIG3_KnobXMin/XMax/YMin/YMax` bounds. Its measured step defaults to 40 px through `%SIG3_VolumeStepPx`.
+1. Import [HeySig3.prj.xml](../projects/HeySig3.prj.xml) as the separate HeySig3 project, preserving phone-side settings. Keep the original HeySig exports as backups and disable competing old slider profiles while testing.
+2. Enable Tasker accessibility, keep the phone on and unlocked, and open Signia's **Controls** page. Launching Signia while it was left on App settings failed the launch check during testing.
+3. Run `SIG3_Init` to fill missing defaults. Existing settings are preserved; noise/sleep automation defaults off.
+4. For the measured Pixel 9a layout only, import [SIG3_Pixel9aGestureSetup.tsk.xml](../tasks/SIG3_Pixel9aGestureSetup.tsk.xml) as a separate task and run `SIG3_Pixel9aGestureSetup`. This selects the balance/tinnitus gesture backends and stores their calibration. It fills an unset audio-stream setting with `media`, matching the observed Signia **Media sound** setting. It does not change an existing audio-stream setting or the Volume backend.
 
-Balance and tinnitus require their own readback selector: `%SIG3_BalanceKnobId` / `%SIG3_TinnitusKnobId`, or the matching four region bounds such as `%SIG3_BalanceKnobXMin`. Pixel spacing is not needed for the new accessibility path. The following StepPx/Direction settings apply only to the explicitly selected legacy gesture backend: set `%SIG3_BalanceStepPx` and `%SIG3_TinnitusStepPx` to measured adjacent-stop spacing (1–200 px). These distances have no guessed default. Run the respective Current task and inspect `%SIG3_QueryData` before attempting movement. Configure `%SIG3_BalanceDirection` / `%SIG3_TinnitusDirection`: `1` means upward increases the displayed value; `-1` means downward increases it. Volume defaults to `1` from the observed phone behavior. Direction must be confirmed on the phone. Tab labels are `Balance Tab` and `Tinnitus Tab`; unavailable tinnitus fails readback.
+The setup was already run on the tested phone. Its calibration is portrait 1080×2424, slider bounds `[501,652][580,2047]`, track endpoints Y=695/2000, StepPx=87, and Direction=1 (up increases). It overwrites balance/tinnitus calibration settings when run; do not apply these measurements to another device or layout. Changed bounds stop the calibrated position check and require fresh measurements.
 
-Current tasks publish `%SIG3_BalanceLevel/X/Y` and `%SIG3_TinnitusLevel/X/Y`. Volume continues publishing `%SIG3_Level` and `%SIG3_VolumeX/Y`. Your configuration uses the common slider controlling both aids; no separate left/right operation is introduced.
+## Commands
 
-## Validation and limitations
+Pass spoken text in Parameter 1 of `SIG3_VoiceRouter`, or use the configured AutoVoice adapter:
 
-Phone testing should begin with an explicit numbered target, such as `volume 10` or `SIG3_VolumeSet` with Parameter 1 `10`. The legacy Up/Down tasks were not reliable; the rewritten SIG3 Up/Down wrappers remain unverified on the phone. Set now uses one numeric accessibility action. Its command-commit behavior is not yet phone-confirmed.
+| Request | Example | Range |
+|---|---|---|
+| Volume | `change volume to 10` | 0–15 |
+| Balance | `change balance to minus 3` | −8–7 |
+| Tinnitus | `change tinnitus to 1` | 0–15, only when the tab is present |
 
-The Chromebook can generate and inspect these exports, but cannot test Signia because the app does not run there. Actual import, accessibility, gesture, and acoustic behavior must be tested on the Android phone with Tasker, AutoInput, and Signia.
+Short forms such as `volume 10`, `balance 0`, and `tinnitus one` also work. Volume/tinnitus mute requests 0; balance soft/sharp requests −8/7. Invalid targets fail rather than clamp. Repeating a target is a no-op after a fresh current query. Router behavior has simulated coverage; actual recognition and event delivery remain on the checklist.
 
-The simulated XML execution checks all 768 source/target transitions, repeated targets, spoken negative balance values, invalid ranges, missing calibration, unavailable controls, unchanged gestures, overshoot, and gesture failure. Static XML validation also passes. These checks do not execute Tasker's Android importer, Java Code, AutoVoice, or the real Signia app. Import and device verification remain necessary. Displayed readback is Signia app state, not independent hearing-aid acknowledgement.
+For manual numbered requests, use `SIG3_VolumeSet`, `SIG3_BalanceSet`, or `SIG3_TinnitusSet` with an integer in Parameter 1. Public Up/Down tasks are compatibility wrappers around Set; balance/tinnitus wrappers passed the adjacent phone tests above. Relative Up/Down voice phrases are not routed. Use public SIG3 tasks, not Internal tasks.
 
-## Additional prerequisites and operation results
+All public UI commands use `SIG3_Worker`. Keep its Tasker collision setting **Abort New Task**: a new command while it is running is rejected, not queued. No persistent busy flag needs resetting after failure or manual Stop. Do not enable competing legacy profiles during acceptance testing.
 
-Set `%SIG3_AudioStream` to `media` or `ring`, matching the choice in Signia. Preflight reads phone stream volume, audio mode, DND, and connected output devices without changing them. It rejects muted stream, an active call/communication mode, known connected external audio outputs, and silent/DND ringtone playback. Connected outputs are a conservative presence check, not an active-route measurement. Signia still owns its configurable audio thresholds; no guessed 50–90% setting is imposed. The phone must be on and unlocked.
+## Readback and program checks
 
-The UI guard requires one visible enabled common control and one visible current-program node. APK-derived defaults (not yet phone-confirmed) are:
+The verified current-value ID is `com.signia.rta:id/TA-SliderValue`. Volume uses `%SIG3_KnobId`; balance/tinnitus use `%SIG3_BalanceKnobId` / `%SIG3_TinnitusKnobId`. A calibrated selector region remains an alternative. The numeric label's oversized accessibility bounds do not locate its thumb reliably; the Pixel setup supplies track calibration instead.
 
-| Variable | Initial ID |
-|---|---|
-| `%SIG3_VolumeControlId` | `com.signia.rta:id/VolumeSlider` |
-| `%SIG3_BalanceControlId` | `com.signia.rta:id/TA-SoundBalanceSlider` |
-| `%SIG3_TinnitusControlId` | `com.signia.rta:id/TA-TinnitusSlider` |
-| `%SIG3_ProgramId` | `com.signia.rta:id/TA-ProgramName` |
+| Family | Verified control ID | Actual tab description |
+|---|---|---|
+| Volume | `com.signia.rta:id/VolumeSlider` | `Volume Tab` |
+| Balance | `com.signia.rta:id/TA-SoundBalanceSlider` | `Sound Sharpness Tab` |
+| Tinnitus | `com.signia.rta:id/TA-TinnitusSlider` | `Tinnitus Signal Tab` |
 
-Override these with IDs observed in your phone's UI query. The control ID must uniquely identify the visible control for that family; a reused numeric label ID alone is insufficient. A missing control/program or changed program causes failure rather than guessing. Dialogs that hide these nodes likewise fail. These checks do not prove every possible overlay is absent.
+Direct view-ID lookup returned zero matches on this phone. The repaired inspection/UI guards traverse the accessibility tree and require the exact visible enabled control. Inspection does not move a slider.
 
-Run `SIG3_Calibrate` with Parameter 1 `Balance` or `Tinnitus` and Parameter 2 such as `40,1` (measured pixel spacing, direction). It performs a read-only Current check and stores calibration only after successful validation. It does not measure spacing itself: inspect adjacent numbered stops first. Verify actual ranges on the phone against volume/tinnitus 0–15 and balance −8–7; changed ranges require updating the generator before movement. Defaults never overwrite already configured IDs.
+Signia changes the program label ID with the selected program (`Universal`, `TV`, etc.). The slider guard also recognizes the uniquely visible **Hearing program … Active** accessibility header when the configured `%SIG3_ProgramId` label is absent. Ambiguity, disagreement, or a program change during an operation fails the guard. Read-only balance detection passed in TV; that does not certify the separate ProgramCurrent/ProgramSwitch tasks.
 
-`%SIG3_OperationId`, `%SIG3_Family`, `%SIG3_Target`, `%SIG3_Program`, `%SIG3_Previous`, `%SIG3_Expected`, `%SIG3_Observed`, `%SIG3_MoveStage`, and `%SIG3_AudioDiagnostics` describe the operation. `%SIG3_Result` is logged and shown as a toast at completion. A manually stopped operation may retain a pending result, but does not leave a lock. `%SIG3_CommandOK` describes the last accepted operation, not a rejected/unrecognized voice request. Requests rejected as busy leave the owner's diagnostics intact. No automatic retry is made.
+Current tasks publish `%SIG3_Level` for volume, `%SIG3_BalanceLevel`, and `%SIG3_TinnitusLevel`, plus their family X/Y coordinates. The controls are common sliders; no separate left/right operation is introduced.
 
-Signia stays open through verification and afterward. This is the current explicit cleanup policy; no automatic Back, force-close, screen lock, or return to another app occurs. A successful result says **Signia displayed the level**, not that the hearing aids acknowledged it. Test volume 9→10, repeat 10, 10→9, 1→0 and 0→1 separately; repeat equivalent minimum-boundary checks for tinnitus if available.
+## Audio checks and results
 
-## Supported import and legacy migration
+Set `%SIG3_AudioStream` to `media` or `ring`, matching Signia. Preflight reads stream volume, call/audio mode, DND, and connected outputs without changing them. It rejects a muted stream, active call/communication mode, known connected external outputs, and silent/DND ringtone playback. The tested Media sound stream was unmuted and routed to the speaker. Connected-output checks are conservative presence checks, not proof of the active route.
 
-Import only `projects/HeySig3.prj.xml` for the new slider workflow. Point voice/button/watch adapters to `SIG3_VoiceRouter` or the public SIG3 Set tasks. Disable old slider-triggering profiles while testing; their events can otherwise operate Signia outside the new worker. Keep `HeySig.prj.xml`, `sig.tasks.tsk.xml`, and `xml/backup.xml` as references/backups, not competing active imports. Original SIG tasks remain untouched. Priority 3 now supplies the program, battery, noise, sleep, initialization, and event-adapter tasks described below.
+Read `%SIG3_CommandOK`, `%SIG3_Error`, and `%SIG3_Result` after a command. `%SIG3_Previous`, `%SIG3_Expected`, `%SIG3_Observed`, `%SIG3_Program`, `%SIG3_MoveStage`, `%SIG3_Gesture`, and `%SIG3_AudioDiagnostics` help diagnose it. Java checks preserve their error messages; parent guards avoid overwriting them with a literal `%SIG3_Error`. A stopped command may retain a pending result; busy/unrecognized requests do not represent a new successful operation. No automatic retry is made.
 
-The worker relies on [Tasker’s documented default collision policy](https://tasker.joaoapps.com/userguide/en/tasks.html), [child task priority behavior](https://tasker.joaoapps.com/userguide/en/help/ah_run_task.html), and the live [Tasks Running variable](https://tasker.joaoapps.com/userguide/en/variables.html). Android guards use [Tasker Java Code](https://tasker.joaoapps.com/userguide/en/help/ah_java_code.html). Export simulations model these APIs; on-phone import and execution remain necessary.
+Signia remains open by default (`%SIG3_CompletionPolicy=stay`). `home` returns to Android Home only after successful work while Signia is still foreground. See [completion policies](HeySig3-completion.md#completion-navigation).
 
+## Testing status
+
+Follow the [completed and remaining checklist](HeySig3-test-checklist.md). Local simulations cover all 768 numeric transitions and missing tinnitus tabs, but they do not execute Android, BeanShell, recognition, plugin events, or acoustic playback. [Static validation](HeySig3-validation.md) checked 79 XML files and 4,921 actions with zero failures. The [acceptance guide](HeySig3-slider-acceptance.md) describes the next phone checks and the separate native backend gate.
+
+The Chromebook generates/validates the project; Signia runs on the phone. USB and authorized wireless ADB were used for inspection/import/testing, not as a requirement for the Tasker balance/tinnitus control path.
 
 ## Priority 3 setup
 

@@ -1,6 +1,6 @@
 # HeySig3 completion and event wiring
 
-Updated October 10, 2026. Import `projects/HeySig3.prj.xml` and run `SIG3_Init`. Existing settings are preserved. Automatic noise/sleep changes remain disabled until configured and tested. SoundWear is removed.
+Updated October 10, 2026. See the [user manual](HeySig3.md), [completed/remaining test checklist](HeySig3-test-checklist.md), and [phone verification notes](HeySig3-verified-usb-drags.md). Import `projects/HeySig3.prj.xml` and run `SIG3_Init`. Existing settings are preserved. Automatic noise/sleep changes remain disabled until configured and tested. SoundWear is removed.
 
 ## User commands
 
@@ -51,8 +51,12 @@ The repository supplies adapters, not fabricated AutoVoice/AutoWear/sleep-provid
 
 Tasker event variables are local to the event task. If a profile needs an intermediate task, use Perform Task to pass the event value explicitly. Export actual configured event profiles from the phone before treating their setup as version-portable XML. No SoundWear profiles should remain active on the phone.
 
-## Acceptance still required
+## Verified sliders and acceptance still required
 
-Follow `HeySig3-slider-acceptance.md` for the accessibility commit gate, native range confirmation and audible volume response. Then test Balance/Tinnitus separately. Import/recognition/plugin event/Java Code compatibility and actual acoustic delivery cannot be certified by repository simulations. Program selection and new Current require phone-confirmed IDs. The original battery sequence is user-confirmed working; its SIG3 import still needs verification.
+Tasker balance and tinnitus passed 0 → 1 → 0 in Universal using the explicitly configured Pixel 9a gesture backend. TV's missing tinnitus tab was checked on the phone: TinnitusUp stopped with `Tinnitus unavailable for this program` and no gesture. Updated read-only checks also passed for tinnitus in Universal and balance in TV. Universal was restored; balance/tinnitus finished at 0.
 
-Repository checks cover XML structure, shared numeric action flow, original battery sequence, program read/switch, prompts and cancellation, semantic aliases, override toggle, three-tier noise, watch sample routing, cancellation/resume and legacy adapter flow. Old gesture simulations explicitly select the compatibility backend; they do not prove the new accessibility backend works on the phone.
+The project default remains native accessibility, and that separate path has not passed a live movement/commit test. Captured touch exploration was off, so its Set gate remains closed. The working per-family gesture settings do not automatically change Volume's backend. The ADB volume tests do not certify Tasker's Volume Set.
+
+Follow the [acceptance guide](HeySig3-slider-acceptance.md) and [test checklist](HeySig3-test-checklist.md) for direct numbered entry, repeated-target behavior, other programs and actual aid response. Live voice/watch events, program-switch/current tasks, prompts, automation and SIG3 battery operation still need phone verification. The original battery sequence is user-confirmed; its migrated SIG3 export remains unverified.
+
+Repository checks cover XML structure, all 768 numeric transitions, per-family backend isolation, missing tinnitus tabs, worker coordination, battery sequence, program read/switch, prompts/cancellation, aliases, override, three-tier noise, watch sample routing and legacy adapter flow. These simulations do not execute Android/BeanShell, plugin events or acoustic delivery.

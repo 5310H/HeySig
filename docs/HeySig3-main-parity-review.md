@@ -12,6 +12,10 @@ Repository parity work now adds prompted mode/battery recognition, configured se
 
 See [completion and event wiring](HeySig3-completion.md) for the final supported behavior. Old source comparisons below are the findings that prompted implementation, not a claim that these tasks are still missing. Actual plugin event profiles, configured program/control IDs and acoustic reception remain phone acceptance items. No functional EQ controller was established in main; its placeholder is not implemented. Spoken-result synthesis was an optional suggestion, not main parity, and remains absent. AppBlock/force-close/lock are replaced by an explicit completion policy rather than copied.
 
+## Subsequent phone verification — October 10
+
+The historical findings below predate the slider repair in [cc3fc3f](https://github.com/5310H/HeySig/commit/cc3fc3f). Balance and tinnitus now have successful Tasker 0 → 1 → 0 tests in Universal through the explicitly configured Pixel 9a gesture backend. TV's missing tinnitus tab stops cleanly without a gesture. Updated read-only checks passed for tinnitus in Universal and balance in TV. Native accessibility movement, Tasker's Volume Set and aid receipt remain separate acceptance items. Use the [current checklist](HeySig3-test-checklist.md) rather than the historical unresolved-slider finding to plan testing.
+
 ## Original audit findings
 
 ## Findings in priority order
