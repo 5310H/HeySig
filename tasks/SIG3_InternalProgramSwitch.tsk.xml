@@ -73,24 +73,38 @@
 			<Int sr="arg6" val="1" />
 		</Action>
 		<Action sr="act7" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%SIG3_Error</lhs>
+					<op>13</op>
+					<rhs />
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act8" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
-			<Str sr="arg1" ve="3">Program launch failed: %SIG3_Error</Str>
+			<Str sr="arg1" ve="3">Program launch failed</Str>
 			<Int sr="arg2" val="0" />
 			<Int sr="arg3" val="0" />
 			<Int sr="arg4" val="0" />
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act8" ve="7">
-			<code>137</code>
-			<Int sr="arg0" val="0" />
-			<Str sr="arg1" ve="3" />
-		</Action>
 		<Action sr="act9" ve="7">
 			<code>38</code>
 		</Action>
 		<Action sr="act10" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
+		</Action>
+		<Action sr="act11" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act12" ve="7">
 			<code>474</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">/* Read-only preflight: no volume, route, DND or lock settings are changed. */
@@ -101,6 +115,7 @@ import android.media.AudioDeviceInfo;
 import android.os.PowerManager;
 import android.os.Build;
 import com.joaomgcd.taskerm.action.java.JavaCodeException;
+try {
 pm = context.getSystemService("power");
 km = context.getSystemService("keyguard");
 if (!pm.isInteractive() || km.isKeyguardLocked())
@@ -134,11 +149,16 @@ if ("ring".equals(streamName) &amp;&amp; (am.getRingerMode() != AudioManager.RIN
     throw new JavaCodeException("Ringtone acoustic control is blocked by silent/DND state");
 /* Media DND and Signia's configurable volume thresholds are recorded, not guessed. */
 return "ready";
+
+} catch (Exception failure) {
+    tasker.setVariable("SIG3_Error", failure.toString());
+    throw failure;
+}
 </Str>
 			<Str sr="arg1" ve="3" />
 			<Int sr="arg2" val="1" />
 		</Action>
-		<Action sr="act11" ve="7">
+		<Action sr="act13" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -149,7 +169,7 @@ return "ready";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act12" ve="7">
+		<Action sr="act14" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_ProgramOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -159,7 +179,7 @@ return "ready";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act13" ve="7">
+		<Action sr="act15" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Program audio preflight failed: %errmsg</Str>
@@ -169,15 +189,15 @@ return "ready";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act14" ve="7">
+		<Action sr="act16" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act15" ve="7">
+		<Action sr="act17" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act16" ve="7">
+		<Action sr="act18" ve="7">
 			<code>474</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">/* Program selection through visible accessibility nodes, never fixed coordinates. */
@@ -253,7 +273,7 @@ throw new JavaCodeException("Program did not become the configured target; inspe
 			<Str sr="arg1" ve="3" />
 			<Int sr="arg2" val="1" />
 		</Action>
-		<Action sr="act17" ve="7">
+		<Action sr="act19" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -264,7 +284,7 @@ throw new JavaCodeException("Program did not become the configured target; inspe
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act18" ve="7">
+		<Action sr="act20" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_ProgramOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -274,7 +294,7 @@ throw new JavaCodeException("Program did not become the configured target; inspe
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act19" ve="7">
+		<Action sr="act21" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Program switch failed: %errmsg</Str>
@@ -284,15 +304,15 @@ throw new JavaCodeException("Program did not become the configured target; inspe
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act20" ve="7">
+		<Action sr="act22" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act21" ve="7">
+		<Action sr="act23" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act22" ve="7">
+		<Action sr="act24" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_ProgramOK</Str>
 			<Str sr="arg1" ve="3">1</Str>

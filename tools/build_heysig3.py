@@ -191,10 +191,23 @@ def family_current(family):
     for a in aa:
         for node in a.iter():
             if node.text:
-                node.text = node.text.replace('SIG3_Volume', 'SIG3_' + family).replace('Volume Tab', family + ' Tab').replace('SIG3_Knob', 'SIG3_' + family + 'Knob').replace('SIG3_Level', 'SIG3_' + family + 'Level')
+                node.text = node.text.replace('SIG3_Volume', 'SIG3_' + family).replace('Volume Tab', {'Balance': 'Sound Sharpness Tab', 'Tinnitus': 'Tinnitus Signal Tab'}[family]).replace('SIG3_Knob', 'SIG3_' + family + 'Knob').replace('SIG3_Level', 'SIG3_' + family + 'Level')
                 if family == 'Balance' and node.text == r'^(?:[0-9]|1[0-5])$':
                     node.text = r'^(?:-[1-8]|[0-7])$'
+    if family == 'Tinnitus':
+        guarded = []
+        for item in aa:
+            if item.findtext('code') == '107361459':
+                guarded += tinnitus_available()
+            guarded.append(item)
+        aa = guarded
     return aa
+
+
+def tinnitus_available():
+    return [setvar('%SIG3_TinnitusAvailable', 0), java_file('sig3_tinnitus_available.java'),
+            *family_guard('Tinnitus', '%SIG3_TinnitusAvailable', 3, 1,
+                          'Tinnitus unavailable for this program')]
 
 
 def family_fail(family, message):
@@ -202,6 +215,10 @@ def family_fail(family, message):
 
 
 def family_guard(family, lhs, op, rhs, message):
+    if '%SIG3_Error' in message:
+        return [condition(lhs, op, rhs), setvar('%SIG3_' + family + 'OK', 0),
+                condition('%SIG3_Error', 13), setvar('%SIG3_Error', message.replace(': %SIG3_Error', '')),
+                action(38), stop(), action(38)]
     return [condition(lhs, op, rhs), *family_fail(family, message), action(38)]
 
 
@@ -221,7 +238,7 @@ def legacy_target_set(family):
         aa += [condition(step, 13), setvar(step, 40), action(38), condition(direction, 13), setvar(direction, 1), action(38)]
     aa += [*g(direction, 5, r'^(?:1|-1)$', 'Configure calibrated direction: 1=up increases, -1=down increases'), *g(step, 5, r'^[0-9]+$', 'Measure and configure ' + step),
            *g(step, 6, 1, 'Invalid step distance'), *g(step, 7, 200, 'Invalid step distance'),
-           call('SIG3_Internal' + family + 'Current'), *g(ok, 3, 1, family + ' initial query failed: %SIG3_Error'),
+           call('SIG3_Internal' + family + 'Current', '%par2'), *g(ok, 3, 1, family + ' initial query failed: %SIG3_Error'),
            loop('%sig3_iteration', '1:16'),
            condition(level, 8, '%sig3_target'), setvar(ok, 1), setvar('%SIG3_MoveStage', 'complete'), stop(), action(38),
            setvar('%sig3_start', level), setvar('%SIG3_Previous', level), setvar('%sig3_delta', 1),
@@ -231,10 +248,10 @@ def legacy_target_set(family):
            setvar('%sig3_end_y', '%sig3_y - %sig3_delta * ' + step + ' * ' + direction, True),
            setvar(ok, 0), setvar('%SIG3_MoveStage', 'gesture'),
            setvar('%SIG3_Error', family + ' gesture did not complete'),
-           setvar('%SIG3_Gesture', family + ' target=%sig3_target expected=%sig3_expected; DOWN-HOLD-MOVE-UP: same pointer; HOLD 200 ms; MOVE 300 ms; dispatchGesture + continueStroke; %sig3_x,%sig3_y -> %sig3_x,%sig3_end_y; UP only at end')]
+           setvar('%SIG3_Gesture', family + ' target=%sig3_target expected=%sig3_expected; DOWN-MOVE-UP: one pointer; MOVE 650 ms; dispatchGesture; %sig3_x,%sig3_y -> %sig3_x,%sig3_end_y; UP only at end')]
     a = hold_drag()
     a.find("Str[@sr='arg0']").text = (ROOT / 'tools/sig3_target_drag.java').read_text()
-    aa += [java_file('sig3_phone_check.java'), *g('%err', 12, '', family + ' audio preflight failed: %errmsg'), java_file('sig3_ui_check.java'), *g('%err', 12, '', family + ' control/program check failed: %errmsg'), a, *g('%err', 12, '', family + ' continuous gesture failed: %errmsg'), wait(500),
+    aa += [setvar('%SIG3_MoveStage', 'audio-preflight'), java_file('sig3_phone_check.java'), *g('%err', 12, '', family + ' audio preflight failed: %errmsg'), setvar('%SIG3_MoveStage', 'control-check'), java_file('sig3_ui_check.java'), *g('%err', 12, '', family + ' control/program check failed: %errmsg'), setvar('%SIG3_MoveStage', 'gesture-dispatch'), a, *g('%err', 12, '', family + ' continuous gesture failed: %errmsg'), wait(500),
            setvar('%SIG3_MoveStage', 'readback'), call('SIG3_Internal' + family + 'Current', 'query_only'), setvar('%SIG3_Observed', level),
            *g(ok, 3, 1, family + ' post-gesture query failed: %SIG3_Error'),
            *g(level, 9, '%sig3_expected', family + ' unexpected readback=' + level + ' expected=%sig3_expected; stopped'),
@@ -247,13 +264,16 @@ def target_set(family):
     level = '%SIG3_Level' if family == 'Volume' else '%SIG3_' + family + 'Level'
     ok = '%SIG3_' + family + 'OK'
     g = lambda lhs, op, rhs, message: family_guard(family, lhs, op, rhs, message)
-    return [condition('%SIG3_SliderBackend',2,'legacy-gesture'), *legacy_target_set(family), action(43),
+    return [setvar('%sig3_backend', '%SIG3_SliderBackend'),
+            condition('%SIG3_' + family + 'Backend', 12),
+            setvar('%sig3_backend', '%SIG3_' + family + 'Backend'), action(38),
+            condition('%sig3_backend',2,'legacy-gesture'), *legacy_target_set(family), action(43),
             setvar(ok,0), setvar('%sig3_target','%par1'),
             *g('%sig3_target',5,r'^-?[0-9]+$',family + ' target must be an integer'),
             *g('%sig3_target',6,lo,family + ' target below minimum'),
             *g('%sig3_target',7,hi,family + ' target above maximum'),
             setvar('%SIG3_Target','%sig3_target'),setvar('%SIG3_' + family + 'Target','%sig3_target'),
-            call('SIG3_Internal' + family + 'Current'), *g(ok,3,1,'Initial slider query failed: %SIG3_Error'),
+            call('SIG3_Internal' + family + 'Current', '%par2'), *g(ok,3,1,'Initial slider query failed: %SIG3_Error'),
             condition(level,8,'%sig3_target'),setvar('%SIG3_Observed',level),stop(),action(38),
             setvar('%SIG3_Previous',level),setvar('%SIG3_Expected','%sig3_target'),setvar(ok,0),
             java_file('sig3_phone_check.java'),*g('%err',12,'','Audio preflight failed: %errmsg'),
@@ -278,7 +298,7 @@ def target_wrapper(family, operation):
             *family_guard(family, ok, 3, 1, 'Current query failed: %SIG3_Error'),
             condition(level, 8, boundary), stop(), action(38),
             setvar('%sig3_requested', level + (' + 1' if operation == 'Up' else ' - 1'), True),
-            call('SIG3_Internal' + family + 'Set', '%sig3_requested')]
+            call('SIG3_Internal' + family + 'Set', '%sig3_requested', 'query_only')]
 
 
 def numeric_voice():
@@ -333,6 +353,8 @@ def defaults():
                         ('VolumeControlId', 'com.signia.rta:id/VolumeSlider'),
                         ('BalanceControlId', 'com.signia.rta:id/TA-SoundBalanceSlider'),
                         ('TinnitusControlId', 'com.signia.rta:id/TA-TinnitusSlider'),
+                        ('BalanceKnobId', 'com.signia.rta:id/TA-SliderValue'),
+                        ('TinnitusKnobId', 'com.signia.rta:id/TA-SliderValue'),
                         ('ProgramOpenId', 'com.signia.rta:id/TA_HomePage_ProgramSwitch_Icon'),
                         ('BatteryOpenId', 'com.signia.rta:id/TA-BatteryIcon'),
                         ('BatteryPageId', 'com.signia.rta:id/TA-BluetoothAndBatteryPageCloseIcon')]:
@@ -539,10 +561,24 @@ def build():
         tasks.append(task('SIG3_Internal' + family + 'Calibrate', 460 + index, protect_internal(aa)))
     tasks.append(task('SIG3_Calibrate', 351, [call('SIG3_Worker', '%par1,Calibrate,%par2')]))
     for index, family in enumerate(('Volume','Balance','Tinnitus')):
-        aa = [call('SIG3_Internal' + family + 'Current'),
-              *family_guard(family,'%SIG3_' + family + 'OK',3,1,'Slider inspection query failed: %SIG3_Error'),
+        # Inspection must not depend on numeric readback or the program guard:
+        # those are precisely the selectors we need the live capture to diagnose.
+        aa = [setvar('%SIG3_' + family + 'OK', 0),
+              setvar('%SIG3_Error', 'Slider inspection did not complete'),
+              setvar('%SIG3_MoveStage', 'inspect-launch'),
+              call('SIG3_InternalAppLaunch'),
+              condition('%SIG3_AppOK', 3, 1),
+              condition('%SIG3_Error', 13),
+              setvar('%SIG3_Error', 'Signia launch failed before slider inspection'),
+              action(38), stop(), action(38)]
+        if family == 'Tinnitus':
+            aa += tinnitus_available()
+        aa += [setvar('%SIG3_MoveStage', 'inspect-tab'),
+               *checked_plugin(107361459, 'click(text,' + {'Volume': 'Volume Tab', 'Balance': 'Sound Sharpness Tab', 'Tinnitus': 'Tinnitus Signal Tab'}[family] + ')'), wait()]
+        aa += [setvar('%SIG3_MoveStage', 'inspect-node'),
               setvar('%sig3_slider_mode','Inspect'),java_file('sig3_slider_progress.java'),
-              *family_guard(family,'%err',12,'','Slider inspection failed: %errmsg')]
+              *family_guard(family,'%err',12,'','Slider inspection failed: %errmsg'),
+              setvar('%SIG3_' + family + 'OK', 1)]
         tasks.append(task('SIG3_Internal' + family + 'Inspect',490+index,protect_internal(aa)))
         tasks.append(task('SIG3_' + family + 'Inspect',390+index,[request(family,'Inspect')]))
     tasks.extend(extra_tasks())

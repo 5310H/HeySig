@@ -6,6 +6,7 @@ import android.media.AudioDeviceInfo;
 import android.os.PowerManager;
 import android.os.Build;
 import com.joaomgcd.taskerm.action.java.JavaCodeException;
+try {
 pm = context.getSystemService("power");
 km = context.getSystemService("keyguard");
 if (!pm.isInteractive() || km.isKeyguardLocked())
@@ -39,3 +40,8 @@ if ("ring".equals(streamName) && (am.getRingerMode() != AudioManager.RINGER_MODE
     throw new JavaCodeException("Ringtone acoustic control is blocked by silent/DND state");
 /* Media DND and Signia's configurable volume thresholds are recorded, not guessed. */
 return "ready";
+
+} catch (Exception failure) {
+    tasker.setVariable("SIG3_Error", failure.toString());
+    throw failure;
+}

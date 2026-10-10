@@ -63,24 +63,38 @@
 			<Int sr="arg6" val="1" />
 		</Action>
 		<Action sr="act6" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%SIG3_Error</lhs>
+					<op>13</op>
+					<rhs />
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act7" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
-			<Str sr="arg1" ve="3">Current query failed: %SIG3_Error</Str>
+			<Str sr="arg1" ve="3">Current query failed</Str>
 			<Int sr="arg2" val="0" />
 			<Int sr="arg3" val="0" />
 			<Int sr="arg4" val="0" />
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act7" ve="7">
-			<code>137</code>
-			<Int sr="arg0" val="0" />
-			<Str sr="arg1" ve="3" />
-		</Action>
 		<Action sr="act8" ve="7">
 			<code>38</code>
 		</Action>
 		<Action sr="act9" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
+		</Action>
+		<Action sr="act10" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act11" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -91,15 +105,15 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act10" ve="7">
+		<Action sr="act12" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act11" ve="7">
+		<Action sr="act13" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act12" ve="7">
+		<Action sr="act14" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig3_requested</Str>
 			<Str sr="arg1" ve="3">%SIG3_Level - 1</Str>
@@ -109,7 +123,7 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act13" ve="7">
+		<Action sr="act15" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_InternalVolumeSet</Str>
@@ -118,7 +132,7 @@
 			</Int>
 			<Int sr="arg10" val="1" />
 			<Str sr="arg2" ve="3">%sig3_requested</Str>
-			<Str sr="arg3" ve="3" />
+			<Str sr="arg3" ve="3">query_only</Str>
 			<Str sr="arg4" ve="3" />
 			<Int sr="arg5" val="0" />
 			<Int sr="arg6" val="0" />

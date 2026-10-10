@@ -31,3 +31,18 @@ p = phone('Volume'); p.touch_exploration = True
 p.globals['SIG3_VolumeRangeConfirmed'] = '1'; p.progress_supported = False
 p.run('SIG3_VolumeSet','10'); assert not p.progress_actions and p.globals['SIG3_CommandOK'] == '0'
 print('Shared numeric action flow: inspection, prerequisites, accepted-without-change, targets, no-op and invalid inputs passed.')
+
+# A family's explicit gesture choice must not enable gestures for other families.
+for family in ('Balance', 'Tinnitus'):
+    p = phone(family)
+    p.globals['SIG3_' + family + 'Backend'] = 'legacy-gesture'
+    p.globals['SIG3_' + family + 'StepPx'] = '40'
+    p.globals['SIG3_' + family + 'Direction'] = '1'
+    start = p.level
+    p.run('SIG3_' + family + 'Set', str(start + 1))
+    assert p.level == start + 1 and len(p.drags) == 1 and not p.progress_actions
+    assert p.gestures[-1][2] == '650'
+    p.globals['SIG3_KnobId'] = 'volume-knob'
+    p.run('SIG3_VolumeSet', str(start + 2))
+    assert p.globals['SIG3_CommandOK'] == '0' and len(p.drags) == 1
+print('Per-family gesture backend leaves other families on their configured backend.')

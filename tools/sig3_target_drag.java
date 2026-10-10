@@ -42,8 +42,9 @@ performStroke(service, stroke, phase) {
         throw new JavaCodeException(phase + ": Android cancelled gesture");
 }
 
+try {
 if (Build.VERSION.SDK_INT < 26)
-    throw new JavaCodeException("Continuous touch requires Android 8 or later");
+    throw new JavaCodeException("Slider gesture requires Android 8 or later");
 service = tasker.getAccessibilityService();
 if (service == null)
     throw new JavaCodeException("Enable Tasker in Android Settings > Accessibility > Installed apps");
@@ -55,31 +56,16 @@ if (x < 0 || endY < 0 || Math.abs(y - endY) < 1 || Math.abs(y - endY) > 200)
 metrics = service.getResources().getDisplayMetrics();
 if (x >= metrics.widthPixels || y < 0 || y >= metrics.heightPixels || endY >= metrics.heightPixels)
     throw new JavaCodeException("Gesture coordinates outside display bounds");
-holdPath = new Path();
-holdPath.moveTo(x, y);
-/* willContinue=true keeps this pointer DOWN after the stationary 200 ms. */
-holdStroke = new GestureDescription.StrokeDescription(holdPath, 0, 200, true);
 movePath = new Path();
 movePath.moveTo(x, y);
 movePath.lineTo(x, endY);
-/* Continue the SAME pointer; false releases it at the end of the 300 ms MOVE. */
-moveStroke = holdStroke.continueStroke(movePath, 0, 300, false);
-held = false;
-try {
-    held = true;
-    performStroke(service, holdStroke, "down-hold");
-    performStroke(service, moveStroke, "move");
-    held = false;
-    tasker.setVariable("SIG3_TouchStage", "released");
-} finally {
-    if (held) {
-        /* Best-effort release of a held pointer after rejection/timeout/error. */
-        try {
-            releaseStroke = holdStroke.continueStroke(holdPath, 0, 1, false);
-            service.dispatchGesture(new GestureDescription.Builder().addStroke(releaseStroke).build(), null, null);
-        } catch (Exception releaseError) {
-            tasker.log("SIG3 held-pointer cleanup: " + releaseError.toString());
-        }
-    }
-}
+// One continuous DOWN-MOVE-UP stroke, matching the successful 650 ms USB drags.
+moveStroke = new GestureDescription.StrokeDescription(movePath, 0, 650, false);
+performStroke(service, moveStroke, "move");
+tasker.setVariable("SIG3_TouchStage", "released");
 return "completed";
+
+} catch (Exception failure) {
+    tasker.setVariable("SIG3_Error", failure.toString());
+    throw failure;
+}

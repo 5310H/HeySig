@@ -98,7 +98,7 @@ for path in files:
 report = '# Tasker XML static validation — 2026-10-10\n\n'
 report += f'Checked {len(files)} XML files and {actions_count} task actions. Found {len(issues)} failures.\n\n'
 report += 'Action numbers were compared with [Tasker’s official definitions](' + catalog['source'] + '). Checks include XML parsing, task IDs, action numbering, nested control flow, explicit condition fields, selected built-in argument layouts, plugin bundle presence, and JSON syntax.\n\n'
-report += 'This is not full schema certification. Tasker has not parsed or executed these files here. The selected argument layouts are repository-derived checks, not an official XSD. Plugin settings, Android components, scene/profile layouts, unresolved external task references, and all remaining action arguments need runtime or authoritative format verification.\n\n'
+report += 'This is not full schema certification. Static checks do not establish Android runtime behavior; selected live checks are recorded in [phone verification notes](HeySig3-verified-usb-drags.md). The selected argument layouts are repository-derived checks, not an official XSD. Plugin settings, Android components, scene/profile layouts, unresolved external task references, and all remaining action arguments need runtime or authoritative format verification.\n\n'
 report += '\n'.join('- ' + x for x in issues) + '\n'
 (ROOT / 'docs/HeySig3-validation.md').write_text(report.rstrip() + '\n')
 print(f'Checked {len(files)} XML files, {actions_count} task actions; {len(issues)} static failures.')

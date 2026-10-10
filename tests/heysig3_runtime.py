@@ -24,6 +24,7 @@ class Phone:
         self.program_capture = 'Universal'
         self.wrong_control = False
         self.ui_checks = 0
+        self.tinnitus_available = True
         self.hook = None
     def run(self, name, param='', param2=''):
         if name in self.active:
@@ -254,6 +255,10 @@ class Phone:
                         value = get('sig3_input')
                         if value.startswith('%'): local['err'], local['errmsg'] = '1', 'No input'
                         else: put('sig3_input', re.sub(r'(?i)^sig3\s+', '', value.strip()))
+                    elif 'Read-only tinnitus availability' in script:
+                        self.globals['SIG3_TinnitusAvailable'] = '1' if self.tinnitus_available else '0'
+                        if not self.tinnitus_available:
+                            self.globals['SIG3_Error'] = 'Tinnitus unavailable for this program'
                     elif 'Read-only live UI guard' in script:
                         self.ui_checks += 1
                         baseline = self.globals.get('SIG3_Program', '')
@@ -267,8 +272,12 @@ class Phone:
                 if self.hook:
                     hook, self.hook = self.hook, None
                     hook(self)
-                assert 'holdStroke.continueStroke(movePath, 0, 300, false)' in script
-                self.gestures.append((f"{get('sig3_x')},{get('sig3_y')}", f"{get('sig3_x')},{get('sig3_end_y')}", '200+300'))
+                if 'holdStroke.continueStroke(movePath, 0, 300, false)' in script:
+                    duration = '200+300'
+                else:
+                    assert 'new GestureDescription.StrokeDescription(movePath, 0, 650, false)' in script
+                    duration = '650'
+                self.gestures.append((f"{get('sig3_x')},{get('sig3_y')}", f"{get('sig3_x')},{get('sig3_end_y')}", duration))
                 distance = float(get('sig3_y')) - float(get('sig3_end_y'))
                 assert 1 <= abs(distance) <= 200
                 self.drags.append(distance)

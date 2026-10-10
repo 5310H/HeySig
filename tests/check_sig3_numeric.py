@@ -27,6 +27,8 @@ for family in ('Volume','Balance','Tinnitus'):
     assert p.level == 4 and p.globals['SIG3_CommandOK'] == '1'
     p.run('SIG3_VoiceRouter',family.lower() + ' four')
     assert len(p.drags) == 2  # repeating a target is a no-op
+p = phone('Balance',0); p.run('SIG3_BalanceSet','-9')
+assert p.level == 0 and not p.drags and p.globals['SIG3_CommandOK'] == '0'
 p = phone('Balance',2); p.run('SIG3_VoiceRouter','set balance to minus three')
 assert p.level == -3 and p.globals['SIG3_CommandOK'] == '1'
 for family in ('Balance','Tinnitus'):
