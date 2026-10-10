@@ -137,6 +137,26 @@
 		</Action>
 		<Action sr="act13" ve="7">
 			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_SliderDiagnostics</Str>
+			<Str sr="arg1" ve="3" />
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act14" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_ProgressAccepted</Str>
+			<Str sr="arg1" ve="3">not run</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act15" ve="7">
+			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_OperationId</Str>
 			<Str sr="arg1" ve="3">%TIMEMS</Str>
 			<Int sr="arg2" val="0" />
@@ -145,7 +165,7 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act14" ve="7">
+		<Action sr="act16" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig3_request</Str>
 			<Str sr="arg1" ve="3">%par1</Str>
@@ -155,13 +175,13 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act15" ve="7">
+		<Action sr="act17" ve="7">
 			<code>590</code>
 			<Str sr="arg0" ve="3">%sig3_request</Str>
 			<Str sr="arg1" ve="3">,</Str>
 			<Int sr="arg2" val="0" />
 		</Action>
-		<Action sr="act16" ve="7">
+		<Action sr="act18" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Family</Str>
 			<Str sr="arg1" ve="3">%sig3_request1</Str>
@@ -171,7 +191,7 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act17" ve="7">
+		<Action sr="act19" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Target</Str>
 			<Str sr="arg1" ve="3">%sig3_request3</Str>
@@ -181,7 +201,7 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act18" ve="7">
+		<Action sr="act20" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Operation incomplete or unsupported request</Str>
@@ -191,7 +211,7 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act19" ve="7">
+		<Action sr="act21" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -202,7 +222,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act20" ve="7">
+		<Action sr="act22" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_ProgramId</Str>
 			<Str sr="arg1" ve="3">com.signia.rta:id/TA-ProgramName</Str>
@@ -212,10 +232,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act21" ve="7">
+		<Action sr="act23" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act22" ve="7">
+		<Action sr="act24" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -226,7 +246,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act23" ve="7">
+		<Action sr="act25" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VolumeControlId</Str>
 			<Str sr="arg1" ve="3">com.signia.rta:id/VolumeSlider</Str>
@@ -236,10 +256,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act24" ve="7">
+		<Action sr="act26" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act25" ve="7">
+		<Action sr="act27" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -250,7 +270,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act26" ve="7">
+		<Action sr="act28" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_BalanceControlId</Str>
 			<Str sr="arg1" ve="3">com.signia.rta:id/TA-SoundBalanceSlider</Str>
@@ -260,10 +280,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act27" ve="7">
+		<Action sr="act29" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act28" ve="7">
+		<Action sr="act30" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -274,7 +294,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act29" ve="7">
+		<Action sr="act31" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_TinnitusControlId</Str>
 			<Str sr="arg1" ve="3">com.signia.rta:id/TA-TinnitusSlider</Str>
@@ -284,10 +304,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act30" ve="7">
+		<Action sr="act32" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act31" ve="7">
+		<Action sr="act33" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -298,7 +318,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act32" ve="7">
+		<Action sr="act34" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_ProgramOpenId</Str>
 			<Str sr="arg1" ve="3">com.signia.rta:id/TA_HomePage_ProgramSwitch_Icon</Str>
@@ -308,10 +328,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act33" ve="7">
+		<Action sr="act35" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act34" ve="7">
+		<Action sr="act36" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -322,7 +342,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act35" ve="7">
+		<Action sr="act37" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_BatteryOpenId</Str>
 			<Str sr="arg1" ve="3">com.signia.rta:id/TA-BatteryIcon</Str>
@@ -332,10 +352,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act36" ve="7">
+		<Action sr="act38" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act37" ve="7">
+		<Action sr="act39" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -346,7 +366,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act38" ve="7">
+		<Action sr="act40" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_BatteryPageId</Str>
 			<Str sr="arg1" ve="3">com.signia.rta:id/TA-BluetoothAndBatteryPageCloseIcon</Str>
@@ -356,10 +376,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act39" ve="7">
+		<Action sr="act41" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act40" ve="7">
+		<Action sr="act42" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -370,7 +390,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act41" ve="7">
+		<Action sr="act43" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -380,7 +400,7 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act42" ve="7">
+		<Action sr="act44" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -391,7 +411,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act43" ve="7">
+		<Action sr="act45" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_InternalVolumeCurrent</Str>
@@ -408,7 +428,7 @@
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act44" ve="7">
+		<Action sr="act46" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -419,7 +439,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act45" ve="7">
+		<Action sr="act47" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Internal task failed: %errmsg</Str>
@@ -429,23 +449,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act46" ve="7">
+		<Action sr="act48" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
-			<Int sr="arg2" val="0" />
-			<Int sr="arg3" val="0" />
-			<Int sr="arg4" val="0" />
-			<Int sr="arg5" val="3" />
-			<Int sr="arg6" val="1" />
-		</Action>
-		<Action sr="act47" ve="7">
-			<code>38</code>
-		</Action>
-		<Action sr="act48" ve="7">
-			<code>547</code>
-			<Str sr="arg0" ve="3">%SIG3_CommandOK</Str>
-			<Str sr="arg1" ve="3">%SIG3_VolumeOK</Str>
 			<Int sr="arg2" val="0" />
 			<Int sr="arg3" val="0" />
 			<Int sr="arg4" val="0" />
@@ -456,6 +463,19 @@
 			<code>38</code>
 		</Action>
 		<Action sr="act50" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_CommandOK</Str>
+			<Str sr="arg1" ve="3">%SIG3_VolumeOK</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act51" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act52" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -466,7 +486,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act51" ve="7">
+		<Action sr="act53" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_InternalVolumeSet</Str>
@@ -483,7 +503,7 @@
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act52" ve="7">
+		<Action sr="act54" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -494,7 +514,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act53" ve="7">
+		<Action sr="act55" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Internal task failed: %errmsg</Str>
@@ -504,23 +524,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act54" ve="7">
+		<Action sr="act56" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
-			<Int sr="arg2" val="0" />
-			<Int sr="arg3" val="0" />
-			<Int sr="arg4" val="0" />
-			<Int sr="arg5" val="3" />
-			<Int sr="arg6" val="1" />
-		</Action>
-		<Action sr="act55" ve="7">
-			<code>38</code>
-		</Action>
-		<Action sr="act56" ve="7">
-			<code>547</code>
-			<Str sr="arg0" ve="3">%SIG3_CommandOK</Str>
-			<Str sr="arg1" ve="3">%SIG3_VolumeOK</Str>
 			<Int sr="arg2" val="0" />
 			<Int sr="arg3" val="0" />
 			<Int sr="arg4" val="0" />
@@ -531,6 +538,94 @@
 			<code>38</code>
 		</Action>
 		<Action sr="act58" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_CommandOK</Str>
+			<Str sr="arg1" ve="3">%SIG3_VolumeOK</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act59" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act60" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%sig3_request2</lhs>
+					<op>2</op>
+					<rhs>Inspect</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act61" ve="7">
+			<code>130</code>
+			<se>true</se>
+			<Str sr="arg0" ve="3">SIG3_InternalVolumeInspect</Str>
+			<Int sr="arg1">
+				<var>%priority+1</var>
+			</Int>
+			<Int sr="arg10" val="1" />
+			<Str sr="arg2" ve="3">%sig3_request3</Str>
+			<Str sr="arg3" ve="3">%sig3_request4</Str>
+			<Str sr="arg4" ve="3" />
+			<Int sr="arg5" val="0" />
+			<Int sr="arg6" val="0" />
+			<Str sr="arg7" ve="3" />
+			<Int sr="arg8" val="0" />
+			<Int sr="arg9" val="0" />
+		</Action>
+		<Action sr="act62" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%err</lhs>
+					<op>12</op>
+					<rhs />
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act63" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_Error</Str>
+			<Str sr="arg1" ve="3">Internal task failed: %errmsg</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act64" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_VolumeOK</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act65" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act66" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_CommandOK</Str>
+			<Str sr="arg1" ve="3">%SIG3_VolumeOK</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act67" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act68" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -541,7 +636,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act59" ve="7">
+		<Action sr="act69" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_InternalVolumeUp</Str>
@@ -558,7 +653,7 @@
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act60" ve="7">
+		<Action sr="act70" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -569,7 +664,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act61" ve="7">
+		<Action sr="act71" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Internal task failed: %errmsg</Str>
@@ -579,7 +674,7 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act62" ve="7">
+		<Action sr="act72" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -589,10 +684,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act63" ve="7">
+		<Action sr="act73" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act64" ve="7">
+		<Action sr="act74" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_CommandOK</Str>
 			<Str sr="arg1" ve="3">%SIG3_VolumeOK</Str>
@@ -602,10 +697,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act65" ve="7">
+		<Action sr="act75" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act66" ve="7">
+		<Action sr="act76" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -616,7 +711,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act67" ve="7">
+		<Action sr="act77" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_InternalVolumeDown</Str>
@@ -633,7 +728,7 @@
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act68" ve="7">
+		<Action sr="act78" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -644,7 +739,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act69" ve="7">
+		<Action sr="act79" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Internal task failed: %errmsg</Str>
@@ -654,7 +749,7 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act70" ve="7">
+		<Action sr="act80" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -664,10 +759,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act71" ve="7">
+		<Action sr="act81" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act72" ve="7">
+		<Action sr="act82" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_CommandOK</Str>
 			<Str sr="arg1" ve="3">%SIG3_VolumeOK</Str>
@@ -677,10 +772,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act73" ve="7">
+		<Action sr="act83" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act74" ve="7">
+		<Action sr="act84" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -691,7 +786,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act75" ve="7">
+		<Action sr="act85" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_InternalVolumeMax</Str>
@@ -708,7 +803,7 @@
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act76" ve="7">
+		<Action sr="act86" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -719,7 +814,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act77" ve="7">
+		<Action sr="act87" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Internal task failed: %errmsg</Str>
@@ -729,7 +824,7 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act78" ve="7">
+		<Action sr="act88" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -739,10 +834,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act79" ve="7">
+		<Action sr="act89" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act80" ve="7">
+		<Action sr="act90" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_CommandOK</Str>
 			<Str sr="arg1" ve="3">%SIG3_VolumeOK</Str>
@@ -752,10 +847,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act81" ve="7">
+		<Action sr="act91" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act82" ve="7">
+		<Action sr="act92" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -766,7 +861,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act83" ve="7">
+		<Action sr="act93" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_InternalVolumeMute</Str>
@@ -783,7 +878,7 @@
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act84" ve="7">
+		<Action sr="act94" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -794,7 +889,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act85" ve="7">
+		<Action sr="act95" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Internal task failed: %errmsg</Str>
@@ -804,7 +899,7 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act86" ve="7">
+		<Action sr="act96" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -814,10 +909,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act87" ve="7">
+		<Action sr="act97" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act88" ve="7">
+		<Action sr="act98" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_CommandOK</Str>
 			<Str sr="arg1" ve="3">%SIG3_VolumeOK</Str>
@@ -827,10 +922,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act89" ve="7">
+		<Action sr="act99" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act90" ve="7">
+		<Action sr="act100" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -841,7 +936,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act91" ve="7">
+		<Action sr="act101" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_InternalVolumeCalibrate</Str>
@@ -858,7 +953,7 @@
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act92" ve="7">
+		<Action sr="act102" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -869,7 +964,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act93" ve="7">
+		<Action sr="act103" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Internal task failed: %errmsg</Str>
@@ -879,7 +974,7 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act94" ve="7">
+		<Action sr="act104" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -889,10 +984,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act95" ve="7">
+		<Action sr="act105" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act96" ve="7">
+		<Action sr="act106" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_CommandOK</Str>
 			<Str sr="arg1" ve="3">%SIG3_VolumeOK</Str>
@@ -902,13 +997,13 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act97" ve="7">
+		<Action sr="act107" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act98" ve="7">
+		<Action sr="act108" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act99" ve="7">
+		<Action sr="act109" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -919,7 +1014,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act100" ve="7">
+		<Action sr="act110" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_BalanceOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -929,7 +1024,7 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act101" ve="7">
+		<Action sr="act111" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -940,7 +1035,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act102" ve="7">
+		<Action sr="act112" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_InternalBalanceCurrent</Str>
@@ -957,7 +1052,7 @@
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act103" ve="7">
+		<Action sr="act113" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -968,7 +1063,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act104" ve="7">
+		<Action sr="act114" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Internal task failed: %errmsg</Str>
@@ -978,7 +1073,7 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act105" ve="7">
+		<Action sr="act115" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_BalanceOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -988,10 +1083,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act106" ve="7">
+		<Action sr="act116" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act107" ve="7">
+		<Action sr="act117" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_CommandOK</Str>
 			<Str sr="arg1" ve="3">%SIG3_BalanceOK</Str>
@@ -1001,10 +1096,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act108" ve="7">
+		<Action sr="act118" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act109" ve="7">
+		<Action sr="act119" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -1015,7 +1110,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act110" ve="7">
+		<Action sr="act120" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_InternalBalanceSet</Str>
@@ -1032,7 +1127,7 @@
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act111" ve="7">
+		<Action sr="act121" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -1043,7 +1138,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act112" ve="7">
+		<Action sr="act122" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Internal task failed: %errmsg</Str>
@@ -1053,7 +1148,7 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act113" ve="7">
+		<Action sr="act123" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_BalanceOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -1063,10 +1158,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act114" ve="7">
+		<Action sr="act124" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act115" ve="7">
+		<Action sr="act125" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_CommandOK</Str>
 			<Str sr="arg1" ve="3">%SIG3_BalanceOK</Str>
@@ -1076,10 +1171,85 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act116" ve="7">
+		<Action sr="act126" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act117" ve="7">
+		<Action sr="act127" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%sig3_request2</lhs>
+					<op>2</op>
+					<rhs>Inspect</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act128" ve="7">
+			<code>130</code>
+			<se>true</se>
+			<Str sr="arg0" ve="3">SIG3_InternalBalanceInspect</Str>
+			<Int sr="arg1">
+				<var>%priority+1</var>
+			</Int>
+			<Int sr="arg10" val="1" />
+			<Str sr="arg2" ve="3">%sig3_request3</Str>
+			<Str sr="arg3" ve="3">%sig3_request4</Str>
+			<Str sr="arg4" ve="3" />
+			<Int sr="arg5" val="0" />
+			<Int sr="arg6" val="0" />
+			<Str sr="arg7" ve="3" />
+			<Int sr="arg8" val="0" />
+			<Int sr="arg9" val="0" />
+		</Action>
+		<Action sr="act129" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%err</lhs>
+					<op>12</op>
+					<rhs />
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act130" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_Error</Str>
+			<Str sr="arg1" ve="3">Internal task failed: %errmsg</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act131" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_BalanceOK</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act132" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act133" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_CommandOK</Str>
+			<Str sr="arg1" ve="3">%SIG3_BalanceOK</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act134" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act135" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -1090,7 +1260,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act118" ve="7">
+		<Action sr="act136" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_InternalBalanceUp</Str>
@@ -1107,7 +1277,7 @@
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act119" ve="7">
+		<Action sr="act137" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -1118,7 +1288,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act120" ve="7">
+		<Action sr="act138" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Internal task failed: %errmsg</Str>
@@ -1128,7 +1298,7 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act121" ve="7">
+		<Action sr="act139" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_BalanceOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -1138,10 +1308,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act122" ve="7">
+		<Action sr="act140" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act123" ve="7">
+		<Action sr="act141" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_CommandOK</Str>
 			<Str sr="arg1" ve="3">%SIG3_BalanceOK</Str>
@@ -1151,10 +1321,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act124" ve="7">
+		<Action sr="act142" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act125" ve="7">
+		<Action sr="act143" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -1165,7 +1335,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act126" ve="7">
+		<Action sr="act144" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_InternalBalanceDown</Str>
@@ -1182,7 +1352,7 @@
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act127" ve="7">
+		<Action sr="act145" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -1193,7 +1363,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act128" ve="7">
+		<Action sr="act146" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Internal task failed: %errmsg</Str>
@@ -1203,7 +1373,7 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act129" ve="7">
+		<Action sr="act147" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_BalanceOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -1213,10 +1383,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act130" ve="7">
+		<Action sr="act148" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act131" ve="7">
+		<Action sr="act149" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_CommandOK</Str>
 			<Str sr="arg1" ve="3">%SIG3_BalanceOK</Str>
@@ -1226,10 +1396,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act132" ve="7">
+		<Action sr="act150" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act133" ve="7">
+		<Action sr="act151" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -1240,7 +1410,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act134" ve="7">
+		<Action sr="act152" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_InternalBalanceSharp</Str>
@@ -1257,7 +1427,7 @@
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act135" ve="7">
+		<Action sr="act153" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -1268,7 +1438,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act136" ve="7">
+		<Action sr="act154" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Internal task failed: %errmsg</Str>
@@ -1278,7 +1448,7 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act137" ve="7">
+		<Action sr="act155" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_BalanceOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -1288,10 +1458,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act138" ve="7">
+		<Action sr="act156" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act139" ve="7">
+		<Action sr="act157" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_CommandOK</Str>
 			<Str sr="arg1" ve="3">%SIG3_BalanceOK</Str>
@@ -1301,10 +1471,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act140" ve="7">
+		<Action sr="act158" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act141" ve="7">
+		<Action sr="act159" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -1315,7 +1485,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act142" ve="7">
+		<Action sr="act160" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_InternalBalanceSoft</Str>
@@ -1332,7 +1502,7 @@
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act143" ve="7">
+		<Action sr="act161" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -1343,7 +1513,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act144" ve="7">
+		<Action sr="act162" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Internal task failed: %errmsg</Str>
@@ -1353,7 +1523,7 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act145" ve="7">
+		<Action sr="act163" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_BalanceOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -1363,10 +1533,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act146" ve="7">
+		<Action sr="act164" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act147" ve="7">
+		<Action sr="act165" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_CommandOK</Str>
 			<Str sr="arg1" ve="3">%SIG3_BalanceOK</Str>
@@ -1376,10 +1546,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act148" ve="7">
+		<Action sr="act166" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act149" ve="7">
+		<Action sr="act167" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -1390,7 +1560,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act150" ve="7">
+		<Action sr="act168" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_InternalBalanceCalibrate</Str>
@@ -1407,7 +1577,7 @@
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act151" ve="7">
+		<Action sr="act169" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -1418,7 +1588,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act152" ve="7">
+		<Action sr="act170" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Internal task failed: %errmsg</Str>
@@ -1428,7 +1598,7 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act153" ve="7">
+		<Action sr="act171" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_BalanceOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -1438,10 +1608,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act154" ve="7">
+		<Action sr="act172" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act155" ve="7">
+		<Action sr="act173" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_CommandOK</Str>
 			<Str sr="arg1" ve="3">%SIG3_BalanceOK</Str>
@@ -1451,13 +1621,13 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act156" ve="7">
+		<Action sr="act174" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act157" ve="7">
+		<Action sr="act175" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act158" ve="7">
+		<Action sr="act176" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -1468,7 +1638,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act159" ve="7">
+		<Action sr="act177" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_TinnitusOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -1478,7 +1648,7 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act160" ve="7">
+		<Action sr="act178" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -1489,7 +1659,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act161" ve="7">
+		<Action sr="act179" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_InternalTinnitusCurrent</Str>
@@ -1506,7 +1676,7 @@
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act162" ve="7">
+		<Action sr="act180" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -1517,7 +1687,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act163" ve="7">
+		<Action sr="act181" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Internal task failed: %errmsg</Str>
@@ -1527,7 +1697,7 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act164" ve="7">
+		<Action sr="act182" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_TinnitusOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -1537,10 +1707,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act165" ve="7">
+		<Action sr="act183" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act166" ve="7">
+		<Action sr="act184" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_CommandOK</Str>
 			<Str sr="arg1" ve="3">%SIG3_TinnitusOK</Str>
@@ -1550,10 +1720,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act167" ve="7">
+		<Action sr="act185" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act168" ve="7">
+		<Action sr="act186" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -1564,7 +1734,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act169" ve="7">
+		<Action sr="act187" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_InternalTinnitusSet</Str>
@@ -1581,7 +1751,7 @@
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act170" ve="7">
+		<Action sr="act188" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -1592,7 +1762,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act171" ve="7">
+		<Action sr="act189" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Internal task failed: %errmsg</Str>
@@ -1602,7 +1772,7 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act172" ve="7">
+		<Action sr="act190" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_TinnitusOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -1612,10 +1782,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act173" ve="7">
+		<Action sr="act191" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act174" ve="7">
+		<Action sr="act192" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_CommandOK</Str>
 			<Str sr="arg1" ve="3">%SIG3_TinnitusOK</Str>
@@ -1625,10 +1795,85 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act175" ve="7">
+		<Action sr="act193" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act176" ve="7">
+		<Action sr="act194" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%sig3_request2</lhs>
+					<op>2</op>
+					<rhs>Inspect</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act195" ve="7">
+			<code>130</code>
+			<se>true</se>
+			<Str sr="arg0" ve="3">SIG3_InternalTinnitusInspect</Str>
+			<Int sr="arg1">
+				<var>%priority+1</var>
+			</Int>
+			<Int sr="arg10" val="1" />
+			<Str sr="arg2" ve="3">%sig3_request3</Str>
+			<Str sr="arg3" ve="3">%sig3_request4</Str>
+			<Str sr="arg4" ve="3" />
+			<Int sr="arg5" val="0" />
+			<Int sr="arg6" val="0" />
+			<Str sr="arg7" ve="3" />
+			<Int sr="arg8" val="0" />
+			<Int sr="arg9" val="0" />
+		</Action>
+		<Action sr="act196" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%err</lhs>
+					<op>12</op>
+					<rhs />
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act197" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_Error</Str>
+			<Str sr="arg1" ve="3">Internal task failed: %errmsg</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act198" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_TinnitusOK</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act199" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act200" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_CommandOK</Str>
+			<Str sr="arg1" ve="3">%SIG3_TinnitusOK</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act201" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act202" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -1639,7 +1884,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act177" ve="7">
+		<Action sr="act203" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_InternalTinnitusUp</Str>
@@ -1656,7 +1901,7 @@
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act178" ve="7">
+		<Action sr="act204" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -1667,7 +1912,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act179" ve="7">
+		<Action sr="act205" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Internal task failed: %errmsg</Str>
@@ -1677,7 +1922,7 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act180" ve="7">
+		<Action sr="act206" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_TinnitusOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -1687,10 +1932,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act181" ve="7">
+		<Action sr="act207" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act182" ve="7">
+		<Action sr="act208" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_CommandOK</Str>
 			<Str sr="arg1" ve="3">%SIG3_TinnitusOK</Str>
@@ -1700,10 +1945,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act183" ve="7">
+		<Action sr="act209" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act184" ve="7">
+		<Action sr="act210" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -1714,7 +1959,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act185" ve="7">
+		<Action sr="act211" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_InternalTinnitusDown</Str>
@@ -1731,7 +1976,7 @@
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act186" ve="7">
+		<Action sr="act212" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -1742,7 +1987,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act187" ve="7">
+		<Action sr="act213" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Internal task failed: %errmsg</Str>
@@ -1752,7 +1997,7 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act188" ve="7">
+		<Action sr="act214" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_TinnitusOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -1762,10 +2007,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act189" ve="7">
+		<Action sr="act215" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act190" ve="7">
+		<Action sr="act216" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_CommandOK</Str>
 			<Str sr="arg1" ve="3">%SIG3_TinnitusOK</Str>
@@ -1775,10 +2020,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act191" ve="7">
+		<Action sr="act217" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act192" ve="7">
+		<Action sr="act218" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -1789,7 +2034,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act193" ve="7">
+		<Action sr="act219" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_InternalTinnitusMax</Str>
@@ -1806,7 +2051,7 @@
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act194" ve="7">
+		<Action sr="act220" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -1817,7 +2062,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act195" ve="7">
+		<Action sr="act221" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Internal task failed: %errmsg</Str>
@@ -1827,7 +2072,7 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act196" ve="7">
+		<Action sr="act222" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_TinnitusOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -1837,10 +2082,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act197" ve="7">
+		<Action sr="act223" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act198" ve="7">
+		<Action sr="act224" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_CommandOK</Str>
 			<Str sr="arg1" ve="3">%SIG3_TinnitusOK</Str>
@@ -1850,10 +2095,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act199" ve="7">
+		<Action sr="act225" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act200" ve="7">
+		<Action sr="act226" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -1864,7 +2109,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act201" ve="7">
+		<Action sr="act227" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_InternalTinnitusMute</Str>
@@ -1881,7 +2126,7 @@
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act202" ve="7">
+		<Action sr="act228" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -1892,7 +2137,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act203" ve="7">
+		<Action sr="act229" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Internal task failed: %errmsg</Str>
@@ -1902,7 +2147,7 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act204" ve="7">
+		<Action sr="act230" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_TinnitusOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -1912,10 +2157,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act205" ve="7">
+		<Action sr="act231" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act206" ve="7">
+		<Action sr="act232" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_CommandOK</Str>
 			<Str sr="arg1" ve="3">%SIG3_TinnitusOK</Str>
@@ -1925,10 +2170,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act207" ve="7">
+		<Action sr="act233" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act208" ve="7">
+		<Action sr="act234" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -1939,7 +2184,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act209" ve="7">
+		<Action sr="act235" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_InternalTinnitusCalibrate</Str>
@@ -1956,7 +2201,7 @@
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act210" ve="7">
+		<Action sr="act236" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -1967,7 +2212,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act211" ve="7">
+		<Action sr="act237" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Internal task failed: %errmsg</Str>
@@ -1977,7 +2222,7 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act212" ve="7">
+		<Action sr="act238" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_TinnitusOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -1987,10 +2232,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act213" ve="7">
+		<Action sr="act239" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act214" ve="7">
+		<Action sr="act240" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_CommandOK</Str>
 			<Str sr="arg1" ve="3">%SIG3_TinnitusOK</Str>
@@ -2000,13 +2245,13 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act215" ve="7">
+		<Action sr="act241" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act216" ve="7">
+		<Action sr="act242" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act217" ve="7">
+		<Action sr="act243" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -2017,7 +2262,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act218" ve="7">
+		<Action sr="act244" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_ProgramOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -2027,7 +2272,7 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act219" ve="7">
+		<Action sr="act245" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -2038,7 +2283,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act220" ve="7">
+		<Action sr="act246" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_InternalProgramSwitch</Str>
@@ -2055,7 +2300,7 @@
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act221" ve="7">
+		<Action sr="act247" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -2066,7 +2311,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act222" ve="7">
+		<Action sr="act248" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Internal task failed: %errmsg</Str>
@@ -2076,7 +2321,7 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act223" ve="7">
+		<Action sr="act249" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_ProgramOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -2086,10 +2331,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act224" ve="7">
+		<Action sr="act250" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act225" ve="7">
+		<Action sr="act251" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_CommandOK</Str>
 			<Str sr="arg1" ve="3">%SIG3_ProgramOK</Str>
@@ -2099,13 +2344,88 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act226" ve="7">
+		<Action sr="act252" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act227" ve="7">
+		<Action sr="act253" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%sig3_request2</lhs>
+					<op>2</op>
+					<rhs>Current</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act254" ve="7">
+			<code>130</code>
+			<se>true</se>
+			<Str sr="arg0" ve="3">SIG3_InternalProgramCurrent</Str>
+			<Int sr="arg1">
+				<var>%priority+1</var>
+			</Int>
+			<Int sr="arg10" val="1" />
+			<Str sr="arg2" ve="3">%sig3_request3</Str>
+			<Str sr="arg3" ve="3" />
+			<Str sr="arg4" ve="3" />
+			<Int sr="arg5" val="0" />
+			<Int sr="arg6" val="0" />
+			<Str sr="arg7" ve="3" />
+			<Int sr="arg8" val="0" />
+			<Int sr="arg9" val="0" />
+		</Action>
+		<Action sr="act255" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%err</lhs>
+					<op>12</op>
+					<rhs />
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act256" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_Error</Str>
+			<Str sr="arg1" ve="3">Internal task failed: %errmsg</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act257" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_ProgramOK</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act258" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act228" ve="7">
+		<Action sr="act259" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_CommandOK</Str>
+			<Str sr="arg1" ve="3">%SIG3_ProgramOK</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act260" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act261" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act262" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -2116,7 +2436,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act229" ve="7">
+		<Action sr="act263" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_BatteryOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -2126,7 +2446,7 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act230" ve="7">
+		<Action sr="act264" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -2137,7 +2457,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act231" ve="7">
+		<Action sr="act265" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_InternalBatteryCheck</Str>
@@ -2154,7 +2474,7 @@
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act232" ve="7">
+		<Action sr="act266" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -2165,7 +2485,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act233" ve="7">
+		<Action sr="act267" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Internal task failed: %errmsg</Str>
@@ -2175,7 +2495,7 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act234" ve="7">
+		<Action sr="act268" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_BatteryOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -2185,10 +2505,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act235" ve="7">
+		<Action sr="act269" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act236" ve="7">
+		<Action sr="act270" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_CommandOK</Str>
 			<Str sr="arg1" ve="3">%SIG3_BatteryOK</Str>
@@ -2198,13 +2518,13 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act237" ve="7">
+		<Action sr="act271" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act238" ve="7">
+		<Action sr="act272" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act239" ve="7">
+		<Action sr="act273" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -2215,7 +2535,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act240" ve="7">
+		<Action sr="act274" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_NoiseOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -2225,7 +2545,7 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act241" ve="7">
+		<Action sr="act275" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -2236,7 +2556,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act242" ve="7">
+		<Action sr="act276" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_InternalNoiseSample</Str>
@@ -2253,7 +2573,7 @@
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act243" ve="7">
+		<Action sr="act277" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -2264,7 +2584,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act244" ve="7">
+		<Action sr="act278" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Internal task failed: %errmsg</Str>
@@ -2274,7 +2594,7 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act245" ve="7">
+		<Action sr="act279" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_NoiseOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -2284,10 +2604,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act246" ve="7">
+		<Action sr="act280" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act247" ve="7">
+		<Action sr="act281" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_CommandOK</Str>
 			<Str sr="arg1" ve="3">%SIG3_NoiseOK</Str>
@@ -2297,10 +2617,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act248" ve="7">
+		<Action sr="act282" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act249" ve="7">
+		<Action sr="act283" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -2311,7 +2631,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act250" ve="7">
+		<Action sr="act284" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_InternalNoiseProcess</Str>
@@ -2328,7 +2648,7 @@
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act251" ve="7">
+		<Action sr="act285" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -2339,7 +2659,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act252" ve="7">
+		<Action sr="act286" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Internal task failed: %errmsg</Str>
@@ -2349,7 +2669,7 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act253" ve="7">
+		<Action sr="act287" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_NoiseOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -2359,10 +2679,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act254" ve="7">
+		<Action sr="act288" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act255" ve="7">
+		<Action sr="act289" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_CommandOK</Str>
 			<Str sr="arg1" ve="3">%SIG3_NoiseOK</Str>
@@ -2372,13 +2692,13 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act256" ve="7">
+		<Action sr="act290" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act257" ve="7">
+		<Action sr="act291" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act258" ve="7">
+		<Action sr="act292" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -2389,7 +2709,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act259" ve="7">
+		<Action sr="act293" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_SleepOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -2399,7 +2719,7 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act260" ve="7">
+		<Action sr="act294" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -2410,7 +2730,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act261" ve="7">
+		<Action sr="act295" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_InternalSleepSet</Str>
@@ -2427,7 +2747,7 @@
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act262" ve="7">
+		<Action sr="act296" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -2438,7 +2758,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act263" ve="7">
+		<Action sr="act297" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Internal task failed: %errmsg</Str>
@@ -2448,7 +2768,7 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act264" ve="7">
+		<Action sr="act298" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_SleepOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -2458,10 +2778,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act265" ve="7">
+		<Action sr="act299" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act266" ve="7">
+		<Action sr="act300" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_CommandOK</Str>
 			<Str sr="arg1" ve="3">%SIG3_SleepOK</Str>
@@ -2471,13 +2791,13 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act267" ve="7">
+		<Action sr="act301" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act268" ve="7">
+		<Action sr="act302" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act269" ve="7">
+		<Action sr="act303" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -2488,7 +2808,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act270" ve="7">
+		<Action sr="act304" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_SetupOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -2498,7 +2818,7 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act271" ve="7">
+		<Action sr="act305" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -2509,7 +2829,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act272" ve="7">
+		<Action sr="act306" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_InternalSetupInit</Str>
@@ -2526,7 +2846,7 @@
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act273" ve="7">
+		<Action sr="act307" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -2537,7 +2857,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act274" ve="7">
+		<Action sr="act308" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Internal task failed: %errmsg</Str>
@@ -2547,7 +2867,7 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act275" ve="7">
+		<Action sr="act309" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_SetupOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -2557,10 +2877,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act276" ve="7">
+		<Action sr="act310" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act277" ve="7">
+		<Action sr="act311" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_CommandOK</Str>
 			<Str sr="arg1" ve="3">%SIG3_SetupOK</Str>
@@ -2570,10 +2890,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act278" ve="7">
+		<Action sr="act312" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act279" ve="7">
+		<Action sr="act313" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -2584,7 +2904,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act280" ve="7">
+		<Action sr="act314" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_InternalSetupOverride</Str>
@@ -2601,7 +2921,7 @@
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act281" ve="7">
+		<Action sr="act315" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -2612,7 +2932,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act282" ve="7">
+		<Action sr="act316" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Internal task failed: %errmsg</Str>
@@ -2622,7 +2942,7 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act283" ve="7">
+		<Action sr="act317" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_SetupOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -2632,10 +2952,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act284" ve="7">
+		<Action sr="act318" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act285" ve="7">
+		<Action sr="act319" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_CommandOK</Str>
 			<Str sr="arg1" ve="3">%SIG3_SetupOK</Str>
@@ -2645,13 +2965,88 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act286" ve="7">
+		<Action sr="act320" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act287" ve="7">
+		<Action sr="act321" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%sig3_request2</lhs>
+					<op>2</op>
+					<rhs>Toggle</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act322" ve="7">
+			<code>130</code>
+			<se>true</se>
+			<Str sr="arg0" ve="3">SIG3_InternalSetupToggle</Str>
+			<Int sr="arg1">
+				<var>%priority+1</var>
+			</Int>
+			<Int sr="arg10" val="1" />
+			<Str sr="arg2" ve="3">%sig3_request3</Str>
+			<Str sr="arg3" ve="3" />
+			<Str sr="arg4" ve="3" />
+			<Int sr="arg5" val="0" />
+			<Int sr="arg6" val="0" />
+			<Str sr="arg7" ve="3" />
+			<Int sr="arg8" val="0" />
+			<Int sr="arg9" val="0" />
+		</Action>
+		<Action sr="act323" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%err</lhs>
+					<op>12</op>
+					<rhs />
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act324" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_Error</Str>
+			<Str sr="arg1" ve="3">Internal task failed: %errmsg</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act325" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_SetupOK</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act326" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act288" ve="7">
+		<Action sr="act327" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_CommandOK</Str>
+			<Str sr="arg1" ve="3">%SIG3_SetupOK</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act328" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act329" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act330" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -2662,7 +3057,7 @@
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act289" ve="7">
+		<Action sr="act331" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_MoveStage</Str>
 			<Str sr="arg1" ve="3">complete</Str>
@@ -2672,7 +3067,7 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act290" ve="7">
+		<Action sr="act332" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3" />
@@ -2682,7 +3077,7 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act291" ve="7">
+		<Action sr="act333" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Result</Str>
 			<Str sr="arg1" ve="3">%SIG3_Family: %SIG3_Observed; program=%SIG3_Program; target=%SIG3_Target (app state; aid receipt unverified)</Str>
@@ -2692,10 +3087,10 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act292" ve="7">
+		<Action sr="act334" ve="7">
 			<code>43</code>
 		</Action>
-		<Action sr="act293" ve="7">
+		<Action sr="act335" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Result</Str>
 			<Str sr="arg1" ve="3">Failed: %SIG3_Error; family=%SIG3_Family target=%SIG3_Target previous=%SIG3_Previous expected=%SIG3_Expected observed=%SIG3_Observed; program=%SIG3_Program; stage=%SIG3_MoveStage</Str>
@@ -2705,15 +3100,47 @@
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act294" ve="7">
+		<Action sr="act336" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act295" ve="7">
+		<Action sr="act337" ve="7">
 			<code>474</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">tasker.log(tasker.getVariable("SIG3_Result") + "; " + tasker.getVariable("SIG3_AudioDiagnostics")); tasker.showToast(tasker.getVariable("SIG3_Result")); return "reported";</Str>
 			<Str sr="arg1" ve="3" />
 			<Int sr="arg2" val="1" />
+		</Action>
+		<Action sr="act338" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%SIG3_CommandOK</lhs>
+					<op>8</op>
+					<rhs>1</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act339" ve="7">
+			<code>474</code>
+			<se>true</se>
+			<Str sr="arg0" ve="3">/* Optional completion navigation; preserve another app's window. */
+import android.accessibilityservice.AccessibilityService;
+policy = tasker.getVariable("SIG3_CompletionPolicy");
+if (policy == null || policy.equals("stay")) return "stayed";
+if (!policy.equals("home")) return "unknown policy; stayed";
+service = tasker.getAccessibilityService();
+root = service == null ? null : service.getRootInActiveWindow();
+if (root != null &amp;&amp; root.getPackageName() != null &amp;&amp; "com.signia.rta".contentEquals(root.getPackageName())) {
+    if (!service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_HOME)) tasker.log("Home navigation rejected");
+}
+return "completion navigation checked";
+</Str>
+			<Str sr="arg1" ve="3" />
+			<Int sr="arg2" val="1" />
+		</Action>
+		<Action sr="act340" ve="7">
+			<code>38</code>
 		</Action>
 	</Task>
 </TaskerData>

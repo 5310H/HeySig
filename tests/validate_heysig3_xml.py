@@ -95,7 +95,7 @@ for path in files:
                     except json.JSONDecodeError as ex: issue(path, where, f'plugin parameters JSON: {ex}')
         if stack: issue(path, name, 'unclosed control-flow blocks')
 
-report = '# Tasker XML static validation — 2026-10-08\n\n'
+report = '# Tasker XML static validation — 2026-10-10\n\n'
 report += f'Checked {len(files)} XML files and {actions_count} task actions. Found {len(issues)} failures.\n\n'
 report += 'Action numbers were compared with [Tasker’s official definitions](' + catalog['source'] + '). Checks include XML parsing, task IDs, action numbering, nested control flow, explicit condition fields, selected built-in argument layouts, plugin bundle presence, and JSON syntax.\n\n'
 report += 'This is not full schema certification. Tasker has not parsed or executed these files here. The selected argument layouts are repository-derived checks, not an official XSD. Plugin settings, Android components, scene/profile layouts, unresolved external task references, and all remaining action arguments need runtime or authoritative format verification.\n\n'

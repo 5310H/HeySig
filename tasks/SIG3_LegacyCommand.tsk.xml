@@ -1,0 +1,71 @@
+<TaskerData sr="" dvi="1" tv="6.6.20">
+	<Task sr="task400">
+		<cdate>1791396000000</cdate>
+		<edate>1791396000000</edate>
+		<id>400</id>
+		<nme>SIG3_LegacyCommand</nme>
+		<pri>100</pri>
+		<Action sr="act0" ve="7">
+			<code>474</code>
+			<se>true</se>
+			<Str sr="arg0" ve="3">/* Explicit legacy caller adapter; original SIG tasks are not overwritten. */
+import com.joaomgcd.taskerm.action.java.JavaCodeException;
+name = tasker.getVariable("par1");
+value = tasker.getVariable("par2");
+request = null;
+for (family : new String[] {"Volume", "Balance", "Tinnitus"}) {
+    for (operation : new String[] {"Current", "Set", "Max", "Mute", "Sharp", "Soft"}) {
+        if (("SIG_" + family + operation).equals(name)) {
+            if (operation.equals("Set") &amp;&amp; (value == null || value.length() == 0)) value = tasker.getVariable("SIG_Target" + family);
+            if (operation.equals("Set") &amp;&amp; (value == null || !value.matches("-?[0-9]+"))) throw new JavaCodeException("Supply the absolute target in Parameter 2");
+            if ((family.equals("Balance") &amp;&amp; (operation.equals("Max") || operation.equals("Mute"))) || (!family.equals("Balance") &amp;&amp; (operation.equals("Sharp") || operation.equals("Soft"))))
+                throw new JavaCodeException("Unsupported legacy operation");
+            request = family + "," + operation + "," + (operation.equals("Set") ? value : "");
+        }
+    }
+}
+if ("SIG_BatteryCheck".equals(name)) request = "Battery,Check,listen";
+if ("SIG_ProgramSwitch".equals(name)) {
+    if (value == null || !value.matches("[1-6]")) throw new JavaCodeException("Supply the program slot in Parameter 2");
+    request = "Program,Switch," + value;
+}
+if (request == null) throw new JavaCodeException("Unsupported legacy caller; use an absolute SIG3 command");
+tasker.setVariable("sig3_legacy_request", request);
+return "mapped";
+</Str>
+			<Str sr="arg1" ve="3" />
+			<Int sr="arg2" val="1" />
+		</Action>
+		<Action sr="act1" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%err</lhs>
+					<op>13</op>
+					<rhs />
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act2" ve="7">
+			<code>130</code>
+			<se>true</se>
+			<Str sr="arg0" ve="3">SIG3_Worker</Str>
+			<Int sr="arg1">
+				<var>%priority+1</var>
+			</Int>
+			<Int sr="arg10" val="1" />
+			<Str sr="arg2" ve="3">%sig3_legacy_request</Str>
+			<Str sr="arg3" ve="3" />
+			<Str sr="arg4" ve="3" />
+			<Int sr="arg5" val="0" />
+			<Int sr="arg6" val="0" />
+			<Str sr="arg7" ve="3" />
+			<Int sr="arg8" val="0" />
+			<Int sr="arg9" val="0" />
+		</Action>
+		<Action sr="act3" ve="7">
+			<code>38</code>
+		</Action>
+	</Task>
+</TaskerData>

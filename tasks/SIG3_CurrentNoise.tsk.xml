@@ -6,6 +6,17 @@
 		<nme>SIG3_CurrentNoise</nme>
 		<pri>100</pri>
 		<Action sr="act0" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%SIG3_NoiseSource</lhs>
+					<op>3</op>
+					<rhs>watch</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act1" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -21,6 +32,9 @@
 			<Str sr="arg7" ve="3" />
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
+		</Action>
+		<Action sr="act2" ve="7">
+			<code>38</code>
 		</Action>
 	</Task>
 </TaskerData>

@@ -12,14 +12,26 @@ def phone():
 p = phone(); assert p.globals['SIG3_NoiseEnabled'] == p.globals['SIG3_SleepEnabled'] == '0'
 p.globals['SIG3_NoiseStrikeLimit'] = '5'; p.run('SIG3_Init'); assert p.globals['SIG3_NoiseStrikeLimit'] == '5'
 p.run('SIG3_ProgramSwitch','2'); assert p.program == 'Music' and p.globals['SIG3_CommandOK'] == '1'
+p.run('SIG3_ProgramCurrent'); assert p.globals['SIG3_Program'] == 'Music' and p.globals['SIG3_CommandOK'] == '1'
+for phrase in ('current program', 'current mode', 'what is the current program?'):
+    p.run('SIG3_VoiceRouter',phrase)
+    assert p.program == 'Music' and p.globals['SIG3_Observed'] == 'Music' and p.globals['SIG3_CommandOK'] == '1'
+missing_program = phone(); missing_program.wrong_control = True
+missing_program.run('SIG3_ProgramCurrent')
+assert missing_program.globals['SIG3_CommandOK'] == '0' and missing_program.globals['SIG3_Program'] == ''
 p.run('SIG3_ProgramSwitch','6'); assert p.program == 'Music' and p.globals['SIG3_CommandOK'] == '0'
 p.run('SIG3_VoiceRouter','program one'); assert p.program == 'Universal'
 p.run('SIG3_VoiceRouter','change program to music'); assert p.program == 'Music'
 p.voice_event='volume ten'; p.run('SIG3_AutoVoiceCommand'); assert p.level == 10
 p.watch_event='sig3 volume nine'; p.run('SIG3_WatchCommand'); assert p.level == 9
 p.run('SIG3_BatteryCheck'); assert p.globals['SIG3_CommandOK'] == '1' and '%' not in p.globals['SIG3_Observed']
-p.run('SIG3_BatteryCheck','listen'); assert p.globals['SIG3_CommandOK'] == '0'
-p.globals['SIG3_BatteryRequestId']='observed-button'; p.run('SIG3_BatteryCheck','listen'); assert p.globals['SIG3_CommandOK'] == '1'
+p.run('SIG3_BatteryCheck','listen'); assert p.globals['SIG3_CommandOK'] == '1'
+p.run('SIG3_BatteryCheck','open'); assert p.globals['SIG3_CommandOK'] == '1'
+p.run('SIG3_BatteryCheck','invalid'); assert p.globals['SIG3_CommandOK'] == '0'
+battery_failure = phone(); battery_failure.fail_stage = 'number'
+battery_failure.run('SIG3_BatteryCheck')
+assert battery_failure.globals['SIG3_CommandOK'] == '0'
+assert 'Battery action 2 failed' in battery_failure.globals['SIG3_Error']
 p.noise_sample = -52; p.run('SIG3_CurrentNoise'); assert float(p.globals['SIG3_NoiseRaw']) == -52 and p.globals['SIG3_CommandOK'] == '1'
 # Sample-only default neither changes program nor assumes a sign convention.
 p.run('SIG3_NoiseMonitor','-45'); assert p.globals['SIG3_NoiseIndex'] == '-45.0' and p.program == 'Music'

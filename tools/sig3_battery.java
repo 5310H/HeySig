@@ -24,7 +24,7 @@ clickId(service, id) {
 service = tasker.getAccessibilityService();
 if (service == null) throw new JavaCodeException("Enable Tasker accessibility");
 mode = tasker.getVariable("par1");
-if (!"open".equals(mode) && !"listen".equals(mode)) throw new JavaCodeException("Battery mode must be open or listen");
+if (!"open".equals(mode)) throw new JavaCodeException("Battery page mode must be open");
 root = service.getRootInActiveWindow();
 pageId = tasker.getVariable("SIG3_BatteryPageId");
 alreadyOpen = false;
@@ -48,8 +48,5 @@ for (node : service.getChildrenRecursive(root)) {
     if (node.isVisibleToUser() && node.getText() != null) text = text + node.getText() + "\n";
 }
 tasker.setVariable("SIG3_BatteryText", text);
-if ("listen".equals(mode)) {
-    clickId(service, tasker.getVariable("SIG3_BatteryRequestId"));
-    tasker.setVariable("SIG3_Observed", "Battery request clicked; listen for the aid indication. Receipt is unverified.");
-} else tasker.setVariable("SIG3_Observed", "Battery page opened; visible text recorded. No aid battery percentage inferred.");
+tasker.setVariable("SIG3_Observed", "Battery page opened; visible text recorded. No aid battery percentage inferred.");
 return "opened";

@@ -20,14 +20,15 @@ low = Double.parseDouble(lowText); high = Double.parseDouble(highText);
 limit = Integer.parseInt(readSetting("SIG3_NoiseStrikeLimit", "3"));
 if (Double.isNaN(low) || Double.isNaN(high) || Double.isInfinite(low) || Double.isInfinite(high) || low >= high || limit < 1 || limit > 20) throw new JavaCodeException("Invalid noise thresholds or strike limit");
 tier = sample >= high ? "loud" : sample <= low ? "quiet" : "middle";
-if ("middle".equals(tier)) { tasker.setVariable("SIG3_NoiseCandidate", ""); tasker.setVariable("SIG3_NoiseStrikes", "0"); return "dead-band"; }
+middleSlot = tasker.getVariable("SIG3_NoiseMiddleProgram");
+if ("middle".equals(tier) && (middleSlot == null || middleSlot.length() == 0)) { tasker.setVariable("SIG3_NoiseCandidate", ""); tasker.setVariable("SIG3_NoiseStrikes", "0"); return "dead-band"; }
 candidate = readSetting("SIG3_NoiseCandidate", "");
 strikes = tier.equals(candidate) ? Integer.parseInt(readSetting("SIG3_NoiseStrikes", "0")) + 1 : 1;
 if (strikes > limit) strikes = limit;
 tasker.setVariable("SIG3_NoiseCandidate", tier);
 tasker.setVariable("SIG3_NoiseStrikes", strikes);
 if (strikes < limit) return "collecting";
-slot = tasker.getVariable("loud".equals(tier) ? "SIG3_NoiseLoudProgram" : "SIG3_NoiseQuietProgram");
+slot = "middle".equals(tier) ? middleSlot : tasker.getVariable("loud".equals(tier) ? "SIG3_NoiseLoudProgram" : "SIG3_NoiseQuietProgram");
 if (slot == null || !slot.matches("[1-6]")) throw new JavaCodeException("Configure the noise program slot (1–6)");
 tasker.setVariable("SIG3_AutoProgramSlot", slot);
 return "target-ready";

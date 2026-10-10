@@ -4,3 +4,5 @@ Numeric voice controls on branch HeySid3: see [HeySig3 setup and calibration](do
 Supported numeric-control import: HeySig3 only. Disable old slider-triggering profiles during testing; do not import the placeholder `tasks/sig.tasks.tsk.xml` or `xml/backup.xml` as current controls. All public SIG3 UI operations share a single worker.
 
 Priority 3 adds configured program selection, battery checks, AutoVoice/watch adapters, initialization, and optional noise/sleep program automation. See [setup and event wiring](docs/HeySig3.md#priority-3-setup); automation defaults off and phone profiles require explicit connection.
+
+Restored workflows and event wiring: [HeySig3 completion](docs/HeySig3-completion.md). Start phone volume testing with [slider acceptance](docs/HeySig3-slider-acceptance.md). SoundWear has been removed.

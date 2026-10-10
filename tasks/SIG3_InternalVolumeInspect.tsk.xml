@@ -1,0 +1,204 @@
+<TaskerData sr="" dvi="1" tv="6.6.20">
+	<Task sr="task490">
+		<cdate>1791396000000</cdate>
+		<edate>1791396000000</edate>
+		<id>490</id>
+		<nme>SIG3_InternalVolumeInspect</nme>
+		<pri>100</pri>
+		<Action sr="act0" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%TRUN</lhs>
+					<op>5</op>
+					<rhs>(^|,)SIG3_Worker(,|$)</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act1" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
+		</Action>
+		<Action sr="act2" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act3" ve="7">
+			<code>130</code>
+			<se>true</se>
+			<Str sr="arg0" ve="3">SIG3_InternalVolumeCurrent</Str>
+			<Int sr="arg1">
+				<var>%priority+1</var>
+			</Int>
+			<Int sr="arg10" val="1" />
+			<Str sr="arg2" ve="3" />
+			<Str sr="arg3" ve="3" />
+			<Str sr="arg4" ve="3" />
+			<Int sr="arg5" val="0" />
+			<Int sr="arg6" val="0" />
+			<Str sr="arg7" ve="3" />
+			<Int sr="arg8" val="0" />
+			<Int sr="arg9" val="0" />
+		</Action>
+		<Action sr="act4" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%SIG3_VolumeOK</lhs>
+					<op>3</op>
+					<rhs>1</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act5" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_VolumeOK</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act6" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_Error</Str>
+			<Str sr="arg1" ve="3">Slider inspection query failed: %SIG3_Error</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act7" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
+		</Action>
+		<Action sr="act8" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act9" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%sig3_slider_mode</Str>
+			<Str sr="arg1" ve="3">Inspect</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act10" ve="7">
+			<code>474</code>
+			<se>true</se>
+			<Str sr="arg0" ve="3">/* Direct numeric slider action: no simulated touch and no automatic touch fallback. */
+import android.view.accessibility.AccessibilityNodeInfo;
+import android.view.accessibility.AccessibilityManager;
+import android.os.Bundle;
+import android.graphics.Rect;
+import com.joaomgcd.taskerm.action.java.JavaCodeException;
+service = tasker.getAccessibilityService();
+if (service == null) throw new JavaCodeException("Enable Tasker accessibility");
+root = service.getRootInActiveWindow();
+if (root == null || root.getPackageName() == null || !"com.signia.rta".contentEquals(root.getPackageName()))
+    throw new JavaCodeException("Signia is not foreground");
+family = tasker.getVariable("SIG3_Family");
+id = tasker.getVariable("SIG3_" + family + "ControlId");
+if (id == null) throw new JavaCodeException("Configure the slider control ID");
+node = null;
+for (candidate : root.findAccessibilityNodeInfosByViewId(id)) {
+    if (!candidate.isVisibleToUser() || !candidate.isEnabled()) continue;
+    if (node != null) throw new JavaCodeException("Slider ID is ambiguous");
+    node = candidate;
+}
+if (node == null) throw new JavaCodeException("Slider node unavailable: " + id);
+manager = context.getSystemService("accessibility");
+range = node.getRangeInfo();
+actions = "";
+canSet = false;
+for (entry : node.getActionList()) {
+    actions = actions + entry.getId() + ":" + entry.getLabel() + ";";
+    if (entry.getId() == AccessibilityNodeInfo.AccessibilityAction.ACTION_SET_PROGRESS.getId()) canSet = true;
+}
+rect = new Rect(); node.getBoundsInScreen(rect);
+diagnostic = "family=" + family + "; id=" + node.getViewIdResourceName() + "; class=" + node.getClassName()
+    + "; bounds=" + rect + "; accessibility=" + manager.isEnabled()
+    + "; touchExploration=" + manager.isTouchExplorationEnabled() + "; actions=" + actions;
+if (range != null) diagnostic = diagnostic + "; rangeType=" + range.getType() + "; min=" + range.getMin() + "; max=" + range.getMax() + "; current=" + range.getCurrent();
+tasker.setVariable("SIG3_SliderDiagnostics", diagnostic);
+tasker.log(diagnostic);
+if ("Inspect".equals(tasker.getVariable("sig3_slider_mode"))) {
+    tasker.setVariable("SIG3_Observed", diagnostic);
+    return "inspected";
+}
+// The range alone cannot prove the displayed-level mapping. Require explicit confirmation.
+if (!"1".equals(tasker.getVariable("SIG3_" + family + "RangeConfirmed")))
+    throw new JavaCodeException("Inspect slider and confirm displayed/native mapping; set SIG3_" + family + "RangeConfirmed=1 only after checking");
+if (!canSet || range == null) throw new JavaCodeException("Slider does not expose ACTION_SET_PROGRESS and RangeInfo");
+if (!manager.isEnabled() || !manager.isTouchExplorationEnabled())
+    throw new JavaCodeException("Signia's accessibility commit requires touch exploration; no action sent. See SIG3_SliderDiagnostics");
+low = "Balance".equals(family) ? -8.0 : 0.0;
+high = "Balance".equals(family) ? 7.0 : 15.0;
+minimum = (double) range.getMin(); maximum = (double) range.getMax();
+if (Double.isNaN(minimum) || Double.isNaN(maximum) || Double.isInfinite(minimum) || Double.isInfinite(maximum) || maximum &lt;= minimum)
+    throw new JavaCodeException("Invalid native slider range");
+target = Double.parseDouble(tasker.getVariable("SIG3_Target"));
+if (target &lt; low || target &gt; high || target != Math.rint(target)) throw new JavaCodeException("Invalid displayed target");
+// Confirmed ascending linear domain: native endpoints correspond to displayed endpoints.
+nativeTarget = minimum + (target - low) * (maximum - minimum) / (high - low);
+bundle = new Bundle();
+bundle.putFloat(AccessibilityNodeInfo.ACTION_ARGUMENT_PROGRESS_VALUE, (float) nativeTarget);
+tasker.setVariable("SIG3_MoveStage", "set-progress");
+tasker.setVariable("SIG3_ProgressAccepted", "0");
+accepted = node.performAction(AccessibilityNodeInfo.AccessibilityAction.ACTION_SET_PROGRESS.getId(), bundle);
+tasker.setVariable("SIG3_ProgressAccepted", accepted ? "1" : "0");
+tasker.setVariable("SIG3_SliderDiagnostics", diagnostic + "; displayedTarget=" + target + "; nativeTarget=" + nativeTarget + "; accepted=" + accepted);
+if (!accepted) throw new JavaCodeException("ACTION_SET_PROGRESS rejected; no touch fallback");
+return "accepted; verify displayed target and audible aid response separately";
+</Str>
+			<Str sr="arg1" ve="3" />
+			<Int sr="arg2" val="1" />
+		</Action>
+		<Action sr="act11" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%err</lhs>
+					<op>12</op>
+					<rhs />
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act12" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_VolumeOK</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act13" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_Error</Str>
+			<Str sr="arg1" ve="3">Slider inspection failed: %errmsg</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act14" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
+		</Action>
+		<Action sr="act15" ve="7">
+			<code>38</code>
+		</Action>
+	</Task>
+</TaskerData>

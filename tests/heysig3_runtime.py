@@ -14,7 +14,11 @@ class Phone:
         self.coordinates, self.ids = coordinates, ids
         self.programs = ['Universal', 'Music', 'Outdoor', 'TV', 'Car', 'Speech']
         self.program = self.programs[0]
-        self.globals, self.drags, self.taps = {}, [], []
+        self.globals, self.drags, self.taps = {'SIG3_SliderBackend':'legacy-gesture'}, [], []
+        self.progress_actions = []
+        self.touch_exploration = False
+        self.progress_supported = True
+        self.progress_commits = True
         self.knob_x, self.knob_y0, self.gestures = 500, 1000, []
         self.active = []
         self.program_capture = 'Universal'
@@ -154,7 +158,46 @@ class Phone:
                 # Model the touch result; Android/BeanShell execution is a separate check.
                 script = arg(a, 0)
                 if 'dispatchGesture' not in script:
-                    if 'Program selection through visible' in script:
+                    if 'Normalize numeric commands' in script:
+                        value = get('sig3_command')
+                        value = re.sub(r'(?i)^sig(?:3)?\s+', '', value.strip())
+                        alias = re.sub(r'^(?:mode|program)\s+', '', value.lower())
+                        keys = {'conversation':'SIG3_ModeConversationProgram','normal':'SIG3_ModeConversationProgram','noisy':'SIG3_ModeNoisyProgram','vnoisy':'SIG3_ModeVeryNoisyProgram','very noisy':'SIG3_ModeVeryNoisyProgram','verynoisy':'SIG3_ModeVeryNoisyProgram'}
+                        if alias in keys:
+                            slot = self.globals.get(keys[alias])
+                            if slot not in ('1','2','3','4','5','6'): local['err'], local['errmsg'] = '1','Configure alias'
+                            else: value = 'program ' + slot
+                        if alias == 'sleep': value = 'sleep'
+                        if alias in ('awake','wake'): value = 'wake'
+                        put('sig3_command',value)
+                    elif 'Automatic changes must not' in script:
+                        if self.globals.get('SIG3_AutomationCancelled') == '1' or self.globals.get('SIG3_ManualOverride') == '1' or (self.globals.get('SIG3_DeferAutomation') != '0' and self.package != 'com.signia.rta'):
+                            local['err'], local['errmsg'] = '1', 'Automatic change cancelled/deferred'
+                    elif 'sig3_override' in script and 'toggled' in script:
+                        put('sig3_override','0' if self.globals.get('SIG3_ManualOverride') == '1' else '1')
+                    elif 'Explicit legacy caller adapter' in script:
+                        name = get('par1'); value = get('par2')
+                        request = None
+                        if name == 'SIG_BatteryCheck': request = 'Battery,Check,listen'
+                        elif name == 'SIG_ProgramSwitch' and value in ('1','2','3','4','5','6'): request = 'Program,Switch,' + value
+                        else:
+                            match = re.fullmatch(r'SIG_(Volume|Balance|Tinnitus)(Current|Set|Max|Mute|Sharp|Soft)',name)
+                            if match:
+                                family,operation=match.groups()
+                                if operation == 'Set' and not value: value=self.globals.get('SIG_Target'+family,'')
+                                if operation != 'Set' or re.fullmatch(r'-?[0-9]+',value): request=family+','+operation+','+(value if operation=='Set' else '')
+                        if request: put('sig3_legacy_request',request)
+                        else: local['err'],local['errmsg']='1','Unsupported legacy request'
+                    elif 'Recognition cancelled or empty' in script:
+                        value = get('sig3_heard')
+                        if not value or value.startswith('%'): local['err'],local['errmsg']='1','Recognition cancelled'
+                    elif 'Read-only current program query' in script:
+                        if self.wrong_control or not self.program:
+                            local['err'], local['errmsg'] = '1', 'Current program missing or ambiguous'
+                        else:
+                            self.globals['SIG3_Program'] = self.program
+                            self.globals['SIG3_Observed'] = self.program
+                    elif 'Program selection through visible' in script:
                         slot = get('par1')
                         target = self.globals.get('SIG3_ProgramName' + slot)
                         if not target or target not in self.programs:
@@ -164,6 +207,20 @@ class Phone:
                             self.program = self.program_capture = target
                             self.globals['SIG3_Observed'] = target
                             self.globals['SIG3_Program'] = target
+                    elif 'Direct numeric slider action' in script:
+                        family = get('SIG3_Family')
+                        self.globals['SIG3_SliderDiagnostics'] = 'modeled range/action and touch exploration'
+                        if get('sig3_slider_mode') == 'Inspect':
+                            self.globals['SIG3_Observed'] = self.globals['SIG3_SliderDiagnostics']
+                        elif self.globals.get('SIG3_' + family + 'RangeConfirmed') != '1':
+                            local['err'], local['errmsg'] = '1', 'Confirm range mapping'
+                        elif not self.progress_supported or not self.touch_exploration:
+                            local['err'], local['errmsg'] = '1', 'Progress unsupported or touch exploration off'
+                        else:
+                            target = int(get('SIG3_Target'))
+                            self.progress_actions.append(target)
+                            self.globals['SIG3_ProgressAccepted'] = '1'
+                            if self.progress_commits: self.level = target
                     elif 'Opens battery UI' in script:
                         if get('par1') == 'listen' and not self.globals.get('SIG3_BatteryRequestId'):
                             local['err'], local['errmsg'] = '1', 'Configure battery request ID'
@@ -184,12 +241,12 @@ class Phone:
                                     limit = int(self.globals.get('SIG3_NoiseStrikeLimit','3'))
                                     if low >= high or limit < 1 or limit > 20: raise ValueError('Invalid thresholds')
                                     tier = 'loud' if value >= high else 'quiet' if value <= low else 'middle'
-                                    if tier == 'middle': self.globals.update(SIG3_NoiseStrikes='0',SIG3_NoiseCandidate='')
+                                    if tier == 'middle' and not self.globals.get('SIG3_NoiseMiddleProgram'): self.globals.update(SIG3_NoiseStrikes='0',SIG3_NoiseCandidate='')
                                     else:
                                         strikes = min(limit, int(self.globals.get('SIG3_NoiseStrikes','0')) + 1) if self.globals.get('SIG3_NoiseCandidate') == tier else 1
                                         self.globals.update(SIG3_NoiseStrikes=str(strikes),SIG3_NoiseCandidate=tier)
                                         if strikes == limit:
-                                            slot = self.globals.get('SIG3_NoiseLoudProgram' if tier == 'loud' else 'SIG3_NoiseQuietProgram')
+                                            slot = self.globals.get('SIG3_NoiseMiddleProgram' if tier == 'middle' else 'SIG3_NoiseLoudProgram' if tier == 'loud' else 'SIG3_NoiseQuietProgram')
                                             if slot not in ('1','2','3','4','5','6'): raise ValueError('Configure noise program')
                                             self.globals['SIG3_AutoProgramSlot'] = slot
                         except (ValueError, KeyError): local['err'], local['errmsg'] = '1', 'Noise configuration/sample invalid'
@@ -236,6 +293,8 @@ class Phone:
                 if abs(distance) >= self.threshold: self.level = max(self.bounds[0], min(self.bounds[1], self.level + (self.jump if distance > 0 else -self.jump)))
             elif code == 18: self.closed = True
             elif code == 25: self.closed = True
+            elif code == 903:
+                self.globals['VOICE'] = getattr(self,'prompt_response','')
             elif code == 1218739680:
                 local['avnoiselevel'] = str(getattr(self, 'noise_sample', -45))
             else: assert code in (20, 18, 25, 30, 548), code

@@ -1,6 +1,26 @@
 # Tasker changes needed after Signia analysis
 
+## Repository parity implementation — October 10, 2026
+
+Added prompted mode/battery recognition, program aliases, override toggle, optional third noise tier, watch sample/source routing, automatic foreground deferral, cancellation/resume, configurable completion navigation and an explicit legacy adapter. SoundWear is removed. See [final setup and remaining phone acceptance](HeySig3-completion.md). Historical findings below are retained as context; actual plugin profile wiring and acoustic command acceptance still require the phone.
+
+## Main-to-HeySig3 functionality comparison — October 9, 2026
+
+The [new parity review](HeySig3-main-parity-review.md) compares main’s project, standalone tasks, state bundle and scene with the current HeySig3 export. The user has selected absolute numeric targets for volume, balance and tinnitus, so relative-volume voice phrases will not be restored. Remaining gaps include interactive recognition prompts, three-tier noise mapping, legacy mode aliases/toggle and completion/screen behavior. Existing SIG3 task coverage does not establish device functionality: the user reports its continuous volume gesture fails. BLE is excluded from the user’s setup; review the non-drag acoustic command route before further gesture work.
+
 Reviewed October 8, 2026, on branch `HeySid3`, based on `main` commit `91cd647`, including the uncommitted HeySig3 numeric-control implementation. This is a static review of repository exports, not a review of the phone's current Tasker configuration. No Tasker XML, Java, or generator code was changed during this review.
+
+## Main audit follow-up — October 10, 2026
+
+The [updated parity audit](HeySig3-main-parity-review.md) covers the retained main XML tasks. Additional gaps are legacy caller/global migration and the documented cancellation/defer workflow. Prompted mode/battery recognition, three-tier mapping and semantic aliases remain missing. Battery and current-program reading have been restored; numeric accessibility control is implemented but acoustic reception remains unverified.
+
+## Numeric accessibility slider path — October 9, 2026
+
+Set now defaults to one direct accessibility progress action shared by Volume, Balance and Tinnitus. Read-only Inspect tasks report live capabilities, range and touch-exploration state. No automatic drag fallback is used. This supersedes earlier gesture descriptions below; [phone acceptance](HeySig3-slider-acceptance.md) remains required to establish acoustic command commit.
+
+## Battery restoration — October 9, 2026
+
+The user confirms HeySig battery checking worked. HeySig3 now preserves its simple left-check/acknowledge/right-check/acknowledge/page-close sequence and original waits. Normal battery voice commands run that sequence; no new request-button ID is required. The legacy task is unchanged. The SIG3 migration passes flow and XML checks; phone import/run remains to be confirmed.
 
 ## Implementation update — Priority 1 and 2
 

@@ -205,7 +205,7 @@ def family_guard(family, lhs, op, rhs, message):
     return [condition(lhs, op, rhs), *family_fail(family, message), action(38)]
 
 
-def target_set(family):
+def legacy_target_set(family):
     lo, hi = (-8, 7) if family == 'Balance' else (0, 15)
     level = '%SIG3_Level' if family == 'Volume' else '%SIG3_' + family + 'Level'
     ok = '%SIG3_' + family + 'OK'
@@ -242,6 +242,30 @@ def target_set(family):
     return aa
 
 
+def target_set(family):
+    lo, hi = (-8, 7) if family == 'Balance' else (0, 15)
+    level = '%SIG3_Level' if family == 'Volume' else '%SIG3_' + family + 'Level'
+    ok = '%SIG3_' + family + 'OK'
+    g = lambda lhs, op, rhs, message: family_guard(family, lhs, op, rhs, message)
+    return [condition('%SIG3_SliderBackend',2,'legacy-gesture'), *legacy_target_set(family), action(43),
+            setvar(ok,0), setvar('%sig3_target','%par1'),
+            *g('%sig3_target',5,r'^-?[0-9]+$',family + ' target must be an integer'),
+            *g('%sig3_target',6,lo,family + ' target below minimum'),
+            *g('%sig3_target',7,hi,family + ' target above maximum'),
+            setvar('%SIG3_Target','%sig3_target'),setvar('%SIG3_' + family + 'Target','%sig3_target'),
+            call('SIG3_Internal' + family + 'Current'), *g(ok,3,1,'Initial slider query failed: %SIG3_Error'),
+            condition(level,8,'%sig3_target'),setvar('%SIG3_Observed',level),stop(),action(38),
+            setvar('%SIG3_Previous',level),setvar('%SIG3_Expected','%sig3_target'),setvar(ok,0),
+            java_file('sig3_phone_check.java'),*g('%err',12,'','Audio preflight failed: %errmsg'),
+            java_file('sig3_ui_check.java'),*g('%err',12,'','Slider/program guard failed: %errmsg'),
+            setvar('%sig3_slider_mode','Set'),java_file('sig3_slider_progress.java'),
+            *g('%err',12,'','Numeric slider action failed: %errmsg'),wait(500),
+            setvar('%SIG3_MoveStage','readback'),call('SIG3_Internal' + family + 'Current','query_only'),
+            setvar('%SIG3_Observed',level),*g(ok,3,1,'Slider readback failed: %SIG3_Error'),
+            *g(level,9,'%sig3_target','Displayed target not reached; observed=' + level + ' requested=%sig3_target'),
+            setvar(ok,1),action(38)]
+
+
 def target_wrapper(family, operation):
     lo, hi = (-8, 7) if family == 'Balance' else (0, 15)
     if operation in ('Max', 'Mute', 'Sharp', 'Soft'):
@@ -259,23 +283,29 @@ def target_wrapper(family, operation):
 
 def numeric_voice():
     aa = [setvar('%sig3_command', '%avcomm'),
-          condition('%par1', 12), setvar('%sig3_command', '%par1'), action(38)]
+          condition('%par1', 12), setvar('%sig3_command', '%par1'), action(38),
+          java_file('sig3_command_normalize.java'), condition('%err',12),
+          java_code('tasker.showToast(tasker.getVariable("errmsg")); return "invalid-command";'), stop(),action(38)]
     words = ['zero','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen']
     for family in ('Volume', 'Balance', 'Tinnitus'):
         for value in range(-8 if family == 'Balance' else 0, 8 if family == 'Balance' else 16):
-            word = (r'(?:minus|negative)\s+' if value < 0 else '') + words[abs(value)]
+            word = (r'(?:minus|negative)\s+(?:' + str(abs(value)) + '|' + words[abs(value)] + ')' if value < 0 else words[value])
             pattern = r'(?i)^\s*(?:(?:set|change)\s+)?' + family.lower() + r'\s+(?:to\s+)?(?:' + str(value) + '|' + word + r')\s*$'
             aa += [condition('%sig3_command', 4, pattern), request(family, 'Set', str(value)), stop(), action(38)]
     for family, operation, pattern in [('Volume', 'Max', r'(?i)^\s*(?:maximum volume|volume max|volume maximum)\s*$'), ('Volume', 'Mute', r'(?i)^\s*(?:mute|volume mute|mute volume)\s*$'), ('Balance', 'Sharp', r'(?i)^\s*(?:balance sharp|sharp balance)\s*$'), ('Balance', 'Soft', r'(?i)^\s*(?:balance soft|soft balance)\s*$'), ('Tinnitus', 'Max', r'(?i)^\s*(?:maximum tinnitus|tinnitus max)\s*$'), ('Tinnitus', 'Mute', r'(?i)^\s*(?:tinnitus mute|mute tinnitus)\s*$')]:
-        aa += [condition('%sig3_command', 4, pattern), request(family, operation), stop(), action(38)]
+        aa += [condition('%sig3_command', 4, pattern), request(family, 'Set', str(7 if family == 'Balance' and operation == 'Sharp' else -8 if family == 'Balance' else 15 if operation == 'Max' else 0)), stop(), action(38)]
     for slot in range(1, 7):
         word = words[slot]
         pattern = r'(?i)^\s*(?:(?:set|change)\s+)?(?:program|mode)\s+(?:to\s+)?(?:' + str(slot) + '|' + word + r'|\Q%SIG3_ProgramName' + str(slot) + r'\E)\s*$'
         aa += [condition('%sig3_command', 4, pattern), request('Program', 'Switch', str(slot)), stop(), action(38)]
     for family, operation, target, pattern in [
-            ('Battery','Check','open',r'(?i)^\s*(?:battery|battery check|check battery)\s*$'),
+            ('Program','Current','',r'(?i)^\s*(?:current program|current mode|what program|what mode|what is (?:the )?current (?:program|mode))\s*\??\s*$'),
+            ('Battery','Check','listen',r'(?i)^\s*(?:battery|battery check|check battery)\s*$'),
             ('Battery','Check','listen',r'(?i)^\s*(?:battery listen|listen to battery)\s*$'),
             ('Noise','Sample','',r'(?i)^\s*(?:noise sample|check noise)\s*$'),
+            ('Setup','Toggle','',r'(?i)^\s*override toggle\s*$'),
+            ('Sleep','Set','asleep',r'(?i)^\s*sleep\s*$'),
+            ('Sleep','Set','awake',r'(?i)^\s*wake\s*$'),
             ('Setup','Override','1',r'(?i)^\s*(?:override on|manual mode)\s*$'),
             ('Setup','Override','0',r'(?i)^\s*(?:override off|automatic mode)\s*$')]:
         aa += [condition('%sig3_command', 4, pattern), request(family, operation, target), stop(), action(38)]
@@ -320,19 +350,19 @@ def worker():
           setvar('%SIG3_Result', 'pending: operation did not finish'),
           setvar('%SIG3_MoveStage', 'start'), setvar('%SIG3_TouchStage', 'not run'), setvar('%SIG3_Gesture', ''), setvar('%SIG3_QueryData', ''), setvar('%SIG3_Program', ''),
           setvar('%SIG3_Previous', ''), setvar('%SIG3_Expected', ''), setvar('%SIG3_Observed', ''),
-          setvar('%SIG3_AudioDiagnostics', ''), setvar('%SIG3_Target', ''),
+          setvar('%SIG3_AudioDiagnostics', ''), setvar('%SIG3_Target', ''), setvar('%SIG3_SliderDiagnostics',''), setvar('%SIG3_ProgressAccepted','not run'),
           setvar('%SIG3_OperationId', '%TIMEMS'), setvar('%sig3_request', '%par1')]
     a = split('%sig3_request'); a.find("Str[@sr='arg1']").text = ','
     aa += [a, setvar('%SIG3_Family', '%sig3_request1'), setvar('%SIG3_Target', '%sig3_request3'), setvar('%SIG3_Error', 'Operation incomplete or unsupported request'), *defaults()]
     for family in ('Volume', 'Balance', 'Tinnitus'):
         aa += [condition('%sig3_request1', 2, family), setvar('%SIG3_' + family + 'OK', 0)]
-        for op in ('Current','Set','Up','Down','Max','Mute','Sharp','Soft','Calibrate'):
+        for op in ('Current','Set','Inspect','Up','Down','Max','Mute','Sharp','Soft','Calibrate'):
             if (family == 'Balance' and op in ('Max','Mute')) or (family != 'Balance' and op in ('Sharp','Soft')): continue
             aa += [condition('%sig3_request2', 2, op), call('SIG3_Internal' + family + op, '%sig3_request3', '%sig3_request4'),
                    condition('%err', 12), setvar('%SIG3_Error', 'Internal task failed: %errmsg'), setvar('%SIG3_' + family + 'OK', 0), action(38),
                    setvar('%SIG3_CommandOK', '%SIG3_' + family + 'OK'), action(38)]
         aa += [action(38)]
-    for family, operations in [('Program', ('Switch',)), ('Battery', ('Check',)), ('Noise', ('Sample','Process')), ('Sleep', ('Set',)), ('Setup', ('Init','Override'))]:
+    for family, operations in [('Program', ('Switch','Current')), ('Battery', ('Check',)), ('Noise', ('Sample','Process')), ('Sleep', ('Set',)), ('Setup', ('Init','Override','Toggle'))]:
         aa += [condition('%sig3_request1', 2, family), setvar('%SIG3_' + family + 'OK', 0)]
         for operation in operations:
             aa += [condition('%sig3_request2', 2, operation), call('SIG3_Internal' + family + operation, '%sig3_request3'),
@@ -343,6 +373,7 @@ def worker():
            setvar('%SIG3_Result', '%SIG3_Family: %SIG3_Observed; program=%SIG3_Program; target=%SIG3_Target (app state; aid receipt unverified)'),
            action(43), setvar('%SIG3_Result', 'Failed: %SIG3_Error; family=%SIG3_Family target=%SIG3_Target previous=%SIG3_Previous expected=%SIG3_Expected observed=%SIG3_Observed; program=%SIG3_Program; stage=%SIG3_MoveStage'), action(38),
            java_code('tasker.log(tasker.getVariable("SIG3_Result") + "; " + tasker.getVariable("SIG3_AudioDiagnostics")); tasker.showToast(tasker.getVariable("SIG3_Result")); return "reported";')]
+    aa += [condition('%SIG3_CommandOK',8,1),java_file('sig3_completion.java'),action(38)]
     return aa
 
 
@@ -356,23 +387,57 @@ def extra_tasks():
         aa = defaults()
         for key, value in [('NoiseEnabled','0'),('SleepEnabled','0'),('ManualOverride','0'),
                            ('NoiseInvert','0'),('NoiseScaleConfirmed','0'),('NoiseStrikeLimit','3'),
-                           ('NoiseStrikes','0'),('SleepActive','0')]:
+                           ('NoiseStrikes','0'),('SleepActive','0'),('DeferAutomation','1'),('CompletionPolicy','stay'),('AutomationCancelled','0'),('NoiseSource','phone')]:
             aa += [condition('%SIG3_' + key, 13), setvar('%SIG3_' + key, value), action(38)]
         return aa + [setvar('%SIG3_Observed','Defaults initialized; existing configuration preserved; automatic features default off'),setvar('%SIG3_SetupOK',1)]
     add('SIG3_InternalSetupInit',470,init_defaults(),True)
     add('SIG3_Init',360,[request('Setup','Init')])
     add('SIG3_InternalSetupOverride',471,[*g('Setup','%par1',5,r'^[01]$','Override must be 0 or 1'),setvar('%SIG3_ManualOverride','%par1'),setvar('%SIG3_NoiseStrikes',0),setvar('%SIG3_NoiseCandidate',''),setvar('%SIG3_Observed','Manual override=%par1'),setvar('%SIG3_SetupOK',1)],True)
     add('SIG3_Override',361,[request('Setup','Override','%par1')])
+    toggle = [java_code('value = tasker.getVariable("SIG3_ManualOverride"); tasker.setVariable("sig3_override", "1".equals(value) ? "0" : "1"); return "toggled";'),call('SIG3_InternalSetupOverride','%sig3_override')]
+    add('SIG3_InternalSetupToggle',494,toggle,True)
+    add('SIG3_OverrideToggle',394,[request('Setup','Toggle')])
+    add('SIG3_CancelAutomation',395,[setvar('%SIG3_AutomationCancelled',1),java_code('tasker.showToast("Automatic changes cancelled; run SIG3_ResumeAutomation to allow future changes"); return "cancelled";')])
+    add('SIG3_ResumeAutomation',396,[setvar('%SIG3_AutomationCancelled',0)])
+
     program = [setvar('%SIG3_ProgramOK',0),call('SIG3_InternalAppLaunch'),*g('Program','%SIG3_AppOK',3,1,'Program launch failed: %SIG3_Error'),
                java_file('sig3_phone_check.java'),*g('Program','%err',12,'','Program audio preflight failed: %errmsg'),
                java_file('sig3_program.java'),*g('Program','%err',12,'','Program switch failed: %errmsg'),setvar('%SIG3_ProgramOK',1)]
     add('SIG3_InternalProgramSwitch',472,program,True)
     add('SIG3_ProgramSwitch',362,[request('Program','Switch','%par1')])
-    battery = [setvar('%SIG3_BatteryOK',0),setvar('%SIG3_BatteryText',''),call('SIG3_InternalAppLaunch'),*g('Battery','%SIG3_AppOK',3,1,'Battery launch failed: %SIG3_Error'),
-               condition('%par1',2,'listen'),java_file('sig3_phone_check.java'),*g('Battery','%err',12,'','Battery audio preflight failed: %errmsg'),action(38),
-               java_file('sig3_battery.java'),*g('Battery','%err',12,'','Battery check failed: %errmsg'),setvar('%SIG3_BatteryOK',1)]
+    program_current = [setvar('%SIG3_ProgramOK',0),call('SIG3_InternalAppLaunch'),
+                       *g('Program','%SIG3_AppOK',3,1,'Program launch failed: %SIG3_Error'),
+                       java_file('sig3_program_current.java'),
+                       *g('Program','%err',12,'','Current program query failed: %errmsg'),setvar('%SIG3_ProgramOK',1)]
+    add('SIG3_InternalProgramCurrent',493,program_current,True)
+    add('SIG3_ProgramCurrent',393,[request('Program','Current')])
+
+    # Preserve the user's working HeySig acoustic battery sequence and wait times.
+    # Keep SIG3 worker ownership/results; omit legacy app close, screen lock and scene cleanup.
+    battery_reference = E.parse(ROOT / 'tasks/SIG_BatteryCheck.tsk.xml').getroot()
+    battery_actions = sorted(battery_reference.findall('.//Task/Action'), key=lambda a: int(a.get('sr')[3:]))
+    battery = [setvar('%SIG3_BatteryOK',0),setvar('%SIG3_BatteryText',''),
+               *g('Battery','%par1',5,r'^(?:open|listen)$','Battery mode must be open or listen'),
+               call('SIG3_InternalAppLaunch'),*g('Battery','%SIG3_AppOK',3,1,'Battery launch failed: %SIG3_Error'),
+               condition('%par1',2,'open'),java_file('sig3_battery.java'),
+               *g('Battery','%err',12,'','Battery page failed: %errmsg'),action(43)]
+    for original in battery_actions:
+        index = int(original.get('sr')[3:])
+        if not 2 <= index <= 12:
+            continue
+        copied = deepcopy(original)
+        if copied.findtext('code') == '107361459':
+            se = copied.find('se')
+            if se is None:
+                se = E.Element('se'); copied.insert(1, se)
+            se.text = 'true'
+        battery.append(copied)
+        if copied.findtext('code') == '107361459':
+            battery += g('Battery','%err',12,'',f'Battery action {index} failed: %errmsg')
+    battery += [setvar('%SIG3_Observed','Left and right battery checks requested; battery page closed. Listen for the aid indications.'),
+                action(38),setvar('%SIG3_BatteryOK',1)]
     add('SIG3_InternalBatteryCheck',473,battery,True)
-    add('SIG3_BatteryCheck',363,[condition('%par1',13),setvar('%sig3_mode','open'),action(43),setvar('%sig3_mode','%par1'),action(38),request('Battery','Check','%sig3_mode')])
+    add('SIG3_BatteryCheck',363,[condition('%par1',13),setvar('%sig3_mode','listen'),action(43),setvar('%sig3_mode','%par1'),action(38),request('Battery','Check','%sig3_mode')])
     # Reuse the exported AutoVoice capture envelope; no invented microphone implementation.
     noise_reference = E.parse(ROOT / 'tasks/SIG_Current_dB.tsk.xml').getroot()
     sample_action = deepcopy(next(a for a in noise_reference.findall('.//Action') if a.findtext('code') == '1218739680'))
@@ -380,20 +445,41 @@ def extra_tasks():
     if e is not None: sample_action.remove(e)
     e = E.Element('se'); e.text = 'true'; sample_action.insert(1,e)
     noise_process = [setvar('%SIG3_NoiseOK',0),setvar('%sig3_noise_raw','%par1'),java_file('sig3_noise.java'),*g('Noise','%err',12,'','Noise processing failed: %errmsg'),
-                     condition('%SIG3_AutoProgramSlot',12),call('SIG3_InternalProgramSwitch','%SIG3_AutoProgramSlot'),*g('Noise','%SIG3_ProgramOK',3,1,'Automatic program switch failed: %SIG3_Error'),action(38),setvar('%SIG3_NoiseOK',1)]
+                     condition('%SIG3_AutoProgramSlot',12),java_file('sig3_automation_guard.java'),*g('Noise','%err',12,'','Automatic change deferred/cancelled: %errmsg'),call('SIG3_InternalProgramSwitch','%SIG3_AutoProgramSlot'),*g('Noise','%SIG3_ProgramOK',3,1,'Automatic program switch failed: %SIG3_Error'),action(38),setvar('%SIG3_NoiseOK',1)]
     add('SIG3_InternalNoiseProcess',474,noise_process,True)
     noise_sample = [setvar('%SIG3_NoiseOK',0),sample_action,*g('Noise','%err',12,'','Noise plugin failed: %errmsg'),call('SIG3_InternalNoiseProcess','%avnoiselevel')]
     add('SIG3_InternalNoiseSample',475,noise_sample,True)
-    add('SIG3_CurrentNoise',364,[request('Noise','Sample')])
+    add('SIG3_CurrentNoise',364,[condition('%SIG3_NoiseSource',3,'watch'),request('Noise','Sample'),action(38)])
     add('SIG3_NoiseMonitor',365,[request('Noise','Process','%par1')])
     sleep = [setvar('%SIG3_SleepOK',0),*g('Sleep','%SIG3_SleepEnabled',3,1,'Sleep automation is disabled'),
              *g('Sleep','%SIG3_ManualOverride',8,1,'Manual override blocks sleep automation'),
              *g('Sleep','%par1',5,r'^(?:asleep|awake)$','Sleep input must be asleep or awake'),
              condition('%par1',2,'asleep'),setvar('%sig3_sleep_slot','%SIG3_SleepProgram'),action(43),setvar('%sig3_sleep_slot','%SIG3_WakeProgram'),action(38),
+             java_file('sig3_automation_guard.java'),*g('Sleep','%err',12,'','Sleep change deferred/cancelled: %errmsg'),
              call('SIG3_InternalProgramSwitch','%sig3_sleep_slot'),*g('Sleep','%SIG3_ProgramOK',3,1,'Sleep program switch failed: %SIG3_Error'),
              condition('%par1',2,'asleep'),setvar('%SIG3_SleepActive',1),action(43),setvar('%SIG3_SleepActive',0),action(38),setvar('%SIG3_SleepOK',1)]
     add('SIG3_InternalSleepSet',476,sleep,True)
     add('SIG3_SleepState',366,[request('Sleep','Set','%par1')])
+    voice_reference = E.parse(ROOT / 'tasks/SIG_Voice_Mode.tsk.xml').getroot()
+    voice_template = next(a for a in voice_reference.findall('.//Action') if a.findtext('code') == '903')
+    for name, number, prompt, prefix in [('SIG3_VoiceMode',397,'What mode would you like?','program '),('SIG3_VoiceBattery',398,'Say battery check to check both batteries','')]:
+        capture = deepcopy(voice_template)
+        capture.find("Str[@sr='arg0']").text = prompt
+        e = E.Element('se'); e.text = 'true'; capture.insert(1,e)
+        aa = [setvar('%VOICE',''),capture,condition('%err',13),setvar('%sig3_heard','%VOICE'),
+              java_code('heard = tasker.getVariable("sig3_heard"); if (heard == null || heard.startsWith("%")) heard = tasker.getVariable("gv_heard1"); if (heard == null || heard.trim().length() == 0) throw new com.joaomgcd.taskerm.action.java.JavaCodeException("Recognition cancelled or empty"); tasker.setVariable("sig3_heard", heard.trim()); return "heard";'),
+              condition('%err',13)]
+        if prefix:
+            aa += [setvar('%sig3_command','%sig3_heard'),java_file('sig3_command_normalize.java'),
+                   condition('%err',13),condition('%sig3_command',5,r'(?i)^(?:program|mode)\s+'),
+                   setvar('%sig3_command','program %sig3_command'),action(38),call('SIG3_VoiceRouter','%sig3_command'),action(38)]
+        else:
+            aa += [call('SIG3_VoiceRouter','%sig3_heard')]
+        aa += [action(38),action(38)]
+        add(name,number,aa)
+    add('SIG3_LegacyCommand',400,[java_file('sig3_legacy_command.java'),condition('%err',13),call('SIG3_Worker','%sig3_legacy_request'),action(38)])
+    # Explicit numeric watch samples: no assumption about plugin event variable names.
+    add('SIG3_WatchNoise',399,[condition('%SIG3_NoiseSource',2,'watch'),request('Noise','Process','%par1'),action(38)])
     # Capture event-local input explicitly. All control execution still goes through the worker.
     for name, number, preferred, fallback in [('SIG3_AutoVoiceCommand',367,'%avcommnofilter','%avcomm'),('SIG3_WatchCommand',368,'%awcomm','%awmessage')]:
         aa = [setvar('%sig3_input',preferred),condition(preferred,13),setvar('%sig3_input',fallback),action(38),
@@ -452,6 +538,13 @@ def build():
               *family_guard(family, '%par2', 5, r'^(?:1|-1)$', 'Calibration direction must be 1 or -1'), setvar(step, '%par1'), setvar('%SIG3_' + family + 'Direction', '%par2')]
         tasks.append(task('SIG3_Internal' + family + 'Calibrate', 460 + index, protect_internal(aa)))
     tasks.append(task('SIG3_Calibrate', 351, [call('SIG3_Worker', '%par1,Calibrate,%par2')]))
+    for index, family in enumerate(('Volume','Balance','Tinnitus')):
+        aa = [call('SIG3_Internal' + family + 'Current'),
+              *family_guard(family,'%SIG3_' + family + 'OK',3,1,'Slider inspection query failed: %SIG3_Error'),
+              setvar('%sig3_slider_mode','Inspect'),java_file('sig3_slider_progress.java'),
+              *family_guard(family,'%err',12,'','Slider inspection failed: %errmsg')]
+        tasks.append(task('SIG3_Internal' + family + 'Inspect',490+index,protect_internal(aa)))
+        tasks.append(task('SIG3_' + family + 'Inspect',390+index,[request(family,'Inspect')]))
     tasks.extend(extra_tasks())
     tasks.append(task('SIG3_Worker', 350, worker()))
     for t in tasks:

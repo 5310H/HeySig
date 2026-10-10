@@ -1,28 +1,30 @@
 # HeySig3 numeric voice controls
 
+Latest: [completion, restored workflows and event wiring](HeySig3-completion.md). Numeric sliders now default to direct accessibility actions; older gesture/calibration paragraphs describe only the explicit compatibility backend.
+
 The current HeySig3 export now includes numeric Volume, Balance, and Tinnitus controls. Import [HeySig3.prj.xml](../projects/HeySig3.prj.xml) as a new, separate project. The original HeySig project remains unchanged. `SIG3_VolumeCurrent` copies the proven HeySig2 reader into the isolated project; no HeySig2 export is modified.
 
 Run `SIG3_VoiceRouter` with Parameter 1 containing the spoken text, or call it from an AutoVoice recognition task that provides `%avcomm`. Existing recognition profiles are not rewired automatically.
 
-Examples: `volume 10`, `set volume to ten`, `balance minus three`, `balance 0`, `tinnitus five`. Supported ranges are volume/tinnitus 0–15 and balance −8–7. Max/mute and balance sharp/soft phrases also route to numeric targets. Repeating the same number is a no-op after a fresh current query.
+Use absolute targets: `change volume to 10`, `change balance to minus 3`, and `change tinnitus to 5`. Short forms such as `volume 10`, `balance 0`, and `tinnitus five` also work. Supported ranges are volume/tinnitus 0–15 and balance −8–7. Max/mute and balance sharp/soft phrases also route to numeric targets. Repeating the same number is a no-op after a fresh current query.
 
-`SIG3_VolumeSet`, `SIG3_BalanceSet`, and `SIG3_TinnitusSet` accept an integer in Parameter 1. Out-of-range input fails rather than clamps. Up/Down and endpoint tasks are wrappers around Set. Volume/tinnitus mute requests zero; balance soft/sharp request −8/7.
+`SIG3_VolumeSet`, `SIG3_BalanceSet`, and `SIG3_TinnitusSet` accept an integer in Parameter 1. Out-of-range input fails rather than clamps. Use these three Set tasks as the supported manual controls; no Up/Down commands are needed. Existing Up/Down tasks remain compatibility wrappers around Set for older phone shortcuts. Endpoint voice aliases also dispatch directly to numeric Set targets. Volume/tinnitus mute requests zero; balance soft/sharp request −8/7.
 
 All public commands enter `SIG3_Worker`. Tasker’s default **Abort New Task** collision policy keeps one worker active; commands arriving while it runs are rejected, not queued. Child tasks run at higher priority. Confirm the worker’s collision setting after import; do not change it to Run Both or Abort Existing. No persistent busy flag needs resetting after failure or manual Stop. Internal tasks are not user entry points.
 
-Each Set reads the active control, starts on its current numbered knob, holds 200 ms, moves one stop over 300 ms using the same pointer, releases, waits 500 ms, and queries again. Every stop must change by exactly one toward the target. An unchanged, skipped, ambiguous, unavailable, or failed reading stops without escalating the distance. At most 16 steps are allowed. `%SIG3_Gesture` records DOWN-HOLD-MOVE-UP timing and mechanism; `%SIG3_Error` records failure; each family has its own `%SIG3_<Family>OK`. Voice completion uses `%SIG3_CommandOK`.
+Each Set now reads the current level, requests the absolute target once through Android `ACTION_SET_PROGRESS`, and verifies fresh displayed readback. There is no automatic gesture fallback. All three families use [the shared slider implementation](../tools/sig3_slider_progress.java). See [volume acceptance steps](HeySig3-slider-acceptance.md) before sending the first command. A successful displayed target still requires separate audible confirmation.
 
-## Calibration before use
+## Readback setup before use
 
 Set `%SIG3_KnobId` to the phone-confirmed current-value ID `com.signia.rta:id/TA-SliderValue`, or use the four `%SIG3_KnobXMin/XMax/YMin/YMax` bounds. Its measured step defaults to 40 px through `%SIG3_VolumeStepPx`.
 
-Balance and tinnitus require their own selector: `%SIG3_BalanceKnobId` / `%SIG3_TinnitusKnobId`, or the matching four region bounds such as `%SIG3_BalanceKnobXMin`. Set `%SIG3_BalanceStepPx` and `%SIG3_TinnitusStepPx` to measured adjacent-stop spacing (1–200 px). These distances have no guessed default. Run the respective Current task and inspect `%SIG3_QueryData` before attempting movement. Configure `%SIG3_BalanceDirection` / `%SIG3_TinnitusDirection`: `1` means upward increases the displayed value; `-1` means downward increases it. Volume defaults to `1` from the observed phone behavior. Direction must be confirmed on the phone. Tab labels are `Balance Tab` and `Tinnitus Tab`; unavailable tinnitus fails readback.
+Balance and tinnitus require their own readback selector: `%SIG3_BalanceKnobId` / `%SIG3_TinnitusKnobId`, or the matching four region bounds such as `%SIG3_BalanceKnobXMin`. Pixel spacing is not needed for the new accessibility path. The following StepPx/Direction settings apply only to the explicitly selected legacy gesture backend: set `%SIG3_BalanceStepPx` and `%SIG3_TinnitusStepPx` to measured adjacent-stop spacing (1–200 px). These distances have no guessed default. Run the respective Current task and inspect `%SIG3_QueryData` before attempting movement. Configure `%SIG3_BalanceDirection` / `%SIG3_TinnitusDirection`: `1` means upward increases the displayed value; `-1` means downward increases it. Volume defaults to `1` from the observed phone behavior. Direction must be confirmed on the phone. Tab labels are `Balance Tab` and `Tinnitus Tab`; unavailable tinnitus fails readback.
 
 Current tasks publish `%SIG3_BalanceLevel/X/Y` and `%SIG3_TinnitusLevel/X/Y`. Volume continues publishing `%SIG3_Level` and `%SIG3_VolumeX/Y`. Your configuration uses the common slider controlling both aids; no separate left/right operation is introduced.
 
 ## Validation and limitations
 
-Phone testing should begin with an explicit numbered target, such as `volume 10` or `SIG3_VolumeSet` with Parameter 1 `10`. The legacy Up/Down tasks were not reliable; the rewritten SIG3 Up/Down wrappers remain unverified on the phone. Set currently reaches its target using verified one-stop gestures, not one direct gesture to the target.
+Phone testing should begin with an explicit numbered target, such as `volume 10` or `SIG3_VolumeSet` with Parameter 1 `10`. The legacy Up/Down tasks were not reliable; the rewritten SIG3 Up/Down wrappers remain unverified on the phone. Set now uses one numeric accessibility action. Its command-commit behavior is not yet phone-confirmed.
 
 The Chromebook can generate and inspect these exports, but cannot test Signia because the app does not run there. Actual import, accessibility, gesture, and acoustic behavior must be tested on the Android phone with Tasker, AutoInput, and Signia.
 
@@ -62,6 +64,8 @@ Run `SIG3_Init` once after import. It fills missing settings and preserves exist
 
 Configure `%SIG3_ProgramName1` through `%SIG3_ProgramName6` with the exact names of programs actually available in Signia; leave unused slots unset. `SIG3_ProgramSwitch` accepts the slot number in Parameter 1. Voice accepts `program two` or `change program to Music`. It reads the current program, opens the picker, clicks a uniquely matching visible name, and verifies the displayed program with bounded waits. Repeating the current program is a no-op. No coordinate fractions or cached success assignments are used.
 
+Run `SIG3_ProgramCurrent` to read the current displayed program without changing it. Voice accepts `current program`, `current mode`, or `what is the current program?`. The result is stored in `%SIG3_Program` and `%SIG3_Observed`, with `%SIG3_ProgramOK` / `%SIG3_CommandOK` reporting success. It launches Signia if needed, requires one visible readable program node matching `%SIG3_ProgramId`, and leaves the app open. It does not require audio settings or configured program slots; it does not open the program picker or send an acoustic command. The worker shows/logs the result. A missing or ambiguous program fails instead of returning stale state.
+
 Additional APK-derived IDs require confirmation from the phone:
 
 | Variable | Initial ID |
@@ -70,7 +74,9 @@ Additional APK-derived IDs require confirmation from the phone:
 | `%SIG3_BatteryOpenId` | `com.signia.rta:id/TA-BatteryIcon` |
 | `%SIG3_BatteryPageId` | `com.signia.rta:id/TA-BluetoothAndBatteryPageCloseIcon` |
 
-`SIG3_BatteryCheck` defaults to Parameter 1 `open`: open/recognize the battery page and record visible text in `%SIG3_BatteryText`. Parameter 1 `listen` additionally clicks a **phone-confirmed** `%SIG3_BatteryRequestId`, with audio preflight. There is no default request button, no left/right routing, and no inferred percentage. A click result does not confirm receipt or decode the audible indication. Voice phrases are `battery check` and `battery listen`. The page remains open; return to the home control page before another operation if needed.
+`SIG3_BatteryCheck` defaults to `listen`, preserving the user-confirmed working HeySig battery check: open the battery page, click `Check Left Battery Button`, acknowledge `TA-PopupButton2`, click `Check Right Battery Button`, acknowledge again, and close the battery page. The original waits and AutoInput settings are preserved. Both `battery check` and `battery listen` run this sequence through the SIG3 worker. No `%SIG3_BatteryRequestId` configuration is needed. Plugin errors stop the sequence and report which action failed.
+
+Parameter 1 `open` remains an optional page-only inspection that records visible text in `%SIG3_BatteryText` and leaves the page open. Normal checks close the battery page and leave Signia open, following SIG3's completion policy. Battery indications are heard from the aids; no numeric percentage is inferred. The original HeySig sequence is user-confirmed working; its migrated SIG3 export still needs an import/run check.
 
 ### Voice and watch events
 
@@ -88,10 +94,10 @@ To enable noise-driven program selection after manual controls work, confirm the
 - `%SIG3_NoiseStrikeLimit`: consecutive samples required, 1–20; default 3.
 - `%SIG3_NoiseEnabled=1`: enable automatic selection.
 
-The middle band clears the candidate/count. Changing quiet/loud classification restarts the count. Once the count reaches the limit, program selection runs through the same worker and readback path. Sampling frequency is supplied by a phone profile; no timer is activated here. `%SIG3_SleepActive=1` suppresses noise changes.
+With NoiseMiddleProgram unset, the middle band clears the candidate/count; configuring that slot enables three-tier selection. Changing quiet/loud classification restarts the count. Once the count reaches the limit, program selection runs through the same worker and readback path. Sampling frequency is supplied by a phone profile; no timer is activated here. `%SIG3_SleepActive=1` suppresses noise changes.
 
 `SIG3_Override` takes `1` for manual override or `0` to release it; voice accepts `override on/off` and `manual/automatic mode`. Override blocks noise/sleep program changes and resets noise history. Releasing override does not itself enable either automation.
 
 `SIG3_SleepState` accepts `asleep` or `awake`. It requires `%SIG3_SleepEnabled=1`, configured `%SIG3_SleepProgram` / `%SIG3_WakeProgram` slots, and no manual override. A real time/sleep-provider profile must supply that state. The task selects and verifies the configured program before updating `%SIG3_SleepActive`. It does not infer sleep, use a hearing-aid standby enum, or assume that a program mutes the microphone.
 
-Priority 3 tests model initialization preservation, program routing/readback failures, voice/watch inputs, battery request configuration, native noise capture, sign handling, thresholds/strike count, override, and sleep transitions. They do not execute Android accessibility, BeanShell, plugin events, or acoustic playback. On-phone import and capture remain the acceptance step.
+Priority 3 tests model initialization preservation, program routing/readback failures, voice/watch inputs, battery sequence and page-only mode, native noise capture, sign handling, thresholds/strike count, override, and sleep transitions. They do not execute Android accessibility, BeanShell, plugin events, or acoustic playback. On-phone import and capture remain the acceptance step.
