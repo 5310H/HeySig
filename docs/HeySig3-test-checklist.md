@@ -36,7 +36,7 @@ Successful app labels do not independently acknowledge acoustic receipt by the a
 
 ## Passed in repository checks
 
-- [x] Static validation: 82 XML files, 5,371 task actions, zero failures.
+- [x] Static validation: 82 XML files, 5,389 task actions, zero failures.
 - [x] Numeric simulation: 768 source/target transitions, invalid targets, repeated targets, endpoints and readback failures.
 - [x] Backend simulation: native prerequisites, accepted-but-unchanged progress, and per-family backend isolation.
 - [x] Missing tinnitus simulation: Current, Up, Down, Set, Max, Mute, Inspect, and voice request stop without movement.
@@ -66,7 +66,7 @@ Use an unlocked phone on Signia Controls. Keep competing legacy profiles disable
 1. [x] Public BalanceSet with Parameter 1 `1`, then `0`; repeated `0` returned success with no gesture. App readback passed; hearing-aid receipt remains unverified.
 2. [ ] Run public TinnitusSet with Parameter 1 `1`, then `0` in Universal; repeat `0` and confirm no additional gesture.
 3. [ ] Test balance 0 → −1 → 0, followed by other small targets before endpoint/long-jump tests.
-4. [ ] Confirm the expected audible aid response for balance and tinnitus separately from app readback.
+4. [x] Acceptance clarified by the user: no aid confirmation is available for balance/tinnitus; use fresh app readback. Battery indications already work.
 5. [ ] In TV, test TinnitusCurrent, Set, Mute/Max and Inspect. Confirm the same unavailable message, no gesture/progress action, and no program switch. Up already passed; the other entry points have simulated coverage only.
 6. [ ] Check availability/readback in the remaining actual programs: Off just Tinnitus, Noisy, Outdoor and Very Noisy. Do not assume which ones provide a tinnitus tab.
 7. [ ] Test balance/tinnitus movement in another program where its control is present; only Universal movement has passed so far.
@@ -81,7 +81,7 @@ Use an unlocked phone on Signia Controls. Keep competing legacy profiles disable
 - [x] Resolve the subsequent public VolumeCurrent failure: the corrected helper passed with a fresh 0 in Universal, CommandOK=1, stage=complete and empty Error. See the [verification report](HeySig3-verification-2026-10-10.md).
 - [ ] Confirm native/display mapping at enough levels for each family before setting its RangeConfirmed flag.
 - [ ] If intentionally testing native accessibility, verify touch exploration is enabled by the user. It was off in the captured inspection, and the code must stop before sending progress when off.
-- [ ] Verify one native adjacent target, repeated target, reverse move and actual aid response. Do not infer acoustic commit from Android acceptance or a changed label.
+- [ ] Verify one native adjacent target, repeated target, reverse move and fresh app readback. Do not infer acoustic commit from Android acceptance or a changed label.
 - [ ] Test mute/max and full-range targets only after ordinary adjacent moves work for the chosen backend.
 
 See the [acceptance guide](HeySig3-slider-acceptance.md); no automatic backend fallback is used.
@@ -91,7 +91,7 @@ See the [acceptance guide](HeySig3-slider-acceptance.md); no automatic backend f
 - [ ] SIG3 ProgramCurrent and ProgramSwitch, exact configured program names/slots, repeated-current no-op and failure cases. Manual program selection and the slider guard's TV read do not certify these tasks.
   ProgramCurrent initially failed; the repaired helper subsequently passed in Universal. ProgramSwitch passed between configured slots 1 and 2, including spoken changes and restoration on October 11. Other programs, failure and no-op cases remain pending; see the [verification report](HeySig3-verification-2026-10-10.md) and [voice verification](HeySig3-voice-verification-2026-10-11.md).
 - [x] SIG3 battery listen sequence: corrected toolbar opener, requests/acknowledgements and close passed with CommandOK1, Error blank, complete stage; user confirmed screen behavior.
-- [ ] Prompted battery recognition and audible battery indications.
+- [x] General prompted battery recognition and speech passed; user confirmed battery indications already work.
 - [ ] Prompted mode recognition, aliases, empty/cancelled input and override toggle.
 - [ ] Phone/watch noise capture, measured units/sign, thresholds, strike count and optional three-tier program selection.
 - [ ] Sleep/wake events, foreground deferral, manual override, cancellation/resume and optional Home completion.
@@ -101,7 +101,7 @@ Leave noise/sleep automation disabled until its configuration and event tests pa
 
 - [x] Phone audio policy: 20 actual Java cases for both streams, DND, silent/vibrate and configurable low-volume boundaries; no automatic phone-setting changes.
 - [x] Live DND and low-volume guards: DND blocked at14/25; media10/25 blocked with instruction to raise to13/25.
-- [ ] Actual hearing-aid receipt remains unverified.
+Actual hearing-aid receipt is not independently observable for program/slider commands and is not a pending acceptance test.
 - [x] Standalone phone audio check live: AudioReady=1, media 14/25, required 13/25, DND off, Error blank; no Signia launch.
 
 - [x] ProgramSwitch with explicit gesture-tap backend: actual picker slots configured, Universal → Off just Tinnitus → Universal passed, CommandOK1, Error blank. Other programs and failure/no-op checks remain pending.
@@ -109,11 +109,18 @@ Leave noise/sleep automation disabled until its configuration and event tests pa
 - [x] Spoken current-program result matched the phone screen.
 - [x] Spoken program selection and return: Off just Tinnitus → Universal → Off just Tinnitus; user confirmed both selected programs and spoken names, and final active header matched the captured starting program.
 - [x] Spoken current-value queries: volume spoke 8; balance and tinnitus matched the screen (subsequent screen reads both 0 in Universal).
-- [x] Spoken battery request: user confirmed battery prompts and spoken confirmation worked. Hearing-aid indications and percentages remain unverified.
+- [x] Spoken battery request: user confirmed battery prompts and spoken confirmation worked. User confirmed battery indications already work; battery percentages were not measured.
 - [x] Spoken volume change and restoration: 8 → 7 → 8 in Universal; user confirmed both spoken levels, and final screen matched starting state.
 - [x] Spoken balance change and restoration: 0 → -1 → 0 in Universal. User clarified using -1, confirmed speech and restoration; screen reads verified both levels.
 - [x] Spoken tinnitus change and restoration: 0 → 1 → 0 in Universal; user confirmed both spoken levels, and screen reads verified change and restoration.
 - [x] TV spoken volume change and restoration: 8 → 7 → 8; user confirmed both spoken levels and final screen verified TV at 8.
 - [x] TV current-tinnitus query: spoken unavailable explanation passed; captured Error=Tinnitus unavailable for this program and CommandOK=0.
 - [x] Live Cancel after banana: user confirmed closure without retry or control change; captured CommandOK=0 and Result=no command sent.
-- [ ] Other spoken blocked-command instructions, live Back/timeout, and TTS failure behavior.
+- [x] Live physical Back dismissal after banana: user confirmed immediate closure without reopening recognition or changing controls.
+- [x] Live retry-dialog timeout: user confirmed automatic closure after leaving the dialog untouched, with no retry or control change.
+- [x] Microphone-prompt Back cancellation ends quietly without retry, speech, or a control change. Empty recognition from silence/timeout also ends quietly.
+- [x] Spoken DND block: check battery stopped and user heard instructions to turn DND off; phone zen_mode was 1.
+- [x] Spoken low-phone-volume block: media 6/25, DND off; user confirmed check battery stopped and volume instruction was audible.
+- [ ] Other blocked-command messages and TTS failure behavior.
+
+- [x] Located Tasker Stop: running task shows a square at bottom-left in place of Play. User confirmed return to triangle; subsequent current-program display/speech passed. Wait-only test does not establish worker interruption.

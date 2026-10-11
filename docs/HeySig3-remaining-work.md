@@ -1,23 +1,24 @@
 # HeySig3 remaining work
 
-Updated October 10, 2026. This is the prioritized completion list, based on the [current test checklist](HeySig3-test-checklist.md), [phone evidence](HeySig3-verified-usb-drags.md), and [event wiring](HeySig3-completion.md). Unchecked items are pending, not necessarily missing implementations. Historical gaps in the main-parity review may already be implemented.
+Updated October 11, 2026. This is the prioritized completion list, based on the [current test checklist](HeySig3-test-checklist.md), [phone evidence](HeySig3-verified-usb-drags.md), and [event wiring](HeySig3-completion.md). Unchecked items are pending, not necessarily missing implementations. Historical gaps in the main-parity review may already be implemented.
+
+Acceptance clarification: the user reports that the aids provide confirmation only for battery checks, which already work. Program and slider tests use fresh Signia readback and command results; audible aid confirmation is not a completion requirement. This readback does not independently prove acoustic receipt.
 
 Program names must come from actual Signia readback or configured slots, never hardcoded into controls or test guards. Named programs in historical evidence describe what was tested. New tests should capture their starting program and verify that it remains unchanged.
 
 ## 1. Finish core slider acceptance
 
-- [ ] Establish a working **Tasker VolumeSet** backend on the phone. Record its configuration, test an adjacent move and reverse, repeat the target to prove no additional movement, and confirm the audible aid response. Successful ADB volume drags do not complete this item.
+- [ ] Establish a working **Tasker VolumeSet** backend on the phone. Record its configuration, test an adjacent move and reverse, repeat the target to prove no additional movement, and verify fresh app readback. Successful ADB volume drags do not complete this item.
 - [x] Run **BalanceSet** directly with Parameter 1: 1 → 0, then repeat 0 and verify no gesture (app readback only).
-- [ ] Test balance 0 → −1 → 0 and confirm hearing-aid receipt.
+- [x] Test balance 0 → −1 → 0 with fresh app readback and spoken results.
 - [ ] Run **TinnitusSet** directly in Universal: 1 → 0, then repeat 0 and verify no gesture.
-- [ ] Confirm audible aid response for balance and tinnitus independently of the app labels.
 - [ ] After small moves pass, test other numbered targets, long jumps and endpoints: volume/tinnitus 0–15, balance −8–7. Restore starting values after testing.
 - [ ] Verify availability and current readback in Off just Tinnitus, Noisy, Outdoor and Very Noisy; record actual tab availability rather than infer it from program names.
 - [ ] Verify balance/tinnitus movement in another program where each control exists.
 - [ ] In TV, run TinnitusCurrent, Set, Mute, Max and Inspect; verify the unavailable error, no movement and no program switch. TinnitusUp already passed.
 - [x] Run TinnitusInspect in a program with tinnitus available; record its diagnostics. Passed in Universal during the [verification run](HeySig3-verification-2026-10-10.md).
 
-Completion evidence: chosen per-family backend, starting/target/observed values, command result/error, repeated-target behavior, and user-confirmed aid response. Use the [slider acceptance guide](HeySig3-slider-acceptance.md).
+Completion evidence: chosen per-family backend, starting/target/observed values, command result/error, repeated-target behavior, and fresh app readback. Use the [slider acceptance guide](HeySig3-slider-acceptance.md).
 
 ## 2. Verify program, battery and prompted commands
 
@@ -28,7 +29,7 @@ Completion evidence: chosen per-family backend, starting/target/observed values,
 - [x] Investigate the live VolumeCurrent failure and restore a fresh successful read. Importing the repaired tree guard passed in Universal with value 0.
 - [ ] Clean up unresolved optional fields in result messages and verify concrete reporting for failed requests.
 - [x] Import/run SIG3_BatteryCheck listen: repaired current top-right opener, left request, acknowledge, right request, acknowledge, close; app screen and Tasker result passed, user confirmed.
-- [ ] Confirm audible battery indications when the aids are worn.
+- [x] Battery indications work, as confirmed by the user; no further audible confirmation test is required.
 - [ ] Test prompted mode and battery recognition, configured aliases, empty/cancelled input and override toggle.
 
 ## 3. Connect and verify actual phone events
@@ -43,10 +44,14 @@ The project supplies tasks but imports **no event profiles**.
 - [x] Verify live spoken balance change and restoration: 0 → -1 → 0, including final screen confirmation.
 - [x] Verify live spoken tinnitus change and restoration: 0 → 1 → 0, including final screen confirmation.
 - [x] Verify TV spoken volume change/restoration (8 → 7 → 8) and unavailable-tinnitus query explanation.
+- [x] Verify spoken DND instruction: check battery stopped and the user heard the instruction.
+- [x] Verify spoken low-phone-volume instruction: check battery stopped at media 6/25 and the user heard the instruction.
 - [ ] Verify other live spoken blocked-command messages. Complete AutoVoice microphone capture separately.
 - [ ] Connect the actual AutoWear command event to SIG3_WatchCommand and verify its input variable and target routing.
 - [x] Confirm unrecognized speech followed by Cancel closes without a control change; recorded result says no command sent.
-- [ ] Verify cancellation inside recognition, Back dismissal, and retry-dialog timeout on the phone.
+- [x] Verify physical Back dismissal: retry dialog closed immediately without retry or control change.
+- [x] Verify retry-dialog timeout: user confirmed automatic closure without retry or control change.
+- [x] Verify cancellation inside the microphone prompt: Back before speaking ends quietly without retry, speech, or a control change. Empty silence/timeout results also end quietly.
 - [ ] Audit phone shortcuts, profiles, intermediate tasks and variable readers. Replace old SIG_ calls/readers with public SIG3 tasks and globals, or explicitly use SIG3_LegacyCommand where supported.
 - [ ] Disable competing legacy control profiles and remove any active SoundWear profiles.
 - [ ] Export the verified phone event profiles so their actual plugin settings and wrappers are preserved.
@@ -75,7 +80,7 @@ The default accessibility backend has not passed live movement/commit acceptance
 
 - [ ] Decide whether native accessibility must be supported for the finished setup. Record the accepted backend for each family and any unsupported backend clearly.
 - [ ] If testing native support, verify native/display mapping before setting each family's RangeConfirmed flag; touch exploration must be intentionally enabled by the user.
-- [ ] Test adjacent target, repeat, reverse and audible aid response; record ProgressAccepted, observed value and errors. No automatic backend fallback is available.
+- [ ] Test adjacent target, repeat, reverse and fresh app readback; record ProgressAccepted, observed value and errors. No automatic backend fallback is available.
 
 ## 7. Close out the release record
 
@@ -94,7 +99,7 @@ Requested October 11, 2026. The user reports that charging turns the aids off an
 - [ ] Add explicit Save settings / Restore settings commands. Save fresh verified readings of the actual selected program, volume, balance, and tinnitus when available, with a timestamp and configuration identity. Persist the snapshot across restarts; do not overwrite it with charging defaults automatically.
 - [ ] Restore and verify the saved program first, then restore its available controls through the existing worker and audio guards. Skip unavailable tinnitus explicitly; reject changed or ambiguous program mappings and invalid snapshots.
 - [ ] Report partial restoration and stop on failures rather than claiming full success. Preserve the saved snapshot for a later manual retry.
-- [ ] Test charging/restart, missing tinnitus, renamed programs, partial failures, and app state versus actual hearing-aid response. Begin with user-triggered restoration; any automatic reconnect trigger needs separate verification.
+- [ ] Test charging/restart, missing tinnitus, renamed programs, partial failures, and accurate app readback after restoration. Begin with user-triggered restoration; any automatic reconnect trigger needs separate verification.
 
 ## Future: Hey Sig wake phrase and spoken readiness cue
 

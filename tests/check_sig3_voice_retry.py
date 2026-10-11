@@ -1,7 +1,7 @@
 """Retry recognition after an explicit choice; never repeat a routed command."""
 from check_sig3_migration import phone
 
-for first in ['', 'please do something', 'program elephant']:
+for first in ['please do something', 'program elephant']:
     p = phone()
     p.prompt_responses = [first, 'program too']
     p.retry_choices = ['retry']
@@ -38,3 +38,11 @@ for family in ("Volume","Balance","Tinnitus"):
     assert p.globals["SIG3_CommandOK"]=="1" and p.globals["SIG3_Family"]==family
     assert (p.program,p.level,len(p.gestures))==before and getattr(p,"retry_dialogs",0)==0
 print("Current volume/balance/tinnitus voice queries read without movement or retry.")
+
+# Native Get Voice exposes cancellation as an empty result, without an error.
+p=phone(); p.globals["SIG3_CommandOK"]="1"; p.prompt_response=""
+p.run("SIG3_VoiceCommand")
+assert p.globals["SIG3_CommandOK"]=="0" and p.globals["SIG3_Error"]==""
+assert "no command sent" in p.globals["SIG3_Result"]
+assert not p.gestures and not getattr(p,"retry_dialogs",0) and not getattr(p,"spoken",[])
+print("Empty capture ends quietly without retry, speech, movement, or stale success.")

@@ -17,6 +17,14 @@ if ("retry".equals(voiceValue("sig3_reply_kind"))) {
     } else if (!"1".equals(voiceValue("SIG3_CommandOK"))) {
         error = voiceValue("SIG3_Error");
         reply = error.length() == 0 ? "Command did not complete. Check the phone screen." : "Command stopped. " + error;
+        if (error.startsWith("Turn off Do Not Disturb")) reply = "Turn off Do Not Disturb.";
+        if (error.startsWith("Raise phone ")) {
+            end = error.indexOf(" volume");
+            if (end > 12) {
+                stream = error.substring(12, end);
+                reply = "Raise phone " + stream + " volume" + (error.contains("(50% minimum)") ? " to halfway." : ".");
+            }
+        }
     } else if (!"complete".equals(voiceValue("SIG3_MoveStage"))) {
         reply = "Command result could not be verified. Check the phone screen.";
     } else {

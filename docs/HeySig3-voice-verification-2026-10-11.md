@@ -105,3 +105,41 @@ Fresh VolumeCurrent screen read showed **8** in the actual selected **TV** progr
 ## Live Cancel after unrecognized speech
 
 Opened the general voice prompt for **banana**, followed by explicit **Cancel**. The user confirmed the dialog closed without another voice prompt or a Signia control change. Captured `%SIG3_CommandOK = 0`, `%SIG3_Error = Voice command not recognized`, and `%SIG3_Result = Voice command not recognized; no command sent`. This verifies the Cancel-button path and clearing stale success. Back dismissal, timeout, and cancellation inside the recognition prompt remain separate live checks.
+
+## Acceptance clarification from the user
+
+The user clarified that the aids provide confirmation only for battery checks, and those indications already work. Remove audible aid-confirmation requirements from program/slider completion tests; use fresh Signia readback and command results. This does not add independent acoustic-receipt evidence for those commands. Battery indications are user-confirmed, without a measured battery percentage.
+
+## Initial Back report and explicit handler
+
+The user reported that phone Back did not close the retry dialog after **banana**. Subsequent screen inspection still showed HeySig3 voice with Cancel/Try again. Added an explicit KEYCODE_BACK listener that consumes Back and cancels on key release, with cancelability explicit. Retry-flow simulations, independent generation, and XML validation passed, but these do not establish Android Back/gesture behavior. The corrected task was imported; later live acceptance is recorded below.
+
+## Live Back dismissal accepted
+
+Earlier Back reports were ambiguous: the user clarified they had spoken back while recognition was inactive, and a later disappearance could have been timeout. These do not establish a physical Back failure or timeout acceptance. After importing the explicit Back-key handler, a fresh **banana** test was repeated with instructions to use the phone Back button/gesture immediately. The user confirmed that Back closed the retry dialog immediately, without reopening recognition or changing controls. Physical Back dismissal is now accepted; timeout and cancellation within recognition remain pending. No claim is made that the earlier implementation had a reproducible physical Back defect.
+
+## Live retry-dialog timeout accepted
+
+Opened the general voice prompt for **banana** and instructed the user to leave Try again / Cancel untouched for approximately 60 seconds. The user confirmed the dialog closed by itself without reopening recognition or changing controls. This is live user acceptance of timeout behavior; elapsed time was not instrumented. Cancellation within the microphone prompt remains pending.
+
+## Quiet microphone-cancellation change accepted
+
+Diagnostic Back-before-speaking run captured empty RecognitionError and RecognitionMessage. Native Get Voice did not expose a distinct cancellation error. Removed temporary diagnostic globals from the task and added an empty-result guard: when both VOICE and gv_heard1 are unset, clear CommandOK, VoiceReply, and Error, record Voice capture ended without speech; no command sent, and stop before speech/retry/routing. Empty silence/timeout results also end quietly; unsupported recognized text retains explicit retry. Retry/parity/generation checks and static validation passed (82 XML files, 5,389 actions). Imported the updated task and opened a fresh microphone prompt. The user used Back before speaking and confirmed quiet termination without not-recognized speech, a retry dialog, or a control change. Live quiet microphone cancellation passed.
+
+## Spoken DND instruction accepted
+
+Read phone zen_mode=1 before the test. The first launcher attempt failed with Missing Tasker tab: TASKS while the phone remained in the voice-task editor; it did not start recognition and is not a DND-command result. Pressed Play directly in the confirmed SIG3_VoiceCommand editor for a fresh **check battery** attempt. The user confirmed the command stopped and the DND instruction was audible. Spoken DND blocking passed user acceptance. No phone DND or volume setting was changed by the test helper. User restoration of DND is pending.
+
+## Spoken low-phone-volume instruction accepted
+
+After the user turned DND off, read zen_mode=0 and active media speaker volume **6/25**, unmuted. Saved that read-only audio dump to `/tmp/HeySig3-low-phone-volume-start-20261011.json`. The volume was already below the configured minimum **13/25**; the helper did not lower it. Opened the general voice prompt for **check battery**. The user confirmed it stopped and the instruction to raise phone volume was audible. Spoken low-volume blocking passed user acceptance. Asked the user to raise media volume to at least 13/25 before subsequent control commands; restoration is not yet verified.
+
+## Restored audio settings and shortened warnings
+
+After user restoration, read zen_mode=0 and active speaker media **17/25**, unmuted. Shortened spoken DND wording to Turn off Do Not Disturb and the 50%-minimum volume instruction to Raise phone media volume to halfway. Other configured minimums do not receive a misleading halfway instruction; the selected stream is retained, and full errors remain unchanged on screen. Added actual formatter cases for 50% media and non-50% ring settings. Shortened wording needs separate live hearing acceptance.
+
+## Manual Stop control located; follow-up voice command accepted
+
+Imported temporary phone-only **SIG3_TestStopOnly**, containing only a 60-second Wait, to locate Stop safely. Screenshot while running showed a square at the bottom-left where Play normally appears; accessibility still described this as Play. The user was instructed to tap the square and subsequently confirmed a triangle was shown. That confirms the task was no longer running, but elapsed timing was not captured and natural completion cannot be excluded. This does not establish interruption of SIG3_Worker or stale-result handling. Opened a subsequent current-program voice query for recovery acceptance. The temporary task is not part of repository exports.
+
+The user subsequently reported the voice-task editor was visible. The launcher had reported Ran, but that alone did not establish an active recognition prompt. Pressed Play directly in the confirmed voice editor; the user said current program and confirmed both display and speech worked. A normal voice command worked after the wait-only task ended. Manual interruption of SIG3_Worker and stale-result behavior remain pending; this limited recovery test does not certify them.

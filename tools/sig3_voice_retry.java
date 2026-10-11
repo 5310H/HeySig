@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.KeyEvent;
 import java.util.function.Consumer;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -33,6 +34,17 @@ try {
                 .setMessage(message).setPositiveButton("Try again", buttons)
                 .setNegativeButton("Cancel", buttons).create();
             dialogRef.set(dialog);
+            dialog.setCancelable(true);
+            dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+                onKey(DialogInterface current, int keyCode, KeyEvent event) {
+                    if (keyCode != KeyEvent.KEYCODE_BACK) return false;
+                    if (event.getAction() == KeyEvent.ACTION_UP) {
+                        choice.set("cancel");
+                        current.cancel();
+                    }
+                    return true;
+                }
+            });
             dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                 onDismiss(DialogInterface dialog) {
                     done.countDown();

@@ -30,7 +30,7 @@ Numbers can be digits or English words. Numeric controls accept an optional “s
 
 Program slot 2 also accepts “program too” (or “mode too”) because speech recognition may transcribe “two” as “too”. This alternative applies to program selection.
 
-`SIG3_VoiceCommand` offers **Try again / Cancel** when speech is missed or the phrase is unrecognized. Try again opens a fresh prompt; it does not resend the previous phrase. Cancel, Back, dismissal, or the dialog's 60-second timeout ends the session. A session allows up to 20 attempts, each retry requiring your choice. A phrase that reaches a real command ends the voice session whether that command succeeds or fails; correct any reported phone settings and start a new voice session yourself. Unknown speech clears the previous command-success flag.
+`SIG3_VoiceCommand` offers **Try again / Cancel** when recognized text contains an unsupported phrase. Empty recognition ends quietly without speech or a retry dialog: native Get Voice returned empty error fields for Back cancellation, so silence/timeout producing the same empty result also ends quietly. Try again opens a fresh prompt; it does not resend the previous phrase. Cancel, Back, dismissal, or the dialog's 60-second timeout ends the session. A session allows up to 20 attempts, each retry requiring your choice. A phrase that reaches a real command ends the voice session whether that command succeeds or fails; correct any reported phone settings and start a new voice session yourself. Unknown speech clears the previous command-success flag.
 
 The general voice task also speaks a short result after a fresh completed command: the actual selected program, verified volume/balance/tinnitus level, or the failure instruction. Unrecognized speech speaks the retry instruction before showing its buttons. Responses use the default phone text-to-speech engine and media stream, with a two-second settling gap; speech waits until finished before the task continues. They are skipped while the SIG3 worker is active. This gap is not a measured confirmation of hearing-aid acoustic completion.
 
@@ -57,7 +57,7 @@ Noise and sleep automation default off. “sleep” selects the configured progr
 
 ## Phone setup and results
 
-Keep the phone unlocked, Tasker accessibility enabled, and Signia ready. If Do Not Disturb is on or the selected phone audio stream is too low, HeySig3 stops and tells you what to change. Turn DND off or raise volume with the phone slider, then retry. HeySig3 does not change those settings automatically. The default minimum is 50% (13/25 on the tested phone).
+Keep the phone unlocked, Tasker accessibility enabled, and Signia ready. If Do Not Disturb is on or the selected phone audio stream is too low, HeySig3 stops and tells you what to change. Spoken warnings are shortened to “Turn off Do Not Disturb” or “Raise phone media volume to halfway” for the default 50% media minimum; full error details remain on screen. Turn DND off or raise volume with the phone slider, then retry. HeySig3 does not change those settings automatically. The default minimum is 50% (13/25 on the tested phone).
 
 For a read-only phone audio check, run `SIG3_PhoneAudioCheck` in Tasker. There is currently no voice phrase for that task or the page-only battery `open` option.
 
