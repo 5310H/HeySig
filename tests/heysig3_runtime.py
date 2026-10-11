@@ -25,6 +25,7 @@ class Phone:
         self.wrong_control = False
         self.ui_checks = 0
         self.tinnitus_available = True
+        self.selected_tab, self.tab_taps = 'Volume', []
         self.hook = None
     def run(self, name, param='', param2=''):
         if name in self.active:
@@ -98,12 +99,13 @@ class Phone:
                 local.pop('err', None)
                 stage = {20: 'launch', 15355: 'query', 778682267: 'gesture', 474: 'gesture'}.get(code)
                 if code == 474 and ('dispatchGesture' not in arg(a, 0) or 'Program selection through' in arg(a, 0)): stage = 'ui' if 'Read-only live UI guard' in arg(a, 0) else 'phone' if 'Read-only preflight' in arg(a, 0) else 'report'
+                if code == 474 and 'tabDescription' in arg(a, 0): stage = 'tab'
                 if code == 107361459:
                     params = a.findtext('./Bundle/Vals/parameters', '')
                     stage = 'tab' if 'Tab)' in params else 'number'
                 if self.fail_stage == 'halt_' + str(stage):
                     return  # Emulate a plugin/Tasker halt before its error guard.
-                if code == 474 and 'dispatchGesture' in arg(a, 0) and 'Program selection through' not in arg(a, 0) and self.fail_stage in ('missing_service', 'hold_rejected', 'hold_cancelled', 'hold_timeout', 'move_rejected', 'move_cancelled', 'move_timeout'):
+                if code == 474 and stage != 'tab' and 'dispatchGesture' in arg(a, 0) and 'Program selection through' not in arg(a, 0) and self.fail_stage in ('missing_service', 'hold_rejected', 'hold_cancelled', 'hold_timeout', 'move_rejected', 'move_cancelled', 'move_timeout'):
                     phase = 'down-hold' if self.fail_stage.startswith('hold_') else 'move-up'
                     reasons = {'missing_service': 'Enable Tasker in Android Settings > Accessibility > Installed apps',
                                'rejected': 'dispatchGesture rejected', 'cancelled': 'Android cancelled gesture',
@@ -159,6 +161,17 @@ class Phone:
             elif code == 474:
                 # Model the touch result; Android/BeanShell execution is a separate check.
                 script = arg(a, 0)
+                if 'tabDescription' in script:
+                    family = get('SIG3_Family')
+                    if self.package != 'com.signia.rta' or family not in ('Volume', 'Balance', 'Tinnitus') or (family == 'Tinnitus' and not self.tinnitus_available):
+                        local['err'], local['errmsg'] = '1', 'Slider tab unavailable'
+                    elif 'performTabDoubleTap' in script:
+                        if self.selected_tab != family:
+                            self.tab_taps.append(family)
+                            self.selected_tab = family
+                    elif self.selected_tab != family:
+                        local['err'], local['errmsg'] = '1', 'Tab was not selected'
+                    pc += 1; continue
                 if 'dispatchGesture' not in script or 'Program selection through' in script:
                     if 'Normalize numeric commands' in script:
                         value = get('sig3_command')

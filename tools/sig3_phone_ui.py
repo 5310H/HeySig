@@ -22,6 +22,19 @@ class PhoneUI:
         if node is None:
             raise RuntimeError('Missing control: '+label+'; visible: '+str([n.get('text') or n.get('content-desc') for n in root.iter('node') if n.get('text') or n.get('content-desc')]))
         self.tap_node(node)
+    def scroll_list(self, direction, root=None):
+        root = self.screen() if root is None else root
+        lists = [n for n in root.iter('node') if n.get('scrollable') == 'true'
+                 and n.get('class') != 'androidx.viewpager.widget.ViewPager']
+        if not lists:
+            raise RuntimeError('No scrollable list on the current screen')
+        x1, y1, x2, y2 = map(int, re.findall(r'\d+', lists[-1].get('bounds')))
+        x = str((x1 + x2) // 2)
+        top = str(y1 + (y2 - y1) // 4)
+        bottom = str(y2 - (y2 - y1) // 4)
+        start, end = (bottom, top) if direction == 'up' else (top, bottom)
+        self.run(['shell', 'input', 'swipe', x, start, x, end, '350'])
+        time.sleep(.4)
     def select_tab(self, label):
         root = self.screen()
         node = next((n for n in root.iter('node') if n.get('text') == label), None)
@@ -39,6 +52,12 @@ class PhoneUI:
         self.run(['shell','am','start','-a','android.intent.action.MAIN','-c','android.intent.category.LAUNCHER','-p','net.dinglisch.android.taskerm'])
         time.sleep(.7)
         root=self.screen()
+        for attempt in range(4):
+            if any(n.get('text') in ('TASKS', 'Task Edit', 'Task File Select')
+                   for n in root.iter('node')):
+                break
+            time.sleep(.5)
+            root=self.screen()
         if any(n.get('text')=='Task File Select' for n in root.iter('node')):
             self.tap('Cancel', root); root=self.screen()
         if any(n.get('text')=='Task Edit' for n in root.iter('node')):
@@ -64,7 +83,8 @@ class PhoneUI:
                 self.run(['shell', 'input', 'swipe', x, y, x, y, '1500'])
                 time.sleep(1)
         self.tap('Import Task')
-        for unused in range(6):self.run(['shell','input','swipe','730','700','730','1950','200'])
+        root = self.screen()
+        for unused in range(6):self.scroll_list('down', root)
         for page in range(12):
             root=self.screen()
             node=next((n for n in root.iter('node') if n.get('text') in (name, name.removesuffix('.tsk.xml'))),None)
@@ -73,7 +93,7 @@ class PhoneUI:
                 print('Imported '+name,flush=True)
                 self.main()
                 return
-            self.run(['shell','input','swipe','740','1900','740','700','400'])
+            self.scroll_list('up', root)
         raise RuntimeError('Task file not found: '+name)
     def run_task(self,name):
         self.main();self.select_tab('TASKS')
@@ -84,7 +104,8 @@ class PhoneUI:
             print('Ran ' + name, flush=True)
             return
 
-        for unused in range(6):self.run(['shell','input','swipe','730','700','730','1950','200'])
+        root = self.screen()
+        for unused in range(6):self.scroll_list('down', root)
         for page in range(16):
             root=self.screen()
             node=next((n for n in root.iter('node') if n.get('text') in (name, name.removesuffix('.tsk.xml'))),None)
@@ -92,13 +113,13 @@ class PhoneUI:
                 self.tap_node(node);self.tap('Play');time.sleep(15)
                 print('Ran '+name,flush=True)
                 return
-            self.run(['shell','input','swipe','730','1960','730','700','400'])
+            self.scroll_list('up', root)
         raise RuntimeError('Task not found: '+name)
     def variables(self,wanted):
         self.main();self.select_tab('VARS')
         values={}
         # Return to the top before reading the alphabetically sorted list.
-        for unused in range(5):self.run(['shell','input','swipe','730','700','730','1950','200'])
+        for unused in range(5):self.scroll_list('down')
         for page in range(14):
             root=self.screen()
             for n in root.iter('node'):
@@ -106,5 +127,5 @@ class PhoneUI:
                 if kids and kids[0].get('text') in wanted:
                     values[kids[0].get('text')]=' | '.join(k.get('text','') for k in kids[1:])
             if len(values)==len(wanted):return values
-            self.run(['shell','input','swipe','730','1700','730','1100','600'])
+            self.scroll_list('up', root)
         return values

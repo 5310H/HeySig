@@ -116,6 +116,19 @@ def checked_plugin(code, command=None):
     return [plugin(code, command), *guard('%err', 12, '', 'AutoInput/launch failed: %errmsg')]
 
 
+def slider_tab(family="Volume"):
+    aa = [java_file('sig3_slider_tab.java'),
+          *guard('%err', 12, '', 'Slider tab activation failed: %errmsg'),
+          java_file('sig3_slider_tab_verify.java'),
+          *guard('%err', 12, '', 'Slider tab selection failed: %errmsg')]
+    if family != 'Volume':
+        for item in aa:
+            for node in item.iter():
+                if node.text and 'tabDescription' not in node.text:
+                    node.text = node.text.replace('SIG3_VolumeOK', 'SIG3_' + family + 'OK')
+    return aa
+
+
 def loop(var, items):
     a = action(39); string(a, 0, var); string(a, 1, items); integer(a, 2, 1); return a
 
@@ -158,7 +171,7 @@ current = [setvar('%SIG3_VolumeOK', 0), setvar('%SIG3_Level', -1),
            condition('%par1', 3, 'query_only'), setvar('%SIG3_Error', ''), action(38),
            condition('%par1', 3, 'query_only'), call('SIG3_InternalAppLaunch'),
            *guard('%SIG3_AppOK', 3, 1, 'Signia launch did not complete: %SIG3_Error'),
-           *checked_plugin(107361459, 'click(text,Volume Tab)'), wait(), action(38),
+           *slider_tab(), wait(), action(38),
            *checked_plugin(15355), *guard('%aipackage', 3, 'com.signia.rta', 'Signia is not foreground'),
            *guard('%aitext(#)', 6, 1, 'Empty UI Query text array'),
            setvar('%SIG3_QueryData', ''), loop('%sig3_dump_i', '1:%aitext(#)'),
@@ -208,14 +221,14 @@ def family_current(family):
     aa = deepcopy(current)
     for a in aa:
         for node in a.iter():
-            if node.text:
+            if node.text and 'tabDescription' not in node.text:
                 node.text = node.text.replace('SIG3_Volume', 'SIG3_' + family).replace('Volume Tab', {'Balance': 'Sound Sharpness Tab', 'Tinnitus': 'Tinnitus Signal Tab'}[family]).replace('SIG3_Knob', 'SIG3_' + family + 'Knob').replace('SIG3_Level', 'SIG3_' + family + 'Level')
                 if family == 'Balance' and node.text == r'^(?:[0-9]|1[0-5])$':
                     node.text = r'^(?:-[1-8]|[0-7])$'
     if family == 'Tinnitus':
         guarded = []
         for item in aa:
-            if item.findtext('code') == '107361459':
+            if item.findtext('code') == '474' and 'performTabDoubleTap' in item.findtext("Str[@sr='arg0']", ''):
                 guarded += tinnitus_available()
             guarded.append(item)
         aa = guarded
@@ -627,7 +640,7 @@ def build():
         if family == 'Tinnitus':
             aa += tinnitus_available()
         aa += [setvar('%SIG3_MoveStage', 'inspect-tab'),
-               *checked_plugin(107361459, 'click(text,' + {'Volume': 'Volume Tab', 'Balance': 'Sound Sharpness Tab', 'Tinnitus': 'Tinnitus Signal Tab'}[family] + ')'), wait()]
+               *slider_tab(family), wait()]
         aa += [setvar('%SIG3_MoveStage', 'inspect-node'),
               setvar('%sig3_slider_mode','Inspect'),java_file('sig3_slider_progress.java'),
               *family_guard(family,'%err',12,'','Slider inspection failed: %errmsg'),

@@ -11,11 +11,12 @@ Program names must come from actual Signia readback or configured slots, never h
 - [ ] Establish a working **Tasker VolumeSet** backend on the phone. Record its configuration, test an adjacent move and reverse, repeat the target to prove no additional movement, and verify fresh app readback. Successful ADB volume drags do not complete this item.
 - [x] Run **BalanceSet** directly with Parameter 1: 1 → 0, then repeat 0 and verify no gesture (app readback only).
 - [x] Test balance 0 → −1 → 0 with fresh app readback and spoken results.
-- [ ] Run **TinnitusSet** directly in Universal: 1 → 0, then repeat 0 and verify no gesture.
+- [x] Test additional small balance targets and repeat/reverse behavior: captured start −3 in Universal, adjacent levels −2/−1/−4/−5, no movement on repeated −1/−5/−3, and final restoration to −3 passed. See [small-target acceptance](HeySig3-balance-small-targets-2026-10-11.md).
+- [x] Run **TinnitusSet** directly in Universal: 1 → 0, then repeat 0 and verify no gesture. Public tasks passed with fresh readback, no movement on repeated 0, and starting tinnitus 0 restored; see [direct acceptance](HeySig3-tinnitus-acceptance-2026-10-11.md).
 - [ ] After small moves pass, test other numbered targets, long jumps and endpoints: volume/tinnitus 0–15, balance −8–7. Restore starting values after testing.
 - [ ] Verify availability and current readback in Off just Tinnitus, Noisy, Outdoor and Very Noisy; record actual tab availability rather than infer it from program names.
 - [ ] Verify balance/tinnitus movement in another program where each control exists.
-- [ ] In TV, run TinnitusCurrent, Set, Mute, Max and Inspect; verify the unavailable error, no movement and no program switch. TinnitusUp already passed.
+- [ ] In TV, run TinnitusCurrent, Set, Mute, Max and Inspect; verify the unavailable error, no movement and no program switch. TinnitusUp already passed. The October 11 attempt stopped during starting VolumeCurrent with Balance selected, before switching to TV; [investigate this failure](HeySig3-tv-unavailable-2026-10-11.md) before resuming.
 - [x] Run TinnitusInspect in a program with tinnitus available; record its diagnostics. Passed in Universal during the [verification run](HeySig3-verification-2026-10-10.md).
 
 Completion evidence: chosen per-family backend, starting/target/observed values, command result/error, repeated-target behavior, and fresh app readback. Use the [slider acceptance guide](HeySig3-slider-acceptance.md).
@@ -58,8 +59,9 @@ The project supplies tasks but imports **no event profiles**.
 
 ## 4. Verify reliability and installation
 
-- [ ] Test a second command while SIG3_Worker runs: verify rejection, accurate results and subsequent recovery.
-- [ ] Test manual Stop and the next command; verify no stale success or stuck lock.
+- [x] Test a second command while SIG3_Worker runs before dispatch: direct worker and public VolumeCurrent rejection, unchanged first-operation results, and subsequent fresh read-only recovery passed. See [collision verification](HeySig3-worker-collision-verification-2026-10-11.md).
+- [x] Test manual Stop before dispatch and the next command: controlled pause inside the real worker, Stop at 7.77 seconds, cleared authoritative success, worker absent afterward, and fresh ProgramCurrent recovery passed. See [worker Stop verification](HeySig3-worker-stop-verification-2026-10-11.md).
+- [ ] Verify collision/interruption during an in-flight plugin action or nested internal helper separately; the pre-dispatch Stop and busy-worker tests do not certify those paths.
 - [ ] Test locked screen, Signia left on settings, missing controls/overlays, program changes during an operation, DND/bedtime mode, low nonzero selected-stream volume, muted stream and active-call failures as appropriate. Record the current manual recovery from settings: open Controls.
 - [ ] Check a fresh project import and the separate Pixel 9a setup task; verify SIG3_Init preserves existing settings and configuration survives Tasker/phone restart.
 - [ ] Confirm normal phone operation without an ongoing ADB connection.
