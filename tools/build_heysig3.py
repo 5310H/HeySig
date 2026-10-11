@@ -67,6 +67,9 @@ def fail(message):
 
 
 def guard(lhs, op, rhs, message):
+    if '%SIG3_Error' in message:
+        return [condition(lhs, op, rhs), setvar('%SIG3_VolumeOK', 0), condition('%SIG3_Error', 13),
+                setvar('%SIG3_Error', message.replace(': %SIG3_Error', '')), action(38), stop(), action(38)]
     return [condition(lhs, op, rhs), *fail(message), action(38)]
 
 
@@ -125,21 +128,36 @@ def task(name, number, aa):
     t = E.Element('Task', sr=f'task{number}')
     for tag, value in [('cdate', STAMP), ('edate', STAMP), ('id', str(number)), ('nme', name), ('pri', '100')]:
         E.SubElement(t, tag).text = value
-    for i, a in enumerate(aa): a.set('sr', f'act{i}'); t.append(a)
+    for i, original in enumerate(aa):
+        a = deepcopy(original)
+        a.set('sr', f'act{i}')
+        t.append(a)
     return t
 
 
-launch = [setvar('%SIG3_AppOK', 0), setvar('%SIG3_Error', ''), plugin(20),
+def java_code(code):
+    a = action(474); E.SubElement(a, 'se').text = 'true'
+    string(a, 0, code); string(a, 1); integer(a, 2, 1)
+    return a
+
+
+def java_file(name):
+    return java_code((ROOT / 'tools' / name).read_text())
+
+
+launch = [setvar('%SIG3_AppOK', 0), setvar('%SIG3_Error', ''),
+          java_file('sig3_launch_check.java'), condition('%SIG3_AppAlreadyForeground',8,1),
+          setvar('%SIG3_AppOK',1), action(43), plugin(20),
           condition('%err', 12), setvar('%SIG3_Error', 'Signia launch failed: %errmsg'), stop(), action(38),
           wait(1000), *checked_plugin(15355),
           condition('%aipackage', 3, 'com.signia.rta'), setvar('%SIG3_Error', 'Signia is not foreground'), stop(), action(38),
-          setvar('%SIG3_AppOK', 1)]
+          setvar('%SIG3_AppOK', 1), action(38)]
 
 current = [setvar('%SIG3_VolumeOK', 0), setvar('%SIG3_Level', -1),
            setvar('%SIG3_VolumeX', -1), setvar('%SIG3_VolumeY', -1),
            condition('%par1', 3, 'query_only'), setvar('%SIG3_Error', ''), action(38),
            condition('%par1', 3, 'query_only'), call('SIG3_InternalAppLaunch'),
-           *guard('%SIG3_AppOK', 3, 1, 'Signia launch did not complete'),
+           *guard('%SIG3_AppOK', 3, 1, 'Signia launch did not complete: %SIG3_Error'),
            *checked_plugin(107361459, 'click(text,Volume Tab)'), wait(), action(38),
            *checked_plugin(15355), *guard('%aipackage', 3, 'com.signia.rta', 'Signia is not foreground'),
            *guard('%aitext(#)', 6, 1, 'Empty UI Query text array'),
@@ -332,15 +350,6 @@ def numeric_voice():
     return aa + [java_code('tasker.showToast("Use volume 0–15, balance minus 8–7, tinnitus 0–15, program 1–6, or battery check"); return "unrecognized";')]
 
 
-def java_code(code):
-    a = action(474); E.SubElement(a, 'se').text = 'true'
-    string(a, 0, code); string(a, 1); integer(a, 2, 1)
-    return a
-
-
-def java_file(name):
-    return java_code((ROOT / 'tools' / name).read_text())
-
 
 def request(family, operation, target=''):
     return call('SIG3_Worker', family + ',' + operation + ',' + target)
@@ -349,7 +358,9 @@ def request(family, operation, target=''):
 def defaults():
     aa = []
     # Static APK IDs, adjustable; do not pretend these are phone-confirmed.
-    for name, value in [('ProgramId', 'com.signia.rta:id/TA-ProgramName'),
+    for name, value in [('MinAudioPercent', '50'),
+                        ('ProgramBackend', 'accessibility-click'),
+                        ('ProgramId', 'com.signia.rta:id/TA-ProgramName'),
                         ('VolumeControlId', 'com.signia.rta:id/VolumeSlider'),
                         ('BalanceControlId', 'com.signia.rta:id/TA-SoundBalanceSlider'),
                         ('TinnitusControlId', 'com.signia.rta:id/TA-TinnitusSlider'),
@@ -357,6 +368,7 @@ def defaults():
                         ('TinnitusKnobId', 'com.signia.rta:id/TA-SliderValue'),
                         ('ProgramOpenId', 'com.signia.rta:id/TA_HomePage_ProgramSwitch_Icon'),
                         ('BatteryOpenId', 'com.signia.rta:id/TA-BatteryIcon'),
+                        ('BatteryOpenDescription', 'TA-BatteryToolbarItem'),
                         ('BatteryPageId', 'com.signia.rta:id/TA-BluetoothAndBatteryPageCloseIcon')]:
         aa += [condition('%SIG3_' + name, 13), setvar('%SIG3_' + name, value), action(38)]
     return aa
@@ -391,10 +403,8 @@ def worker():
                    condition('%err', 12), setvar('%SIG3_Error', 'Internal task failed: %errmsg'), setvar('%SIG3_' + family + 'OK', 0), action(38),
                    setvar('%SIG3_CommandOK', '%SIG3_' + family + 'OK'), action(38)]
         aa += [action(38)]
-    aa += [condition('%SIG3_CommandOK', 8, 1), setvar('%SIG3_MoveStage', 'complete'), setvar('%SIG3_Error', ''),
-           setvar('%SIG3_Result', '%SIG3_Family: %SIG3_Observed; program=%SIG3_Program; target=%SIG3_Target (app state; aid receipt unverified)'),
-           action(43), setvar('%SIG3_Result', 'Failed: %SIG3_Error; family=%SIG3_Family target=%SIG3_Target previous=%SIG3_Previous expected=%SIG3_Expected observed=%SIG3_Observed; program=%SIG3_Program; stage=%SIG3_MoveStage'), action(38),
-           java_code('tasker.log(tasker.getVariable("SIG3_Result") + "; " + tasker.getVariable("SIG3_AudioDiagnostics")); tasker.showToast(tasker.getVariable("SIG3_Result")); return "reported";')]
+    aa += [condition('%SIG3_CommandOK', 8, 1), setvar('%SIG3_MoveStage', 'complete'),
+           setvar('%SIG3_Error', ''), action(38), java_file('sig3_report.java')]
     aa += [condition('%SIG3_CommandOK',8,1),java_file('sig3_completion.java'),action(38)]
     return aa
 
@@ -441,11 +451,15 @@ def extra_tasks():
     battery = [setvar('%SIG3_BatteryOK',0),setvar('%SIG3_BatteryText',''),
                *g('Battery','%par1',5,r'^(?:open|listen)$','Battery mode must be open or listen'),
                call('SIG3_InternalAppLaunch'),*g('Battery','%SIG3_AppOK',3,1,'Battery launch failed: %SIG3_Error'),
-               condition('%par1',2,'open'),java_file('sig3_battery.java'),
-               *g('Battery','%err',12,'','Battery page failed: %errmsg'),action(43)]
+               condition('%par1',2,'listen'), setvar('%SIG3_MoveStage','battery-audio-preflight'),
+               java_file('sig3_phone_check.java'),
+               *g('Battery','%err',12,'','Battery audio preflight failed: %errmsg'),action(38),
+               setvar('%SIG3_MoveStage','battery-open'),java_file('sig3_battery.java'),
+               *g('Battery','%err',12,'','Battery page failed: %errmsg'),
+               condition('%par1',2,'listen')]
     for original in battery_actions:
         index = int(original.get('sr')[3:])
-        if not 2 <= index <= 12:
+        if not 3 <= index <= 12:
             continue
         copied = deepcopy(original)
         if copied.findtext('code') == '107361459':
@@ -453,6 +467,10 @@ def extra_tasks():
             if se is None:
                 se = E.Element('se'); copied.insert(1, se)
             se.text = 'true'
+        stages = {4: 'battery-left-request', 6: 'battery-left-acknowledge',
+                  8: 'battery-right-request', 10: 'battery-right-acknowledge', 12: 'battery-close'}
+        if index in stages:
+            battery.append(setvar('%SIG3_MoveStage', stages[index]))
         battery.append(copied)
         if copied.findtext('code') == '107361459':
             battery += g('Battery','%err',12,'',f'Battery action {index} failed: %errmsg')
@@ -581,6 +599,13 @@ def build():
               setvar('%SIG3_' + family + 'OK', 1)]
         tasks.append(task('SIG3_Internal' + family + 'Inspect',490+index,protect_internal(aa)))
         tasks.append(task('SIG3_' + family + 'Inspect',390+index,[request(family,'Inspect')]))
+    tasks.append(task('SIG3_PhoneAudioCheck', 495, [
+        setvar('%SIG3_AudioReady', 0), setvar('%SIG3_Error', ''),
+        setvar('%SIG3_AudioDiagnostics', ''), *defaults(),
+        java_file('sig3_phone_check.java'), condition('%err', 12),
+        java_code('tasker.showToast(tasker.getVariable("SIG3_Error")); return "blocked";'),
+        stop(), action(38), setvar('%SIG3_AudioReady', 1),
+        java_code('tasker.showToast("Phone audio ready: " + tasker.getVariable("SIG3_AudioDiagnostics")); return "ready";')]))
     tasks.extend(extra_tasks())
     tasks.append(task('SIG3_Worker', 350, worker()))
     for t in tasks:

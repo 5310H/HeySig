@@ -31,7 +31,7 @@ p.run('SIG3_BatteryCheck','invalid'); assert p.globals['SIG3_CommandOK'] == '0'
 battery_failure = phone(); battery_failure.fail_stage = 'number'
 battery_failure.run('SIG3_BatteryCheck')
 assert battery_failure.globals['SIG3_CommandOK'] == '0'
-assert 'Battery action 2 failed' in battery_failure.globals['SIG3_Error']
+assert 'Battery action 4 failed' in battery_failure.globals['SIG3_Error']
 p.noise_sample = -52; p.run('SIG3_CurrentNoise'); assert float(p.globals['SIG3_NoiseRaw']) == -52 and p.globals['SIG3_CommandOK'] == '1'
 # Sample-only default neither changes program nor assumes a sign convention.
 p.run('SIG3_NoiseMonitor','-45'); assert p.globals['SIG3_NoiseIndex'] == '-45.0' and p.program == 'Music'
@@ -50,3 +50,14 @@ p.run('SIG3_SleepState','asleep'); assert p.program == 'Music' and p.globals['SI
 p.run('SIG3_SleepState','awake'); assert p.program == 'Universal' and p.globals['SIG3_SleepActive'] == '0'
 p.run('SIG3_NoiseMonitor','bad'); assert p.globals['SIG3_CommandOK'] == '0'
 print('Initialization, program/voice/watch, battery, noise hysteresis/override and sleep flow checks passed')
+
+# Keep the working left/ack/right/ack/close sequence while replacing its obsolete opener.
+import xml.etree.ElementTree as E
+from heysig3_runtime import ROOT, TASKS
+reference = sorted(E.parse(ROOT/'tasks/SIG_BatteryCheck.tsk.xml').findall('.//Action'), key=lambda a:int(a.get('sr')[3:]))
+expected = [a.findtext('.//parameters') for a in reference if a.findtext('code')=='107361459'][1:]
+actual = sorted(TASKS['SIG3_InternalBatteryCheck'].findall('Action'),key=lambda a:int(a.get('sr')[3:]))
+assert [a.findtext('.//parameters') for a in actual if a.findtext('code')=='107361459'] == expected
+p=phone(); p.battery_open_failure=True; p.run('SIG3_BatteryCheck')
+assert p.globals['SIG3_CommandOK']=='0' and p.globals['SIG3_MoveStage']=='battery-open'
+print('Battery main-branch request/acknowledgement sequence preserved; failed opener stops before requests')

@@ -28,6 +28,7 @@ Updated October 10, 2026. Checked phone items below were actually observed on th
 - [x] TV inspected: Volume/Balance tabs present, tinnitus tab absent.
 - [x] TinnitusUp in TV: `Tinnitus unavailable for this program`, empty gesture diagnostic, no slider gesture.
 - [x] Updated TinnitusCurrent in Universal: displayed 0, program Universal, empty Error.
+- [x] Public TinnitusInspect in Universal: CommandOK=1, MoveStage=complete, empty Error; exact visible enabled tinnitus slider captured. See the [subsequent verification run](HeySig3-verification-2026-10-10.md) for remaining result-message issues.
 - [x] Updated BalanceCurrent in TV: displayed 0, program TV, empty Error despite the configured label ID being Universal.
 - [x] Restore Universal after TV testing; balance and tinnitus finished at 0.
 
@@ -35,7 +36,7 @@ Successful app labels do not independently acknowledge acoustic receipt by the a
 
 ## Passed in repository checks
 
-- [x] Static validation: 79 XML files, 4,921 task actions, zero failures.
+- [x] Static validation: 81 XML files, 5,089 task actions, zero failures.
 - [x] Numeric simulation: 768 source/target transitions, invalid targets, repeated targets, endpoints and readback failures.
 - [x] Backend simulation: native prerequisites, accepted-but-unchanged progress, and per-family backend isolation.
 - [x] Missing tinnitus simulation: Current, Up, Down, Set, Max, Mute, Inspect, and voice request stop without movement.
@@ -44,6 +45,8 @@ Successful app labels do not independently acknowledge acoustic receipt by the a
 These checks do not execute Android/BeanShell or phone plugin events. Run the repository checks with:
 
 ```bash
+python3 tests/check_sig3_audio.py
+python3 tests/check_sig3_reporting.py
 python3 tests/check_sig3_numeric.py
 python3 tests/check_sig3_progress.py
 python3 tests/check_sig3_tinnitus_available.py
@@ -57,7 +60,7 @@ python3 tests/validate_heysig3_xml.py
 
 Use an unlocked phone on Signia Controls. Keep competing legacy profiles disabled. Record starting program/value and restore them after each test. Stop on an error or unexpected readback; do not resend blindly.
 
-1. [ ] Run public BalanceSet with Parameter 1 `1`, then `0`; repeat `0` and confirm no additional gesture. The successful Up/Down wrappers exercised Set internally, but direct numbered entry and repeated-target behavior still need explicit phone checks.
+1. [x] Public BalanceSet with Parameter 1 `1`, then `0`; repeated `0` returned success with no gesture. App readback passed; hearing-aid receipt remains unverified.
 2. [ ] Run public TinnitusSet with Parameter 1 `1`, then `0` in Universal; repeat `0` and confirm no additional gesture.
 3. [ ] Test balance 0 → −1 → 0, followed by other small targets before endpoint/long-jump tests.
 4. [ ] Confirm the expected audible aid response for balance and tinnitus separately from app readback.
@@ -72,6 +75,7 @@ Use an unlocked phone on Signia Controls. Keep competing legacy profiles disable
 ## Volume and native accessibility acceptance still pending
 
 - [ ] Verify Tasker's Volume Set path separately. Existing ADB volume success does not establish it.
+- [x] Resolve the subsequent public VolumeCurrent failure: the corrected helper passed with a fresh 0 in Universal, CommandOK=1, stage=complete and empty Error. See the [verification report](HeySig3-verification-2026-10-10.md).
 - [ ] Confirm native/display mapping at enough levels for each family before setting its RangeConfirmed flag.
 - [ ] If intentionally testing native accessibility, verify touch exploration is enabled by the user. It was off in the captured inspection, and the code must stop before sending progress when off.
 - [ ] Verify one native adjacent target, repeated target, reverse move and actual aid response. Do not infer acoustic commit from Android acceptance or a changed label.
@@ -82,10 +86,19 @@ See the [acceptance guide](HeySig3-slider-acceptance.md); no automatic backend f
 ## Other workflows: implemented, phone verification pending
 
 - [ ] SIG3 ProgramCurrent and ProgramSwitch, exact configured program names/slots, repeated-current no-op and failure cases. Manual program selection and the slider guard's TV read do not certify these tasks.
-- [ ] SIG3 battery listen sequence and prompted battery recognition. The original HeySig sequence was user-confirmed; the migrated SIG3 version remains unverified.
+  ProgramCurrent initially failed; the repaired helper subsequently passed in Universal with CommandOK=1, ProgramOK=1, stage=complete and empty Error. Other programs, failure cases and ProgramSwitch remain pending; see the [verification report](HeySig3-verification-2026-10-10.md).
+- [x] SIG3 battery listen sequence: corrected toolbar opener, requests/acknowledgements and close passed with CommandOK1, Error blank, complete stage; user confirmed screen behavior.
+- [ ] Prompted battery recognition and audible battery indications.
 - [ ] Prompted mode recognition, aliases, empty/cancelled input and override toggle.
 - [ ] Phone/watch noise capture, measured units/sign, thresholds, strike count and optional three-tier program selection.
 - [ ] Sleep/wake events, foreground deferral, manual override, cancellation/resume and optional Home completion.
 - [ ] Fresh project import and Pixel setup after export, plus configuration persistence after Tasker/phone restart.
 
 Leave noise/sleep automation disabled until its configuration and event tests pass. See [event wiring](HeySig3-completion.md).
+
+- [x] Phone audio policy: 20 actual Java cases for both streams, DND, silent/vibrate and configurable low-volume boundaries; no automatic phone-setting changes.
+- [x] Live DND and low-volume guards: DND blocked at14/25; media10/25 blocked with instruction to raise to13/25.
+- [ ] Actual hearing-aid receipt remains unverified.
+- [x] Standalone phone audio check live: AudioReady=1, media 14/25, required 13/25, DND off, Error blank; no Signia launch.
+
+- [x] ProgramSwitch with explicit gesture-tap backend: actual picker slots configured, Universal → Off just Tinnitus → Universal passed, CommandOK1, Error blank. Other programs and failure/no-op checks remain pending.

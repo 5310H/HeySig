@@ -1,4 +1,4 @@
-"""Build explicit Pixel 9a gesture calibration for Balance and Tinnitus only."""
+"""Build separate explicit Pixel 9a slider gesture calibration tasks."""
 import xml.etree.ElementTree as E
 import build_heysig3 as b
 
@@ -18,6 +18,13 @@ def build():
                       [b.condition('%SIG3_AudioStream', 13), b.setvar('%SIG3_AudioStream', 'media'), b.action(38)] +
                       [b.setvar('%' + name, value) for name, value in settings]))
     b.write(b.ROOT / 'tasks/SIG3_Pixel9aGestureSetup.tsk.xml', root)
+    # Separate explicit opt-in: preserve the established balance/tinnitus setup.
+    volume = [(name.replace('Balance', 'Volume'), value) for name, value in settings if 'Balance' in name]
+    volume.append(('SIG3_KnobId', 'com.signia.rta:id/TA-SliderValue'))
+    root = E.Element('TaskerData', sr='', dvi='1', tv='6.6.20')
+    root.append(b.task('SIG3_Pixel9aVolumeGestureSetup', 991,
+                      [b.setvar('%' + name, value) for name, value in volume]))
+    b.write(b.ROOT / 'tasks/SIG3_Pixel9aVolumeGestureSetup.tsk.xml', root)
 
 
 if __name__ == '__main__':

@@ -25,6 +25,8 @@ The setup was already run on the tested phone. Its calibration is portrait 1080�
 
 ## Commands
 
+See the [voice command list](HeySig3-voice-commands.md) for every supported phrase, numeric ranges, configured program aliases, and optional automation commands.
+
 Pass spoken text in Parameter 1 of `SIG3_VoiceRouter`, or use the configured AutoVoice adapter:
 
 | Request | Example | Range |
@@ -51,13 +53,17 @@ The verified current-value ID is `com.signia.rta:id/TA-SliderValue`. Volume uses
 
 Direct view-ID lookup returned zero matches on this phone. The repaired inspection/UI guards traverse the accessibility tree and require the exact visible enabled control. Inspection does not move a slider.
 
-Signia changes the program label ID with the selected program (`Universal`, `TV`, etc.). The slider guard also recognizes the uniquely visible **Hearing program … Active** accessibility header when the configured `%SIG3_ProgramId` label is absent. Ambiguity, disagreement, or a program change during an operation fails the guard. Read-only balance detection passed in TV; that does not certify the separate ProgramCurrent/ProgramSwitch tasks.
+Signia changes the program label ID with the selected program (`Universal`, `TV`, etc.). The slider guard also recognizes the uniquely visible **Hearing program … Active** accessibility header when the configured `%SIG3_ProgramId` label is absent. Ambiguity, disagreement, or a program change during an operation fails the guard. Read-only balance detection passed in TV. ProgramCurrent and a program change followed by restoration also passed on the phone; program names came from the actual picker.
 
 Current tasks publish `%SIG3_Level` for volume, `%SIG3_BalanceLevel`, and `%SIG3_TinnitusLevel`, plus their family X/Y coordinates. The controls are common sliders; no separate left/right operation is introduced.
 
 ## Audio checks and results
 
-Set `%SIG3_AudioStream` to `media` or `ring`, matching Signia. Preflight reads stream volume, call/audio mode, DND, and connected outputs without changing them. It rejects a muted stream, active call/communication mode, known connected external outputs, and silent/DND ringtone playback. The tested Media sound stream was unmuted and routed to the speaker. Connected-output checks are conservative presence checks, not proof of the active route.
+Set `%SIG3_AudioStream` to `media` or `ring`, matching Signia. Preflight reads stream volume, call/audio mode, DND, and connected outputs without changing them. It stops with instructions when DND/bedtime mode is active, the phone is silent, the selected stream is below the configured minimum, a call/communication mode is active, or a known external output is connected. Ring sound also requires normal ringer mode. Settings are never changed automatically. The tested Media sound stream was unmuted and routed to the speaker. Connected-output checks are conservative presence checks, not proof of the active route.
+
+Run `SIG3_PhoneAudioCheck` to check Android phone audio without opening Signia or sending a hearing-aid command. `%SIG3_AudioReady` is 1 on success and 0 on failure; `%SIG3_Error` tells you what to change, and `%SIG3_AudioDiagnostics` includes the measured volume and required level. This checks phone volume, not hearing-aid volume.
+
+`%SIG3_MinAudioPercent` defaults to 50, matching the inspected Signia APK audio manager default. For a 25-step stream this requires 13/25, rounding up. Signia can configure its own threshold; if its volume-slider prompt requires a higher level, set this variable to that confirmed minimum. Match `%SIG3_AudioStream` to Signia’s Media sound or Ring sound selection. Check before retrying; HeySig3 does not move the phone volume slider or dismiss Signia’s prompt automatically. Battery `listen` also runs audio preflight before either acoustic check; battery `open` remains read-only.
 
 Read `%SIG3_CommandOK`, `%SIG3_Error`, and `%SIG3_Result` after a command. `%SIG3_Previous`, `%SIG3_Expected`, `%SIG3_Observed`, `%SIG3_Program`, `%SIG3_MoveStage`, `%SIG3_Gesture`, and `%SIG3_AudioDiagnostics` help diagnose it. Java checks preserve their error messages; parent guards avoid overwriting them with a literal `%SIG3_Error`. A stopped command may retain a pending result; busy/unrecognized requests do not represent a new successful operation. No automatic retry is made.
 
@@ -65,7 +71,7 @@ Signia remains open by default (`%SIG3_CompletionPolicy=stay`). `home` returns t
 
 ## Testing status
 
-Follow the [completed and remaining checklist](HeySig3-test-checklist.md). Local simulations cover all 768 numeric transitions and missing tinnitus tabs, but they do not execute Android, BeanShell, recognition, plugin events, or acoustic playback. [Static validation](HeySig3-validation.md) checked 79 XML files and 4,921 actions with zero failures. The [acceptance guide](HeySig3-slider-acceptance.md) describes the next phone checks and the separate native backend gate.
+Follow the [completed and remaining checklist](HeySig3-test-checklist.md). Local simulations cover all 768 numeric transitions and missing tinnitus tabs, but they do not execute Android, BeanShell, recognition, plugin events, or acoustic playback. [Static validation](HeySig3-validation.md) checked 81 XML files and 5,089 actions with zero failures. The [acceptance guide](HeySig3-slider-acceptance.md) describes the next phone checks and the separate native backend gate.
 
 The Chromebook generates/validates the project; Signia runs on the phone. USB and authorized wireless ADB were used for inspection/import/testing, not as a requirement for the Tasker balance/tinnitus control path.
 
@@ -73,9 +79,9 @@ The Chromebook generates/validates the project; Signia runs on the phone. USB an
 
 Run `SIG3_Init` once after import. It fills missing settings and preserves existing ones. Noise and sleep automation default to **disabled**. No profile is installed or activated by the export.
 
-Configure `%SIG3_ProgramName1` through `%SIG3_ProgramName6` with the exact names of programs actually available in Signia; leave unused slots unset. `SIG3_ProgramSwitch` accepts the slot number in Parameter 1. Voice accepts `program two` or `change program to Music`. It reads the current program, opens the picker, clicks a uniquely matching visible name, and verifies the displayed program with bounded waits. Repeating the current program is a no-op. No coordinate fractions or cached success assignments are used.
+Configure `%SIG3_ProgramName1` through `%SIG3_ProgramName6` with the exact names of programs actually available in Signia; leave unused slots unset. `SIG3_ProgramSwitch` accepts the slot number in Parameter 1. Voice accepts `program two` or `change program to Music`. It reads the current program, opens the picker, selects a uniquely matching visible name, and verifies the displayed program with bounded waits. `%SIG3_ProgramBackend=accessibility-click` uses clickable accessibility ancestors; `gesture-tap` explicitly taps centers of the current visible node bounds and waits for Android completion. There is no automatic fallback between them. The phone-specific tap choice does not alter slider backends. Repeating the current program is a no-op. No coordinate fractions or cached success assignments are used.
 
-Run `SIG3_ProgramCurrent` to read the current displayed program without changing it. Voice accepts `current program`, `current mode`, or `what is the current program?`. The result is stored in `%SIG3_Program` and `%SIG3_Observed`, with `%SIG3_ProgramOK` / `%SIG3_CommandOK` reporting success. It launches Signia if needed, requires one visible readable program node matching `%SIG3_ProgramId`, and leaves the app open. It does not require audio settings or configured program slots; it does not open the program picker or send an acoustic command. The worker shows/logs the result. A missing or ambiguous program fails instead of returning stale state.
+Run `SIG3_ProgramCurrent` to read the current displayed program without changing it. Voice accepts `current program`, `current mode`, or `what is the current program?`. The result is stored in `%SIG3_Program` and `%SIG3_Observed`, with `%SIG3_ProgramOK` / `%SIG3_CommandOK` reporting success. It launches Signia if needed, reads the configured visible program label or the unique visible **Hearing program … Active** header, rejects ambiguous or disagreeing readings, and leaves the app open. It does not require audio settings or configured program slots; it does not open the program picker or send an acoustic command. The worker shows/logs the result. A missing or ambiguous program fails instead of returning stale state.
 
 Additional APK-derived IDs require confirmation from the phone:
 
@@ -87,7 +93,7 @@ Additional APK-derived IDs require confirmation from the phone:
 
 `SIG3_BatteryCheck` defaults to `listen`, preserving the user-confirmed working HeySig battery check: open the battery page, click `Check Left Battery Button`, acknowledge `TA-PopupButton2`, click `Check Right Battery Button`, acknowledge again, and close the battery page. The original waits and AutoInput settings are preserved. Both `battery check` and `battery listen` run this sequence through the SIG3 worker. No `%SIG3_BatteryRequestId` configuration is needed. Plugin errors stop the sequence and report which action failed.
 
-Parameter 1 `open` remains an optional page-only inspection that records visible text in `%SIG3_BatteryText` and leaves the page open. Normal checks close the battery page and leave Signia open, following SIG3's completion policy. Battery indications are heard from the aids; no numeric percentage is inferred. The original HeySig sequence is user-confirmed working; its migrated SIG3 export still needs an import/run check.
+Parameter 1 `open` remains an optional page-only inspection that records visible text in `%SIG3_BatteryText` and leaves the page open. Normal checks close the battery page and leave Signia open, following SIG3's completion policy. Battery indications are heard from the aids; no numeric percentage is inferred. The repaired SIG3 battery sequence passed its phone import/run check and the user confirmed it worked. Acoustic battery indications remain unverified in this run.
 
 ### Voice and watch events
 
@@ -112,3 +118,9 @@ With NoiseMiddleProgram unset, the middle band clears the candidate/count; confi
 `SIG3_SleepState` accepts `asleep` or `awake`. It requires `%SIG3_SleepEnabled=1`, configured `%SIG3_SleepProgram` / `%SIG3_WakeProgram` slots, and no manual override. A real time/sleep-provider profile must supply that state. The task selects and verifies the configured program before updating `%SIG3_SleepActive`. It does not infer sleep, use a hearing-aid standby enum, or assume that a program mutes the microphone.
 
 Priority 3 tests model initialization preservation, program routing/readback failures, voice/watch inputs, battery sequence and page-only mode, native noise capture, sign handling, thresholds/strike count, override, and sleep transitions. They do not execute Android accessibility, BeanShell, plugin events, or acoustic playback. On-phone import and capture remain the acceptance step.
+
+## Battery page entry
+
+`SIG3_BatteryCheck` defaults to `listen`: phone audio preflight, open the top-right question-mark battery icon, request left, acknowledge, request right, acknowledge, then close. Parameter1 `open` only opens the page and records visible text; it has no audio preflight and sends no battery-check request. Neither mode uses a slider.
+
+The current app’s top-right opener has content description `TA-BatteryToolbarItem`. `%SIG3_BatteryOpenDescription` supplies that captured selector when `%SIG3_BatteryOpenId` has no match. The `TA-BatteryIcon` ID appears twice inside the page on this phone; it is not a unique Controls toolbar selector. The close marker is `%SIG3_BatteryPageId`. Open mode rejects ambiguous markers/openers, and `%SIG3_MoveStage` identifies each listen step.

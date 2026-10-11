@@ -96,13 +96,13 @@ class Phone:
             if code in (20, 15355, 107361459, 778682267, 474):
                 local.pop('err', None)
                 stage = {20: 'launch', 15355: 'query', 778682267: 'gesture', 474: 'gesture'}.get(code)
-                if code == 474 and 'dispatchGesture' not in arg(a, 0): stage = 'ui' if 'Read-only live UI guard' in arg(a, 0) else 'phone' if 'Read-only preflight' in arg(a, 0) else 'report'
+                if code == 474 and ('dispatchGesture' not in arg(a, 0) or 'Program selection through' in arg(a, 0)): stage = 'ui' if 'Read-only live UI guard' in arg(a, 0) else 'phone' if 'Read-only preflight' in arg(a, 0) else 'report'
                 if code == 107361459:
                     params = a.findtext('./Bundle/Vals/parameters', '')
                     stage = 'tab' if 'Tab)' in params else 'number'
                 if self.fail_stage == 'halt_' + str(stage):
                     return  # Emulate a plugin/Tasker halt before its error guard.
-                if code == 474 and 'dispatchGesture' in arg(a, 0) and self.fail_stage in ('missing_service', 'hold_rejected', 'hold_cancelled', 'hold_timeout', 'move_rejected', 'move_cancelled', 'move_timeout'):
+                if code == 474 and 'dispatchGesture' in arg(a, 0) and 'Program selection through' not in arg(a, 0) and self.fail_stage in ('missing_service', 'hold_rejected', 'hold_cancelled', 'hold_timeout', 'move_rejected', 'move_cancelled', 'move_timeout'):
                     phase = 'down-hold' if self.fail_stage.startswith('hold_') else 'move-up'
                     reasons = {'missing_service': 'Enable Tasker in Android Settings > Accessibility > Installed apps',
                                'rejected': 'dispatchGesture rejected', 'cancelled': 'Android cancelled gesture',
@@ -158,7 +158,7 @@ class Phone:
             elif code == 474:
                 # Model the touch result; Android/BeanShell execution is a separate check.
                 script = arg(a, 0)
-                if 'dispatchGesture' not in script:
+                if 'dispatchGesture' not in script or 'Program selection through' in script:
                     if 'Normalize numeric commands' in script:
                         value = get('sig3_command')
                         value = re.sub(r'(?i)^sig(?:3)?\s+', '', value.strip())
@@ -223,7 +223,7 @@ class Phone:
                             self.globals['SIG3_ProgressAccepted'] = '1'
                             if self.progress_commits: self.level = target
                     elif 'Opens battery UI' in script:
-                        if get('par1') == 'listen' and not self.globals.get('SIG3_BatteryRequestId'):
+                        if getattr(self, 'battery_open_failure', False):
                             local['err'], local['errmsg'] = '1', 'Configure battery request ID'
                         else:
                             self.globals['SIG3_BatteryText'] = 'Acoustic battery indication'
@@ -266,6 +266,24 @@ class Phone:
                             local['err'], local['errmsg'] = '1', 'Wrong control or program changed'
                         else:
                             self.globals['SIG3_Program'] = self.program_capture
+                    elif 'Read-only app foreground check' in script:
+                        self.globals['SIG3_AppAlreadyForeground'] = '1' if self.package == 'com.signia.rta' and getattr(self, 'app_foreground', True) else '0'
+                    elif 'Concrete command reporting' in script:
+                        def clean(name):
+                            value = self.globals.get(name, '')
+                            return '' if str(value).startswith('%') else str(value)
+                        if clean('SIG3_CommandOK') == '1':
+                            result = clean('SIG3_Family') + ': ' + clean('SIG3_Observed')
+                            for key, label in [('SIG3_Program', 'program'), ('SIG3_Target', 'target')]:
+                                if clean(key): result += '; ' + label + '=' + clean(key)
+                            result += ' (app state; aid receipt unverified)'
+                        else:
+                            error = clean('SIG3_Error') or 'Operation did not complete'
+                            self.globals['SIG3_Error'] = error
+                            result = 'Failed: ' + error
+                            for key in ['SIG3_Family','SIG3_Target','SIG3_Previous','SIG3_Expected','SIG3_Observed','SIG3_Program','SIG3_MoveStage']:
+                                if clean(key): result += '; ' + key[5:] + '=' + clean(key)
+                        self.globals['SIG3_Result'] = result
                     elif 'Read-only preflight' in script:
                         self.globals['SIG3_AudioDiagnostics'] = 'stream=media volume=10/15; outputs=speaker'
                     pc += 1; continue

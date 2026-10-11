@@ -69,3 +69,11 @@ for t in r.findall('Task'):
         for c in e: clean(c)
     clean(t); clean(other); assert E.tostring(t) == E.tostring(other), name
 print('Worker collision/recovery, wrong-control/program guards, calibration, project isolation/parity passed')
+
+# An already foreground app avoids Launch App; actual launch failures survive the current guard.
+p = phone(); p.fail_stage = 'launch'; p.run('SIG3_VolumeCurrent')
+assert p.globals['SIG3_CommandOK'] == '1' and p.globals['SIG3_AppAlreadyForeground'] == '1'
+p = phone(); p.app_foreground = False; p.fail_stage = 'launch'; p.run('SIG3_VolumeCurrent')
+assert p.globals['SIG3_CommandOK'] == '0' and 'Injected plugin failure' in p.globals['SIG3_Error']
+p.fail_stage = None; p.run('SIG3_VolumeCurrent'); assert p.globals['SIG3_CommandOK'] == '1'
+print('Foreground reuse, preserved launch failure and subsequent recovery passed')
