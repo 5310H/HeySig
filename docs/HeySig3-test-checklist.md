@@ -1,6 +1,6 @@
 # HeySig3 completed work and test checklist
 
-Updated October 10, 2026. Checked phone items below were actually observed on the Pixel 9a; repository checks are listed separately. Unchecked items remain to be tested. See the [user manual](HeySig3.md) and [recorded phone evidence](HeySig3-verified-usb-drags.md).
+Updated October 11, 2026. Checked phone items below were actually observed on the Pixel 9a; repository checks are listed separately. Unchecked items remain to be tested. See the [user manual](HeySig3.md) and [recorded phone evidence](HeySig3-verified-usb-drags.md).
 
 ## Completed implementation
 
@@ -36,13 +36,13 @@ Successful app labels do not independently acknowledge acoustic receipt by the a
 
 ## Passed in repository checks
 
-- [x] Static validation: 81 XML files, 5,089 task actions, zero failures.
+- [x] Static validation: 82 XML files, 5,371 task actions, zero failures.
 - [x] Numeric simulation: 768 source/target transitions, invalid targets, repeated targets, endpoints and readback failures.
 - [x] Backend simulation: native prerequisites, accepted-but-unchanged progress, and per-family backend isolation.
 - [x] Missing tinnitus simulation: Current, Up, Down, Set, Max, Mute, Inspect, and voice request stop without movement.
 - [x] Worker coordination, wrong control/program, calibration, generated-project parity, migration and restored workflows.
 
-These checks do not execute Android/BeanShell or phone plugin events. Run the repository checks with:
+The spoken-result formatter check executes its actual Java body in local BeanShell; the remaining simulations and static checks do not execute Android or phone plugin events. Run the repository checks with:
 
 ```bash
 python3 tests/check_sig3_audio.py
@@ -53,6 +53,9 @@ python3 tests/check_sig3_tinnitus_available.py
 python3 tests/check_sig3_coordination.py
 python3 tests/check_sig3_parity.py
 python3 tests/check_sig3_migration.py
+python3 tests/check_sig3_generation.py
+python3 tests/check_sig3_voice_retry.py
+python3 tests/check_sig3_voice_reply.py
 python3 tests/validate_heysig3_xml.py
 ```
 
@@ -86,7 +89,7 @@ See the [acceptance guide](HeySig3-slider-acceptance.md); no automatic backend f
 ## Other workflows: implemented, phone verification pending
 
 - [ ] SIG3 ProgramCurrent and ProgramSwitch, exact configured program names/slots, repeated-current no-op and failure cases. Manual program selection and the slider guard's TV read do not certify these tasks.
-  ProgramCurrent initially failed; the repaired helper subsequently passed in Universal with CommandOK=1, ProgramOK=1, stage=complete and empty Error. Other programs, failure cases and ProgramSwitch remain pending; see the [verification report](HeySig3-verification-2026-10-10.md).
+  ProgramCurrent initially failed; the repaired helper subsequently passed in Universal. ProgramSwitch passed between configured slots 1 and 2, including spoken changes and restoration on October 11. Other programs, failure and no-op cases remain pending; see the [verification report](HeySig3-verification-2026-10-10.md) and [voice verification](HeySig3-voice-verification-2026-10-11.md).
 - [x] SIG3 battery listen sequence: corrected toolbar opener, requests/acknowledgements and close passed with CommandOK1, Error blank, complete stage; user confirmed screen behavior.
 - [ ] Prompted battery recognition and audible battery indications.
 - [ ] Prompted mode recognition, aliases, empty/cancelled input and override toggle.
@@ -102,3 +105,15 @@ Leave noise/sleep automation disabled until its configuration and event tests pa
 - [x] Standalone phone audio check live: AudioReady=1, media 14/25, required 13/25, DND off, Error blank; no Signia launch.
 
 - [x] ProgramSwitch with explicit gesture-tap backend: actual picker slots configured, Universal → Off just Tinnitus → Universal passed, CommandOK1, Error blank. Other programs and failure/no-op checks remain pending.
+- [x] General phone voice prompt: current-program query and Try again after unrecognized speech passed.
+- [x] Spoken current-program result matched the phone screen.
+- [x] Spoken program selection and return: Off just Tinnitus → Universal → Off just Tinnitus; user confirmed both selected programs and spoken names, and final active header matched the captured starting program.
+- [x] Spoken current-value queries: volume spoke 8; balance and tinnitus matched the screen (subsequent screen reads both 0 in Universal).
+- [x] Spoken battery request: user confirmed battery prompts and spoken confirmation worked. Hearing-aid indications and percentages remain unverified.
+- [x] Spoken volume change and restoration: 8 → 7 → 8 in Universal; user confirmed both spoken levels, and final screen matched starting state.
+- [x] Spoken balance change and restoration: 0 → -1 → 0 in Universal. User clarified using -1, confirmed speech and restoration; screen reads verified both levels.
+- [x] Spoken tinnitus change and restoration: 0 → 1 → 0 in Universal; user confirmed both spoken levels, and screen reads verified change and restoration.
+- [x] TV spoken volume change and restoration: 8 → 7 → 8; user confirmed both spoken levels and final screen verified TV at 8.
+- [x] TV current-tinnitus query: spoken unavailable explanation passed; captured Error=Tinnitus unavailable for this program and CommandOK=0.
+- [x] Live Cancel after banana: user confirmed closure without retry or control change; captured CommandOK=0 and Result=no command sent.
+- [ ] Other spoken blocked-command instructions, live Back/timeout, and TTS failure behavior.

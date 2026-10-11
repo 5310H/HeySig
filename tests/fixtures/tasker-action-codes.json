@@ -20,7 +20,8 @@
     "590": "SPLIT_VARIABLE",
     "596": "CONVERT_VARIABLE",
     "903": "GET_VOICE",
-    "474": "JAVA_CODE"
+    "474": "JAVA_CODE",
+    "559": "SAY"
   },
   "java_code_schema_source": "Native Tasker 6.6.20 SIG2_JavaProbe export (2026-10-07): Str arg0 Code, Str arg1 Return, Int arg2=1"
 }

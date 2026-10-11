@@ -27,6 +27,10 @@ The setup was already run on the tested phone. Its calibration is portrait 1080Ã
 
 See the [voice command list](HeySig3-voice-commands.md) for every supported phrase, numeric ranges, configured program aliases, and optional automation commands.
 
+Run `SIG3_VoiceCommand` in Tasker for a general speech prompt. The spoken **current program** query passed on the Pixel 9a on October 11; [voice verification](HeySig3-voice-verification-2026-10-11.md) separates this working entry from AutoVoice microphone capture, which remains unresolved.
+
+The general task now offers Try again / Cancel for unrecognized speech and speaks a short result after verified command completion. Both retry and a spoken current-program response passed on the phone. Set `%SIG3_VoiceResponses=0` to silence replies; on-screen results remain. Other spoken results still require live acceptance.
+
 Pass spoken text in Parameter 1 of `SIG3_VoiceRouter`, or use the configured AutoVoice adapter:
 
 | Request | Example | Range |

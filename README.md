@@ -11,6 +11,8 @@ Prioritized work still needed: [HeySig3 remaining work](docs/HeySig3-remaining-w
 
 Spoken phrases and supported alternatives: [HeySig3 voice commands](docs/HeySig3-voice-commands.md).
 
+Planned phone/watch noise-based selection: [noise automation plan](docs/HeySig3-noise-automation-plan.md).
+
 Phone verification updated October 10, 2026: Tasker balance and tinnitus passed **0 → 1 → 0** in Universal using measured Pixel 9a gesture settings. Tinnitus requests stop cleanly when a program has no tinnitus tab, verified in TV. Native accessibility and Tasker's Volume backend still need separate acceptance.
 
 Use the [completed and remaining test checklist](docs/HeySig3-test-checklist.md) to resume testing, and the [phone verification notes](docs/HeySig3-verified-usb-drags.md) for exact evidence. The [Pixel 9a setup task](tasks/SIG3_Pixel9aGestureSetup.tsk.xml) is imported separately from the project and applies only to the measured layout.

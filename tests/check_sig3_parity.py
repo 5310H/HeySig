@@ -9,6 +9,10 @@ p.run('SIG3_VoiceRouter','override toggle'); assert p.globals['SIG3_ManualOverri
 p.prompt_response='Music'; p.run('SIG3_VoiceMode'); assert p.program=='Music'
 p.prompt_response='battery check'; p.run('SIG3_VoiceBattery'); assert 'battery checks requested' in p.globals['SIG3_Observed']
 p.prompt_response=''; previous=p.program; p.run('SIG3_VoiceMode'); assert p.program==previous
+p.prompt_response='current program'; p.run('SIG3_VoiceCommand'); assert p.globals['SIG3_CommandOK']=='1' and p.program==previous
+p.prompt_response='volume three'; p.run('SIG3_VoiceCommand'); assert p.level==3
+p.prompt_response=''; before=(p.program,p.level,len(p.gestures)); p.run('SIG3_VoiceCommand'); assert (p.program,p.level,len(p.gestures))==before
+p.run('SIG3_ProgramSwitch','1'); p.prompt_response='program too'; p.run('SIG3_VoiceCommand'); assert p.program=='Music' and p.globals['SIG3_CommandOK']=='1'
 p.globals.update(SIG3_NoiseEnabled='1',SIG3_NoiseScaleConfirmed='1',SIG3_NoiseLow='40',SIG3_NoiseHigh='60',SIG3_NoiseStrikeLimit='2',SIG3_NoiseQuietProgram='1',SIG3_NoiseMiddleProgram='2',SIG3_NoiseLoudProgram='3')
 p.run('SIG3_ProgramSwitch','1')
 p.run('SIG3_NoiseMonitor','50'); assert p.program=='Universal'

@@ -35,9 +35,18 @@ Completion evidence: chosen per-family backend, starting/target/observed values,
 
 The project supplies tasks but imports **no event profiles**.
 
-- [ ] Connect AutoVoice Recognized to SIG3_AutoVoiceCommand using the actual recognition text. First test explicit text through VoiceRouter, then live recognition for volume, balance, tinnitus, program and battery requests.
+- [x] Connect the original AutoVoice recognition profile to SIG3_AutoVoiceCommand; its typed event test reached HeySig3. AutoVoice microphone prompt remains unresolved.
+- [x] Verify the separate SIG3_VoiceCommand phone prompt: current-program query, explicit Try again, spoken program result, and spoken program change followed by restoration passed.
+- [x] Verify live spoken current-volume, current-balance, and current-tinnitus queries; user confirmed each matched the phone screen.
+- [x] Verify live spoken battery request; user confirmed app prompts and spoken confirmation.
+- [x] Verify live spoken volume change and restoration: 8 → 7 → 8, with final screen confirmation.
+- [x] Verify live spoken balance change and restoration: 0 → -1 → 0, including final screen confirmation.
+- [x] Verify live spoken tinnitus change and restoration: 0 → 1 → 0, including final screen confirmation.
+- [x] Verify TV spoken volume change/restoration (8 → 7 → 8) and unavailable-tinnitus query explanation.
+- [ ] Verify other live spoken blocked-command messages. Complete AutoVoice microphone capture separately.
 - [ ] Connect the actual AutoWear command event to SIG3_WatchCommand and verify its input variable and target routing.
-- [ ] Confirm unrecognized speech and cancelled recognition send no command.
+- [x] Confirm unrecognized speech followed by Cancel closes without a control change; recorded result says no command sent.
+- [ ] Verify cancellation inside recognition, Back dismissal, and retry-dialog timeout on the phone.
 - [ ] Audit phone shortcuts, profiles, intermediate tasks and variable readers. Replace old SIG_ calls/readers with public SIG3 tasks and globals, or explicitly use SIG3_LegacyCommand where supported.
 - [ ] Disable competing legacy control profiles and remove any active SoundWear profiles.
 - [ ] Export the verified phone event profiles so their actual plugin settings and wrappers are preserved.
@@ -76,4 +85,32 @@ The default accessibility backend has not passed live movement/commit acceptance
 
 Already established: Tasker balance and tinnitus 0 → 1 → 0 in Universal, TV tinnitus rejection through Up, selected read-only checks, and repository simulations/static validation. These do not complete the remaining live tests above.
 
-Outside current completion scope: relative Up/Down voice phrases, a new EQ controller, spoken-result synthesis, AppBlock, force-close/lock behavior, BLE/root/helper-app control, and automatic secure unlock.
+Outside current completion scope: relative Up/Down voice phrases, a new EQ controller, AppBlock, force-close/lock behavior, BLE/root/helper-app control, and automatic secure unlock.
+
+## Future: save and restore settings after charging
+
+Requested October 11, 2026. The user reports that charging turns the aids off and they restart with default settings. Investigate this behavior separately from Signia app readback.
+
+- [ ] Add explicit Save settings / Restore settings commands. Save fresh verified readings of the actual selected program, volume, balance, and tinnitus when available, with a timestamp and configuration identity. Persist the snapshot across restarts; do not overwrite it with charging defaults automatically.
+- [ ] Restore and verify the saved program first, then restore its available controls through the existing worker and audio guards. Skip unavailable tinnitus explicitly; reject changed or ambiguous program mappings and invalid snapshots.
+- [ ] Report partial restoration and stop on failures rather than claiming full success. Preserve the saved snapshot for a later manual retry.
+- [ ] Test charging/restart, missing tinnitus, renamed programs, partial failures, and app state versus actual hearing-aid response. Begin with user-triggered restoration; any automatic reconnect trigger needs separate verification.
+
+## Future: Hey Sig wake phrase and spoken readiness cue
+
+Requested October 11, 2026: use **“Hey Sig”** as the wake phrase and say **“Sig here”** when ready to receive the command, so the user can operate without viewing the phone.
+
+- [ ] Investigate and implement an explicitly enabled wake-word listener for **“Hey Sig”**, accounting for microphone permissions, battery use, false activations, and Android background restrictions. Provide an easy way to disable listening.
+- [ ] Add the spoken readiness cue to the general voice prompt and explicit Try again flow. Sequence playback and microphone capture so recognition does not capture the cue itself; verify that the cue accurately indicates when speech can begin.
+- [ ] Test with the screen off and locked, including Android microphone/background restrictions. If recognition or Signia control requires unlocking, give clear spoken instructions where possible; do not bypass the lock screen.
+- [ ] Respect the existing speech preference and DND/phone-volume handling. Verify the cue is audible under supported settings and preserve an on-screen indication.
+
+Both wake-word activation and the readiness announcement are future work. No always-listening service is currently enabled; screen-off/locked operation remains unverified.
+
+## Future: spoken-response on/off switch
+
+Requested October 11, 2026: add a visible **Spoken responses** on/off switch so the user can enable or silence voice replies without editing Tasker variables.
+
+- [ ] Connect the switch to the existing `%SIG3_VoiceResponses` setting (0 off, 1 on), show its current state, and persist the choice across restarts.
+- [ ] Keep on-screen results available when speech is off. Apply the choice to result replies, retry instructions, and the future **Sig here** readiness cue.
+- [ ] Keep wake-word listening independently controlled; turning spoken responses off must not silently change whether **Hey Sig** listening is enabled. Verify both switch states and restart persistence.

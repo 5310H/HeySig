@@ -320,7 +320,7 @@ def target_wrapper(family, operation):
 
 
 def numeric_voice():
-    aa = [setvar('%sig3_command', '%avcomm'),
+    aa = [setvar('%SIG3_VoiceMatched',0),setvar('%sig3_command', '%avcomm'),
           condition('%par1', 12), setvar('%sig3_command', '%par1'), action(38),
           java_file('sig3_command_normalize.java'), condition('%err',12),
           java_code('tasker.showToast(tasker.getVariable("errmsg")); return "invalid-command";'), stop(),action(38)]
@@ -329,14 +329,17 @@ def numeric_voice():
         for value in range(-8 if family == 'Balance' else 0, 8 if family == 'Balance' else 16):
             word = (r'(?:minus|negative)\s+(?:' + str(abs(value)) + '|' + words[abs(value)] + ')' if value < 0 else words[value])
             pattern = r'(?i)^\s*(?:(?:set|change)\s+)?' + family.lower() + r'\s+(?:to\s+)?(?:' + str(value) + '|' + word + r')\s*$'
-            aa += [condition('%sig3_command', 4, pattern), request(family, 'Set', str(value)), stop(), action(38)]
+            aa += [condition('%sig3_command', 4, pattern), setvar('%SIG3_VoiceMatched',1), request(family, 'Set', str(value)), stop(), action(38)]
     for family, operation, pattern in [('Volume', 'Max', r'(?i)^\s*(?:maximum volume|volume max|volume maximum)\s*$'), ('Volume', 'Mute', r'(?i)^\s*(?:mute|volume mute|mute volume)\s*$'), ('Balance', 'Sharp', r'(?i)^\s*(?:balance sharp|sharp balance)\s*$'), ('Balance', 'Soft', r'(?i)^\s*(?:balance soft|soft balance)\s*$'), ('Tinnitus', 'Max', r'(?i)^\s*(?:maximum tinnitus|tinnitus max)\s*$'), ('Tinnitus', 'Mute', r'(?i)^\s*(?:tinnitus mute|mute tinnitus)\s*$')]:
-        aa += [condition('%sig3_command', 4, pattern), request(family, 'Set', str(7 if family == 'Balance' and operation == 'Sharp' else -8 if family == 'Balance' else 15 if operation == 'Max' else 0)), stop(), action(38)]
+        aa += [condition('%sig3_command', 4, pattern), setvar('%SIG3_VoiceMatched',1), request(family, 'Set', str(7 if family == 'Balance' and operation == 'Sharp' else -8 if family == 'Balance' else 15 if operation == 'Max' else 0)), stop(), action(38)]
     for slot in range(1, 7):
-        word = words[slot]
+        word = r'(?:two|too)' if slot == 2 else words[slot]
         pattern = r'(?i)^\s*(?:(?:set|change)\s+)?(?:program|mode)\s+(?:to\s+)?(?:' + str(slot) + '|' + word + r'|\Q%SIG3_ProgramName' + str(slot) + r'\E)\s*$'
-        aa += [condition('%sig3_command', 4, pattern), request('Program', 'Switch', str(slot)), stop(), action(38)]
+        aa += [condition('%sig3_command', 4, pattern), setvar('%SIG3_VoiceMatched',1), request('Program', 'Switch', str(slot)), stop(), action(38)]
     for family, operation, target, pattern in [
+            ('Volume','Current','',r'(?i)^\s*(?:current volume|what is (?:the )?(?:current )?volume)\s*\??\s*$'),
+            ('Balance','Current','',r'(?i)^\s*(?:current balance|what is (?:the )?(?:current )?balance)\s*\??\s*$'),
+            ('Tinnitus','Current','',r'(?i)^\s*(?:current tinnitus|current tinnitus level|what is (?:the )?(?:current )?tinnitus(?: level)?)\s*\??\s*$'),
             ('Program','Current','',r'(?i)^\s*(?:current program|current mode|what program|what mode|what is (?:the )?current (?:program|mode))\s*\??\s*$'),
             ('Battery','Check','listen',r'(?i)^\s*(?:battery|battery check|check battery)\s*$'),
             ('Battery','Check','listen',r'(?i)^\s*(?:battery listen|listen to battery)\s*$'),
@@ -346,7 +349,7 @@ def numeric_voice():
             ('Sleep','Set','awake',r'(?i)^\s*wake\s*$'),
             ('Setup','Override','1',r'(?i)^\s*(?:override on|manual mode)\s*$'),
             ('Setup','Override','0',r'(?i)^\s*(?:override off|automatic mode)\s*$')]:
-        aa += [condition('%sig3_command', 4, pattern), request(family, operation, target), stop(), action(38)]
+        aa += [condition('%sig3_command', 4, pattern), setvar('%SIG3_VoiceMatched',1), request(family, operation, target), stop(), action(38)]
     return aa + [java_code('tasker.showToast("Use volume 0–15, balance minus 8–7, tinnitus 0–15, program 1–6, or battery check"); return "unrecognized";')]
 
 
@@ -407,6 +410,20 @@ def worker():
            setvar('%SIG3_Error', ''), action(38), java_file('sig3_report.java')]
     aa += [condition('%SIG3_CommandOK',8,1),java_file('sig3_completion.java'),action(38)]
     return aa
+
+
+def voice_reply(kind='result'):
+    # Reuse the original phone-exported Say envelope; wait for speech completion.
+    reference = E.parse(ROOT / 'tasks/SIG_TinnitusSet.tsk.xml').getroot()
+    speech = deepcopy(next(a for a in reference.findall('.//Action') if a.findtext('code') == '559'))
+    speech.find("Str[@sr='arg0']").text = '%sig3_speech'
+    speech.find("Int[@sr='arg7']").set('val','0')  # Continue Task Immediately off.
+    se = E.Element('se'); se.text = 'true'; speech.insert(1,se)
+    return [setvar('%sig3_reply_kind',kind),java_file('sig3_voice_reply.java'),
+            condition('%err',13),condition('%sig3_speech',12),wait(2000),
+            condition('%TRUN',5,r'(^|,)SIG3_Worker(,|$)'),speech,
+            condition('%err',12),java_code('tasker.showToast("Voice response unavailable. Read the result on the phone screen."); return "speech-failed";'),
+            action(38),action(38),action(38),action(38)]
 
 
 def extra_tasks():
@@ -502,7 +519,7 @@ def extra_tasks():
     add('SIG3_SleepState',366,[request('Sleep','Set','%par1')])
     voice_reference = E.parse(ROOT / 'tasks/SIG_Voice_Mode.tsk.xml').getroot()
     voice_template = next(a for a in voice_reference.findall('.//Action') if a.findtext('code') == '903')
-    for name, number, prompt, prefix in [('SIG3_VoiceMode',397,'What mode would you like?','program '),('SIG3_VoiceBattery',398,'Say battery check to check both batteries','')]:
+    for name, number, prompt, prefix in [('SIG3_VoiceMode',397,'What mode would you like?','program '),('SIG3_VoiceBattery',398,'Say battery check to check both batteries',''),('SIG3_VoiceCommand',380,'Say a HeySig3 command','')]:
         capture = deepcopy(voice_template)
         capture.find("Str[@sr='arg0']").text = prompt
         e = E.Element('se'); e.text = 'true'; capture.insert(1,e)
@@ -516,6 +533,20 @@ def extra_tasks():
         else:
             aa += [call('SIG3_VoiceRouter','%sig3_heard')]
         aa += [action(38),action(38)]
+        if name == 'SIG3_VoiceCommand':
+            aa = [loop('%sig3_attempt', ','.join(str(i) for i in range(1,21))),
+                  setvar('%SIG3_VoiceHeard',''),setvar('%SIG3_VoiceMatched',0),
+                  setvar('%VOICE',''),setvar('%gv_heard1',''),capture,
+                  condition('%err',13),setvar('%sig3_heard','%VOICE'),
+                  java_code('heard = tasker.getVariable("sig3_heard"); if (heard == null || heard.length() == 0 || heard.startsWith("%")) heard = tasker.getVariable("gv_heard1"); if (heard == null || heard.trim().length() == 0 || heard.startsWith("%")) throw new com.joaomgcd.taskerm.action.java.JavaCodeException("Recognition cancelled or empty"); tasker.setVariable("sig3_heard", heard.trim()); return "heard";'),
+                  condition('%err',13),setvar('%SIG3_VoiceHeard','%sig3_heard'),
+                  setvar('%sig3_reply_before','%SIG3_OperationId'),call('SIG3_VoiceRouter','%sig3_heard'),action(38),action(38),
+                  condition('%SIG3_VoiceMatched',2,1),*voice_reply(),stop(),action(38),
+                  setvar('%SIG3_CommandOK',0),setvar('%SIG3_Error','Voice command not recognized'),
+                  setvar('%SIG3_Result','Voice command not recognized; no command sent'),
+                  *voice_reply('retry'),java_file('sig3_voice_retry.java'),condition('%err',12),stop(),action(38),
+                  condition('%sig3_retry',3,'retry'),stop(),action(38),action(40),
+                  java_code('tasker.showToast("Voice session ended. Run SIG3_VoiceCommand to start again."); return "ended";')]
         add(name,number,aa)
     add('SIG3_LegacyCommand',400,[java_file('sig3_legacy_command.java'),condition('%err',13),call('SIG3_Worker','%sig3_legacy_request'),action(38)])
     # Explicit numeric watch samples: no assumption about plugin event variable names.

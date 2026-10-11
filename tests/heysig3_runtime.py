@@ -31,7 +31,8 @@ class Phone:
             return False  # Tasker's default Abort New Task policy.
         self.active.append(name)
         self.globals['TRUN'] = ',' + ','.join(self.active) + ','
-        self.globals['TIMEMS'] = '1791460800000'
+        self.clock_tick = getattr(self, 'clock_tick', 1791460800000) + 1
+        self.globals['TIMEMS'] = str(self.clock_tick)
         try:
             self._run(name, param, param2)
             return True
@@ -189,6 +190,12 @@ class Phone:
                                 if operation != 'Set' or re.fullmatch(r'-?[0-9]+',value): request=family+','+operation+','+(value if operation=='Set' else '')
                         if request: put('sig3_legacy_request',request)
                         else: local['err'],local['errmsg']='1','Unsupported legacy request'
+                    elif 'Speak only a fresh completed voice result' in script:
+                        put('sig3_speech', '' if self.globals.get('SIG3_VoiceResponses') == '0' else 'Voice result')
+                    elif 'Reopen recognition only after an explicit Try again choice' in script:
+                        self.retry_dialogs = getattr(self, 'retry_dialogs', 0) + 1
+                        choices = getattr(self, 'retry_choices', [])
+                        put('sig3_retry', choices.pop(0) if choices else 'cancel')
                     elif 'Recognition cancelled or empty' in script:
                         value = get('sig3_heard')
                         if not value or value.startswith('%'): local['err'],local['errmsg']='1','Recognition cancelled'
@@ -321,7 +328,11 @@ class Phone:
             elif code == 18: self.closed = True
             elif code == 25: self.closed = True
             elif code == 903:
-                self.globals['VOICE'] = getattr(self,'prompt_response','')
+                local.pop('err', None)
+                responses = getattr(self, 'prompt_responses', [])
+                self.globals['VOICE'] = responses.pop(0) if responses else getattr(self,'prompt_response','')
+            elif code == 559:
+                self.spoken = getattr(self, 'spoken', []) + [expand(arg(a, 0))]
             elif code == 1218739680:
                 local['avnoiselevel'] = str(getattr(self, 'noise_sample', -45))
             else: assert code in (20, 18, 25, 30, 548), code
