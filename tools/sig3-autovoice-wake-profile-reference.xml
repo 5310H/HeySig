@@ -1,11 +1,10 @@
 <TaskerData sr="" dvi="1" tv="6.5.11">
 	<Profile sr="prof386" ve="2">
 		<cdate>1791770177404</cdate>
-		<edate>1791770229376</edate>
+		<edate>1791771439203</edate>
 		<flags>8</flags>
 		<id>386</id>
-		<limit>true</limit>
-		<mid0>384</mid0>
+		<mid0>390</mid0>
 		<Event sr="con0" ve="2">
 			<code>41628340</code>
 			<pri>0</pri>
@@ -29,7 +28,7 @@
 					<ProfileName-type>java.lang.String</ProfileName-type>
 					<Responses>&lt;null&gt;</Responses>
 					<Responses-type>java.lang.String</Responses-type>
-					<Source>&lt;null&gt;</Source>
+					<Source>continuous</Source>
 					<Source-type>java.lang.String</Source-type>
 					<Substitutions>&lt;null&gt;</Substitutions>
 					<Substitutions-type>java.lang.String</Substitutions-type>
@@ -43,7 +42,8 @@
 					<VariableNames-type>java.lang.String</VariableNames-type>
 					<VariableValues>&lt;null&gt;</VariableValues>
 					<VariableValues-type>java.lang.String</VariableValues-type>
-					<com.twofortyfouram.locale.intent.extra.BLURB>Command: "hey sig (exact)"</com.twofortyfouram.locale.intent.extra.BLURB>
+					<com.twofortyfouram.locale.intent.extra.BLURB>Command: "hey sig (exact)"
+Source: continuous</com.twofortyfouram.locale.intent.extra.BLURB>
 					<com.twofortyfouram.locale.intent.extra.BLURB-type>java.lang.String</com.twofortyfouram.locale.intent.extra.BLURB-type>
 					<config_easy_commands>&lt;null&gt;</config_easy_commands>
 					<config_easy_commands-type>java.lang.String</config_easy_commands-type>
@@ -75,9 +75,9 @@ Can be normal, continuous, test or googlenow&lt;/_array_net.dinglisch.android.ta
 Word Array
 &lt;/_array_net.dinglisch.android.tasker.RELEVANT_VARIABLES5&gt;&lt;/StringArray&gt;</net.dinglisch.android.tasker.RELEVANT_VARIABLES>
 					<net.dinglisch.android.tasker.RELEVANT_VARIABLES-type>[Ljava.lang.String;</net.dinglisch.android.tasker.RELEVANT_VARIABLES-type>
-					<net.dinglisch.android.tasker.extras.REQUESTED_TIMEOUT>10000</net.dinglisch.android.tasker.extras.REQUESTED_TIMEOUT>
+					<net.dinglisch.android.tasker.extras.REQUESTED_TIMEOUT>0</net.dinglisch.android.tasker.extras.REQUESTED_TIMEOUT>
 					<net.dinglisch.android.tasker.extras.REQUESTED_TIMEOUT-type>java.lang.Integer</net.dinglisch.android.tasker.extras.REQUESTED_TIMEOUT-type>
-					<net.dinglisch.android.tasker.extras.VARIABLE_REPLACE_KEYS>configcommand plugininstanceid plugintypeid </net.dinglisch.android.tasker.extras.VARIABLE_REPLACE_KEYS>
+					<net.dinglisch.android.tasker.extras.VARIABLE_REPLACE_KEYS>configcommand Source plugininstanceid plugintypeid </net.dinglisch.android.tasker.extras.VARIABLE_REPLACE_KEYS>
 					<net.dinglisch.android.tasker.extras.VARIABLE_REPLACE_KEYS-type>java.lang.String</net.dinglisch.android.tasker.extras.VARIABLE_REPLACE_KEYS-type>
 					<net.dinglisch.android.tasker.subbundled>true</net.dinglisch.android.tasker.subbundled>
 					<net.dinglisch.android.tasker.subbundled-type>java.lang.Boolean</net.dinglisch.android.tasker.subbundled-type>

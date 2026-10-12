@@ -769,7 +769,7 @@ def build():
     for tag, value in [('cdate', STAMP), ('name', 'HeySig3'), ('tids', ','.join(t.findtext('id') for t in tasks))]: E.SubElement(p, tag).text = value
     wake_profile = deepcopy(E.parse(ROOT / 'tools/sig3-autovoice-wake-profile-reference.xml').find('Profile'))
     wake_profile.set('sr','prof523')
-    for tag, value in [('id','523'),('mid0','522'),('flags','0'),('cdate',STAMP),('edate',STAMP)]:
+    for tag, value in [('id','523'),('mid0','522'),('cdate',STAMP),('edate',STAMP)]:
         wake_profile.find(tag).text = value
     E.SubElement(wake_profile,'nme').text = 'SIG3_HeySigWake'
     wake_profile.find('Event/Bundle/Vals/Source').text = 'continuous'
