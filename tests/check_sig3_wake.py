@@ -5,7 +5,7 @@ from check_sig3_migration import phone
 root=Path(__file__).resolve().parents[1]
 source=(root/'tools/sig3_wake_trigger.java').read_text()
 stub='class Tasker {java.util.Map vars=new java.util.HashMap();String getVariable(String n){return (String)vars.get(n);}void setVariable(String n,String v){vars.put(n,v);}}tasker=new Tasker();'
-cases=[({'SIG3_WakeEnabled':'1','par1':'Hey Sig'},True),({'SIG3_WakeEnabled':'1','avcommnofilter':'hey sig!'},True),({'SIG3_WakeEnabled':'0','par1':'hey sig'},False),({'SIG3_WakeEnabled':'1','SIG3_VoiceBusy':'1','par1':'hey sig'},False),({'SIG3_WakeEnabled':'1','TRUN':',SIG3_Worker,','par1':'hey sig'},False),({'SIG3_WakeEnabled':'1','par1':'hey sig volume 10'},False),({'SIG3_WakeEnabled':'1','par1':'volume 10'},False)]
+cases=[({'SIG3_WakeEnabled':'1','par1':'hey cig'},True),({'SIG3_WakeEnabled':'1','par1':'hey cig volume 10'},False),({'SIG3_WakeEnabled':'1','par1':'Hey Sig'},True),({'SIG3_WakeEnabled':'1','avcommnofilter':'hey sig!'},True),({'SIG3_WakeEnabled':'0','par1':'hey sig'},False),({'SIG3_WakeEnabled':'1','SIG3_VoiceBusy':'1','par1':'hey sig'},False),({'SIG3_WakeEnabled':'1','TRUN':',SIG3_Worker,','par1':'hey sig'},False),({'SIG3_WakeEnabled':'1','par1':'hey sig volume 10'},False),({'SIG3_WakeEnabled':'1','par1':'volume 10'},False)]
 for variables,accepted in cases:
  with tempfile.TemporaryDirectory() as d:
   f=Path(d)/'wake.bsh';setup=''.join('tasker.setVariable('+json.dumps(k)+','+json.dumps(v)+');' for k,v in variables.items());f.write_text(stub+setup+'check(){'+source+'}check();if(!tasker.getVariable("sig3_wake_accepted").equals('+json.dumps('1' if accepted else '0')+'))throw new RuntimeException("wrong acceptance");print("PASS");')
@@ -28,4 +28,4 @@ for entry in ['SIG3_WakeEnable','SIG3_VoiceCommand']:
    p.continuous_hook=None;p.run('SIG3_WakeDisable')
  p.continuous_hook=disable_during_start;p.run(entry)
  assert p.globals['SIG3_WakeEnabled']=='0' and not p.continuous_active
-print('7 actual wake-phrase cases passed; listener pauses/resumes, cancels cleanly, respects disable and blocks direct continuous commands')
+print('9 actual wake-phrase cases passed; listener pauses/resumes, cancels cleanly, respects disable and blocks direct continuous commands')

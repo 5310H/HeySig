@@ -5,7 +5,10 @@ voiceValue(name) {
 }
 tasker.setVariable("sig3_speech", "");
 tasker.setVariable("SIG3_VoiceReply", "");
-if ("0".equals(voiceValue("SIG3_VoiceResponses"))) return "disabled";
+retry = "retry".equals(voiceValue("sig3_reply_kind"));
+preference = voiceValue(retry ? "SIG3_VoicePrompts" : "SIG3_VoiceResponses");
+if (retry && preference.length() == 0) preference = voiceValue("SIG3_VoiceResponses");
+if ("0".equals(preference)) return "disabled";
 running = voiceValue("TRUN");
 if (running.matches("(?s).*(?:^|,)SIG3_Worker(?:,|$).*")) return "worker-busy";
 if ("retry".equals(voiceValue("sig3_reply_kind"))) {

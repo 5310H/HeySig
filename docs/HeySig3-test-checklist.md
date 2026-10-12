@@ -133,3 +133,14 @@ Actual hearing-aid receipt is not independently observable for program/slider co
 - [ ] Verify collision/interruption during an in-flight plugin action or nested internal helper; the controlled pre-dispatch tests do not certify those paths.
 
 - [x] Muted media write guard: user-muted 0/25 blocked public VolumeSet 9→8 at audio preflight, with no touch/progress dispatch and unchanged Universal value 9. Read-only Current remained usable. Captured media 17/25 was restored; see [guard verification](HeySig3-muted-stream-2026-10-11.md).
+
+## October 12 voice additions
+
+- [x] Independent Spoken results and Voice prompts controls: all four combinations saved/reopened; Cancel and Back preserved choices.
+- [x] Voice prompts off, spoken results on: no readiness cue, microphone capture and spoken current-program reply accepted.
+- [x] Spoken “cancel” closes the general voice session cleanly without an unrecognized reply or Try again.
+- [x] “Current tin” shorthand recognized; current program correctly reported tinnitus unavailable.
+- [ ] Physical restart persistence of the speech controls.
+- [ ] Reliable repeated wake commands, phone wake-regex alias configuration, locked-screen guidance, and volume preservation. Continuous listening is off at the user’s request.
+
+Additional executable checks: `check_sig3_voice_preferences.py`, `check_sig3_voice_ready.py`, `check_sig3_voice_retry.py`, `check_sig3_wake.py`, `check_sig3_wake_audio.py`, `check_sig3_settings_snapshot.py`, and `check_sig3_settings_flow.py`. These do not substitute for unfinished phone acceptance. See [voice settings](HeySig3-voice-settings.md) and [wake status](HeySig3-wake-phrase.md).

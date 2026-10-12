@@ -177,9 +177,26 @@ class Phone:
                         heard=get('par1') or get('avcommnofilter') or get('avcomm')
                         accepted=get('SIG3_WakeEnabled')=='1' and get('SIG3_VoiceBusy')!='1' and 'SIG3_Worker' not in self.active and re.fullmatch(r'hey\s+sig[.!?]?',heard.strip(),re.I) is not None
                         put('sig3_wake_accepted','1' if accepted else '0')
+                    elif 'Preserve the media level across AutoVoice continuous mute cycles' in script:
+                        pass  # Executed against an audio stub in check_sig3_wake_audio.py.
+                    elif 'Load or atomically save independent speech preferences' in script:
+                        prefs=getattr(self,'voice_preferences',{})
+                        if get('sig3_voice_pref_mode')=='save':
+                            self.voice_preferences={'responses':get('sig3_voice_results_choice'),'prompts':get('sig3_voice_prompts_choice')}
+                            put('SIG3_VoiceResponses',get('sig3_voice_results_choice'));put('SIG3_VoicePrompts',get('sig3_voice_prompts_choice'))
+                        else:
+                            responses=get('SIG3_VoiceResponses')
+                            if responses not in ('0','1'):responses=prefs.get('responses','1')
+                            prompts=get('SIG3_VoicePrompts')
+                            if prompts not in ('0','1'):prompts=prefs.get('prompts',responses)
+                            put('SIG3_VoiceResponses',responses);put('SIG3_VoicePrompts',prompts)
+                    elif 'Show separate visible on/off controls' in script:
+                        choice=getattr(self,'voice_settings_choice',None)
+                        put('sig3_voice_settings_decision','save' if choice else 'cancel')
+                        if choice:put('sig3_voice_results_choice',choice[0]);put('sig3_voice_prompts_choice',choice[1])
                     elif 'Prepare the readiness cue' in script:
                         put('SIG3_VoiceReady','0');put('SIG3_VoiceCaptureAllowed','1');put('SIG3_VoiceStatus','Opening command prompt')
-                        put('sig3_ready_speech','' if get('SIG3_VoiceResponses')=='0' else 'Sig here')
+                        put('sig3_ready_speech','' if get('SIG3_VoicePrompts')=='0' else 'Sig here')
                     elif 'Update the last verified settings' in script:
                         keys='Family CommandOK Error Result MoveStage TouchStage Gesture QueryData Program Previous Expected Observed AudioDiagnostics Target SliderDiagnostics ProgressAccepted OperationId'.split()
                         if get('sig3_settings_auto_mode')=='finish':
@@ -236,6 +253,7 @@ class Phone:
                     elif 'Normalize numeric commands' in script:
                         value = get('sig3_command')
                         value = re.sub(r'(?i)^sig(?:3)?\s+', '', value.strip())
+                        value = re.sub(r'(?i)^((?:(?:set|change|current|maximum|mute)\s+|what is\s+(?:the\s+)?(?:current\s+)?)?)tin(?=\s|$)', r'\1tinnitus', value)
                         alias = re.sub(r'^(?:mode|program)\s+', '', value.lower())
                         keys = {'conversation':'SIG3_ModeConversationProgram','normal':'SIG3_ModeConversationProgram','noisy':'SIG3_ModeNoisyProgram','vnoisy':'SIG3_ModeVeryNoisyProgram','very noisy':'SIG3_ModeVeryNoisyProgram','verynoisy':'SIG3_ModeVeryNoisyProgram'}
                         if alias in keys:
@@ -264,7 +282,7 @@ class Phone:
                         if request: put('sig3_legacy_request',request)
                         else: local['err'],local['errmsg']='1','Unsupported legacy request'
                     elif 'Speak only a fresh completed voice result' in script:
-                        put('sig3_speech', '' if self.globals.get('SIG3_VoiceResponses') == '0' else 'Voice result')
+                        put('sig3_speech', '' if get('SIG3_VoicePrompts' if get('sig3_reply_kind')=='retry' else 'SIG3_VoiceResponses') == '0' else 'Voice result')
                     elif 'Reopen recognition only after an explicit Try again choice' in script:
                         self.retry_dialogs = getattr(self, 'retry_dialogs', 0) + 1
                         choices = getattr(self, 'retry_choices', [])

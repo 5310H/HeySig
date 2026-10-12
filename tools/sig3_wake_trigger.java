@@ -9,6 +9,6 @@ if (wakeValue("TRUN").matches("(?s).*(?:^|,)SIG3_Worker(?:,|$).*")) return "work
 heard = wakeValue("par1");
 if (heard.length() == 0) heard = wakeValue("avcommnofilter");
 if (heard.length() == 0) heard = wakeValue("avcomm");
-if (!heard.trim().matches("(?i)^hey\\s+sig[.!?]?$")) return "not-wake-phrase";
+if (!heard.trim().matches("(?i)^hey\\s+(?:sig|cig)[.!?]?$")) return "not-wake-phrase";
 tasker.setVariable("sig3_wake_accepted", "1");
 return "wake-accepted";

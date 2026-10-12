@@ -1,0 +1,253 @@
+<TaskerData sr="" dvi="1" tv="6.6.20">
+	<Task sr="task524">
+		<cdate>1791396000000</cdate>
+		<edate>1791396000000</edate>
+		<id>524</id>
+		<nme>SIG3_VoiceSettings</nme>
+		<pri>100</pri>
+		<Action sr="act0" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%sig3_voice_pref_mode</Str>
+			<Str sr="arg1" ve="3">load</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act1" ve="7">
+			<code>474</code>
+			<se>true</se>
+			<Str sr="arg0" ve="3">/* Load or atomically save independent speech preferences. */
+voicePreferenceValue(name) {
+    value = tasker.getVariable(name);
+    return value == null || value.startsWith("%") ? "" : value;
+}
+voicePreferenceValid(value) { return "0".equals(value) || "1".equals(value); }
+prefs = context.getSharedPreferences("heysig3-voice", 0);
+mode = voicePreferenceValue("sig3_voice_pref_mode");
+if ("save".equals(mode)) {
+    responses = voicePreferenceValue("sig3_voice_results_choice");
+    prompts = voicePreferenceValue("sig3_voice_prompts_choice");
+    if (!voicePreferenceValid(responses) || !voicePreferenceValid(prompts))
+        throw new com.joaomgcd.taskerm.action.java.JavaCodeException("Invalid voice preference selection");
+    if (!prefs.edit().putString("responses", responses).putString("prompts", prompts).commit())
+        throw new com.joaomgcd.taskerm.action.java.JavaCodeException("Voice preferences could not be saved");
+} else if ("load".equals(mode)) {
+    responses = voicePreferenceValue("SIG3_VoiceResponses");
+    if (!voicePreferenceValid(responses)) responses = prefs.getString("responses", "1");
+    if (!voicePreferenceValid(responses)) responses = "1";
+    prompts = voicePreferenceValue("SIG3_VoicePrompts");
+    if (!voicePreferenceValid(prompts)) prompts = prefs.getString("prompts", responses);
+    if (!voicePreferenceValid(prompts)) prompts = responses;
+} else throw new com.joaomgcd.taskerm.action.java.JavaCodeException("Unknown voice preference operation");
+tasker.setVariable("SIG3_VoiceResponses", responses);
+tasker.setVariable("SIG3_VoicePrompts", prompts);
+tasker.setVariable("SIG3_VoiceSettingsStatus", "Spoken results " + ("1".equals(responses) ? "on" : "off") + "; voice prompts " + ("1".equals(prompts) ? "on" : "off"));
+return "voice preferences " + mode;
+</Str>
+			<Str sr="arg1" ve="3" />
+			<Int sr="arg2" val="1" />
+		</Action>
+		<Action sr="act2" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%err</lhs>
+					<op>12</op>
+					<rhs />
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act3" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_VoiceSettingsStatus</Str>
+			<Str sr="arg1" ve="3">Voice preferences unavailable: %errmsg</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act4" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
+		</Action>
+		<Action sr="act5" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act6" ve="7">
+			<code>474</code>
+			<se>true</se>
+			<Str sr="arg0" ve="3">/* Show separate visible on/off controls; Cancel leaves preferences unchanged. */
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.os.Handler;
+import android.os.Looper;
+import java.util.function.Consumer;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReference;
+
+selected = new boolean[] {"1".equals(tasker.getVariable("SIG3_VoiceResponses")), "1".equals(tasker.getVariable("SIG3_VoicePrompts"))};
+decision = new AtomicReference("cancel"); activityRef = new AtomicReference(); dialogRef = new AtomicReference(); done = new CountDownLatch(1);
+ui = new Handler(Looper.getMainLooper());
+tasker.setVariable("sig3_voice_settings_decision", "cancel");
+try {
+    tasker.doWithActivity(new Consumer() {
+        accept(Object value) {
+            final Activity screen = (Activity) value; activityRef.set(screen);
+            dialog = new AlertDialog.Builder(screen).setTitle("HeySig3 voice settings")
+                .setMultiChoiceItems(new String[] {"Spoken results", "Voice prompts"}, selected, new DialogInterface.OnMultiChoiceClickListener() {
+                    onClick(DialogInterface dialog, int which, boolean checked) { selected[which] = checked; }
+                }).setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                    onClick(DialogInterface dialog, int which) { decision.set("save"); }
+                }).setNegativeButton("Cancel", null).create();
+            dialogRef.set(dialog); dialog.setCancelable(true);
+            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                onDismiss(DialogInterface dialog) { done.countDown(); screen.finish(); }
+            });
+            dialog.show();
+        }
+    });
+    if (done.await(60, TimeUnit.SECONDS) &amp;&amp; "save".equals(decision.get())) {
+        tasker.setVariable("sig3_voice_results_choice", selected[0] ? "1" : "0");
+        tasker.setVariable("sig3_voice_prompts_choice", selected[1] ? "1" : "0");
+        tasker.setVariable("sig3_voice_settings_decision", "save");
+    }
+} finally {
+    ui.post(new Runnable() {
+        run() {
+            dialog = dialogRef.get(); if (dialog != null &amp;&amp; dialog.isShowing()) dialog.dismiss();
+            screen = activityRef.get(); if (screen != null &amp;&amp; !screen.isFinishing()) screen.finish();
+        }
+    });
+}
+return tasker.getVariable("sig3_voice_settings_decision");
+</Str>
+			<Str sr="arg1" ve="3" />
+			<Int sr="arg2" val="1" />
+		</Action>
+		<Action sr="act7" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%err</lhs>
+					<op>12</op>
+					<rhs />
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act8" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_VoiceSettingsStatus</Str>
+			<Str sr="arg1" ve="3">Voice settings could not open: %errmsg</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act9" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
+		</Action>
+		<Action sr="act10" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act11" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%sig3_voice_settings_decision</lhs>
+					<op>2</op>
+					<rhs>save</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act12" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%sig3_voice_pref_mode</Str>
+			<Str sr="arg1" ve="3">save</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act13" ve="7">
+			<code>474</code>
+			<se>true</se>
+			<Str sr="arg0" ve="3">/* Load or atomically save independent speech preferences. */
+voicePreferenceValue(name) {
+    value = tasker.getVariable(name);
+    return value == null || value.startsWith("%") ? "" : value;
+}
+voicePreferenceValid(value) { return "0".equals(value) || "1".equals(value); }
+prefs = context.getSharedPreferences("heysig3-voice", 0);
+mode = voicePreferenceValue("sig3_voice_pref_mode");
+if ("save".equals(mode)) {
+    responses = voicePreferenceValue("sig3_voice_results_choice");
+    prompts = voicePreferenceValue("sig3_voice_prompts_choice");
+    if (!voicePreferenceValid(responses) || !voicePreferenceValid(prompts))
+        throw new com.joaomgcd.taskerm.action.java.JavaCodeException("Invalid voice preference selection");
+    if (!prefs.edit().putString("responses", responses).putString("prompts", prompts).commit())
+        throw new com.joaomgcd.taskerm.action.java.JavaCodeException("Voice preferences could not be saved");
+} else if ("load".equals(mode)) {
+    responses = voicePreferenceValue("SIG3_VoiceResponses");
+    if (!voicePreferenceValid(responses)) responses = prefs.getString("responses", "1");
+    if (!voicePreferenceValid(responses)) responses = "1";
+    prompts = voicePreferenceValue("SIG3_VoicePrompts");
+    if (!voicePreferenceValid(prompts)) prompts = prefs.getString("prompts", responses);
+    if (!voicePreferenceValid(prompts)) prompts = responses;
+} else throw new com.joaomgcd.taskerm.action.java.JavaCodeException("Unknown voice preference operation");
+tasker.setVariable("SIG3_VoiceResponses", responses);
+tasker.setVariable("SIG3_VoicePrompts", prompts);
+tasker.setVariable("SIG3_VoiceSettingsStatus", "Spoken results " + ("1".equals(responses) ? "on" : "off") + "; voice prompts " + ("1".equals(prompts) ? "on" : "off"));
+return "voice preferences " + mode;
+</Str>
+			<Str sr="arg1" ve="3" />
+			<Int sr="arg2" val="1" />
+		</Action>
+		<Action sr="act14" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%err</lhs>
+					<op>12</op>
+					<rhs />
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act15" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_VoiceSettingsStatus</Str>
+			<Str sr="arg1" ve="3">Voice preferences could not be saved: %errmsg</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act16" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act17" ve="7">
+			<code>474</code>
+			<se>true</se>
+			<Str sr="arg0" ve="3">tasker.showToast(tasker.getVariable("SIG3_VoiceSettingsStatus")); return "voice-settings-status";</Str>
+			<Str sr="arg1" ve="3" />
+			<Int sr="arg2" val="1" />
+		</Action>
+		<Action sr="act18" ve="7">
+			<code>38</code>
+		</Action>
+	</Task>
+</TaskerData>

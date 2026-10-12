@@ -2,7 +2,7 @@
 	<Project sr="proj0" ve="2">
 		<cdate>1791396000000</cdate>
 		<name>HeySig3</name>
-		<tids>401,301,402,302,403,303,404,304,405,305,406,306,407,307,408,308,409,309,410,310,411,311,412,312,413,313,414,314,415,315,416,316,417,317,418,318,419,319,320,460,461,462,351,490,390,491,391,492,392,495,510,512,511,513,470,360,471,361,494,394,395,396,472,362,493,393,473,363,474,475,364,365,476,366,397,398,514,380,400,399,367,368,520,521,522,350</tids>
+		<tids>401,301,402,302,403,303,404,304,405,305,406,306,407,307,408,308,409,309,410,310,411,311,412,312,413,313,414,314,415,315,416,316,417,317,418,318,419,319,320,460,461,462,351,490,390,491,391,492,392,495,510,512,511,513,470,360,471,361,494,394,395,396,472,362,493,393,473,363,474,475,364,365,476,366,397,398,514,380,400,399,367,368,520,521,522,524,350</tids>
 		<pids>523</pids>
 	</Project>
 	<Profile sr="prof523" ve="2">
@@ -48,12 +48,12 @@
 					<VariableNames-type>java.lang.String</VariableNames-type>
 					<VariableValues>&lt;null&gt;</VariableValues>
 					<VariableValues-type>java.lang.String</VariableValues-type>
-					<com.twofortyfouram.locale.intent.extra.BLURB>Command: "hey sig (exact)"
+					<com.twofortyfouram.locale.intent.extra.BLURB>Command: Hey Sig (recognition alias Hey Cig; full phrase)
 Source: continuous</com.twofortyfouram.locale.intent.extra.BLURB>
 					<com.twofortyfouram.locale.intent.extra.BLURB-type>java.lang.String</com.twofortyfouram.locale.intent.extra.BLURB-type>
 					<config_easy_commands>&lt;null&gt;</config_easy_commands>
 					<config_easy_commands-type>java.lang.String</config_easy_commands-type>
-					<configcommand>hey sig</configcommand>
+					<configcommand>(?i)^hey\s+(?:sig|cig)[.!?]?$</configcommand>
 					<configcommand-type>java.lang.String</configcommand-type>
 					<configcommandid>&lt;null&gt;</configcommandid>
 					<configcommandid-type>java.lang.String</configcommandid-type>
@@ -63,7 +63,7 @@ Source: continuous</com.twofortyfouram.locale.intent.extra.BLURB>
 					<configexactsub-type>java.lang.Boolean</configexactsub-type>
 					<configlastcommand>&lt;null&gt;</configlastcommand>
 					<configlastcommand-type>java.lang.String</configlastcommand-type>
-					<configregexsub>false</configregexsub>
+					<configregexsub>true</configregexsub>
 					<configregexsub-type>java.lang.Boolean</configregexsub-type>
 					<net.dinglisch.android.tasker.EXTRA_NSR_DEPRECATED>true</net.dinglisch.android.tasker.EXTRA_NSR_DEPRECATED>
 					<net.dinglisch.android.tasker.EXTRA_NSR_DEPRECATED-type>java.lang.Boolean</net.dinglisch.android.tasker.EXTRA_NSR_DEPRECATED-type>
@@ -13239,6 +13239,16 @@ return "accepted; verify displayed target and audible aid response separately";
 		</Action>
 		<Action sr="act1" ve="7">
 			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_VoiceCancelled</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act2" ve="7">
+			<code>547</code>
 			<Str sr="arg0" ve="3">%sig3_command</Str>
 			<Str sr="arg1" ve="3">%avcomm</Str>
 			<Int sr="arg2" val="0" />
@@ -13247,7 +13257,7 @@ return "accepted; verify displayed target and audible aid response separately";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act2" ve="7">
+		<Action sr="act3" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -13258,7 +13268,7 @@ return "accepted; verify displayed target and audible aid response separately";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act3" ve="7">
+		<Action sr="act4" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig3_command</Str>
 			<Str sr="arg1" ve="3">%par1</Str>
@@ -13268,10 +13278,10 @@ return "accepted; verify displayed target and audible aid response separately";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act4" ve="7">
+		<Action sr="act5" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act5" ve="7">
+		<Action sr="act6" ve="7">
 			<code>474</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">/* Normalize numeric commands and configured semantic program aliases. */
@@ -13279,6 +13289,8 @@ import com.joaomgcd.taskerm.action.java.JavaCodeException;
 input = tasker.getVariable("sig3_command");
 if (input == null || input.trim().length() == 0) throw new JavaCodeException("No command text supplied");
 input = input.trim().replaceAll("(?i)^sig(?:3)?\\s+", "");
+// A short spoken name for tinnitus; do not rewrite program names.
+input = input.replaceAll("(?i)^((?:(?:set|change|current|maximum|mute)\\s+|what is\\s+(?:the\\s+)?(?:current\\s+)?)?)tin(?=\\s|$)", "$1tinnitus");
 alias = input.toLowerCase().replaceAll("^(?:mode|program)\\s+", "");
 key = null;
 if (alias.equals("conversation") || alias.equals("normal")) key = "SIG3_ModeConversationProgram";
@@ -13297,7 +13309,7 @@ return "normalized";
 			<Str sr="arg1" ve="3" />
 			<Int sr="arg2" val="1" />
 		</Action>
-		<Action sr="act6" ve="7">
+		<Action sr="act7" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -13308,22 +13320,111 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act7" ve="7">
+		<Action sr="act8" ve="7">
 			<code>474</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">tasker.showToast(tasker.getVariable("errmsg")); return "invalid-command";</Str>
 			<Str sr="arg1" ve="3" />
 			<Int sr="arg2" val="1" />
 		</Action>
-		<Action sr="act8" ve="7">
+		<Action sr="act9" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act9" ve="7">
+		<Action sr="act10" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act10" ve="7">
+		<Action sr="act11" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%sig3_command</lhs>
+					<op>4</op>
+					<rhs>(?i)^\s*cancel[.!?]?\s*$</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act12" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
+			<Str sr="arg1" ve="3">1</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act13" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_VoiceCancelled</Str>
+			<Str sr="arg1" ve="3">1</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act14" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_CommandOK</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act15" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_Error</Str>
+			<Str sr="arg1" ve="3" />
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act16" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_VoiceReply</Str>
+			<Str sr="arg1" ve="3" />
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act17" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_Result</Str>
+			<Str sr="arg1" ve="3">Voice session cancelled; no command sent</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act18" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_VoiceStatus</Str>
+			<Str sr="arg1" ve="3">Voice session cancelled</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act19" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
+		</Action>
+		<Action sr="act20" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act21" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -13334,7 +13435,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act11" ve="7">
+		<Action sr="act22" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -13344,7 +13445,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act12" ve="7">
+		<Action sr="act23" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -13361,15 +13462,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act13" ve="7">
+		<Action sr="act24" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act14" ve="7">
+		<Action sr="act25" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act15" ve="7">
+		<Action sr="act26" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -13380,7 +13481,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act16" ve="7">
+		<Action sr="act27" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -13390,7 +13491,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act17" ve="7">
+		<Action sr="act28" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -13407,15 +13508,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act18" ve="7">
+		<Action sr="act29" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act19" ve="7">
+		<Action sr="act30" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act20" ve="7">
+		<Action sr="act31" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -13426,7 +13527,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act21" ve="7">
+		<Action sr="act32" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -13436,7 +13537,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act22" ve="7">
+		<Action sr="act33" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -13453,15 +13554,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act23" ve="7">
+		<Action sr="act34" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act24" ve="7">
+		<Action sr="act35" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act25" ve="7">
+		<Action sr="act36" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -13472,7 +13573,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act26" ve="7">
+		<Action sr="act37" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -13482,7 +13583,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act27" ve="7">
+		<Action sr="act38" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -13499,15 +13600,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act28" ve="7">
+		<Action sr="act39" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act29" ve="7">
+		<Action sr="act40" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act30" ve="7">
+		<Action sr="act41" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -13518,7 +13619,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act31" ve="7">
+		<Action sr="act42" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -13528,7 +13629,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act32" ve="7">
+		<Action sr="act43" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -13545,15 +13646,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act33" ve="7">
+		<Action sr="act44" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act34" ve="7">
+		<Action sr="act45" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act35" ve="7">
+		<Action sr="act46" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -13564,7 +13665,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act36" ve="7">
+		<Action sr="act47" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -13574,7 +13675,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act37" ve="7">
+		<Action sr="act48" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -13591,15 +13692,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act38" ve="7">
+		<Action sr="act49" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act39" ve="7">
+		<Action sr="act50" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act40" ve="7">
+		<Action sr="act51" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -13610,7 +13711,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act41" ve="7">
+		<Action sr="act52" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -13620,7 +13721,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act42" ve="7">
+		<Action sr="act53" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -13637,15 +13738,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act43" ve="7">
+		<Action sr="act54" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act44" ve="7">
+		<Action sr="act55" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act45" ve="7">
+		<Action sr="act56" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -13656,7 +13757,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act46" ve="7">
+		<Action sr="act57" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -13666,7 +13767,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act47" ve="7">
+		<Action sr="act58" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -13683,15 +13784,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act48" ve="7">
+		<Action sr="act59" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act49" ve="7">
+		<Action sr="act60" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act50" ve="7">
+		<Action sr="act61" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -13702,7 +13803,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act51" ve="7">
+		<Action sr="act62" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -13712,7 +13813,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act52" ve="7">
+		<Action sr="act63" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -13729,15 +13830,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act53" ve="7">
+		<Action sr="act64" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act54" ve="7">
+		<Action sr="act65" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act55" ve="7">
+		<Action sr="act66" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -13748,7 +13849,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act56" ve="7">
+		<Action sr="act67" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -13758,7 +13859,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act57" ve="7">
+		<Action sr="act68" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -13775,15 +13876,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act58" ve="7">
+		<Action sr="act69" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act59" ve="7">
+		<Action sr="act70" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act60" ve="7">
+		<Action sr="act71" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -13794,7 +13895,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act61" ve="7">
+		<Action sr="act72" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -13804,7 +13905,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act62" ve="7">
+		<Action sr="act73" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -13821,15 +13922,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act63" ve="7">
+		<Action sr="act74" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act64" ve="7">
+		<Action sr="act75" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act65" ve="7">
+		<Action sr="act76" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -13840,7 +13941,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act66" ve="7">
+		<Action sr="act77" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -13850,7 +13951,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act67" ve="7">
+		<Action sr="act78" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -13867,15 +13968,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act68" ve="7">
+		<Action sr="act79" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act69" ve="7">
+		<Action sr="act80" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act70" ve="7">
+		<Action sr="act81" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -13886,7 +13987,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act71" ve="7">
+		<Action sr="act82" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -13896,7 +13997,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act72" ve="7">
+		<Action sr="act83" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -13913,15 +14014,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act73" ve="7">
+		<Action sr="act84" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act74" ve="7">
+		<Action sr="act85" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act75" ve="7">
+		<Action sr="act86" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -13932,7 +14033,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act76" ve="7">
+		<Action sr="act87" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -13942,7 +14043,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act77" ve="7">
+		<Action sr="act88" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -13959,15 +14060,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act78" ve="7">
+		<Action sr="act89" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act79" ve="7">
+		<Action sr="act90" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act80" ve="7">
+		<Action sr="act91" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -13978,7 +14079,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act81" ve="7">
+		<Action sr="act92" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -13988,7 +14089,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act82" ve="7">
+		<Action sr="act93" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -14005,15 +14106,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act83" ve="7">
+		<Action sr="act94" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act84" ve="7">
+		<Action sr="act95" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act85" ve="7">
+		<Action sr="act96" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -14024,7 +14125,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act86" ve="7">
+		<Action sr="act97" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -14034,7 +14135,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act87" ve="7">
+		<Action sr="act98" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -14051,15 +14152,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act88" ve="7">
+		<Action sr="act99" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act89" ve="7">
+		<Action sr="act100" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act90" ve="7">
+		<Action sr="act101" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -14070,7 +14171,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act91" ve="7">
+		<Action sr="act102" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -14080,7 +14181,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act92" ve="7">
+		<Action sr="act103" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -14097,15 +14198,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act93" ve="7">
+		<Action sr="act104" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act94" ve="7">
+		<Action sr="act105" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act95" ve="7">
+		<Action sr="act106" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -14116,7 +14217,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act96" ve="7">
+		<Action sr="act107" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -14126,7 +14227,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act97" ve="7">
+		<Action sr="act108" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -14143,15 +14244,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act98" ve="7">
+		<Action sr="act109" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act99" ve="7">
+		<Action sr="act110" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act100" ve="7">
+		<Action sr="act111" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -14162,7 +14263,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act101" ve="7">
+		<Action sr="act112" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -14172,7 +14273,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act102" ve="7">
+		<Action sr="act113" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -14189,15 +14290,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act103" ve="7">
+		<Action sr="act114" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act104" ve="7">
+		<Action sr="act115" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act105" ve="7">
+		<Action sr="act116" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -14208,7 +14309,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act106" ve="7">
+		<Action sr="act117" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -14218,7 +14319,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act107" ve="7">
+		<Action sr="act118" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -14235,15 +14336,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act108" ve="7">
+		<Action sr="act119" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act109" ve="7">
+		<Action sr="act120" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act110" ve="7">
+		<Action sr="act121" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -14254,7 +14355,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act111" ve="7">
+		<Action sr="act122" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -14264,7 +14365,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act112" ve="7">
+		<Action sr="act123" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -14281,15 +14382,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act113" ve="7">
+		<Action sr="act124" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act114" ve="7">
+		<Action sr="act125" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act115" ve="7">
+		<Action sr="act126" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -14300,7 +14401,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act116" ve="7">
+		<Action sr="act127" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -14310,7 +14411,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act117" ve="7">
+		<Action sr="act128" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -14327,15 +14428,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act118" ve="7">
+		<Action sr="act129" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act119" ve="7">
+		<Action sr="act130" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act120" ve="7">
+		<Action sr="act131" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -14346,7 +14447,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act121" ve="7">
+		<Action sr="act132" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -14356,7 +14457,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act122" ve="7">
+		<Action sr="act133" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -14373,15 +14474,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act123" ve="7">
+		<Action sr="act134" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act124" ve="7">
+		<Action sr="act135" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act125" ve="7">
+		<Action sr="act136" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -14392,7 +14493,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act126" ve="7">
+		<Action sr="act137" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -14402,7 +14503,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act127" ve="7">
+		<Action sr="act138" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -14419,15 +14520,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act128" ve="7">
+		<Action sr="act139" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act129" ve="7">
+		<Action sr="act140" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act130" ve="7">
+		<Action sr="act141" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -14438,7 +14539,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act131" ve="7">
+		<Action sr="act142" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -14448,7 +14549,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act132" ve="7">
+		<Action sr="act143" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -14465,15 +14566,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act133" ve="7">
+		<Action sr="act144" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act134" ve="7">
+		<Action sr="act145" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act135" ve="7">
+		<Action sr="act146" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -14484,7 +14585,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act136" ve="7">
+		<Action sr="act147" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -14494,7 +14595,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act137" ve="7">
+		<Action sr="act148" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -14511,15 +14612,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act138" ve="7">
+		<Action sr="act149" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act139" ve="7">
+		<Action sr="act150" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act140" ve="7">
+		<Action sr="act151" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -14530,7 +14631,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act141" ve="7">
+		<Action sr="act152" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -14540,7 +14641,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act142" ve="7">
+		<Action sr="act153" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -14557,15 +14658,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act143" ve="7">
+		<Action sr="act154" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act144" ve="7">
+		<Action sr="act155" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act145" ve="7">
+		<Action sr="act156" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -14576,7 +14677,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act146" ve="7">
+		<Action sr="act157" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -14586,7 +14687,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act147" ve="7">
+		<Action sr="act158" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -14603,15 +14704,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act148" ve="7">
+		<Action sr="act159" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act149" ve="7">
+		<Action sr="act160" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act150" ve="7">
+		<Action sr="act161" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -14622,7 +14723,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act151" ve="7">
+		<Action sr="act162" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -14632,7 +14733,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act152" ve="7">
+		<Action sr="act163" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -14649,15 +14750,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act153" ve="7">
+		<Action sr="act164" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act154" ve="7">
+		<Action sr="act165" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act155" ve="7">
+		<Action sr="act166" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -14668,7 +14769,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act156" ve="7">
+		<Action sr="act167" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -14678,7 +14779,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act157" ve="7">
+		<Action sr="act168" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -14695,15 +14796,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act158" ve="7">
+		<Action sr="act169" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act159" ve="7">
+		<Action sr="act170" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act160" ve="7">
+		<Action sr="act171" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -14714,7 +14815,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act161" ve="7">
+		<Action sr="act172" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -14724,7 +14825,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act162" ve="7">
+		<Action sr="act173" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -14741,15 +14842,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act163" ve="7">
+		<Action sr="act174" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act164" ve="7">
+		<Action sr="act175" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act165" ve="7">
+		<Action sr="act176" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -14760,7 +14861,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act166" ve="7">
+		<Action sr="act177" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -14770,7 +14871,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act167" ve="7">
+		<Action sr="act178" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -14787,15 +14888,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act168" ve="7">
+		<Action sr="act179" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act169" ve="7">
+		<Action sr="act180" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act170" ve="7">
+		<Action sr="act181" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -14806,7 +14907,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act171" ve="7">
+		<Action sr="act182" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -14816,7 +14917,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act172" ve="7">
+		<Action sr="act183" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -14833,15 +14934,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act173" ve="7">
+		<Action sr="act184" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act174" ve="7">
+		<Action sr="act185" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act175" ve="7">
+		<Action sr="act186" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -14852,7 +14953,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act176" ve="7">
+		<Action sr="act187" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -14862,7 +14963,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act177" ve="7">
+		<Action sr="act188" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -14879,15 +14980,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act178" ve="7">
+		<Action sr="act189" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act179" ve="7">
+		<Action sr="act190" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act180" ve="7">
+		<Action sr="act191" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -14898,7 +14999,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act181" ve="7">
+		<Action sr="act192" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -14908,7 +15009,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act182" ve="7">
+		<Action sr="act193" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -14925,15 +15026,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act183" ve="7">
+		<Action sr="act194" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act184" ve="7">
+		<Action sr="act195" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act185" ve="7">
+		<Action sr="act196" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -14944,7 +15045,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act186" ve="7">
+		<Action sr="act197" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -14954,7 +15055,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act187" ve="7">
+		<Action sr="act198" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -14971,15 +15072,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act188" ve="7">
+		<Action sr="act199" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act189" ve="7">
+		<Action sr="act200" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act190" ve="7">
+		<Action sr="act201" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -14990,7 +15091,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act191" ve="7">
+		<Action sr="act202" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -15000,7 +15101,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act192" ve="7">
+		<Action sr="act203" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -15017,15 +15118,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act193" ve="7">
+		<Action sr="act204" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act194" ve="7">
+		<Action sr="act205" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act195" ve="7">
+		<Action sr="act206" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -15036,7 +15137,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act196" ve="7">
+		<Action sr="act207" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -15046,7 +15147,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act197" ve="7">
+		<Action sr="act208" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -15063,15 +15164,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act198" ve="7">
+		<Action sr="act209" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act199" ve="7">
+		<Action sr="act210" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act200" ve="7">
+		<Action sr="act211" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -15082,7 +15183,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act201" ve="7">
+		<Action sr="act212" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -15092,7 +15193,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act202" ve="7">
+		<Action sr="act213" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -15109,15 +15210,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act203" ve="7">
+		<Action sr="act214" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act204" ve="7">
+		<Action sr="act215" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act205" ve="7">
+		<Action sr="act216" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -15128,7 +15229,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act206" ve="7">
+		<Action sr="act217" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -15138,7 +15239,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act207" ve="7">
+		<Action sr="act218" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -15155,15 +15256,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act208" ve="7">
+		<Action sr="act219" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act209" ve="7">
+		<Action sr="act220" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act210" ve="7">
+		<Action sr="act221" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -15174,7 +15275,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act211" ve="7">
+		<Action sr="act222" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -15184,7 +15285,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act212" ve="7">
+		<Action sr="act223" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -15201,15 +15302,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act213" ve="7">
+		<Action sr="act224" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act214" ve="7">
+		<Action sr="act225" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act215" ve="7">
+		<Action sr="act226" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -15220,7 +15321,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act216" ve="7">
+		<Action sr="act227" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -15230,7 +15331,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act217" ve="7">
+		<Action sr="act228" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -15247,15 +15348,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act218" ve="7">
+		<Action sr="act229" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act219" ve="7">
+		<Action sr="act230" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act220" ve="7">
+		<Action sr="act231" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -15266,7 +15367,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act221" ve="7">
+		<Action sr="act232" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -15276,7 +15377,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act222" ve="7">
+		<Action sr="act233" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -15293,15 +15394,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act223" ve="7">
+		<Action sr="act234" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act224" ve="7">
+		<Action sr="act235" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act225" ve="7">
+		<Action sr="act236" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -15312,7 +15413,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act226" ve="7">
+		<Action sr="act237" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -15322,7 +15423,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act227" ve="7">
+		<Action sr="act238" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -15339,15 +15440,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act228" ve="7">
+		<Action sr="act239" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act229" ve="7">
+		<Action sr="act240" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act230" ve="7">
+		<Action sr="act241" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -15358,7 +15459,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act231" ve="7">
+		<Action sr="act242" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -15368,7 +15469,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act232" ve="7">
+		<Action sr="act243" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -15385,15 +15486,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act233" ve="7">
+		<Action sr="act244" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act234" ve="7">
+		<Action sr="act245" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act235" ve="7">
+		<Action sr="act246" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -15404,7 +15505,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act236" ve="7">
+		<Action sr="act247" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -15414,7 +15515,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act237" ve="7">
+		<Action sr="act248" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -15431,15 +15532,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act238" ve="7">
+		<Action sr="act249" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act239" ve="7">
+		<Action sr="act250" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act240" ve="7">
+		<Action sr="act251" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -15450,7 +15551,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act241" ve="7">
+		<Action sr="act252" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -15460,7 +15561,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act242" ve="7">
+		<Action sr="act253" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -15477,15 +15578,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act243" ve="7">
+		<Action sr="act254" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act244" ve="7">
+		<Action sr="act255" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act245" ve="7">
+		<Action sr="act256" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -15496,7 +15597,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act246" ve="7">
+		<Action sr="act257" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -15506,7 +15607,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act247" ve="7">
+		<Action sr="act258" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -15523,15 +15624,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act248" ve="7">
+		<Action sr="act259" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act249" ve="7">
+		<Action sr="act260" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act250" ve="7">
+		<Action sr="act261" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -15542,7 +15643,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act251" ve="7">
+		<Action sr="act262" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -15552,7 +15653,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act252" ve="7">
+		<Action sr="act263" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -15569,15 +15670,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act253" ve="7">
+		<Action sr="act264" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act254" ve="7">
+		<Action sr="act265" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act255" ve="7">
+		<Action sr="act266" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -15588,7 +15689,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act256" ve="7">
+		<Action sr="act267" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -15598,7 +15699,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act257" ve="7">
+		<Action sr="act268" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -15615,15 +15716,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act258" ve="7">
+		<Action sr="act269" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act259" ve="7">
+		<Action sr="act270" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act260" ve="7">
+		<Action sr="act271" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -15634,7 +15735,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act261" ve="7">
+		<Action sr="act272" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -15644,7 +15745,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act262" ve="7">
+		<Action sr="act273" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -15661,15 +15762,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act263" ve="7">
+		<Action sr="act274" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act264" ve="7">
+		<Action sr="act275" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act265" ve="7">
+		<Action sr="act276" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -15680,7 +15781,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act266" ve="7">
+		<Action sr="act277" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -15690,7 +15791,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act267" ve="7">
+		<Action sr="act278" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -15707,15 +15808,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act268" ve="7">
+		<Action sr="act279" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act269" ve="7">
+		<Action sr="act280" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act270" ve="7">
+		<Action sr="act281" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -15726,7 +15827,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act271" ve="7">
+		<Action sr="act282" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -15736,7 +15837,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act272" ve="7">
+		<Action sr="act283" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -15753,15 +15854,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act273" ve="7">
+		<Action sr="act284" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act274" ve="7">
+		<Action sr="act285" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act275" ve="7">
+		<Action sr="act286" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -15772,7 +15873,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act276" ve="7">
+		<Action sr="act287" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -15782,7 +15883,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act277" ve="7">
+		<Action sr="act288" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -15799,15 +15900,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act278" ve="7">
+		<Action sr="act289" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act279" ve="7">
+		<Action sr="act290" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act280" ve="7">
+		<Action sr="act291" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -15818,7 +15919,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act281" ve="7">
+		<Action sr="act292" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -15828,7 +15929,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act282" ve="7">
+		<Action sr="act293" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -15845,15 +15946,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act283" ve="7">
+		<Action sr="act294" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act284" ve="7">
+		<Action sr="act295" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act285" ve="7">
+		<Action sr="act296" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -15864,7 +15965,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act286" ve="7">
+		<Action sr="act297" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -15874,7 +15975,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act287" ve="7">
+		<Action sr="act298" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -15891,15 +15992,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act288" ve="7">
+		<Action sr="act299" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act289" ve="7">
+		<Action sr="act300" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act290" ve="7">
+		<Action sr="act301" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -15910,7 +16011,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act291" ve="7">
+		<Action sr="act302" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -15920,7 +16021,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act292" ve="7">
+		<Action sr="act303" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -15937,15 +16038,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act293" ve="7">
+		<Action sr="act304" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act294" ve="7">
+		<Action sr="act305" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act295" ve="7">
+		<Action sr="act306" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -15956,7 +16057,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act296" ve="7">
+		<Action sr="act307" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -15966,7 +16067,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act297" ve="7">
+		<Action sr="act308" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -15983,15 +16084,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act298" ve="7">
+		<Action sr="act309" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act299" ve="7">
+		<Action sr="act310" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act300" ve="7">
+		<Action sr="act311" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -16002,7 +16103,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act301" ve="7">
+		<Action sr="act312" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -16012,7 +16113,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act302" ve="7">
+		<Action sr="act313" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -16029,15 +16130,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act303" ve="7">
+		<Action sr="act314" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act304" ve="7">
+		<Action sr="act315" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act305" ve="7">
+		<Action sr="act316" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -16048,7 +16149,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act306" ve="7">
+		<Action sr="act317" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -16058,7 +16159,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act307" ve="7">
+		<Action sr="act318" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -16075,15 +16176,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act308" ve="7">
+		<Action sr="act319" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act309" ve="7">
+		<Action sr="act320" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act310" ve="7">
+		<Action sr="act321" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -16094,7 +16195,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act311" ve="7">
+		<Action sr="act322" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -16104,7 +16205,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act312" ve="7">
+		<Action sr="act323" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -16121,15 +16222,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act313" ve="7">
+		<Action sr="act324" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act314" ve="7">
+		<Action sr="act325" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act315" ve="7">
+		<Action sr="act326" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -16140,7 +16241,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act316" ve="7">
+		<Action sr="act327" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -16150,7 +16251,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act317" ve="7">
+		<Action sr="act328" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -16167,15 +16268,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act318" ve="7">
+		<Action sr="act329" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act319" ve="7">
+		<Action sr="act330" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act320" ve="7">
+		<Action sr="act331" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -16186,7 +16287,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act321" ve="7">
+		<Action sr="act332" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -16196,7 +16297,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act322" ve="7">
+		<Action sr="act333" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -16213,15 +16314,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act323" ve="7">
+		<Action sr="act334" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act324" ve="7">
+		<Action sr="act335" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act325" ve="7">
+		<Action sr="act336" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -16232,7 +16333,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act326" ve="7">
+		<Action sr="act337" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -16242,7 +16343,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act327" ve="7">
+		<Action sr="act338" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -16259,15 +16360,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act328" ve="7">
+		<Action sr="act339" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act329" ve="7">
+		<Action sr="act340" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act330" ve="7">
+		<Action sr="act341" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -16278,7 +16379,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act331" ve="7">
+		<Action sr="act342" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -16288,7 +16389,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act332" ve="7">
+		<Action sr="act343" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -16305,15 +16406,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act333" ve="7">
+		<Action sr="act344" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act334" ve="7">
+		<Action sr="act345" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act335" ve="7">
+		<Action sr="act346" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -16324,7 +16425,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act336" ve="7">
+		<Action sr="act347" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -16334,7 +16435,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act337" ve="7">
+		<Action sr="act348" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -16351,15 +16452,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act338" ve="7">
+		<Action sr="act349" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act339" ve="7">
+		<Action sr="act350" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act340" ve="7">
+		<Action sr="act351" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -16370,7 +16471,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act341" ve="7">
+		<Action sr="act352" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -16380,7 +16481,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act342" ve="7">
+		<Action sr="act353" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -16397,15 +16498,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act343" ve="7">
+		<Action sr="act354" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act344" ve="7">
+		<Action sr="act355" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act345" ve="7">
+		<Action sr="act356" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -16416,7 +16517,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act346" ve="7">
+		<Action sr="act357" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -16426,7 +16527,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act347" ve="7">
+		<Action sr="act358" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -16443,15 +16544,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act348" ve="7">
+		<Action sr="act359" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act349" ve="7">
+		<Action sr="act360" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act350" ve="7">
+		<Action sr="act361" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -16462,7 +16563,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act351" ve="7">
+		<Action sr="act362" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -16472,7 +16573,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act352" ve="7">
+		<Action sr="act363" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -16489,15 +16590,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act353" ve="7">
+		<Action sr="act364" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act354" ve="7">
+		<Action sr="act365" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act355" ve="7">
+		<Action sr="act366" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -16508,7 +16609,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act356" ve="7">
+		<Action sr="act367" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -16518,7 +16619,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act357" ve="7">
+		<Action sr="act368" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -16535,15 +16636,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act358" ve="7">
+		<Action sr="act369" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act359" ve="7">
+		<Action sr="act370" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act360" ve="7">
+		<Action sr="act371" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -16554,7 +16655,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act361" ve="7">
+		<Action sr="act372" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -16564,7 +16665,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act362" ve="7">
+		<Action sr="act373" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -16581,15 +16682,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act363" ve="7">
+		<Action sr="act374" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act364" ve="7">
+		<Action sr="act375" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act365" ve="7">
+		<Action sr="act376" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -16600,7 +16701,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act366" ve="7">
+		<Action sr="act377" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -16610,7 +16711,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act367" ve="7">
+		<Action sr="act378" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -16627,15 +16728,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act368" ve="7">
+		<Action sr="act379" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act369" ve="7">
+		<Action sr="act380" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act370" ve="7">
+		<Action sr="act381" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -16646,7 +16747,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act371" ve="7">
+		<Action sr="act382" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -16656,7 +16757,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act372" ve="7">
+		<Action sr="act383" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -16673,15 +16774,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act373" ve="7">
+		<Action sr="act384" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act374" ve="7">
+		<Action sr="act385" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act375" ve="7">
+		<Action sr="act386" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -16692,7 +16793,7 @@ return "normalized";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act376" ve="7">
+		<Action sr="act387" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceMatched</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -16702,7 +16803,7 @@ return "normalized";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act377" ve="7">
+		<Action sr="act388" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_Worker</Str>
@@ -16719,15 +16820,15 @@ return "normalized";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act378" ve="7">
+		<Action sr="act389" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act379" ve="7">
+		<Action sr="act390" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act380" ve="7">
+		<Action sr="act391" ve="7">
 			<code>474</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">tasker.showToast("Use volume 0–15, balance minus 8–7, tinnitus 0–15, program 1–6, or battery check"); return "unrecognized";</Str>
@@ -28756,6 +28857,8 @@ import com.joaomgcd.taskerm.action.java.JavaCodeException;
 input = tasker.getVariable("sig3_command");
 if (input == null || input.trim().length() == 0) throw new JavaCodeException("No command text supplied");
 input = input.trim().replaceAll("(?i)^sig(?:3)?\\s+", "");
+// A short spoken name for tinnitus; do not rewrite program names.
+input = input.replaceAll("(?i)^((?:(?:set|change|current|maximum|mute)\\s+|what is\\s+(?:the\\s+)?(?:current\\s+)?)?)tin(?=\\s|$)", "$1tinnitus");
 alias = input.toLowerCase().replaceAll("^(?:mode|program)\\s+", "");
 key = null;
 if (alias.equals("conversation") || alias.equals("normal")) key = "SIG3_ModeConversationProgram";
@@ -28988,6 +29091,79 @@ List of possible variations of what was heard&lt;/_array_net.dinglisch.android.t
 			<Int sr="arg6" val="1" />
 		</Action>
 		<Action sr="act5" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%sig3_voice_pref_mode</Str>
+			<Str sr="arg1" ve="3">load</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act6" ve="7">
+			<code>474</code>
+			<se>true</se>
+			<Str sr="arg0" ve="3">/* Load or atomically save independent speech preferences. */
+voicePreferenceValue(name) {
+    value = tasker.getVariable(name);
+    return value == null || value.startsWith("%") ? "" : value;
+}
+voicePreferenceValid(value) { return "0".equals(value) || "1".equals(value); }
+prefs = context.getSharedPreferences("heysig3-voice", 0);
+mode = voicePreferenceValue("sig3_voice_pref_mode");
+if ("save".equals(mode)) {
+    responses = voicePreferenceValue("sig3_voice_results_choice");
+    prompts = voicePreferenceValue("sig3_voice_prompts_choice");
+    if (!voicePreferenceValid(responses) || !voicePreferenceValid(prompts))
+        throw new com.joaomgcd.taskerm.action.java.JavaCodeException("Invalid voice preference selection");
+    if (!prefs.edit().putString("responses", responses).putString("prompts", prompts).commit())
+        throw new com.joaomgcd.taskerm.action.java.JavaCodeException("Voice preferences could not be saved");
+} else if ("load".equals(mode)) {
+    responses = voicePreferenceValue("SIG3_VoiceResponses");
+    if (!voicePreferenceValid(responses)) responses = prefs.getString("responses", "1");
+    if (!voicePreferenceValid(responses)) responses = "1";
+    prompts = voicePreferenceValue("SIG3_VoicePrompts");
+    if (!voicePreferenceValid(prompts)) prompts = prefs.getString("prompts", responses);
+    if (!voicePreferenceValid(prompts)) prompts = responses;
+} else throw new com.joaomgcd.taskerm.action.java.JavaCodeException("Unknown voice preference operation");
+tasker.setVariable("SIG3_VoiceResponses", responses);
+tasker.setVariable("SIG3_VoicePrompts", prompts);
+tasker.setVariable("SIG3_VoiceSettingsStatus", "Spoken results " + ("1".equals(responses) ? "on" : "off") + "; voice prompts " + ("1".equals(prompts) ? "on" : "off"));
+return "voice preferences " + mode;
+</Str>
+			<Str sr="arg1" ve="3" />
+			<Int sr="arg2" val="1" />
+		</Action>
+		<Action sr="act7" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%err</lhs>
+					<op>12</op>
+					<rhs />
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act8" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_VoiceSettingsStatus</Str>
+			<Str sr="arg1" ve="3">Voice preferences unavailable: %errmsg</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act9" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
+		</Action>
+		<Action sr="act10" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act11" ve="7">
 			<code>474</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">/* Prepare the readiness cue before opening microphone capture. */
@@ -29013,14 +29189,27 @@ tasker.setVariable("SIG3_VoiceCaptureAllowed", "1");
 tasker.setVariable("SIG3_VoiceStatus", "Opening command prompt");
 tasker.showToast("Sig here");
 am = context.getSystemService("audio"); nm = context.getSystemService("notification");
-if (!"0".equals(readyValue("SIG3_VoiceResponses")) &amp;&amp; nm.getCurrentInterruptionFilter() == NotificationManager.INTERRUPTION_FILTER_ALL &amp;&amp; am.getStreamVolume(AudioManager.STREAM_MUSIC) &gt; 0 &amp;&amp; am.getMode() == AudioManager.MODE_NORMAL)
+prompts = readyValue("SIG3_VoicePrompts");
+if (prompts.length() == 0) prompts = readyValue("SIG3_VoiceResponses");
+// AutoVoice Media suppression can release mute after its stop action returns.
+// Wait only for an enabled wake handoff; never change the user's volume.
+if (!"0".equals(prompts) &amp;&amp; "1".equals(readyValue("SIG3_WakeEnabled"))
+    &amp;&amp; nm.getCurrentInterruptionFilter() == NotificationManager.INTERRUPTION_FILTER_ALL
+    &amp;&amp; am.getMode() == AudioManager.MODE_NORMAL) {
+    for (settle = 0; settle &lt; 20; settle++) {
+        if (!am.isStreamMute(AudioManager.STREAM_MUSIC)
+            &amp;&amp; am.getStreamVolume(AudioManager.STREAM_MUSIC) &gt; 0) break;
+        Thread.sleep(100);
+    }
+}
+if (!"0".equals(prompts) &amp;&amp; nm.getCurrentInterruptionFilter() == NotificationManager.INTERRUPTION_FILTER_ALL &amp;&amp; !am.isStreamMute(AudioManager.STREAM_MUSIC) &amp;&amp; am.getStreamVolume(AudioManager.STREAM_MUSIC) &gt; 0 &amp;&amp; am.getMode() == AudioManager.MODE_NORMAL)
     tasker.setVariable("sig3_ready_speech", "Sig here");
 return "cue prepared";
 </Str>
 			<Str sr="arg1" ve="3" />
 			<Int sr="arg2" val="1" />
 		</Action>
-		<Action sr="act6" ve="7">
+		<Action sr="act12" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -29031,15 +29220,15 @@ return "cue prepared";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act7" ve="7">
+		<Action sr="act13" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act8" ve="7">
+		<Action sr="act14" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act9" ve="7">
+		<Action sr="act15" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -29050,15 +29239,15 @@ return "cue prepared";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act10" ve="7">
+		<Action sr="act16" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act11" ve="7">
+		<Action sr="act17" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act12" ve="7">
+		<Action sr="act18" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -29069,7 +29258,7 @@ return "cue prepared";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act13" ve="7">
+		<Action sr="act19" ve="7">
 			<code>559</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">%sig3_ready_speech</Str>
@@ -29081,7 +29270,7 @@ return "cue prepared";
 			<Int sr="arg6" val="0" />
 			<Int sr="arg7" val="0" />
 		</Action>
-		<Action sr="act14" ve="7">
+		<Action sr="act20" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -29092,7 +29281,7 @@ return "cue prepared";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act15" ve="7">
+		<Action sr="act21" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceStatus</Str>
 			<Str sr="arg1" ve="3">Readiness cue could not be spoken</Str>
@@ -29102,18 +29291,18 @@ return "cue prepared";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act16" ve="7">
+		<Action sr="act22" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act17" ve="7">
+		<Action sr="act23" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act18" ve="7">
+		<Action sr="act24" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act19" ve="7">
+		<Action sr="act25" ve="7">
 			<code>30</code>
 			<Int sr="arg0" val="300" />
 			<Int sr="arg1" val="0" />
@@ -29121,7 +29310,7 @@ return "cue prepared";
 			<Int sr="arg3" val="0" />
 			<Int sr="arg4" val="0" />
 		</Action>
-		<Action sr="act20" ve="7">
+		<Action sr="act26" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceReady</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -29131,7 +29320,7 @@ return "cue prepared";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act21" ve="7">
+		<Action sr="act27" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceStatus</Str>
 			<Str sr="arg1" ve="3">Listening for command</Str>
@@ -29141,7 +29330,7 @@ return "cue prepared";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act22" ve="7">
+		<Action sr="act28" ve="7">
 			<code>903</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">Say a HeySig3 command</Str>
@@ -29161,7 +29350,7 @@ List of possible variations of what was heard&lt;/_array_net.dinglisch.android.t
 				</Vals>
 			</Bundle>
 		</Action>
-		<Action sr="act23" ve="7">
+		<Action sr="act29" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceReady</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -29171,7 +29360,7 @@ List of possible variations of what was heard&lt;/_array_net.dinglisch.android.t
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act24" ve="7">
+		<Action sr="act30" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceStatus</Str>
 			<Str sr="arg1" ve="3">Recognition finished</Str>
@@ -29181,7 +29370,7 @@ List of possible variations of what was heard&lt;/_array_net.dinglisch.android.t
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act25" ve="7">
+		<Action sr="act31" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -29192,7 +29381,7 @@ List of possible variations of what was heard&lt;/_array_net.dinglisch.android.t
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act26" ve="7">
+		<Action sr="act32" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -29203,7 +29392,7 @@ List of possible variations of what was heard&lt;/_array_net.dinglisch.android.t
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act27" ve="7">
+		<Action sr="act33" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_CommandOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -29213,7 +29402,7 @@ List of possible variations of what was heard&lt;/_array_net.dinglisch.android.t
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act28" ve="7">
+		<Action sr="act34" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceReply</Str>
 			<Str sr="arg1" ve="3" />
@@ -29223,7 +29412,7 @@ List of possible variations of what was heard&lt;/_array_net.dinglisch.android.t
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act29" ve="7">
+		<Action sr="act35" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3" />
@@ -29233,7 +29422,7 @@ List of possible variations of what was heard&lt;/_array_net.dinglisch.android.t
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act30" ve="7">
+		<Action sr="act36" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Result</Str>
 			<Str sr="arg1" ve="3">Voice capture ended without speech; no command sent</Str>
@@ -29243,18 +29432,18 @@ List of possible variations of what was heard&lt;/_array_net.dinglisch.android.t
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act31" ve="7">
+		<Action sr="act37" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act32" ve="7">
+		<Action sr="act38" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act33" ve="7">
+		<Action sr="act39" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act34" ve="7">
+		<Action sr="act40" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -29265,7 +29454,7 @@ List of possible variations of what was heard&lt;/_array_net.dinglisch.android.t
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act35" ve="7">
+		<Action sr="act41" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig3_heard</Str>
 			<Str sr="arg1" ve="3">%VOICE</Str>
@@ -29275,14 +29464,14 @@ List of possible variations of what was heard&lt;/_array_net.dinglisch.android.t
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act36" ve="7">
+		<Action sr="act42" ve="7">
 			<code>474</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">heard = tasker.getVariable("sig3_heard"); if (heard == null || heard.length() == 0 || heard.startsWith("%")) heard = tasker.getVariable("gv_heard1"); if (heard == null || heard.trim().length() == 0 || heard.startsWith("%")) throw new com.joaomgcd.taskerm.action.java.JavaCodeException("Recognition cancelled or empty"); tasker.setVariable("sig3_heard", heard.trim()); return "heard";</Str>
 			<Str sr="arg1" ve="3" />
 			<Int sr="arg2" val="1" />
 		</Action>
-		<Action sr="act37" ve="7">
+		<Action sr="act43" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -29293,7 +29482,7 @@ List of possible variations of what was heard&lt;/_array_net.dinglisch.android.t
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act38" ve="7">
+		<Action sr="act44" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceHeard</Str>
 			<Str sr="arg1" ve="3">%sig3_heard</Str>
@@ -29303,7 +29492,7 @@ List of possible variations of what was heard&lt;/_array_net.dinglisch.android.t
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act39" ve="7">
+		<Action sr="act45" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig3_reply_before</Str>
 			<Str sr="arg1" ve="3">%SIG3_OperationId</Str>
@@ -29313,7 +29502,7 @@ List of possible variations of what was heard&lt;/_array_net.dinglisch.android.t
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act40" ve="7">
+		<Action sr="act46" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_VoiceRouter</Str>
@@ -29330,13 +29519,32 @@ List of possible variations of what was heard&lt;/_array_net.dinglisch.android.t
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act41" ve="7">
+		<Action sr="act47" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act42" ve="7">
+		<Action sr="act48" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act43" ve="7">
+		<Action sr="act49" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%SIG3_VoiceCancelled</lhs>
+					<op>2</op>
+					<rhs>1</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act50" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
+		</Action>
+		<Action sr="act51" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act52" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -29347,155 +29555,70 @@ List of possible variations of what was heard&lt;/_array_net.dinglisch.android.t
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act44" ve="7">
+		<Action sr="act53" ve="7">
 			<code>547</code>
-			<Str sr="arg0" ve="3">%sig3_reply_kind</Str>
-			<Str sr="arg1" ve="3">result</Str>
+			<Str sr="arg0" ve="3">%sig3_voice_pref_mode</Str>
+			<Str sr="arg1" ve="3">load</Str>
 			<Int sr="arg2" val="0" />
 			<Int sr="arg3" val="0" />
 			<Int sr="arg4" val="0" />
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act45" ve="7">
+		<Action sr="act54" ve="7">
 			<code>474</code>
 			<se>true</se>
-			<Str sr="arg0" ve="3">/* Speak only a fresh completed voice result, using actual app readback. */
-voiceValue(name) {
+			<Str sr="arg0" ve="3">/* Load or atomically save independent speech preferences. */
+voicePreferenceValue(name) {
     value = tasker.getVariable(name);
     return value == null || value.startsWith("%") ? "" : value;
 }
-tasker.setVariable("sig3_speech", "");
-tasker.setVariable("SIG3_VoiceReply", "");
-if ("0".equals(voiceValue("SIG3_VoiceResponses"))) return "disabled";
-running = voiceValue("TRUN");
-if (running.matches("(?s).*(?:^|,)SIG3_Worker(?:,|$).*")) return "worker-busy";
-if ("retry".equals(voiceValue("sig3_reply_kind"))) {
-    reply = "Command not recognized. Tap Try again to speak again, or Cancel.";
-} else {
-    operation = voiceValue("SIG3_OperationId");
-    if (operation.length() == 0 || operation.equals(voiceValue("sig3_reply_before"))) {
-        reply = "Command was not accepted. Please try again when the current command finishes.";
-    } else if (!"1".equals(voiceValue("SIG3_CommandOK"))) {
-        error = voiceValue("SIG3_Error");
-        reply = error.length() == 0 ? "Command did not complete. Check the phone screen." : "Command stopped. " + error;
-        if (error.startsWith("Turn off Do Not Disturb")) reply = "Turn off Do Not Disturb.";
-        if (error.startsWith("Raise phone ")) {
-            end = error.indexOf(" volume");
-            if (end &gt; 12) {
-                stream = error.substring(12, end);
-                reply = "Raise phone " + stream + " volume" + (error.contains("(50% minimum)") ? " to halfway." : ".");
-            }
-        }
-    } else if (!"complete".equals(voiceValue("SIG3_MoveStage"))) {
-        reply = "Command result could not be verified. Check the phone screen.";
-    } else {
-        family = voiceValue("SIG3_Family");
-        observed = voiceValue("SIG3_Observed");
-        program = voiceValue("SIG3_Program");
-        reply = "Command completed. Check the phone screen.";
-        if ("Program".equals(family) &amp;&amp; program.length() &gt; 0) reply = "Program is " + program + ".";
-        if ("Volume".equals(family) || "Balance".equals(family) || "Tinnitus".equals(family)) {
-            if (observed.matches("-?[0-9]+")) {
-                spoken = observed.startsWith("-") ? "minus " + observed.substring(1) : observed;
-                reply = family + " is " + spoken + ".";
-            }
-        }
-        if ("Battery".equals(family)) reply = "Battery checks requested. Listen for the hearing aid indications.";
-        if (("Noise".equals(family) || "Setup".equals(family) || "Sleep".equals(family) || "Settings".equals(family)) &amp;&amp; observed.length() &gt; 0)
-            reply = observed + ".";
-        if (voiceValue("SIG3_SettingsAutoError").length() &gt; 0) reply += " Settings were not saved. " + voiceValue("SIG3_SettingsAutoError");
-    }
-}
-tasker.setVariable("SIG3_VoiceReply", reply);
-tasker.setVariable("sig3_speech", reply);
-return "ready";
+voicePreferenceValid(value) { return "0".equals(value) || "1".equals(value); }
+prefs = context.getSharedPreferences("heysig3-voice", 0);
+mode = voicePreferenceValue("sig3_voice_pref_mode");
+if ("save".equals(mode)) {
+    responses = voicePreferenceValue("sig3_voice_results_choice");
+    prompts = voicePreferenceValue("sig3_voice_prompts_choice");
+    if (!voicePreferenceValid(responses) || !voicePreferenceValid(prompts))
+        throw new com.joaomgcd.taskerm.action.java.JavaCodeException("Invalid voice preference selection");
+    if (!prefs.edit().putString("responses", responses).putString("prompts", prompts).commit())
+        throw new com.joaomgcd.taskerm.action.java.JavaCodeException("Voice preferences could not be saved");
+} else if ("load".equals(mode)) {
+    responses = voicePreferenceValue("SIG3_VoiceResponses");
+    if (!voicePreferenceValid(responses)) responses = prefs.getString("responses", "1");
+    if (!voicePreferenceValid(responses)) responses = "1";
+    prompts = voicePreferenceValue("SIG3_VoicePrompts");
+    if (!voicePreferenceValid(prompts)) prompts = prefs.getString("prompts", responses);
+    if (!voicePreferenceValid(prompts)) prompts = responses;
+} else throw new com.joaomgcd.taskerm.action.java.JavaCodeException("Unknown voice preference operation");
+tasker.setVariable("SIG3_VoiceResponses", responses);
+tasker.setVariable("SIG3_VoicePrompts", prompts);
+tasker.setVariable("SIG3_VoiceSettingsStatus", "Spoken results " + ("1".equals(responses) ? "on" : "off") + "; voice prompts " + ("1".equals(prompts) ? "on" : "off"));
+return "voice preferences " + mode;
 </Str>
 			<Str sr="arg1" ve="3" />
 			<Int sr="arg2" val="1" />
 		</Action>
-		<Action sr="act46" ve="7">
+		<Action sr="act55" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
 				<Condition sr="c0" ve="3">
 					<lhs>%err</lhs>
-					<op>13</op>
-					<rhs />
-				</Condition>
-			</ConditionList>
-		</Action>
-		<Action sr="act47" ve="7">
-			<code>37</code>
-			<coll>false</coll>
-			<ConditionList sr="if">
-				<Condition sr="c0" ve="3">
-					<lhs>%sig3_speech</lhs>
 					<op>12</op>
 					<rhs />
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act48" ve="7">
-			<code>30</code>
-			<Int sr="arg0" val="2000" />
-			<Int sr="arg1" val="0" />
+		<Action sr="act56" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_VoiceSettingsStatus</Str>
+			<Str sr="arg1" ve="3">Voice preferences unavailable: %errmsg</Str>
 			<Int sr="arg2" val="0" />
 			<Int sr="arg3" val="0" />
 			<Int sr="arg4" val="0" />
-		</Action>
-		<Action sr="act49" ve="7">
-			<code>37</code>
-			<coll>false</coll>
-			<ConditionList sr="if">
-				<Condition sr="c0" ve="3">
-					<lhs>%TRUN</lhs>
-					<op>5</op>
-					<rhs>(^|,)SIG3_Worker(,|$)</rhs>
-				</Condition>
-			</ConditionList>
-		</Action>
-		<Action sr="act50" ve="7">
-			<code>559</code>
-			<se>true</se>
-			<Str sr="arg0" ve="3">%sig3_speech</Str>
-			<Str sr="arg1" ve="3">default:default</Str>
-			<Int sr="arg2" val="3" />
-			<Int sr="arg3" val="5" />
-			<Int sr="arg4" val="5" />
-			<Int sr="arg5" val="1" />
-			<Int sr="arg6" val="0" />
-			<Int sr="arg7" val="0" />
-		</Action>
-		<Action sr="act51" ve="7">
-			<code>37</code>
-			<coll>false</coll>
-			<ConditionList sr="if">
-				<Condition sr="c0" ve="3">
-					<lhs>%err</lhs>
-					<op>12</op>
-					<rhs />
-				</Condition>
-			</ConditionList>
-		</Action>
-		<Action sr="act52" ve="7">
-			<code>474</code>
-			<se>true</se>
-			<Str sr="arg0" ve="3">tasker.showToast("Voice response unavailable. Read the result on the phone screen."); return "speech-failed";</Str>
-			<Str sr="arg1" ve="3" />
-			<Int sr="arg2" val="1" />
-		</Action>
-		<Action sr="act53" ve="7">
-			<code>38</code>
-		</Action>
-		<Action sr="act54" ve="7">
-			<code>38</code>
-		</Action>
-		<Action sr="act55" ve="7">
-			<code>38</code>
-		</Action>
-		<Action sr="act56" ve="7">
-			<code>38</code>
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
 		</Action>
 		<Action sr="act57" ve="7">
 			<code>137</code>
@@ -29507,8 +29630,8 @@ return "ready";
 		</Action>
 		<Action sr="act59" ve="7">
 			<code>547</code>
-			<Str sr="arg0" ve="3">%SIG3_CommandOK</Str>
-			<Str sr="arg1" ve="3">0</Str>
+			<Str sr="arg0" ve="3">%sig3_reply_kind</Str>
+			<Str sr="arg1" ve="3">result</Str>
 			<Int sr="arg2" val="0" />
 			<Int sr="arg3" val="0" />
 			<Int sr="arg4" val="0" />
@@ -29516,36 +29639,6 @@ return "ready";
 			<Int sr="arg6" val="1" />
 		</Action>
 		<Action sr="act60" ve="7">
-			<code>547</code>
-			<Str sr="arg0" ve="3">%SIG3_Error</Str>
-			<Str sr="arg1" ve="3">Voice command not recognized</Str>
-			<Int sr="arg2" val="0" />
-			<Int sr="arg3" val="0" />
-			<Int sr="arg4" val="0" />
-			<Int sr="arg5" val="3" />
-			<Int sr="arg6" val="1" />
-		</Action>
-		<Action sr="act61" ve="7">
-			<code>547</code>
-			<Str sr="arg0" ve="3">%SIG3_Result</Str>
-			<Str sr="arg1" ve="3">Voice command not recognized; no command sent</Str>
-			<Int sr="arg2" val="0" />
-			<Int sr="arg3" val="0" />
-			<Int sr="arg4" val="0" />
-			<Int sr="arg5" val="3" />
-			<Int sr="arg6" val="1" />
-		</Action>
-		<Action sr="act62" ve="7">
-			<code>547</code>
-			<Str sr="arg0" ve="3">%sig3_reply_kind</Str>
-			<Str sr="arg1" ve="3">retry</Str>
-			<Int sr="arg2" val="0" />
-			<Int sr="arg3" val="0" />
-			<Int sr="arg4" val="0" />
-			<Int sr="arg5" val="3" />
-			<Int sr="arg6" val="1" />
-		</Action>
-		<Action sr="act63" ve="7">
 			<code>474</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">/* Speak only a fresh completed voice result, using actual app readback. */
@@ -29555,7 +29648,10 @@ voiceValue(name) {
 }
 tasker.setVariable("sig3_speech", "");
 tasker.setVariable("SIG3_VoiceReply", "");
-if ("0".equals(voiceValue("SIG3_VoiceResponses"))) return "disabled";
+retry = "retry".equals(voiceValue("sig3_reply_kind"));
+preference = voiceValue(retry ? "SIG3_VoicePrompts" : "SIG3_VoiceResponses");
+if (retry &amp;&amp; preference.length() == 0) preference = voiceValue("SIG3_VoiceResponses");
+if ("0".equals(preference)) return "disabled";
 running = voiceValue("TRUN");
 if (running.matches("(?s).*(?:^|,)SIG3_Worker(?:,|$).*")) return "worker-busy";
 if ("retry".equals(voiceValue("sig3_reply_kind"))) {
@@ -29602,7 +29698,7 @@ return "ready";
 			<Str sr="arg1" ve="3" />
 			<Int sr="arg2" val="1" />
 		</Action>
-		<Action sr="act64" ve="7">
+		<Action sr="act61" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -29613,7 +29709,7 @@ return "ready";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act65" ve="7">
+		<Action sr="act62" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -29624,7 +29720,7 @@ return "ready";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act66" ve="7">
+		<Action sr="act63" ve="7">
 			<code>30</code>
 			<Int sr="arg0" val="2000" />
 			<Int sr="arg1" val="0" />
@@ -29632,7 +29728,7 @@ return "ready";
 			<Int sr="arg3" val="0" />
 			<Int sr="arg4" val="0" />
 		</Action>
-		<Action sr="act67" ve="7">
+		<Action sr="act64" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -29643,7 +29739,7 @@ return "ready";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act68" ve="7">
+		<Action sr="act65" ve="7">
 			<code>559</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">%sig3_speech</Str>
@@ -29655,7 +29751,7 @@ return "ready";
 			<Int sr="arg6" val="0" />
 			<Int sr="arg7" val="0" />
 		</Action>
-		<Action sr="act69" ve="7">
+		<Action sr="act66" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -29666,26 +29762,290 @@ return "ready";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act70" ve="7">
+		<Action sr="act67" ve="7">
 			<code>474</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">tasker.showToast("Voice response unavailable. Read the result on the phone screen."); return "speech-failed";</Str>
 			<Str sr="arg1" ve="3" />
 			<Int sr="arg2" val="1" />
 		</Action>
+		<Action sr="act68" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act69" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act70" ve="7">
+			<code>38</code>
+		</Action>
 		<Action sr="act71" ve="7">
 			<code>38</code>
 		</Action>
 		<Action sr="act72" ve="7">
-			<code>38</code>
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
 		</Action>
 		<Action sr="act73" ve="7">
 			<code>38</code>
 		</Action>
 		<Action sr="act74" ve="7">
-			<code>38</code>
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_CommandOK</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
 		</Action>
 		<Action sr="act75" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_Error</Str>
+			<Str sr="arg1" ve="3">Voice command not recognized</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act76" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_Result</Str>
+			<Str sr="arg1" ve="3">Voice command not recognized; no command sent</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act77" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%sig3_voice_pref_mode</Str>
+			<Str sr="arg1" ve="3">load</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act78" ve="7">
+			<code>474</code>
+			<se>true</se>
+			<Str sr="arg0" ve="3">/* Load or atomically save independent speech preferences. */
+voicePreferenceValue(name) {
+    value = tasker.getVariable(name);
+    return value == null || value.startsWith("%") ? "" : value;
+}
+voicePreferenceValid(value) { return "0".equals(value) || "1".equals(value); }
+prefs = context.getSharedPreferences("heysig3-voice", 0);
+mode = voicePreferenceValue("sig3_voice_pref_mode");
+if ("save".equals(mode)) {
+    responses = voicePreferenceValue("sig3_voice_results_choice");
+    prompts = voicePreferenceValue("sig3_voice_prompts_choice");
+    if (!voicePreferenceValid(responses) || !voicePreferenceValid(prompts))
+        throw new com.joaomgcd.taskerm.action.java.JavaCodeException("Invalid voice preference selection");
+    if (!prefs.edit().putString("responses", responses).putString("prompts", prompts).commit())
+        throw new com.joaomgcd.taskerm.action.java.JavaCodeException("Voice preferences could not be saved");
+} else if ("load".equals(mode)) {
+    responses = voicePreferenceValue("SIG3_VoiceResponses");
+    if (!voicePreferenceValid(responses)) responses = prefs.getString("responses", "1");
+    if (!voicePreferenceValid(responses)) responses = "1";
+    prompts = voicePreferenceValue("SIG3_VoicePrompts");
+    if (!voicePreferenceValid(prompts)) prompts = prefs.getString("prompts", responses);
+    if (!voicePreferenceValid(prompts)) prompts = responses;
+} else throw new com.joaomgcd.taskerm.action.java.JavaCodeException("Unknown voice preference operation");
+tasker.setVariable("SIG3_VoiceResponses", responses);
+tasker.setVariable("SIG3_VoicePrompts", prompts);
+tasker.setVariable("SIG3_VoiceSettingsStatus", "Spoken results " + ("1".equals(responses) ? "on" : "off") + "; voice prompts " + ("1".equals(prompts) ? "on" : "off"));
+return "voice preferences " + mode;
+</Str>
+			<Str sr="arg1" ve="3" />
+			<Int sr="arg2" val="1" />
+		</Action>
+		<Action sr="act79" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%err</lhs>
+					<op>12</op>
+					<rhs />
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act80" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_VoiceSettingsStatus</Str>
+			<Str sr="arg1" ve="3">Voice preferences unavailable: %errmsg</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act81" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
+		</Action>
+		<Action sr="act82" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act83" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%sig3_reply_kind</Str>
+			<Str sr="arg1" ve="3">retry</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act84" ve="7">
+			<code>474</code>
+			<se>true</se>
+			<Str sr="arg0" ve="3">/* Speak only a fresh completed voice result, using actual app readback. */
+voiceValue(name) {
+    value = tasker.getVariable(name);
+    return value == null || value.startsWith("%") ? "" : value;
+}
+tasker.setVariable("sig3_speech", "");
+tasker.setVariable("SIG3_VoiceReply", "");
+retry = "retry".equals(voiceValue("sig3_reply_kind"));
+preference = voiceValue(retry ? "SIG3_VoicePrompts" : "SIG3_VoiceResponses");
+if (retry &amp;&amp; preference.length() == 0) preference = voiceValue("SIG3_VoiceResponses");
+if ("0".equals(preference)) return "disabled";
+running = voiceValue("TRUN");
+if (running.matches("(?s).*(?:^|,)SIG3_Worker(?:,|$).*")) return "worker-busy";
+if ("retry".equals(voiceValue("sig3_reply_kind"))) {
+    reply = "Command not recognized. Tap Try again to speak again, or Cancel.";
+} else {
+    operation = voiceValue("SIG3_OperationId");
+    if (operation.length() == 0 || operation.equals(voiceValue("sig3_reply_before"))) {
+        reply = "Command was not accepted. Please try again when the current command finishes.";
+    } else if (!"1".equals(voiceValue("SIG3_CommandOK"))) {
+        error = voiceValue("SIG3_Error");
+        reply = error.length() == 0 ? "Command did not complete. Check the phone screen." : "Command stopped. " + error;
+        if (error.startsWith("Turn off Do Not Disturb")) reply = "Turn off Do Not Disturb.";
+        if (error.startsWith("Raise phone ")) {
+            end = error.indexOf(" volume");
+            if (end &gt; 12) {
+                stream = error.substring(12, end);
+                reply = "Raise phone " + stream + " volume" + (error.contains("(50% minimum)") ? " to halfway." : ".");
+            }
+        }
+    } else if (!"complete".equals(voiceValue("SIG3_MoveStage"))) {
+        reply = "Command result could not be verified. Check the phone screen.";
+    } else {
+        family = voiceValue("SIG3_Family");
+        observed = voiceValue("SIG3_Observed");
+        program = voiceValue("SIG3_Program");
+        reply = "Command completed. Check the phone screen.";
+        if ("Program".equals(family) &amp;&amp; program.length() &gt; 0) reply = "Program is " + program + ".";
+        if ("Volume".equals(family) || "Balance".equals(family) || "Tinnitus".equals(family)) {
+            if (observed.matches("-?[0-9]+")) {
+                spoken = observed.startsWith("-") ? "minus " + observed.substring(1) : observed;
+                reply = family + " is " + spoken + ".";
+            }
+        }
+        if ("Battery".equals(family)) reply = "Battery checks requested. Listen for the hearing aid indications.";
+        if (("Noise".equals(family) || "Setup".equals(family) || "Sleep".equals(family) || "Settings".equals(family)) &amp;&amp; observed.length() &gt; 0)
+            reply = observed + ".";
+        if (voiceValue("SIG3_SettingsAutoError").length() &gt; 0) reply += " Settings were not saved. " + voiceValue("SIG3_SettingsAutoError");
+    }
+}
+tasker.setVariable("SIG3_VoiceReply", reply);
+tasker.setVariable("sig3_speech", reply);
+return "ready";
+</Str>
+			<Str sr="arg1" ve="3" />
+			<Int sr="arg2" val="1" />
+		</Action>
+		<Action sr="act85" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%err</lhs>
+					<op>13</op>
+					<rhs />
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act86" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%sig3_speech</lhs>
+					<op>12</op>
+					<rhs />
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act87" ve="7">
+			<code>30</code>
+			<Int sr="arg0" val="2000" />
+			<Int sr="arg1" val="0" />
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+		</Action>
+		<Action sr="act88" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%TRUN</lhs>
+					<op>5</op>
+					<rhs>(^|,)SIG3_Worker(,|$)</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act89" ve="7">
+			<code>559</code>
+			<se>true</se>
+			<Str sr="arg0" ve="3">%sig3_speech</Str>
+			<Str sr="arg1" ve="3">default:default</Str>
+			<Int sr="arg2" val="3" />
+			<Int sr="arg3" val="5" />
+			<Int sr="arg4" val="5" />
+			<Int sr="arg5" val="1" />
+			<Int sr="arg6" val="0" />
+			<Int sr="arg7" val="0" />
+		</Action>
+		<Action sr="act90" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%err</lhs>
+					<op>12</op>
+					<rhs />
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act91" ve="7">
+			<code>474</code>
+			<se>true</se>
+			<Str sr="arg0" ve="3">tasker.showToast("Voice response unavailable. Read the result on the phone screen."); return "speech-failed";</Str>
+			<Str sr="arg1" ve="3" />
+			<Int sr="arg2" val="1" />
+		</Action>
+		<Action sr="act92" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act93" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act94" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act95" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act96" ve="7">
 			<code>474</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">/* Reopen recognition only after an explicit Try again choice. */
@@ -29760,7 +30120,7 @@ return tasker.getVariable("sig3_retry");
 			<Str sr="arg1" ve="3" />
 			<Int sr="arg2" val="1" />
 		</Action>
-		<Action sr="act76" ve="7">
+		<Action sr="act97" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -29771,15 +30131,15 @@ return tasker.getVariable("sig3_retry");
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act77" ve="7">
+		<Action sr="act98" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act78" ve="7">
+		<Action sr="act99" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act79" ve="7">
+		<Action sr="act100" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -29790,18 +30150,18 @@ return tasker.getVariable("sig3_retry");
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act80" ve="7">
+		<Action sr="act101" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act81" ve="7">
+		<Action sr="act102" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act82" ve="7">
+		<Action sr="act103" ve="7">
 			<code>40</code>
 		</Action>
-		<Action sr="act83" ve="7">
+		<Action sr="act104" ve="7">
 			<code>474</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">tasker.showToast("Voice session ended. Run SIG3_VoiceCommand to start again."); return "ended";</Str>
@@ -29952,6 +30312,89 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<code>38</code>
 		</Action>
 		<Action sr="act12" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%sig3_wake_audio_mode</Str>
+			<Str sr="arg1" ve="3">restore</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act13" ve="7">
+			<code>474</code>
+			<se>true</se>
+			<Str sr="arg0" ve="3">/* Preserve the media level across AutoVoice continuous mute cycles. */
+import android.media.AudioManager;
+wakeAudioValue(name) {
+    value = tasker.getVariable(name);
+    return value == null || value.startsWith("%") ? "" : value;
+}
+am = context.getSystemService("audio");
+mode = wakeAudioValue("sig3_wake_audio_mode");
+if ("capture".equals(mode)) {
+    tasker.setVariable("SIG3_WakeMediaLevel", "" + am.getStreamVolume(AudioManager.STREAM_MUSIC));
+    return "media captured";
+}
+if (!"restore".equals(mode)) throw new com.joaomgcd.taskerm.action.java.JavaCodeException("Unknown wake audio operation");
+saved = wakeAudioValue("SIG3_WakeMediaLevel");
+if (!saved.matches("[0-9]+")) return "no captured media level";
+level = Integer.parseInt(saved);
+if (level &gt; am.getStreamMaxVolume(AudioManager.STREAM_MUSIC))
+    throw new com.joaomgcd.taskerm.action.java.JavaCodeException("Captured media level is outside the phone range");
+// Allow the stopped plugin to finish releasing its suppression before restoration.
+Thread.sleep(500);
+if (am.getStreamVolume(AudioManager.STREAM_MUSIC) != level)
+    am.setStreamVolume(AudioManager.STREAM_MUSIC, level, 0);
+if (level &gt; 0 &amp;&amp; am.isStreamMute(AudioManager.STREAM_MUSIC))
+    am.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_UNMUTE, 0);
+if (am.getStreamVolume(AudioManager.STREAM_MUSIC) != level)
+    throw new com.joaomgcd.taskerm.action.java.JavaCodeException("Phone media volume did not restore");
+return "media restored";
+</Str>
+			<Str sr="arg1" ve="3" />
+			<Int sr="arg2" val="1" />
+		</Action>
+		<Action sr="act14" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%err</lhs>
+					<op>12</op>
+					<rhs />
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act15" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_VoiceBusy</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act16" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_WakeStatus</Str>
+			<Str sr="arg1" ve="3">Phone media preservation failed: %errmsg</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act17" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
+		</Action>
+		<Action sr="act18" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act19" ve="7">
 			<code>30</code>
 			<Int sr="arg0" val="500" />
 			<Int sr="arg1" val="0" />
@@ -29959,10 +30402,10 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg3" val="0" />
 			<Int sr="arg4" val="0" />
 		</Action>
-		<Action sr="act13" ve="7">
+		<Action sr="act20" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act14" ve="7">
+		<Action sr="act21" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_VoiceSession</Str>
@@ -29979,7 +30422,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act15" ve="7">
+		<Action sr="act22" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceReady</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -29989,7 +30432,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act16" ve="7">
+		<Action sr="act23" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceBusy</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -29999,7 +30442,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act17" ve="7">
+		<Action sr="act24" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -30010,7 +30453,90 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act18" ve="7">
+		<Action sr="act25" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%sig3_wake_audio_mode</Str>
+			<Str sr="arg1" ve="3">capture</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act26" ve="7">
+			<code>474</code>
+			<se>true</se>
+			<Str sr="arg0" ve="3">/* Preserve the media level across AutoVoice continuous mute cycles. */
+import android.media.AudioManager;
+wakeAudioValue(name) {
+    value = tasker.getVariable(name);
+    return value == null || value.startsWith("%") ? "" : value;
+}
+am = context.getSystemService("audio");
+mode = wakeAudioValue("sig3_wake_audio_mode");
+if ("capture".equals(mode)) {
+    tasker.setVariable("SIG3_WakeMediaLevel", "" + am.getStreamVolume(AudioManager.STREAM_MUSIC));
+    return "media captured";
+}
+if (!"restore".equals(mode)) throw new com.joaomgcd.taskerm.action.java.JavaCodeException("Unknown wake audio operation");
+saved = wakeAudioValue("SIG3_WakeMediaLevel");
+if (!saved.matches("[0-9]+")) return "no captured media level";
+level = Integer.parseInt(saved);
+if (level &gt; am.getStreamMaxVolume(AudioManager.STREAM_MUSIC))
+    throw new com.joaomgcd.taskerm.action.java.JavaCodeException("Captured media level is outside the phone range");
+// Allow the stopped plugin to finish releasing its suppression before restoration.
+Thread.sleep(500);
+if (am.getStreamVolume(AudioManager.STREAM_MUSIC) != level)
+    am.setStreamVolume(AudioManager.STREAM_MUSIC, level, 0);
+if (level &gt; 0 &amp;&amp; am.isStreamMute(AudioManager.STREAM_MUSIC))
+    am.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_UNMUTE, 0);
+if (am.getStreamVolume(AudioManager.STREAM_MUSIC) != level)
+    throw new com.joaomgcd.taskerm.action.java.JavaCodeException("Phone media volume did not restore");
+return "media restored";
+</Str>
+			<Str sr="arg1" ve="3" />
+			<Int sr="arg2" val="1" />
+		</Action>
+		<Action sr="act27" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%err</lhs>
+					<op>12</op>
+					<rhs />
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act28" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_VoiceBusy</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act29" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_WakeStatus</Str>
+			<Str sr="arg1" ve="3">Phone media preservation failed: %errmsg</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act30" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
+		</Action>
+		<Action sr="act31" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act32" ve="7">
 			<code>269503190</code>
 			<Bundle sr="arg0">
 				<Vals sr="val">
@@ -30028,7 +30554,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 					<NotificationText-type>java.lang.String</NotificationText-type>
 					<NotificationTitle>&lt;null&gt;</NotificationTitle>
 					<NotificationTitle-type>java.lang.String</NotificationTitle-type>
-					<PersistentNotification>false</PersistentNotification>
+					<PersistentNotification>true</PersistentNotification>
 					<PersistentNotification-type>java.lang.Boolean</PersistentNotification-type>
 					<com.twofortyfouram.locale.intent.extra.BLURB>
 Starting continuous voice recognition without headset</com.twofortyfouram.locale.intent.extra.BLURB>
@@ -30057,7 +30583,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg4" val="1" />
 			<se>true</se>
 		</Action>
-		<Action sr="act19" ve="7">
+		<Action sr="act33" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -30068,7 +30594,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act20" ve="7">
+		<Action sr="act34" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_WakeEnabled</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -30078,7 +30604,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act21" ve="7">
+		<Action sr="act35" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_WakeStatus</Str>
 			<Str sr="arg1" ve="3">Listener resume failed: %errmsg</Str>
@@ -30088,10 +30614,10 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act22" ve="7">
+		<Action sr="act36" ve="7">
 			<code>43</code>
 		</Action>
-		<Action sr="act23" ve="7">
+		<Action sr="act37" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -30102,7 +30628,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act24" ve="7">
+		<Action sr="act38" ve="7">
 			<code>269503190</code>
 			<Bundle sr="arg0">
 				<Vals sr="val">
@@ -30149,7 +30675,90 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg4" val="1" />
 			<se>true</se>
 		</Action>
-		<Action sr="act25" ve="7">
+		<Action sr="act39" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%sig3_wake_audio_mode</Str>
+			<Str sr="arg1" ve="3">restore</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act40" ve="7">
+			<code>474</code>
+			<se>true</se>
+			<Str sr="arg0" ve="3">/* Preserve the media level across AutoVoice continuous mute cycles. */
+import android.media.AudioManager;
+wakeAudioValue(name) {
+    value = tasker.getVariable(name);
+    return value == null || value.startsWith("%") ? "" : value;
+}
+am = context.getSystemService("audio");
+mode = wakeAudioValue("sig3_wake_audio_mode");
+if ("capture".equals(mode)) {
+    tasker.setVariable("SIG3_WakeMediaLevel", "" + am.getStreamVolume(AudioManager.STREAM_MUSIC));
+    return "media captured";
+}
+if (!"restore".equals(mode)) throw new com.joaomgcd.taskerm.action.java.JavaCodeException("Unknown wake audio operation");
+saved = wakeAudioValue("SIG3_WakeMediaLevel");
+if (!saved.matches("[0-9]+")) return "no captured media level";
+level = Integer.parseInt(saved);
+if (level &gt; am.getStreamMaxVolume(AudioManager.STREAM_MUSIC))
+    throw new com.joaomgcd.taskerm.action.java.JavaCodeException("Captured media level is outside the phone range");
+// Allow the stopped plugin to finish releasing its suppression before restoration.
+Thread.sleep(500);
+if (am.getStreamVolume(AudioManager.STREAM_MUSIC) != level)
+    am.setStreamVolume(AudioManager.STREAM_MUSIC, level, 0);
+if (level &gt; 0 &amp;&amp; am.isStreamMute(AudioManager.STREAM_MUSIC))
+    am.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_UNMUTE, 0);
+if (am.getStreamVolume(AudioManager.STREAM_MUSIC) != level)
+    throw new com.joaomgcd.taskerm.action.java.JavaCodeException("Phone media volume did not restore");
+return "media restored";
+</Str>
+			<Str sr="arg1" ve="3" />
+			<Int sr="arg2" val="1" />
+		</Action>
+		<Action sr="act41" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%err</lhs>
+					<op>12</op>
+					<rhs />
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act42" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_VoiceBusy</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act43" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_WakeStatus</Str>
+			<Str sr="arg1" ve="3">Phone media preservation failed: %errmsg</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act44" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
+		</Action>
+		<Action sr="act45" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act46" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_WakeStatus</Str>
 			<Str sr="arg1" ve="3">Hey Sig listening disabled</Str>
@@ -30159,10 +30768,10 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act26" ve="7">
+		<Action sr="act47" ve="7">
 			<code>43</code>
 		</Action>
-		<Action sr="act27" ve="7">
+		<Action sr="act48" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_WakeStatus</Str>
 			<Str sr="arg1" ve="3">Hey Sig listening enabled</Str>
@@ -30172,13 +30781,13 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act28" ve="7">
+		<Action sr="act49" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act29" ve="7">
+		<Action sr="act50" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act30" ve="7">
+		<Action sr="act51" ve="7">
 			<code>38</code>
 		</Action>
 	</Task>
@@ -30550,6 +31159,103 @@ return "mapped";
 			<code>38</code>
 		</Action>
 		<Action sr="act4" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%SIG3_WakeEnabled</lhs>
+					<op>3</op>
+					<rhs>1</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act5" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%sig3_wake_audio_mode</Str>
+			<Str sr="arg1" ve="3">capture</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act6" ve="7">
+			<code>474</code>
+			<se>true</se>
+			<Str sr="arg0" ve="3">/* Preserve the media level across AutoVoice continuous mute cycles. */
+import android.media.AudioManager;
+wakeAudioValue(name) {
+    value = tasker.getVariable(name);
+    return value == null || value.startsWith("%") ? "" : value;
+}
+am = context.getSystemService("audio");
+mode = wakeAudioValue("sig3_wake_audio_mode");
+if ("capture".equals(mode)) {
+    tasker.setVariable("SIG3_WakeMediaLevel", "" + am.getStreamVolume(AudioManager.STREAM_MUSIC));
+    return "media captured";
+}
+if (!"restore".equals(mode)) throw new com.joaomgcd.taskerm.action.java.JavaCodeException("Unknown wake audio operation");
+saved = wakeAudioValue("SIG3_WakeMediaLevel");
+if (!saved.matches("[0-9]+")) return "no captured media level";
+level = Integer.parseInt(saved);
+if (level &gt; am.getStreamMaxVolume(AudioManager.STREAM_MUSIC))
+    throw new com.joaomgcd.taskerm.action.java.JavaCodeException("Captured media level is outside the phone range");
+// Allow the stopped plugin to finish releasing its suppression before restoration.
+Thread.sleep(500);
+if (am.getStreamVolume(AudioManager.STREAM_MUSIC) != level)
+    am.setStreamVolume(AudioManager.STREAM_MUSIC, level, 0);
+if (level &gt; 0 &amp;&amp; am.isStreamMute(AudioManager.STREAM_MUSIC))
+    am.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_UNMUTE, 0);
+if (am.getStreamVolume(AudioManager.STREAM_MUSIC) != level)
+    throw new com.joaomgcd.taskerm.action.java.JavaCodeException("Phone media volume did not restore");
+return "media restored";
+</Str>
+			<Str sr="arg1" ve="3" />
+			<Int sr="arg2" val="1" />
+		</Action>
+		<Action sr="act7" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%err</lhs>
+					<op>12</op>
+					<rhs />
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act8" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_VoiceBusy</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act9" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_WakeStatus</Str>
+			<Str sr="arg1" ve="3">Phone media preservation failed: %errmsg</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act10" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
+		</Action>
+		<Action sr="act11" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act12" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act13" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_WakeEnabled</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -30559,7 +31265,7 @@ return "mapped";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act5" ve="7">
+		<Action sr="act14" ve="7">
 			<code>269503190</code>
 			<Bundle sr="arg0">
 				<Vals sr="val">
@@ -30577,7 +31283,7 @@ return "mapped";
 					<NotificationText-type>java.lang.String</NotificationText-type>
 					<NotificationTitle>&lt;null&gt;</NotificationTitle>
 					<NotificationTitle-type>java.lang.String</NotificationTitle-type>
-					<PersistentNotification>false</PersistentNotification>
+					<PersistentNotification>true</PersistentNotification>
 					<PersistentNotification-type>java.lang.Boolean</PersistentNotification-type>
 					<com.twofortyfouram.locale.intent.extra.BLURB>
 Starting continuous voice recognition without headset</com.twofortyfouram.locale.intent.extra.BLURB>
@@ -30606,7 +31312,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg4" val="1" />
 			<se>true</se>
 		</Action>
-		<Action sr="act6" ve="7">
+		<Action sr="act15" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -30617,7 +31323,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act7" ve="7">
+		<Action sr="act16" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_WakeEnabled</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -30627,7 +31333,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act8" ve="7">
+		<Action sr="act17" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_WakeStatus</Str>
 			<Str sr="arg1" ve="3">Listener start failed: %errmsg</Str>
@@ -30637,15 +31343,15 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act9" ve="7">
+		<Action sr="act18" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act10" ve="7">
+		<Action sr="act19" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act11" ve="7">
+		<Action sr="act20" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -30656,7 +31362,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act12" ve="7">
+		<Action sr="act21" ve="7">
 			<code>269503190</code>
 			<Bundle sr="arg0">
 				<Vals sr="val">
@@ -30703,7 +31409,90 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg4" val="1" />
 			<se>true</se>
 		</Action>
-		<Action sr="act13" ve="7">
+		<Action sr="act22" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%sig3_wake_audio_mode</Str>
+			<Str sr="arg1" ve="3">restore</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act23" ve="7">
+			<code>474</code>
+			<se>true</se>
+			<Str sr="arg0" ve="3">/* Preserve the media level across AutoVoice continuous mute cycles. */
+import android.media.AudioManager;
+wakeAudioValue(name) {
+    value = tasker.getVariable(name);
+    return value == null || value.startsWith("%") ? "" : value;
+}
+am = context.getSystemService("audio");
+mode = wakeAudioValue("sig3_wake_audio_mode");
+if ("capture".equals(mode)) {
+    tasker.setVariable("SIG3_WakeMediaLevel", "" + am.getStreamVolume(AudioManager.STREAM_MUSIC));
+    return "media captured";
+}
+if (!"restore".equals(mode)) throw new com.joaomgcd.taskerm.action.java.JavaCodeException("Unknown wake audio operation");
+saved = wakeAudioValue("SIG3_WakeMediaLevel");
+if (!saved.matches("[0-9]+")) return "no captured media level";
+level = Integer.parseInt(saved);
+if (level &gt; am.getStreamMaxVolume(AudioManager.STREAM_MUSIC))
+    throw new com.joaomgcd.taskerm.action.java.JavaCodeException("Captured media level is outside the phone range");
+// Allow the stopped plugin to finish releasing its suppression before restoration.
+Thread.sleep(500);
+if (am.getStreamVolume(AudioManager.STREAM_MUSIC) != level)
+    am.setStreamVolume(AudioManager.STREAM_MUSIC, level, 0);
+if (level &gt; 0 &amp;&amp; am.isStreamMute(AudioManager.STREAM_MUSIC))
+    am.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_UNMUTE, 0);
+if (am.getStreamVolume(AudioManager.STREAM_MUSIC) != level)
+    throw new com.joaomgcd.taskerm.action.java.JavaCodeException("Phone media volume did not restore");
+return "media restored";
+</Str>
+			<Str sr="arg1" ve="3" />
+			<Int sr="arg2" val="1" />
+		</Action>
+		<Action sr="act24" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%err</lhs>
+					<op>12</op>
+					<rhs />
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act25" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_VoiceBusy</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act26" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_WakeStatus</Str>
+			<Str sr="arg1" ve="3">Phone media preservation failed: %errmsg</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act27" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
+		</Action>
+		<Action sr="act28" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act29" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_WakeStatus</Str>
 			<Str sr="arg1" ve="3">Hey Sig listening disabled</Str>
@@ -30713,15 +31502,15 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act14" ve="7">
+		<Action sr="act30" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act15" ve="7">
+		<Action sr="act31" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act16" ve="7">
+		<Action sr="act32" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_WakeStatus</Str>
 			<Str sr="arg1" ve="3">Hey Sig listening enabled</Str>
@@ -30826,6 +31615,89 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 		</Action>
 		<Action sr="act6" ve="7">
 			<code>547</code>
+			<Str sr="arg0" ve="3">%sig3_wake_audio_mode</Str>
+			<Str sr="arg1" ve="3">restore</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act7" ve="7">
+			<code>474</code>
+			<se>true</se>
+			<Str sr="arg0" ve="3">/* Preserve the media level across AutoVoice continuous mute cycles. */
+import android.media.AudioManager;
+wakeAudioValue(name) {
+    value = tasker.getVariable(name);
+    return value == null || value.startsWith("%") ? "" : value;
+}
+am = context.getSystemService("audio");
+mode = wakeAudioValue("sig3_wake_audio_mode");
+if ("capture".equals(mode)) {
+    tasker.setVariable("SIG3_WakeMediaLevel", "" + am.getStreamVolume(AudioManager.STREAM_MUSIC));
+    return "media captured";
+}
+if (!"restore".equals(mode)) throw new com.joaomgcd.taskerm.action.java.JavaCodeException("Unknown wake audio operation");
+saved = wakeAudioValue("SIG3_WakeMediaLevel");
+if (!saved.matches("[0-9]+")) return "no captured media level";
+level = Integer.parseInt(saved);
+if (level &gt; am.getStreamMaxVolume(AudioManager.STREAM_MUSIC))
+    throw new com.joaomgcd.taskerm.action.java.JavaCodeException("Captured media level is outside the phone range");
+// Allow the stopped plugin to finish releasing its suppression before restoration.
+Thread.sleep(500);
+if (am.getStreamVolume(AudioManager.STREAM_MUSIC) != level)
+    am.setStreamVolume(AudioManager.STREAM_MUSIC, level, 0);
+if (level &gt; 0 &amp;&amp; am.isStreamMute(AudioManager.STREAM_MUSIC))
+    am.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_UNMUTE, 0);
+if (am.getStreamVolume(AudioManager.STREAM_MUSIC) != level)
+    throw new com.joaomgcd.taskerm.action.java.JavaCodeException("Phone media volume did not restore");
+return "media restored";
+</Str>
+			<Str sr="arg1" ve="3" />
+			<Int sr="arg2" val="1" />
+		</Action>
+		<Action sr="act8" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%err</lhs>
+					<op>12</op>
+					<rhs />
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act9" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_VoiceBusy</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act10" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_WakeStatus</Str>
+			<Str sr="arg1" ve="3">Phone media preservation failed: %errmsg</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act11" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
+		</Action>
+		<Action sr="act12" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act13" ve="7">
+			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_WakeStatus</Str>
 			<Str sr="arg1" ve="3">Hey Sig listening disabled</Str>
 			<Int sr="arg2" val="0" />
@@ -30855,7 +31727,7 @@ if (wakeValue("TRUN").matches("(?s).*(?:^|,)SIG3_Worker(?:,|$).*")) return "work
 heard = wakeValue("par1");
 if (heard.length() == 0) heard = wakeValue("avcommnofilter");
 if (heard.length() == 0) heard = wakeValue("avcomm");
-if (!heard.trim().matches("(?i)^hey\\s+sig[.!?]?$")) return "not-wake-phrase";
+if (!heard.trim().matches("(?i)^hey\\s+(?:sig|cig)[.!?]?$")) return "not-wake-phrase";
 tasker.setVariable("sig3_wake_accepted", "1");
 return "wake-accepted";
 </Str>
@@ -30910,6 +31782,257 @@ return "wake-accepted";
 			<Int sr="arg9" val="0" />
 		</Action>
 		<Action sr="act6" ve="7">
+			<code>38</code>
+		</Action>
+	</Task>
+	<Task sr="task524">
+		<cdate>1791396000000</cdate>
+		<edate>1791396000000</edate>
+		<id>524</id>
+		<nme>SIG3_VoiceSettings</nme>
+		<pri>100</pri>
+		<Action sr="act0" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%sig3_voice_pref_mode</Str>
+			<Str sr="arg1" ve="3">load</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act1" ve="7">
+			<code>474</code>
+			<se>true</se>
+			<Str sr="arg0" ve="3">/* Load or atomically save independent speech preferences. */
+voicePreferenceValue(name) {
+    value = tasker.getVariable(name);
+    return value == null || value.startsWith("%") ? "" : value;
+}
+voicePreferenceValid(value) { return "0".equals(value) || "1".equals(value); }
+prefs = context.getSharedPreferences("heysig3-voice", 0);
+mode = voicePreferenceValue("sig3_voice_pref_mode");
+if ("save".equals(mode)) {
+    responses = voicePreferenceValue("sig3_voice_results_choice");
+    prompts = voicePreferenceValue("sig3_voice_prompts_choice");
+    if (!voicePreferenceValid(responses) || !voicePreferenceValid(prompts))
+        throw new com.joaomgcd.taskerm.action.java.JavaCodeException("Invalid voice preference selection");
+    if (!prefs.edit().putString("responses", responses).putString("prompts", prompts).commit())
+        throw new com.joaomgcd.taskerm.action.java.JavaCodeException("Voice preferences could not be saved");
+} else if ("load".equals(mode)) {
+    responses = voicePreferenceValue("SIG3_VoiceResponses");
+    if (!voicePreferenceValid(responses)) responses = prefs.getString("responses", "1");
+    if (!voicePreferenceValid(responses)) responses = "1";
+    prompts = voicePreferenceValue("SIG3_VoicePrompts");
+    if (!voicePreferenceValid(prompts)) prompts = prefs.getString("prompts", responses);
+    if (!voicePreferenceValid(prompts)) prompts = responses;
+} else throw new com.joaomgcd.taskerm.action.java.JavaCodeException("Unknown voice preference operation");
+tasker.setVariable("SIG3_VoiceResponses", responses);
+tasker.setVariable("SIG3_VoicePrompts", prompts);
+tasker.setVariable("SIG3_VoiceSettingsStatus", "Spoken results " + ("1".equals(responses) ? "on" : "off") + "; voice prompts " + ("1".equals(prompts) ? "on" : "off"));
+return "voice preferences " + mode;
+</Str>
+			<Str sr="arg1" ve="3" />
+			<Int sr="arg2" val="1" />
+		</Action>
+		<Action sr="act2" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%err</lhs>
+					<op>12</op>
+					<rhs />
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act3" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_VoiceSettingsStatus</Str>
+			<Str sr="arg1" ve="3">Voice preferences unavailable: %errmsg</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act4" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
+		</Action>
+		<Action sr="act5" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act6" ve="7">
+			<code>474</code>
+			<se>true</se>
+			<Str sr="arg0" ve="3">/* Show separate visible on/off controls; Cancel leaves preferences unchanged. */
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.os.Handler;
+import android.os.Looper;
+import java.util.function.Consumer;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReference;
+
+selected = new boolean[] {"1".equals(tasker.getVariable("SIG3_VoiceResponses")), "1".equals(tasker.getVariable("SIG3_VoicePrompts"))};
+decision = new AtomicReference("cancel"); activityRef = new AtomicReference(); dialogRef = new AtomicReference(); done = new CountDownLatch(1);
+ui = new Handler(Looper.getMainLooper());
+tasker.setVariable("sig3_voice_settings_decision", "cancel");
+try {
+    tasker.doWithActivity(new Consumer() {
+        accept(Object value) {
+            final Activity screen = (Activity) value; activityRef.set(screen);
+            dialog = new AlertDialog.Builder(screen).setTitle("HeySig3 voice settings")
+                .setMultiChoiceItems(new String[] {"Spoken results", "Voice prompts"}, selected, new DialogInterface.OnMultiChoiceClickListener() {
+                    onClick(DialogInterface dialog, int which, boolean checked) { selected[which] = checked; }
+                }).setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                    onClick(DialogInterface dialog, int which) { decision.set("save"); }
+                }).setNegativeButton("Cancel", null).create();
+            dialogRef.set(dialog); dialog.setCancelable(true);
+            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                onDismiss(DialogInterface dialog) { done.countDown(); screen.finish(); }
+            });
+            dialog.show();
+        }
+    });
+    if (done.await(60, TimeUnit.SECONDS) &amp;&amp; "save".equals(decision.get())) {
+        tasker.setVariable("sig3_voice_results_choice", selected[0] ? "1" : "0");
+        tasker.setVariable("sig3_voice_prompts_choice", selected[1] ? "1" : "0");
+        tasker.setVariable("sig3_voice_settings_decision", "save");
+    }
+} finally {
+    ui.post(new Runnable() {
+        run() {
+            dialog = dialogRef.get(); if (dialog != null &amp;&amp; dialog.isShowing()) dialog.dismiss();
+            screen = activityRef.get(); if (screen != null &amp;&amp; !screen.isFinishing()) screen.finish();
+        }
+    });
+}
+return tasker.getVariable("sig3_voice_settings_decision");
+</Str>
+			<Str sr="arg1" ve="3" />
+			<Int sr="arg2" val="1" />
+		</Action>
+		<Action sr="act7" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%err</lhs>
+					<op>12</op>
+					<rhs />
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act8" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_VoiceSettingsStatus</Str>
+			<Str sr="arg1" ve="3">Voice settings could not open: %errmsg</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act9" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
+		</Action>
+		<Action sr="act10" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act11" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%sig3_voice_settings_decision</lhs>
+					<op>2</op>
+					<rhs>save</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act12" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%sig3_voice_pref_mode</Str>
+			<Str sr="arg1" ve="3">save</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act13" ve="7">
+			<code>474</code>
+			<se>true</se>
+			<Str sr="arg0" ve="3">/* Load or atomically save independent speech preferences. */
+voicePreferenceValue(name) {
+    value = tasker.getVariable(name);
+    return value == null || value.startsWith("%") ? "" : value;
+}
+voicePreferenceValid(value) { return "0".equals(value) || "1".equals(value); }
+prefs = context.getSharedPreferences("heysig3-voice", 0);
+mode = voicePreferenceValue("sig3_voice_pref_mode");
+if ("save".equals(mode)) {
+    responses = voicePreferenceValue("sig3_voice_results_choice");
+    prompts = voicePreferenceValue("sig3_voice_prompts_choice");
+    if (!voicePreferenceValid(responses) || !voicePreferenceValid(prompts))
+        throw new com.joaomgcd.taskerm.action.java.JavaCodeException("Invalid voice preference selection");
+    if (!prefs.edit().putString("responses", responses).putString("prompts", prompts).commit())
+        throw new com.joaomgcd.taskerm.action.java.JavaCodeException("Voice preferences could not be saved");
+} else if ("load".equals(mode)) {
+    responses = voicePreferenceValue("SIG3_VoiceResponses");
+    if (!voicePreferenceValid(responses)) responses = prefs.getString("responses", "1");
+    if (!voicePreferenceValid(responses)) responses = "1";
+    prompts = voicePreferenceValue("SIG3_VoicePrompts");
+    if (!voicePreferenceValid(prompts)) prompts = prefs.getString("prompts", responses);
+    if (!voicePreferenceValid(prompts)) prompts = responses;
+} else throw new com.joaomgcd.taskerm.action.java.JavaCodeException("Unknown voice preference operation");
+tasker.setVariable("SIG3_VoiceResponses", responses);
+tasker.setVariable("SIG3_VoicePrompts", prompts);
+tasker.setVariable("SIG3_VoiceSettingsStatus", "Spoken results " + ("1".equals(responses) ? "on" : "off") + "; voice prompts " + ("1".equals(prompts) ? "on" : "off"));
+return "voice preferences " + mode;
+</Str>
+			<Str sr="arg1" ve="3" />
+			<Int sr="arg2" val="1" />
+		</Action>
+		<Action sr="act14" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%err</lhs>
+					<op>12</op>
+					<rhs />
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act15" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_VoiceSettingsStatus</Str>
+			<Str sr="arg1" ve="3">Voice preferences could not be saved: %errmsg</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act16" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act17" ve="7">
+			<code>474</code>
+			<se>true</se>
+			<Str sr="arg0" ve="3">tasker.showToast(tasker.getVariable("SIG3_VoiceSettingsStatus")); return "voice-settings-status";</Str>
+			<Str sr="arg1" ve="3" />
+			<Int sr="arg2" val="1" />
+		</Action>
+		<Action sr="act18" ve="7">
 			<code>38</code>
 		</Action>
 	</Task>

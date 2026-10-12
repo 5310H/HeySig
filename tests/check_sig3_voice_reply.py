@@ -10,6 +10,10 @@ source = (root / 'tools/sig3_voice_reply.java').read_text()
 base = dict(SIG3_OperationId='new',sig3_reply_before='old',SIG3_CommandOK='1',
             SIG3_MoveStage='complete',SIG3_Family='Program',SIG3_Program='My custom program')
 cases = [
+    ({'SIG3_VoiceResponses':'0','SIG3_VoicePrompts':'1','sig3_reply_kind':'retry'}, 'Command not recognized. Tap Try again to speak again, or Cancel.'),
+    ({'SIG3_VoiceResponses':'1','SIG3_VoicePrompts':'0','sig3_reply_kind':'retry'}, ''),
+    ({'SIG3_VoiceResponses':'1','SIG3_VoicePrompts':'0'}, 'Program is My custom program.'),
+    ({'SIG3_VoiceResponses':'0','SIG3_VoicePrompts':'1'}, ''),
     ({}, 'Program is My custom program.'),
     ({'SIG3_Family':'Volume','SIG3_Observed':'3'}, 'Volume is 3.'),
     ({'SIG3_Family':'Balance','SIG3_Observed':'-3'}, 'Balance is minus 3.'),

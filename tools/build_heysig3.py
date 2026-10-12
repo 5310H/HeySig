@@ -333,10 +333,15 @@ def target_wrapper(family, operation):
 
 
 def numeric_voice():
-    aa = [setvar('%SIG3_VoiceMatched',0),setvar('%sig3_command', '%avcomm'),
+    aa = [setvar('%SIG3_VoiceMatched',0),setvar('%SIG3_VoiceCancelled',0),setvar('%sig3_command', '%avcomm'),
           condition('%par1', 12), setvar('%sig3_command', '%par1'), action(38),
           java_file('sig3_command_normalize.java'), condition('%err',12),
           java_code('tasker.showToast(tasker.getVariable("errmsg")); return "invalid-command";'), stop(),action(38)]
+    aa += [condition('%sig3_command',4,r'(?i)^\s*cancel[.!?]?\s*$'),
+           setvar('%SIG3_VoiceMatched',1),setvar('%SIG3_VoiceCancelled',1),
+           setvar('%SIG3_CommandOK',0),setvar('%SIG3_Error',''),setvar('%SIG3_VoiceReply',''),
+           setvar('%SIG3_Result','Voice session cancelled; no command sent'),
+           setvar('%SIG3_VoiceStatus','Voice session cancelled'),stop(),action(38)]
     words = ['zero','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen']
     for family in ('Volume', 'Balance', 'Tinnitus'):
         for value in range(-8 if family == 'Balance' else 0, 8 if family == 'Balance' else 16):
@@ -431,13 +436,18 @@ def worker():
     return aa
 
 
+def voice_preferences_load():
+    return [setvar('%sig3_voice_pref_mode','load'),java_file('sig3_voice_preferences.java'),condition('%err',12),
+            setvar('%SIG3_VoiceSettingsStatus','Voice preferences unavailable: %errmsg'),stop(),action(38)]
+
+
 def voice_ready():
     reference = E.parse(ROOT / 'tasks/SIG_TinnitusSet.tsk.xml').getroot()
     speech = deepcopy(next(a for a in reference.findall('.//Action') if a.findtext('code') == '559'))
     speech.find("Str[@sr='arg0']").text = '%sig3_ready_speech'
     speech.find("Int[@sr='arg7']").set('val','0')
     se=E.Element('se');se.text='true';speech.insert(1,se)
-    return [java_file('sig3_voice_ready.java'),condition('%err',12),stop(),action(38),
+    return [*voice_preferences_load(),java_file('sig3_voice_ready.java'),condition('%err',12),stop(),action(38),
             condition('%SIG3_VoiceCaptureAllowed',3,1),stop(),action(38),
             condition('%sig3_ready_speech',12),speech,condition('%err',12),
             setvar('%SIG3_VoiceStatus','Readiness cue could not be spoken'),stop(),action(38),action(38),
@@ -449,19 +459,27 @@ def continuous(enabled):
     reference = E.parse(ROOT / f'tools/sig3-autovoice-continuous-{suffix}-reference.tsk.xml')
     a = deepcopy(reference.find('.//Action'))
     assert a.findtext('Bundle/Vals/continuous') == str(enabled).lower()
+    if enabled: a.find('Bundle/Vals/PersistentNotification').text = 'true'
     a.find('Bundle/Vals/plugininstanceid').text = str(uuid.uuid5(uuid.NAMESPACE_URL, 'HeySig3:Continuous:' + suffix))
     E.SubElement(a, 'se').text = 'true'
     return a
 
 
+def wake_audio(mode):
+    return [setvar('%sig3_wake_audio_mode',mode),java_file('sig3_wake_audio.java'),
+            condition('%err',12),setvar('%SIG3_VoiceBusy',0),
+            setvar('%SIG3_WakeStatus','Phone media preservation failed: %errmsg'),stop(),action(38)]
+
+
 def wake_tasks():
     enable = [condition('%SIG3_VoiceBusy',2,1),setvar('%SIG3_WakeStatus','Finish the voice prompt before enabling listening'),stop(),action(38),
+              condition('%SIG3_WakeEnabled',3,1),*wake_audio('capture'),action(38),
               setvar('%SIG3_WakeEnabled',1),
               continuous(True),condition('%err',12),setvar('%SIG3_WakeEnabled',0),setvar('%SIG3_WakeStatus','Listener start failed: %errmsg'),stop(),action(38),
-              condition('%SIG3_WakeEnabled',3,1),continuous(False),setvar('%SIG3_WakeStatus','Hey Sig listening disabled'),stop(),action(38),
+              condition('%SIG3_WakeEnabled',3,1),continuous(False),*wake_audio('restore'),setvar('%SIG3_WakeStatus','Hey Sig listening disabled'),stop(),action(38),
               setvar('%SIG3_WakeStatus','Hey Sig listening enabled')]
     disable = [setvar('%SIG3_WakeEnabled',0),continuous(False),condition('%err',12),
-               setvar('%SIG3_WakeStatus','Listener stop failed: %errmsg'),stop(),action(38),setvar('%SIG3_WakeStatus','Hey Sig listening disabled')]
+               setvar('%SIG3_WakeStatus','Listener stop failed: %errmsg'),stop(),action(38),*wake_audio('restore'),setvar('%SIG3_WakeStatus','Hey Sig listening disabled')]
     trigger = [java_file('sig3_wake_trigger.java'),condition('%err',12),stop(),action(38),
                condition('%sig3_wake_accepted',2,1),call('SIG3_VoiceCommand'),action(38)]
     return [task('SIG3_WakeEnable',520,enable),task('SIG3_WakeDisable',521,disable),task('SIG3_WakeTrigger',522,trigger)]
@@ -470,11 +488,11 @@ def wake_tasks():
 def voice_session_wrapper():
     return [condition('%SIG3_VoiceBusy',2,1),stop(),action(38),setvar('%SIG3_VoiceBusy',1),
             condition('%SIG3_WakeEnabled',2,1),continuous(False),condition('%err',12),
-            setvar('%SIG3_VoiceBusy',0),setvar('%SIG3_VoiceReady',0),setvar('%SIG3_WakeStatus','Cannot pause listener: %errmsg'),stop(),action(38),wait(500),action(38),
+            setvar('%SIG3_VoiceBusy',0),setvar('%SIG3_VoiceReady',0),setvar('%SIG3_WakeStatus','Cannot pause listener: %errmsg'),stop(),action(38),*wake_audio('restore'),wait(500),action(38),
             call('SIG3_VoiceSession'),setvar('%SIG3_VoiceReady',0),setvar('%SIG3_VoiceBusy',0),
-            condition('%SIG3_WakeEnabled',2,1),continuous(True),condition('%err',12),setvar('%SIG3_WakeEnabled',0),
+            condition('%SIG3_WakeEnabled',2,1),*wake_audio('capture'),continuous(True),condition('%err',12),setvar('%SIG3_WakeEnabled',0),
             setvar('%SIG3_WakeStatus','Listener resume failed: %errmsg'),action(43),
-            condition('%SIG3_WakeEnabled',3,1),continuous(False),setvar('%SIG3_WakeStatus','Hey Sig listening disabled'),action(43),
+            condition('%SIG3_WakeEnabled',3,1),continuous(False),*wake_audio('restore'),setvar('%SIG3_WakeStatus','Hey Sig listening disabled'),action(43),
             setvar('%SIG3_WakeStatus','Hey Sig listening enabled'),action(38),action(38),action(38)]
 
 
@@ -485,7 +503,7 @@ def voice_reply(kind='result'):
     speech.find("Str[@sr='arg0']").text = '%sig3_speech'
     speech.find("Int[@sr='arg7']").set('val','0')  # Continue Task Immediately off.
     se = E.Element('se'); se.text = 'true'; speech.insert(1,se)
-    return [setvar('%sig3_reply_kind',kind),java_file('sig3_voice_reply.java'),
+    return [*voice_preferences_load(),setvar('%sig3_reply_kind',kind),java_file('sig3_voice_reply.java'),
             condition('%err',13),condition('%sig3_speech',12),wait(2000),
             condition('%TRUN',5,r'(^|,)SIG3_Worker(,|$)'),speech,
             condition('%err',12),java_code('tasker.showToast("Voice response unavailable. Read the result on the phone screen."); return "speech-failed";'),
@@ -656,6 +674,7 @@ def extra_tasks():
                   java_code('heard = tasker.getVariable("sig3_heard"); if (heard == null || heard.length() == 0 || heard.startsWith("%")) heard = tasker.getVariable("gv_heard1"); if (heard == null || heard.trim().length() == 0 || heard.startsWith("%")) throw new com.joaomgcd.taskerm.action.java.JavaCodeException("Recognition cancelled or empty"); tasker.setVariable("sig3_heard", heard.trim()); return "heard";'),
                   condition('%err',13),setvar('%SIG3_VoiceHeard','%sig3_heard'),
                   setvar('%sig3_reply_before','%SIG3_OperationId'),call('SIG3_VoiceRouter','%sig3_heard'),action(38),action(38),
+                  condition('%SIG3_VoiceCancelled',2,1),stop(),action(38),
                   condition('%SIG3_VoiceMatched',2,1),*voice_reply(),stop(),action(38),
                   setvar('%SIG3_CommandOK',0),setvar('%SIG3_Error','Voice command not recognized'),
                   setvar('%SIG3_Result','Voice command not recognized; no command sent'),
@@ -680,6 +699,11 @@ def extra_tasks():
             aa = [condition('%SIG3_WakeEnabled',2,1),stop(),action(38),*aa]
         add(name,number,aa)
     tasks.extend(wake_tasks())
+    add('SIG3_VoiceSettings',524,[*voice_preferences_load(),java_file('sig3_voice_settings.java'),condition('%err',12),
+        setvar('%SIG3_VoiceSettingsStatus','Voice settings could not open: %errmsg'),stop(),action(38),
+        condition('%sig3_voice_settings_decision',2,'save'),setvar('%sig3_voice_pref_mode','save'),java_file('sig3_voice_preferences.java'),
+        condition('%err',12),setvar('%SIG3_VoiceSettingsStatus','Voice preferences could not be saved: %errmsg'),action(38),
+        java_code('tasker.showToast(tasker.getVariable("SIG3_VoiceSettingsStatus")); return "voice-settings-status";'),action(38)])
     return tasks
 
 def write(path, root):
@@ -773,6 +797,9 @@ def build():
         wake_profile.find(tag).text = value
     E.SubElement(wake_profile,'nme').text = 'SIG3_HeySigWake'
     wake_profile.find('Event/Bundle/Vals/Source').text = 'continuous'
+    wake_profile.find('Event/Bundle/Vals/configcommand').text = r'(?i)^hey\s+(?:sig|cig)[.!?]?$'
+    wake_profile.find('Event/Bundle/Vals/configregexsub').text = 'true'
+    wake_profile.find('Event/Bundle/Vals/com.twofortyfouram.locale.intent.extra.BLURB').text = 'Command: Hey Sig (recognition alias Hey Cig; full phrase)\nSource: continuous'
     wake_profile.find('Event/Bundle/Vals/plugininstanceid').text = str(uuid.uuid5(uuid.NAMESPACE_URL,'HeySig3:HeySigWake'))
     E.SubElement(p,'pids').text = '523'
     r.append(wake_profile)

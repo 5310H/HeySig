@@ -46,3 +46,10 @@ for family in ('Volume','Balance','Tinnitus'):
 p = phone('Volume',2); p.voice_event = 'set volume to ten'; p.run('SIG3_VoiceRouter')
 assert p.level == 10 and p.globals['SIG3_CommandOK'] == '1'
 print('Numeric wrapper endpoints and AutoVoice event routing passed')
+
+for command in ['tin four','set tin to four','change tin to four']:
+    p=phone('Tinnitus',2);p.run('SIG3_VoiceRouter',command)
+    assert p.level==4 and p.globals['SIG3_CommandOK']=='1'
+p=phone('Tinnitus',2);p.run('SIG3_VoiceRouter','current tin')
+assert p.level==2 and not p.drags and p.globals['SIG3_Family']=='Tinnitus'
+print('Tin shorthand routes numeric changes and current query to tinnitus.')

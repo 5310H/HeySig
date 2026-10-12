@@ -47,3 +47,16 @@ assert "no command sent" in p.globals["SIG3_Result"]
 assert not p.gestures and not getattr(p,"retry_dialogs",0)
 assert getattr(p,"spoken",[]) == ['Sig here']
 print("Empty capture ends after readiness without result speech, retry, movement or stale success.")
+
+# Spoken cancellation is accepted without a worker request or retry.
+for command in ["cancel", "CANCEL", " cancel ", "cancel."]:
+    p=phone(); p.globals["SIG3_CommandOK"]="1"
+    p.prompt_responses=[command,"program two"]
+    p.run("SIG3_VoiceCommand")
+    assert p.globals["SIG3_VoiceCancelled"]=="1"
+    assert p.globals["SIG3_VoiceMatched"]=="1" and p.globals["SIG3_CommandOK"]=="0"
+    assert p.globals["SIG3_Error"]=="" and "cancelled" in p.globals["SIG3_Result"]
+    assert p.program=="Universal" and not p.gestures
+    assert not getattr(p,"retry_dialogs",0) and p.prompt_responses==["program two"]
+    assert getattr(p,"spoken",[])==["Sig here"]
+print("Spoken cancel exits without retry, worker dispatch, stale success or result speech.")

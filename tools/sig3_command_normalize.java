@@ -3,6 +3,8 @@ import com.joaomgcd.taskerm.action.java.JavaCodeException;
 input = tasker.getVariable("sig3_command");
 if (input == null || input.trim().length() == 0) throw new JavaCodeException("No command text supplied");
 input = input.trim().replaceAll("(?i)^sig(?:3)?\\s+", "");
+// A short spoken name for tinnitus; do not rewrite program names.
+input = input.replaceAll("(?i)^((?:(?:set|change|current|maximum|mute)\\s+|what is\\s+(?:the\\s+)?(?:current\\s+)?)?)tin(?=\\s|$)", "$1tinnitus");
 alias = input.toLowerCase().replaceAll("^(?:mode|program)\\s+", "");
 key = null;
 if (alias.equals("conversation") || alias.equals("normal")) key = "SIG3_ModeConversationProgram";
