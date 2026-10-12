@@ -6,7 +6,7 @@ Updated October 11, 2026. Checked phone items below were actually observed on th
 
 - [x] Repair slider inspection when direct ID lookup returns no nodes; traverse the actual accessibility tree using exact IDs.
 - [x] Use the actual Balance and Tinnitus tab descriptions.
-- [x] Activate slider tabs with a double tap at their live bounds center and verify actual selection; support both two- and three-tab layouts.
+- [x] Activate slider tabs with a double tap at their live label center (container center fallback) and verify actual selection; support both two- and three-tab layouts.
 - [x] Locate calibrated gesture starts from native progress rather than the numeric label's oversized bounds.
 - [x] Send one continuous 650 ms Tasker gesture and verify fresh displayed readback.
 - [x] Select backends per family, preserving the Volume backend when configuring balance/tinnitus.
@@ -42,7 +42,7 @@ Successful app labels do not independently acknowledge acoustic receipt by the a
 - [x] Backend simulation: native prerequisites, accepted-but-unchanged progress, and per-family backend isolation.
 - [x] Missing tinnitus simulation: Current, Up, Down, Set, Max, Mute, Inspect, and voice request stop without movement.
 - [x] Worker coordination, wrong control/program, calibration, generated-project parity, migration and restored workflows.
-- [x] Shared slider-tab selector: 18 BeanShell cases resolve live X/Y centers and exercise activation guards for two- and three-tab layouts, selected-tab no-op, missing/ambiguous tabs, display bounds, Android version, rejected activation and layout/selection changes while settling; 5 cases check actual selection and fail on unchanged, hidden or ambiguous selection and foreground loss. Six additional cases validate program icons against tinnitus availability. Phone verification is recorded separately.
+- [x] Shared slider-tab selector: 19 BeanShell cases resolve live X/Y centers and exercise activation guards for two- and three-tab layouts, selected-tab no-op, missing/ambiguous tabs, display bounds, Android version, rejected activation and layout/selection changes while settling; 5 cases check actual selection and fail on unchanged, hidden or ambiguous selection and foreground loss. Six additional cases validate icon-first tinnitus availability and unknown-icon fallback; known icons forbid reading tab descriptions. Phone verification is recorded separately.
 
 The spoken-result formatter check executes its actual Java body in local BeanShell; the remaining simulations and static checks do not execute Android or phone plugin events. Run the repository checks with:
 
@@ -70,18 +70,18 @@ Use an unlocked phone on Signia Controls. Keep competing legacy profiles disable
 2. [x] Run public TinnitusSet with Parameter 1 `1`, then `0` in Universal; repeat `0` and confirm no additional gesture. All requests passed with fresh readback; the repeated target and final restore sent no gesture/progress action. Starting tinnitus 0 restored; see [direct acceptance](HeySig3-tinnitus-acceptance-2026-10-11.md).
 3. [x] Test other small balance targets before endpoint/long-jump tests. Fresh starting balance −3 in Universal; adjacent targets −2, −1, −4, −5, reverse moves, repeated −1/−5/−3 without movement, and restoration to −3 passed. See [small-target acceptance](HeySig3-balance-small-targets-2026-10-11.md). Balance 0 → −1 → 0 already passed with fresh screen readback and speech; see [voice verification](HeySig3-voice-verification-2026-10-11.md).
 4. [x] Acceptance clarified by the user: no aid confirmation is available for balance/tinnitus; use fresh app readback. Battery indications already work.
-5. [ ] In TV, test TinnitusCurrent, Set, Mute/Max and Inspect. Confirm the same unavailable message, no gesture/progress action, and no program switch. Up already passed; the other entry points have simulated coverage only. October 11 attempt stopped before switching programs because starting VolumeCurrent failed while Balance was selected; see [test attempt](HeySig3-tv-unavailable-2026-10-11.md).
-6. [ ] Check availability/readback in the remaining actual programs: Off just Tinnitus, Noisy, Outdoor and Very Noisy. Do not assume which ones provide a tinnitus tab.
-7. [ ] Test balance/tinnitus movement in another program where its control is present; only Universal movement has passed so far.
-8. [ ] Test public numeric voice routing with explicit command text, then actual AutoVoice recognition. Confirm correct target, cancellation and no command on unrecognized speech.
-9. [ ] Test the configured AutoWear command event and its actual input variable.
+5. [x] In TV, TinnitusCurrent, Set 1, Mute, Max and Inspect returned the same unavailable message with no gesture/progress action or program change. Volume/Balance reads passed before and afterward; all 18 guarded requests passed and Universal's captured values 9/0/0 were restored. Known no-tinnitus icons skip the tinnitus tab search; see [acceptance](HeySig3-tv-unavailable-2026-10-11.md).
+6. [x] Off just Tinnitus, Noisy, Outdoor and Very Noisy passed availability/readback. Each has U+E912 and tinnitus available on this phone; all 28 guarded requests, repeated-selection no-ops and starting-value restoration passed. See [program readback](HeySig3-program-readback-2026-10-11.md).
+7. [x] Noisy passed Balance 0→−1→0 and Tinnitus 7→6→7, repeated targets without movement, and restoration. Direct VolumeSet 8→7→8 also passed; all 24 guarded requests succeeded. See [movement acceptance](HeySig3-other-program-movement-2026-10-11.md).
+8. [ ] Numeric typed AutoVoice `volume 8` routing passed; working SIG3_VoiceCommand recognized spoken `volume 9`, restored the starting value and spoke the result, confirmed by the user. AutoVoice microphone shortcut still opens no prompt, so actual AutoVoice recognition remains unchecked. Previously tested cancellation and unrecognized speech still apply; see [voice verification](HeySig3-voice-verification-2026-10-11.md).
+9. [ ] Test the configured AutoWear command event and its actual input variable. No watch is available for this test, as confirmed by the user on October 11.
 10. [x] Test a second command while the worker runs, manual Stop before dispatch, and successful recovery afterward. Confirm no stale success or stuck lock.
     Manual Stop during a controlled pause in the actual worker before dispatch and subsequent fresh ProgramCurrent recovery passed on October 11; see [worker Stop verification](HeySig3-worker-stop-verification-2026-10-11.md). Direct worker and public VolumeCurrent collision rejection, unchanged first-operation results, and fresh VolumeCurrent recovery at 9 in Universal also passed; see [collision verification](HeySig3-worker-collision-verification-2026-10-11.md). Interruption/collision during plugin or internal-helper execution remains a separate live test.
 11. [ ] Test locked screen, app left on settings, missing control/overlay, program change, muted selected stream and active call failures as appropriate. Opening Controls recovered the observed settings-page launch failure; automatic recovery is not implemented.
 
 ## Volume and native accessibility acceptance still pending
 
-- [ ] Verify Tasker's Volume Set path separately. Existing ADB volume success does not establish it.
+- [x] Direct public Tasker VolumeSet passed in Noisy: 8→7→8, repeated targets without movement, and fresh app readback. The configured dispatchGesture backend was used; see [acceptance](HeySig3-other-program-movement-2026-10-11.md).
 - [x] Resolve the subsequent public VolumeCurrent failure: the corrected helper passed with a fresh 0 in Universal, CommandOK=1, stage=complete and empty Error. See the [verification report](HeySig3-verification-2026-10-10.md).
 - [ ] Confirm native/display mapping at enough levels for each family before setting its RangeConfirmed flag.
 - [ ] If intentionally testing native accessibility, verify touch exploration is enabled by the user. It was off in the captured inspection, and the code must stop before sending progress when off.
@@ -131,3 +131,5 @@ Actual hearing-aid receipt is not independently observable for program/slider co
 - [x] Controlled Stop of the actual worker before dispatch: Stop at 7.77 seconds during a two-minute diagnostic Wait, square changed to triangle, worker absent afterward, authoritative result remained pending with CommandOK=0, and fresh ProgramCurrent recovery returned Universal with success. Original phone worker restored; see [verification](HeySig3-worker-stop-verification-2026-10-11.md).
 - [x] Busy-worker rejection before dispatch: direct worker and public VolumeCurrent requests showed Tasker's Abort New Task warning, preserved the running worker's operation ID and captured result fields, and subsequent fresh VolumeCurrent recovery returned 9 in Universal with success and matching screen readback. See [collision verification](HeySig3-worker-collision-verification-2026-10-11.md).
 - [ ] Verify collision/interruption during an in-flight plugin action or nested internal helper; the controlled pre-dispatch tests do not certify those paths.
+
+- [x] Muted media write guard: user-muted 0/25 blocked public VolumeSet 9→8 at audio preflight, with no touch/progress dispatch and unchanged Universal value 9. Read-only Current remained usable. Captured media 17/25 was restored; see [guard verification](HeySig3-muted-stream-2026-10-11.md).

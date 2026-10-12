@@ -100,6 +100,26 @@ try {
     if (rect.isEmpty() || rect.left < 0 || rect.top < 0
         || rect.right > metrics.widthPixels || rect.bottom > metrics.heightPixels)
         throw new JavaCodeException("Tab bounds are outside the display");
+    // Prefer the visible label inside the resolved tab, away from icon/layout gaps.
+    labelNodes = new java.util.ArrayList(); labelNodes.add(tab); labelCount = 0;
+    for (labelScan = 0; labelScan < labelNodes.size() && labelScan < 30; labelScan++) {
+        labelNode = (AccessibilityNodeInfo) labelNodes.get(labelScan);
+        labelText = labelNode.getText();
+        if (labelNode.isVisibleToUser() && labelNode.isEnabled() && labelText != null
+            && family.contentEquals(labelText)) {
+            labelRect = new android.graphics.Rect(); labelNode.getBoundsInScreen(labelRect);
+            if (!labelRect.isEmpty() && labelRect.left >= rect.left && labelRect.top >= rect.top
+                && labelRect.right <= rect.right && labelRect.bottom <= rect.bottom) {
+                labelCount++; labelX = labelRect.centerX(); labelY = labelRect.centerY();
+            }
+        }
+        for (labelChildIndex = 0; labelChildIndex < labelNode.getChildCount() && labelNodes.size() < 30; labelChildIndex++) {
+            labelChild = labelNode.getChild(labelChildIndex);
+            if (labelChild != null) labelNodes.add(labelChild);
+        }
+    }
+    if (labelCount > 1) throw new JavaCodeException("Ambiguous tab label");
+    if (labelCount == 1) { x = labelX; y = labelY; }
     tasker.setVariable("sig3_tab_x", "" + x);
     tasker.setVariable("sig3_tab_y", "" + y);
     tasker.setVariable("SIG3_Gesture", family + " tab double tap at " + x + "," + y + "; bounds=" + rect);

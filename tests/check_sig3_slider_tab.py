@@ -57,6 +57,7 @@ cases = [
     ('three tab balance', 'tasker.family="Balance";tabNode.desc="Sound Sharpness Tab";', True, '855,2214'),
     ('two tab balance', 'tasker.family="Balance";tabNode.desc="Sound Sharpness Tab";tabNode.left=540;', True, '776,2214'),
     ('tinnitus', 'tasker.family="Tinnitus";tabNode.desc="Tinnitus Signal Tab";tabNode.left=370;tabNode.right=685;', True, '527,2214'),
+    ('live label target', 'labelNode=new AccessibilityNodeInfo();labelNode.text="Volume";labelNode.left=216;labelNode.top=2231;labelNode.right=340;labelNode.bottom=2280;tabNode.left=42;tabNode.right=514;tabNode.children.add(labelNode);', True, '278,2255'),
     ('selected', 'tabNode.desc="Selected Volume Tab";', True, 'null,null'),
     ('missing', 'rootNode.children.clear();', False, 'null,null'),
     ('ambiguous', 'rootNode.children.add(tabNode);', False, 'null,null'),
