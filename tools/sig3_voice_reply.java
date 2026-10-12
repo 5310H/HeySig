@@ -40,8 +40,9 @@ if ("retry".equals(voiceValue("sig3_reply_kind"))) {
             }
         }
         if ("Battery".equals(family)) reply = "Battery checks requested. Listen for the hearing aid indications.";
-        if (("Noise".equals(family) || "Setup".equals(family) || "Sleep".equals(family)) && observed.length() > 0)
+        if (("Noise".equals(family) || "Setup".equals(family) || "Sleep".equals(family) || "Settings".equals(family)) && observed.length() > 0)
             reply = observed + ".";
+        if (voiceValue("SIG3_SettingsAutoError").length() > 0) reply += " Settings were not saved. " + voiceValue("SIG3_SettingsAutoError");
     }
 }
 tasker.setVariable("SIG3_VoiceReply", reply);

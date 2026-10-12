@@ -52,6 +52,9 @@ if (visible != 1) throw new JavaCodeException("Expected exactly one enabled " + 
 if (count == 0 && headerCount == 1) { program = headerProgram; count = 1; }
 if (count != 1 || headerCount > 1) throw new JavaCodeException("Cannot identify current program unambiguously");
 if (headerCount == 1 && !headerProgram.equals(program)) throw new JavaCodeException("Program label and active header disagree");
+savedProgram = tasker.getVariable("SIG3_SettingsExpectedProgram");
+if (savedProgram != null && savedProgram.length() > 0 && !savedProgram.startsWith("%") && !savedProgram.equals(program))
+    throw new JavaCodeException("Program changed during settings operation; saved program=" + savedProgram + "; current=" + program);
 baseline = tasker.getVariable("SIG3_Program");
 if (baseline != null && !baseline.equals(program))
     throw new JavaCodeException("Program changed during operation: " + baseline + " -> " + program);

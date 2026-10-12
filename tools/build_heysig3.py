@@ -356,6 +356,8 @@ def numeric_voice():
             ('Program','Current','',r'(?i)^\s*(?:current program|current mode|what program|what mode|what is (?:the )?current (?:program|mode))\s*\??\s*$'),
             ('Battery','Check','listen',r'(?i)^\s*(?:battery|battery check|check battery)\s*$'),
             ('Battery','Check','listen',r'(?i)^\s*(?:battery listen|listen to battery)\s*$'),
+            ('Settings','Save','',r'(?i)^\s*save settings\s*$'),
+            ('Settings','Restore','',r'(?i)^\s*restore settings\s*$'),
             ('Noise','Sample','',r'(?i)^\s*(?:noise sample|check noise)\s*$'),
             ('Setup','Toggle','',r'(?i)^\s*override toggle\s*$'),
             ('Sleep','Set','asleep',r'(?i)^\s*sleep\s*$'),
@@ -398,7 +400,7 @@ def protect_internal(aa):
 def worker():
     aa = [setvar('%SIG3_CommandOK', 0), setvar('%SIG3_Error', ''),
           setvar('%SIG3_Result', 'pending: operation did not finish'),
-          setvar('%SIG3_MoveStage', 'start'), setvar('%SIG3_TouchStage', 'not run'), setvar('%SIG3_Gesture', ''), setvar('%SIG3_QueryData', ''), setvar('%SIG3_Program', ''),
+          setvar('%SIG3_SettingsAutoError',''), setvar('%SIG3_SettingsExpectedProgram',''), setvar('%SIG3_MoveStage', 'start'), setvar('%SIG3_TouchStage', 'not run'), setvar('%SIG3_Gesture', ''), setvar('%SIG3_QueryData', ''), setvar('%SIG3_Program', ''),
           setvar('%SIG3_Previous', ''), setvar('%SIG3_Expected', ''), setvar('%SIG3_Observed', ''),
           setvar('%SIG3_AudioDiagnostics', ''), setvar('%SIG3_Target', ''), setvar('%SIG3_SliderDiagnostics',''), setvar('%SIG3_ProgressAccepted','not run'),
           setvar('%SIG3_OperationId', '%TIMEMS'), setvar('%sig3_request', '%par1')]
@@ -412,17 +414,68 @@ def worker():
                    condition('%err', 12), setvar('%SIG3_Error', 'Internal task failed: %errmsg'), setvar('%SIG3_' + family + 'OK', 0), action(38),
                    setvar('%SIG3_CommandOK', '%SIG3_' + family + 'OK'), action(38)]
         aa += [action(38)]
-    for family, operations in [('Program', ('Switch','Current')), ('Battery', ('Check',)), ('Noise', ('Sample','Process')), ('Sleep', ('Set',)), ('Setup', ('Init','Override','Toggle'))]:
+    for family, operations in [('Program', ('Switch','Current')), ('Battery', ('Check',)), ('Noise', ('Sample','Process')), ('Sleep', ('Set',)), ('Setup', ('Init','Override','Toggle')), ('Settings', ('Save','Restore'))]:
         aa += [condition('%sig3_request1', 2, family), setvar('%SIG3_' + family + 'OK', 0)]
         for operation in operations:
             aa += [condition('%sig3_request2', 2, operation), call('SIG3_Internal' + family + operation, '%sig3_request3'),
                    condition('%err', 12), setvar('%SIG3_Error', 'Internal task failed: %errmsg'), setvar('%SIG3_' + family + 'OK', 0), action(38),
                    setvar('%SIG3_CommandOK', '%SIG3_' + family + 'OK'), action(38)]
         aa += [action(38)]
-    aa += [condition('%SIG3_CommandOK', 8, 1), setvar('%SIG3_MoveStage', 'complete'),
+    aa += [setvar('%sig3_settings_auto_mode','prepare'), java_file('sig3_settings_auto.java'),
+           condition('%SIG3_SettingsAutoMode',2,'full'), call('SIG3_InternalSettingsSave'), action(38),
+           condition('%SIG3_SettingsAutoMode',2,'update'), setvar('%sig3_settings_mode','commit'), java_file('sig3_settings_snapshot.java'), action(38),
+           condition('%SIG3_SettingsAutoMode',12), setvar('%sig3_settings_auto_mode','finish'), java_file('sig3_settings_auto.java'), action(38)]
+    aa += [setvar('%SIG3_SettingsExpectedProgram',''), condition('%SIG3_CommandOK', 8, 1), setvar('%SIG3_MoveStage', 'complete'),
            setvar('%SIG3_Error', ''), action(38), java_file('sig3_report.java')]
     aa += [condition('%SIG3_CommandOK',8,1),java_file('sig3_completion.java'),action(38)]
     return aa
+
+
+def voice_ready():
+    reference = E.parse(ROOT / 'tasks/SIG_TinnitusSet.tsk.xml').getroot()
+    speech = deepcopy(next(a for a in reference.findall('.//Action') if a.findtext('code') == '559'))
+    speech.find("Str[@sr='arg0']").text = '%sig3_ready_speech'
+    speech.find("Int[@sr='arg7']").set('val','0')
+    se=E.Element('se');se.text='true';speech.insert(1,se)
+    return [java_file('sig3_voice_ready.java'),condition('%err',12),stop(),action(38),
+            condition('%SIG3_VoiceCaptureAllowed',3,1),stop(),action(38),
+            condition('%sig3_ready_speech',12),speech,condition('%err',12),
+            setvar('%SIG3_VoiceStatus','Readiness cue could not be spoken'),stop(),action(38),action(38),
+            wait(300),setvar('%SIG3_VoiceReady',1),setvar('%SIG3_VoiceStatus','Listening for command')]
+
+
+def continuous(enabled):
+    suffix = 'on' if enabled else 'off'
+    reference = E.parse(ROOT / f'tools/sig3-autovoice-continuous-{suffix}-reference.tsk.xml')
+    a = deepcopy(reference.find('.//Action'))
+    assert a.findtext('Bundle/Vals/continuous') == str(enabled).lower()
+    a.find('Bundle/Vals/plugininstanceid').text = str(uuid.uuid5(uuid.NAMESPACE_URL, 'HeySig3:Continuous:' + suffix))
+    E.SubElement(a, 'se').text = 'true'
+    return a
+
+
+def wake_tasks():
+    enable = [condition('%SIG3_VoiceBusy',2,1),setvar('%SIG3_WakeStatus','Finish the voice prompt before enabling listening'),stop(),action(38),
+              setvar('%SIG3_WakeEnabled',1),
+              continuous(True),condition('%err',12),setvar('%SIG3_WakeEnabled',0),setvar('%SIG3_WakeStatus','Listener start failed: %errmsg'),stop(),action(38),
+              condition('%SIG3_WakeEnabled',3,1),continuous(False),setvar('%SIG3_WakeStatus','Hey Sig listening disabled'),stop(),action(38),
+              setvar('%SIG3_WakeStatus','Hey Sig listening enabled')]
+    disable = [setvar('%SIG3_WakeEnabled',0),continuous(False),condition('%err',12),
+               setvar('%SIG3_WakeStatus','Listener stop failed: %errmsg'),stop(),action(38),setvar('%SIG3_WakeStatus','Hey Sig listening disabled')]
+    trigger = [java_file('sig3_wake_trigger.java'),condition('%err',12),stop(),action(38),
+               condition('%sig3_wake_accepted',2,1),call('SIG3_VoiceCommand'),action(38)]
+    return [task('SIG3_WakeEnable',520,enable),task('SIG3_WakeDisable',521,disable),task('SIG3_WakeTrigger',522,trigger)]
+
+
+def voice_session_wrapper():
+    return [condition('%SIG3_VoiceBusy',2,1),stop(),action(38),setvar('%SIG3_VoiceBusy',1),
+            condition('%SIG3_WakeEnabled',2,1),continuous(False),condition('%err',12),
+            setvar('%SIG3_VoiceBusy',0),setvar('%SIG3_VoiceReady',0),setvar('%SIG3_WakeStatus','Cannot pause listener: %errmsg'),stop(),action(38),wait(500),action(38),
+            call('SIG3_VoiceSession'),setvar('%SIG3_VoiceReady',0),setvar('%SIG3_VoiceBusy',0),
+            condition('%SIG3_WakeEnabled',2,1),continuous(True),condition('%err',12),setvar('%SIG3_WakeEnabled',0),
+            setvar('%SIG3_WakeStatus','Listener resume failed: %errmsg'),action(43),
+            condition('%SIG3_WakeEnabled',3,1),continuous(False),setvar('%SIG3_WakeStatus','Hey Sig listening disabled'),action(43),
+            setvar('%SIG3_WakeStatus','Hey Sig listening enabled'),action(38),action(38),action(38)]
 
 
 def voice_reply(kind='result'):
@@ -452,6 +505,50 @@ def extra_tasks():
                            ('NoiseStrikes','0'),('SleepActive','0'),('DeferAutomation','1'),('CompletionPolicy','stay'),('AutomationCancelled','0'),('NoiseSource','phone')]:
             aa += [condition('%SIG3_' + key, 13), setvar('%SIG3_' + key, value), action(38)]
         return aa + [setvar('%SIG3_Observed','Defaults initialized; existing configuration preserved; automatic features default off'),setvar('%SIG3_SetupOK',1)]
+    def settings_guard(lhs, op, rhs=''):
+        return [condition(lhs, op, rhs), setvar('%SIG3_Family','Settings'),
+                setvar('%SIG3_SettingsOK',0),
+                java_code('detail = tasker.getVariable("SIG3_Error"); if(detail == null || detail.length() == 0 || detail.startsWith("%")) detail="Settings operation failed"; if("Restore".equals(tasker.getVariable("SIG3_SettingsOperation"))) detail="Restore stopped at " + tasker.getVariable("SIG3_SettingsStage") + ": " + detail + "; snapshot retained; earlier steps may have completed"; tasker.setVariable("SIG3_Error",detail); return "stopped";'),
+                stop(),action(38)]
+    def snapshot_step(mode):
+        return [setvar('%sig3_settings_mode',mode),java_file('sig3_settings_snapshot.java'),*settings_guard('%err',12)]
+    def settings_call(family, operation, value=''):
+        return [setvar('%SIG3_SettingsStage',family+' '+operation),setvar('%SIG3_Family',family),
+                call('SIG3_Internal'+family+operation,value),setvar('%SIG3_Family','Settings'),
+                *settings_guard('%err',12),*settings_guard('%SIG3_'+family+'OK',3,1)]
+    save = [setvar('%SIG3_SettingsOK',0),setvar('%SIG3_SettingsOperation','Save'),
+            setvar('%SIG3_SettingsDraft',''),*settings_call('Program','Current'),*snapshot_step('begin-save')]
+    for family in ('Volume','Balance'):
+        save += [*settings_call(family,'Current'),setvar('%sig3_settings_control',family),*snapshot_step('capture')]
+    save += [java_file('sig3_tinnitus_available.java'),*settings_guard('%err',12),
+             condition('%SIG3_TinnitusAvailable',8,1),*settings_call('Tinnitus','Current'),action(38),
+             setvar('%SIG3_Error',''),setvar('%sig3_settings_control','Tinnitus'),*snapshot_step('capture'),
+             *settings_call('Program','Current'),*snapshot_step('commit')]
+    add('SIG3_InternalSettingsSave',510,save,True)
+    add('SIG3_SaveSettings',512,[request('Settings','Save')])
+    restore = [setvar('%SIG3_SettingsOK',0),setvar('%SIG3_SettingsOperation','Restore'),
+               setvar('%SIG3_SettingsStage','snapshot validation'),*snapshot_step('load'),
+               *settings_call('Program','Switch','%SIG3_SettingsSlot'),*settings_call('Program','Current'),
+               *snapshot_step('verify-program')]
+    restore += [java_file('sig3_tinnitus_available.java'),*settings_guard('%err',12),
+                setvar('%SIG3_SettingsTinnitusAvailable','%SIG3_TinnitusAvailable'),setvar('%SIG3_Error','')]
+    for family in ('Volume','Balance','Tinnitus'):
+        if family == 'Tinnitus':
+            restore += [condition('%SIG3_SettingsTinnitus',12),condition('%SIG3_SettingsTinnitusAvailable',8,1)]
+        restore += [*settings_call(family,'Set','%SIG3_Settings'+family),
+                    setvar('%sig3_settings_control',family),*snapshot_step('verify-control')]
+        if family == 'Tinnitus':restore += [action(38),action(38)]
+    # Re-read every restored control at the end, rather than trusting cached globals.
+    for family in ('Volume','Balance','Tinnitus'):
+        if family == 'Tinnitus':
+            restore += [condition('%SIG3_SettingsTinnitus',12),condition('%SIG3_SettingsTinnitusAvailable',8,1)]
+        restore += [*settings_call(family,'Current'),setvar('%sig3_settings_control',family),*snapshot_step('verify-control')]
+        if family == 'Tinnitus':restore += [action(38),action(38)]
+    restore += [*settings_call('Program','Current'),setvar('%SIG3_TinnitusAvailable','%SIG3_SettingsTinnitusAvailable'),
+                *snapshot_step('finish-restore')]
+    add('SIG3_InternalSettingsRestore',511,restore,True)
+    add('SIG3_RestoreSettings',513,[request('Settings','Restore')])
+
     add('SIG3_InternalSetupInit',470,init_defaults(),True)
     add('SIG3_Init',360,[request('Setup','Init')])
     add('SIG3_InternalSetupOverride',471,[*g('Setup','%par1',5,r'^[01]$','Override must be 0 or 1'),setvar('%SIG3_ManualOverride','%par1'),setvar('%SIG3_NoiseStrikes',0),setvar('%SIG3_NoiseCandidate',''),setvar('%SIG3_Observed','Manual override=%par1'),setvar('%SIG3_SetupOK',1)],True)
@@ -549,7 +646,8 @@ def extra_tasks():
         if name == 'SIG3_VoiceCommand':
             aa = [loop('%sig3_attempt', ','.join(str(i) for i in range(1,21))),
                   setvar('%SIG3_VoiceHeard',''),setvar('%SIG3_VoiceMatched',0),
-                  setvar('%VOICE',''),setvar('%gv_heard1',''),capture,
+                  setvar('%VOICE',''),setvar('%gv_heard1',''),*voice_ready(),capture,
+                  setvar('%SIG3_VoiceReady',0),setvar('%SIG3_VoiceStatus','Recognition finished'),
                   condition('%VOICE',13),condition('%gv_heard1',13),
                   setvar('%SIG3_CommandOK',0),setvar('%SIG3_VoiceReply',''),
                   setvar('%SIG3_Error',''),setvar('%SIG3_Result','Voice capture ended without speech; no command sent'),
@@ -564,7 +662,11 @@ def extra_tasks():
                   *voice_reply('retry'),java_file('sig3_voice_retry.java'),condition('%err',12),stop(),action(38),
                   condition('%sig3_retry',3,'retry'),stop(),action(38),action(40),
                   java_code('tasker.showToast("Voice session ended. Run SIG3_VoiceCommand to start again."); return "ended";')]
-        add(name,number,aa)
+        if name == 'SIG3_VoiceCommand':
+            add('SIG3_VoiceSession',514,aa)
+            add(name,number,voice_session_wrapper())
+        else:
+            add(name,number,aa)
     add('SIG3_LegacyCommand',400,[java_file('sig3_legacy_command.java'),condition('%err',13),call('SIG3_Worker','%sig3_legacy_request'),action(38)])
     # Explicit numeric watch samples: no assumption about plugin event variable names.
     add('SIG3_WatchNoise',399,[condition('%SIG3_NoiseSource',2,'watch'),request('Noise','Process','%par1'),action(38)])
@@ -574,7 +676,10 @@ def extra_tasks():
               condition('%par1',12),setvar('%sig3_input','%par1'),action(38),
               java_code('input = tasker.getVariable("sig3_input"); if (input == null) throw new com.joaomgcd.taskerm.action.java.JavaCodeException("No command text supplied by event"); input = input.trim().replaceAll("(?i)^sig3\\\\s+", ""); tasker.setVariable("sig3_input", input); return "normalized";'),
               condition('%err',13),call('SIG3_VoiceRouter','%sig3_input'),action(38)]
+        if name == 'SIG3_AutoVoiceCommand':
+            aa = [condition('%SIG3_WakeEnabled',2,1),stop(),action(38),*aa]
         add(name,number,aa)
+    tasks.extend(wake_tasks())
     return tasks
 
 def write(path, root):
@@ -662,6 +767,15 @@ def build():
     r = E.Element('TaskerData', sr='', dvi='1', tv='6.6.20')
     p = E.SubElement(r, 'Project', sr='proj0', ve='2')
     for tag, value in [('cdate', STAMP), ('name', 'HeySig3'), ('tids', ','.join(t.findtext('id') for t in tasks))]: E.SubElement(p, tag).text = value
+    wake_profile = deepcopy(E.parse(ROOT / 'tools/sig3-autovoice-wake-profile-reference.xml').find('Profile'))
+    wake_profile.set('sr','prof523')
+    for tag, value in [('id','523'),('mid0','522'),('flags','0'),('cdate',STAMP),('edate',STAMP)]:
+        wake_profile.find(tag).text = value
+    E.SubElement(wake_profile,'nme').text = 'SIG3_HeySigWake'
+    wake_profile.find('Event/Bundle/Vals/Source').text = 'continuous'
+    wake_profile.find('Event/Bundle/Vals/plugininstanceid').text = str(uuid.uuid5(uuid.NAMESPACE_URL,'HeySig3:HeySigWake'))
+    E.SubElement(p,'pids').text = '523'
+    r.append(wake_profile)
     r.extend(tasks); write(ROOT / 'projects/HeySig3.prj.xml', r)
 
 

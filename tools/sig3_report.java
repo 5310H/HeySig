@@ -13,6 +13,8 @@ if ("1".equals(cleanValue("SIG3_CommandOK"))) {
     if (program.length() > 0) result += "; program=" + program;
     if (target.length() > 0) result += "; target=" + target;
     result += " (app state; aid receipt unverified)";
+    warning = cleanValue("SIG3_SettingsAutoError");
+    if (warning.length() > 0) result += "; settings not saved: " + warning;
 } else {
     error = cleanValue("SIG3_Error");
     if (error.length() == 0) error = "Operation did not complete";

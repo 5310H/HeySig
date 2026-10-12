@@ -94,25 +94,27 @@ Already established: Tasker balance and tinnitus 0 → 1 → 0 in Universal, TV 
 
 Outside current completion scope: relative Up/Down voice phrases, a new EQ controller, AppBlock, force-close/lock behavior, BLE/root/helper-app control, and automatic secure unlock.
 
-## Future: save and restore settings after charging
+## Completed: save and restore settings after charging
 
-Requested October 11, 2026. The user reports that charging turns the aids off and they restart with default settings. Investigate this behavior separately from Signia app readback.
+Requested October 11, 2026. The user reports that charging turns the aids off and they restart with default settings. On the user’s instruction, test persistent settings and Signia app readback without requiring physical aids or aid-response verification.
 
-- [ ] Add explicit Save settings / Restore settings commands. Save fresh verified readings of the actual selected program, volume, balance, and tinnitus when available, with a timestamp and configuration identity. Persist the snapshot across restarts; do not overwrite it with charging defaults automatically.
-- [ ] Restore and verify the saved program first, then restore its available controls through the existing worker and audio guards. Skip unavailable tinnitus explicitly; reject changed or ambiguous program mappings and invalid snapshots.
-- [ ] Report partial restoration and stop on failures rather than claiming full success. Preserve the saved snapshot for a later manual retry.
-- [ ] Test charging/restart, missing tinnitus, renamed programs, partial failures, and accurate app readback after restoration. Begin with user-triggered restoration; any automatic reconnect trigger needs separate verification.
+- [x] Automatically save the last successful settings change: current program, volume, balance, and tinnitus when available. Update only the changed value when a complete verified baseline exists for that program; establish a fresh baseline after a program change. Persist across restarts, and preserve the snapshot during read-only queries, failed requests, no-ops, charging defaults, and restoration. Support the voice command **“restore settings”** and an optional explicit **“save settings”** refresh. Implemented and verified in the installed phone tasks.
+- [x] Restore and verify the saved program first, then restore its available controls through the existing worker and audio guards. Skip unavailable tinnitus explicitly; reject changed or ambiguous program mappings and invalid snapshots.
+- [x] Report partial restoration and stop on failures rather than claiming full success. Preserve the saved snapshot for a later manual retry.
+- [x] Test persistence/restart, simulated unsaved defaults, missing tinnitus, renamed programs, partial failures, and accurate app readback after restoration. Restoration remains user-triggered; a physical charging test and aid-response verification are outside the requested scope. Any automatic reconnect trigger needs separate verification.
+
+App-only acceptance: [12 installed-phone checks](HeySig3-settings-verification-2026-10-11.md), plus persistent-file and failure tests.
 
 ## Future: Hey Sig wake phrase and spoken readiness cue
 
 Requested October 11, 2026: use **“Hey Sig”** as the wake phrase and say **“Sig here”** when ready to receive the command, so the user can operate without viewing the phone.
 
-- [ ] Investigate and implement an explicitly enabled wake-word listener for **“Hey Sig”**, accounting for microphone permissions, battery use, false activations, and Android background restrictions. Provide an easy way to disable listening.
-- [ ] Add the spoken readiness cue to the general voice prompt and explicit Try again flow. Sequence playback and microphone capture so recognition does not capture the cue itself; verify that the cue accurately indicates when speech can begin.
+- [x] Implement opt-in AutoVoice Continuous controls and an exact **“Hey Sig”** event, with enable/disable tasks, busy guards, and listener pause/resume around native voice capture. Live wake detection, battery/background behavior, and restart persistence remain pending.
+- [x] Add **“Sig here”** to the general prompt and Try again loop. Speech completes before capture; the cue, microphone prompt, and spoken current-program reply passed live acceptance. Try again sequencing has executable coverage.
 - [ ] Test with the screen off and locked, including Android microphone/background restrictions. If recognition or Signia control requires unlocking, give clear spoken instructions where possible; do not bypass the lock screen.
 - [ ] Respect the existing speech preference and DND/phone-volume handling. Verify the cue is audible under supported settings and preserve an on-screen indication.
 
-Both wake-word activation and the readiness announcement are future work. No always-listening service is currently enabled; screen-off/locked operation remains unverified.
+The readiness cue is implemented in the general voice prompt and Try again loop. Nine executable preflight cases pass; the user heard the cue on the phone. Live microphone-only and cue-plus-microphone checks passed. The user then confirmed the full “current program” flow spoke the program name after the cue and prompt. An earlier captured command was blocked by the existing Do Not Disturb guard; the successful full test ran with Do Not Disturb off. The opt-in wake controls and exact event are implemented; [setup and limitations](HeySig3-wake-phrase.md) distinguish local coverage from pending live wake detection. The listener is left off, and screen-off/locked operation remains unverified.
 
 ## Future: spoken-response on/off switch
 

@@ -22,6 +22,8 @@ cases = [
     ({'SIG3_CommandOK':'0','SIG3_Error':'%SIG3_Error'}, 'Command did not complete. Check the phone screen.'),
     ({'SIG3_OperationId':'old'}, 'Command was not accepted. Please try again when the current command finishes.'),
     ({'SIG3_MoveStage':'start'}, 'Command result could not be verified. Check the phone screen.'),
+    ({'SIG3_Family':'Settings','SIG3_Observed':'Settings restored for Universal'}, 'Settings restored for Universal.'),
+    ({'SIG3_Family':'Volume','SIG3_Observed':'9','SIG3_SettingsAutoError':'Disk full'}, 'Volume is 9. Settings were not saved. Disk full'),
     ({'SIG3_Family':'Battery'}, 'Battery checks requested. Listen for the hearing aid indications.'),
     ({'sig3_reply_kind':'retry'}, 'Command not recognized. Tap Try again to speak again, or Cancel.'),
     ({'SIG3_VoiceResponses':'0'}, ''),
@@ -34,15 +36,16 @@ with tempfile.TemporaryDirectory() as d:
         f=Path(d)/'voice.bsh'
         f.write_text(stub+setup+'format(){'+source+'} format();'+
                      'reply=tasker.getVariable("sig3_speech"); if (!reply.equals('+json.dumps(expected)+')) throw new RuntimeException(reply); print("PASS");')
-        out=subprocess.run(['java','-cp','/usr/share/java/bsh.jar','bsh.Interpreter',str(f)],capture_output=True,text=True,check=True)
+        out=subprocess.run(['java','-XX:-UsePerfData','-cp','/usr/share/java/bsh.jar','bsh.Interpreter',str(f)],capture_output=True,text=True,check=True)
         assert 'PASS' in out.stdout,out.stdout+out.stderr
 
-task=E.parse(root/'tasks/SIG3_VoiceCommand.tsk.xml').getroot().find('Task')
+task=E.parse(root/'tasks/SIG3_VoiceSession.tsk.xml').getroot().find('Task')
 actions=task.findall('Action')
 for i,a in enumerate(actions):
     if a.findtext('code')=='559':
         assert a.find("Int[@sr='arg2']").get('val')=='3'  # Media stream, no volume change.
         assert a.find("Int[@sr='arg7']").get('val')=='0'  # Wait until speech ends.
         assert a.find("Int[@sr='arg6']").get('val')=='0'  # Offline/default engine.
-        assert any(x.findtext('code')=='30' for x in actions[max(0,i-3):i])
+        if a.find("Str[@sr='arg0']").text == '%sig3_speech':
+            assert any(x.findtext('code')=='30' for x in actions[max(0,i-3):i])
 print(f'{len(cases)} actual BeanShell spoken-result cases passed; Say waits, uses media and follows a settling delay.')

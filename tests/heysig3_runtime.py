@@ -173,7 +173,67 @@ class Phone:
                         local['err'], local['errmsg'] = '1', 'Tab was not selected'
                     pc += 1; continue
                 if 'dispatchGesture' not in script or 'Program selection through' in script:
-                    if 'Normalize numeric commands' in script:
+                    if 'Accept only the wake phrase' in script:
+                        heard=get('par1') or get('avcommnofilter') or get('avcomm')
+                        accepted=get('SIG3_WakeEnabled')=='1' and get('SIG3_VoiceBusy')!='1' and 'SIG3_Worker' not in self.active and re.fullmatch(r'hey\s+sig[.!?]?',heard.strip(),re.I) is not None
+                        put('sig3_wake_accepted','1' if accepted else '0')
+                    elif 'Prepare the readiness cue' in script:
+                        put('SIG3_VoiceReady','0');put('SIG3_VoiceCaptureAllowed','1');put('SIG3_VoiceStatus','Opening command prompt')
+                        put('sig3_ready_speech','' if get('SIG3_VoiceResponses')=='0' else 'Sig here')
+                    elif 'Update the last verified settings' in script:
+                        keys='Family CommandOK Error Result MoveStage TouchStage Gesture QueryData Program Previous Expected Observed AudioDiagnostics Target SliderDiagnostics ProgressAccepted OperationId'.split()
+                        if get('sig3_settings_auto_mode')=='finish':
+                            warning='' if get('SIG3_SettingsOK')=='1' else get('SIG3_Error') or 'Settings snapshot did not complete'
+                            for k,v in self.settings_command_state.items():put('SIG3_'+k,v)
+                            put('SIG3_SettingsAutoError',warning);put('SIG3_SettingsExpectedProgram','')
+                        else:
+                            put('SIG3_SettingsAutoMode','');f=get('SIG3_Family');op=get('sig3_request2')
+                            slider=f in ('Volume','Balance','Tinnitus')
+                            changed=slider and op in ('Set','Up','Down','Max','Mute','Sharp','Soft') and get('SIG3_Previous')!=get('SIG3_Observed') and bool(get('SIG3_Previous'))
+                            changed=changed or (f=='Program' and op=='Switch' and bool(get('SIG3_Previous')) and get('SIG3_Previous')!=get('SIG3_Program'))
+                            if get('SIG3_CommandOK')=='1' and changed:
+                                self.settings_command_state={k:get('SIG3_'+k) for k in keys}
+                                put('SIG3_SettingsOK','0');put('SIG3_SettingsAutoMode','full')
+                                snap=getattr(self,'settings_snapshot',None)
+                                names=[self.globals.get('SIG3_ProgramName'+str(i),'') for i in range(1,7)]
+                                if slider and snap and snap['program']==self.program and snap['programs']==names:
+                                    self.settings_draft=json.loads(json.dumps(snap));self.settings_draft['controls'][f]=int(get('SIG3_Observed'));put('SIG3_SettingsAutoMode','update')
+                    elif 'Persistent user-triggered snapshot' in script:
+                        mode=get('sig3_settings_mode');family=get('sig3_settings_control')
+                        names=[self.globals.get('SIG3_ProgramName'+str(i),'') for i in range(1,7)]
+                        try:
+                            if getattr(self,'settings_fail_mode','')==mode: raise ValueError('Injected snapshot failure')
+                            if mode=='begin-save':
+                                if self.program not in names: raise ValueError('Program not configured')
+                                self.settings_draft={'program':self.program,'programs':names,'controls':{}}
+                                put('SIG3_SettingsExpectedProgram',self.program)
+                            elif mode in ('capture','commit'):
+                                if self.settings_draft['program']!=self.program or self.settings_draft['programs']!=names: raise ValueError('Program changed during save')
+                                if mode=='capture':
+                                    key='SIG3_Level' if family=='Volume' else 'SIG3_'+family+'Level'
+                                    self.settings_draft['controls'][family]=None if family=='Tinnitus' and not self.tinnitus_available else int(get(key))
+                                else:
+                                    self.settings_snapshot=json.loads(json.dumps(self.settings_draft))
+                                    put('SIG3_SettingsOK','1');put('SIG3_Observed','Settings saved for '+self.program)
+                            elif mode=='load':
+                                snap=getattr(self,'settings_snapshot',None)
+                                if not snap or snap['programs']!=names: raise ValueError('Missing snapshot or changed mapping')
+                                put('SIG3_SettingsExpectedProgram',snap['program']);put('SIG3_SettingsProgram',snap['program']);put('SIG3_SettingsSlot',str(names.index(snap['program'])+1))
+                                for f,v in snap['controls'].items():put('SIG3_Settings'+f,'' if v is None else str(v))
+                            elif mode in ('verify-program','verify-control','finish-restore'):
+                                snap=self.settings_snapshot
+                                if snap['program']!=self.program or snap['programs']!=names: raise ValueError('Program changed during restore')
+                                if mode=='verify-control':
+                                    key='SIG3_Level' if family=='Volume' else 'SIG3_'+family+'Level'
+                                    if int(get(key))!=snap['controls'][family]:raise ValueError('Restoration readback mismatch')
+                                elif mode=='finish-restore':
+                                    partial=snap['controls']['Tinnitus'] is not None and not self.tinnitus_available
+                                    put('SIG3_SettingsOK','0' if partial else '1');put('SIG3_Error','Partial restore: saved tinnitus unavailable; snapshot retained' if partial else '');put('SIG3_Observed','Settings restored for '+self.program)
+                        except (ValueError,KeyError) as failure:
+                            local['err'],local['errmsg']='1',str(failure);put('SIG3_Error',str(failure));put('SIG3_SettingsOK','0')
+                    elif 'Restore stopped at ' in script:
+                        if get('SIG3_SettingsOperation')=='Restore':put('SIG3_Error','Restore stopped at '+get('SIG3_SettingsStage')+': '+get('SIG3_Error')+'; snapshot retained; earlier steps may have completed')
+                    elif 'Normalize numeric commands' in script:
                         value = get('sig3_command')
                         value = re.sub(r'(?i)^sig(?:3)?\s+', '', value.strip())
                         alias = re.sub(r'^(?:mode|program)\s+', '', value.lower())
@@ -282,7 +342,7 @@ class Phone:
                     elif 'Read-only live UI guard' in script:
                         self.ui_checks += 1
                         baseline = self.globals.get('SIG3_Program', '')
-                        if self.wrong_control or (baseline and baseline != self.program_capture):
+                        if self.wrong_control or (baseline and baseline != self.program_capture) or (self.globals.get('SIG3_SettingsExpectedProgram') and self.globals['SIG3_SettingsExpectedProgram'] != self.program_capture):
                             local['err'], local['errmsg'] = '1', 'Wrong control or program changed'
                         else:
                             self.globals['SIG3_Program'] = self.program_capture
@@ -340,7 +400,16 @@ class Phone:
                 if abs(distance) >= self.threshold: self.level = max(self.bounds[0], min(self.bounds[1], self.level + (self.jump if distance > 0 else -self.jump)))
             elif code == 18: self.closed = True
             elif code == 25: self.closed = True
+            elif code == 269503190:
+                local.pop('err',None)
+                enabled=a.findtext('Bundle/Vals/continuous')=='true'
+                self.continuous_calls=getattr(self,'continuous_calls',[])+[enabled]
+                if getattr(self,'continuous_failure',None)==('start' if enabled else 'stop'):
+                    local['err'],local['errmsg']='1','Injected continuous failure'
+                else:self.continuous_active=enabled
+                if getattr(self,"continuous_hook",None):self.continuous_hook(enabled)
             elif code == 903:
+                if getattr(self,'voice_capture_hook',None):self.voice_capture_hook()
                 local.pop('err', None)
                 responses = getattr(self, 'prompt_responses', [])
                 self.globals['VOICE'] = responses.pop(0) if responses else getattr(self,'prompt_response','')

@@ -27,7 +27,7 @@ The setup was already run on the tested phone. Its calibration is portrait 1080�
 
 See the [voice command list](HeySig3-voice-commands.md) for every supported phrase, numeric ranges, configured program aliases, and optional automation commands.
 
-Run `SIG3_VoiceCommand` in Tasker for a general speech prompt. The spoken **current program** query passed on the Pixel 9a on October 11; [voice verification](HeySig3-voice-verification-2026-10-11.md) separates this working entry from AutoVoice microphone capture, which remains unresolved.
+Run `SIG3_VoiceCommand` in Tasker for a general speech prompt. It says **Sig here** before microphone capture; the cue and spoken current-program reply passed together on October 11. The spoken **current program** query passed on the Pixel 9a on October 11; [voice verification](HeySig3-voice-verification-2026-10-11.md) separates this working entry from AutoVoice microphone capture, which remains unresolved.
 
 The general task now offers Try again / Cancel for unrecognized speech and speaks a short result after verified command completion. Both retry and a spoken current-program response passed on the phone. Set `%SIG3_VoiceResponses=0` to silence replies; on-screen results remain. Other spoken results still require live acceptance.
 
@@ -81,7 +81,7 @@ The Chromebook generates/validates the project; Signia runs on the phone. USB an
 
 ## Priority 3 setup
 
-Run `SIG3_Init` once after import. It fills missing settings and preserves existing ones. Noise and sleep automation default to **disabled**. No profile is installed or activated by the export.
+Run `SIG3_Init` once after import. It fills missing settings and preserves existing ones. Noise and sleep automation default to **disabled**. The export includes the exact-match AutoVoice wake profile; its listener remains off until `SIG3_WakeEnable` runs. See [Hey Sig wake setup](HeySig3-wake-phrase.md).
 
 Configure `%SIG3_ProgramName1` through `%SIG3_ProgramName6` with the exact names of programs actually available in Signia; leave unused slots unset. `SIG3_ProgramSwitch` accepts the slot number in Parameter 1. Voice accepts `program two` or `change program to Music`. It reads the current program, opens the picker, selects a uniquely matching visible name, and verifies the displayed program with bounded waits. `%SIG3_ProgramBackend=accessibility-click` uses clickable accessibility ancestors; `gesture-tap` explicitly taps centers of the current visible node bounds and waits for Android completion. There is no automatic fallback between them. The phone-specific tap choice does not alter slider backends. Repeating the current program is a no-op. No coordinate fractions or cached success assignments are used.
 
@@ -101,7 +101,7 @@ Parameter 1 `open` remains an optional page-only inspection that records visible
 
 ### Voice and watch events
 
-Create or edit an actual AutoVoice recognition profile on the phone to run `SIG3_AutoVoiceCommand`. It prefers the event's `%avcommnofilter`, falling back to `%avcomm`. Connect the actual AutoWear command event to `SIG3_WatchCommand`; it prefers `%awcomm`, falling back to `%awmessage`. Both adapters accept explicit command text in Parameter 1, trim it, remove an optional leading `sig3 `, and pass it to the same router. Verify which event variables your installed plugins expose; use Parameter 1 explicitly when necessary. Plugin-specific Profile XML is deliberately absent because an authentic export from those installed event versions is unavailable. Disable competing legacy profiles while testing.
+Create or edit an actual AutoVoice recognition profile on the phone to run `SIG3_AutoVoiceCommand`. It prefers the event's `%avcommnofilter`, falling back to `%avcomm`. Connect the actual AutoWear command event to `SIG3_WatchCommand`; it prefers `%awcomm`, falling back to `%awmessage`. Both adapters accept explicit command text in Parameter 1, trim it, remove an optional leading `sig3 `, and pass it to the same router. Verify which event variables your installed plugins expose; use Parameter 1 explicitly when necessary. The wake profile uses an authentic installed AutoVoice event export. General command and AutoWear profiles still require phone configuration. Disable competing legacy profiles while testing.
 
 ### Noise and sleep
 
@@ -128,3 +128,7 @@ Priority 3 tests model initialization preservation, program routing/readback fai
 `SIG3_BatteryCheck` defaults to `listen`: phone audio preflight, open the top-right question-mark battery icon, request left, acknowledge, request right, acknowledge, then close. Parameter1 `open` only opens the page and records visible text; it has no audio preflight and sends no battery-check request. Neither mode uses a slider.
 
 The current app’s top-right opener has content description `TA-BatteryToolbarItem`. `%SIG3_BatteryOpenDescription` supplies that captured selector when `%SIG3_BatteryOpenId` has no match. The `TA-BatteryIcon` ID appears twice inside the page on this phone; it is not a unique Controls toolbar selector. The close marker is `%SIG3_BatteryPageId`. Open mode rejects ambiguous markers/openers, and `%SIG3_MoveStage` identifies each listen step.
+
+## Save and restore the last settings
+
+Successful HeySig3 changes automatically save the current program, volume, balance and tinnitus level when available. For a known program, the changed value updates the complete saved record. Say **“restore settings”** to apply that record after charging. An optional **“save settings”** command refreshes all current readings. See [saved-settings behavior and verification](HeySig3-saved-settings.md). Verification covers saved settings and Signia app readback; a physical charging test is outside the requested scope.

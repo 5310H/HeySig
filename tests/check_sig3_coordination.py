@@ -59,7 +59,9 @@ for t in r.findall('Task'):
         if a.findtext('code') == '130':
             callee = a.findtext("Str[@sr='arg0']")
             assert callee in TASKS and callee.startswith('SIG3_')
-            if not name.startswith('SIG3_Internal') and name != 'SIG3_Worker': assert callee in ('SIG3_Worker', 'SIG3_VoiceRouter')
+            if not name.startswith('SIG3_Internal') and name != 'SIG3_Worker':
+                voice_children = {'SIG3_VoiceCommand': 'SIG3_VoiceSession', 'SIG3_WakeTrigger': 'SIG3_VoiceCommand'}
+                assert callee in ('SIG3_Worker', 'SIG3_VoiceRouter', voice_children.get(name))
     # Omission uses Tasker's documented default Abort New Task collision policy.
     assert t.find('rty') is None
     other = E.parse(ROOT / 'tasks' / (name + '.tsk.xml')).getroot().find('Task')

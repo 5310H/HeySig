@@ -836,6 +836,9 @@ if (visible != 1) throw new JavaCodeException("Expected exactly one enabled " + 
 if (count == 0 &amp;&amp; headerCount == 1) { program = headerProgram; count = 1; }
 if (count != 1 || headerCount &gt; 1) throw new JavaCodeException("Cannot identify current program unambiguously");
 if (headerCount == 1 &amp;&amp; !headerProgram.equals(program)) throw new JavaCodeException("Program label and active header disagree");
+savedProgram = tasker.getVariable("SIG3_SettingsExpectedProgram");
+if (savedProgram != null &amp;&amp; savedProgram.length() &gt; 0 &amp;&amp; !savedProgram.startsWith("%") &amp;&amp; !savedProgram.equals(program))
+    throw new JavaCodeException("Program changed during settings operation; saved program=" + savedProgram + "; current=" + program);
 baseline = tasker.getVariable("SIG3_Program");
 if (baseline != null &amp;&amp; !baseline.equals(program))
     throw new JavaCodeException("Program changed during operation: " + baseline + " -&gt; " + program);
@@ -1654,6 +1657,9 @@ if (visible != 1) throw new JavaCodeException("Expected exactly one enabled " + 
 if (count == 0 &amp;&amp; headerCount == 1) { program = headerProgram; count = 1; }
 if (count != 1 || headerCount &gt; 1) throw new JavaCodeException("Cannot identify current program unambiguously");
 if (headerCount == 1 &amp;&amp; !headerProgram.equals(program)) throw new JavaCodeException("Program label and active header disagree");
+savedProgram = tasker.getVariable("SIG3_SettingsExpectedProgram");
+if (savedProgram != null &amp;&amp; savedProgram.length() &gt; 0 &amp;&amp; !savedProgram.startsWith("%") &amp;&amp; !savedProgram.equals(program))
+    throw new JavaCodeException("Program changed during settings operation; saved program=" + savedProgram + "; current=" + program);
 baseline = tasker.getVariable("SIG3_Program");
 if (baseline != null &amp;&amp; !baseline.equals(program))
     throw new JavaCodeException("Program changed during operation: " + baseline + " -&gt; " + program);

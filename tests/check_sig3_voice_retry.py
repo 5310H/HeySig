@@ -44,5 +44,6 @@ p=phone(); p.globals["SIG3_CommandOK"]="1"; p.prompt_response=""
 p.run("SIG3_VoiceCommand")
 assert p.globals["SIG3_CommandOK"]=="0" and p.globals["SIG3_Error"]==""
 assert "no command sent" in p.globals["SIG3_Result"]
-assert not p.gestures and not getattr(p,"retry_dialogs",0) and not getattr(p,"spoken",[])
-print("Empty capture ends quietly without retry, speech, movement, or stale success.")
+assert not p.gestures and not getattr(p,"retry_dialogs",0)
+assert getattr(p,"spoken",[]) == ['Sig here']
+print("Empty capture ends after readiness without result speech, retry, movement or stale success.")
