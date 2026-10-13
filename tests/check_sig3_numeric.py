@@ -64,3 +64,19 @@ for start in range(16):
 p=phone('Volume',5,jump=2);p.globals['SIG3_VolumeDragMode']='direct';p.run('SIG3_VolumeSet','9')
 assert p.globals['SIG3_CommandOK']=='0' and len(p.drags)==1
 print('Direct volume: 256 transitions, single stroke, no-op and failed-readback stop passed.')
+
+for family in ('Balance','Tinnitus'):
+    levels=range(-8,8) if family=='Balance' else range(16)
+    for start in levels:
+        for target in levels:
+            p=phone(family,start);p.globals['SIG3_'+family+'DragMode']='direct'
+            p.run('SIG3_'+family+'Set',str(target))
+            assert p.level==target and p.globals['SIG3_CommandOK']=='1', (family,start,target,p.globals)
+            assert len(p.drags)==int(start!=target)
+    p=phone(family,0,jump=2);p.globals['SIG3_'+family+'DragMode']='direct';p.run('SIG3_'+family+'Set','3')
+    assert p.globals['SIG3_CommandOK']=='0' and len(p.drags)==1
+print('Direct balance/tinnitus: 512 transitions and failed-readback stops passed')
+
+p=phone('Tinnitus',0);p.globals['SIG3_VolumeDragMode']='direct';p.run('SIG3_TinnitusSet','3')
+assert len(p.drags)==3, 'Volume direct mode must not enable another family'
+print('Per-family direct mode remains independent')

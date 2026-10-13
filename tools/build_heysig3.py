@@ -265,8 +265,9 @@ def legacy_target_set(family):
           *g('%sig3_target', 6, lo, family + ' target below minimum'),
           *g('%sig3_target', 7, hi, family + ' target above maximum'),
           setvar('%SIG3_' + family + 'Target', '%sig3_target'), setvar('%SIG3_Target', '%sig3_target')]
+    aa += [condition('%SIG3_' + family + 'DragMode', 2, 'direct'), setvar('%sig3_drag_direct', 1), action(38)]
     if family == 'Volume':
-        aa += [condition('%SIG3_VolumeDragMode', 2, 'direct'), setvar('%sig3_drag_direct', 1), action(38), condition(step, 13), setvar(step, 40), action(38), condition(direction, 13), setvar(direction, 1), action(38)]
+        aa += [condition(step, 13), setvar(step, 40), action(38), condition(direction, 13), setvar(direction, 1), action(38)]
     aa += [*g(direction, 5, r'^(?:1|-1)$', 'Configure calibrated direction: 1=up increases, -1=down increases'), *g(step, 5, r'^[0-9]+$', 'Measure and configure ' + step),
            *g(step, 6, 1, 'Invalid step distance'), *g(step, 7, 200, 'Invalid step distance'),
            call('SIG3_Internal' + family + 'Current', '%par2'), *g(ok, 3, 1, family + ' initial query failed: %SIG3_Error'),

@@ -37,7 +37,7 @@ Successful app labels do not independently acknowledge acoustic receipt by the a
 
 ## Passed in repository checks
 
-- [x] Static validation: 91 XML files, 6,713 task actions, zero failures.
+- [x] Static validation: 91 XML files, 6,725 task actions, zero failures.
 - [x] Numeric simulation: 768 source/target transitions, invalid targets, repeated targets, endpoints and readback failures.
 - [x] Backend simulation: native prerequisites, accepted-but-unchanged progress, and per-family backend isolation.
 - [x] Missing tinnitus simulation: Current, Up, Down, Set, Max, Mute, Inspect, and voice request stop without movement.
@@ -157,4 +157,6 @@ Background observation: after returning to Home, AutoVoice Continuous remained a
 - [x] Tasker accessibility enabled and Bluetooth audio disconnected to satisfy existing guards.
 - [ ] Direct-drag endpoints, other layouts and longer real-device changes remain separate acceptance.
 
-See [direct-volume setup and verification](HeySig3-direct-volume.md). All 20 repository checks passed; static validation checked 91 XML files and 6,713 actions.
+See [direct-volume setup and verification](HeySig3-direct-volume.md). All 20 repository checks passed; static validation checked 91 XML files and 6,725 actions.
+
+October 12 direct-slider extension: normal Tasker BalanceSet passed Universal −4 → −1 → −4 with fresh final readback. TinnitusSet passed 0 → 3 → 0 after combining a brief minimum-thumb activation tap and continuous drag in one Android gesture request. Both moves recorded CommandOK=1 and fresh expected readback. Balance and tinnitus direct modes remain enabled, with starting levels restored. Tinnitus interior 3 → 4 → 3 and downward 3 → 0 also passed. Broader endpoints and other layouts remain untested.

@@ -33,7 +33,13 @@ performStroke(service, stroke, phase) {
             }
         });
     tasker.setVariable("SIG3_TouchStage", phase);
-    gesture = new GestureDescription.Builder().addStroke(stroke).build();
+    builder = new GestureDescription.Builder();
+    if (phase.equals("move") && direct && "Tinnitus".equals(family)
+        && Integer.parseInt(tasker.getVariable("sig3_start")) == 0) {
+        tapPath = new Path(); tapPath.moveTo(x, y);
+        builder.addStroke(new GestureDescription.StrokeDescription(tapPath, 0, 50, false));
+    }
+    gesture = builder.addStroke(stroke).build();
     if (!service.dispatchGesture(gesture, callback, new Handler(Looper.getMainLooper())))
         throw new JavaCodeException(phase + ": dispatchGesture rejected");
     if (!signal.await(3, TimeUnit.SECONDS))
@@ -41,6 +47,7 @@ performStroke(service, stroke, phase) {
     if (!result.get().equals("completed"))
         throw new JavaCodeException(phase + ": Android cancelled gesture");
 }
+
 
 try {
 if (Build.VERSION.SDK_INT < 26)
@@ -52,18 +59,21 @@ x = Float.parseFloat(tasker.getVariable("sig3_x"));
 y = Float.parseFloat(tasker.getVariable("sig3_y"));
 endY = Float.parseFloat(tasker.getVariable("sig3_end_y"));
 direct = "1".equals(tasker.getVariable("sig3_drag_direct"));
+family = tasker.getVariable("SIG3_Family");
 if (direct) {
-    if (!"Volume".equals(tasker.getVariable("SIG3_Family")))
-        throw new JavaCodeException("Direct drag is only supported for volume");
-    top = Float.parseFloat(tasker.getVariable("SIG3_VolumeTrackTopY"));
-    bottom = Float.parseFloat(tasker.getVariable("SIG3_VolumeTrackBottomY"));
+    if (!"Volume".equals(family) && !"Balance".equals(family) && !"Tinnitus".equals(family))
+        throw new JavaCodeException("Unknown direct slider family");
+    top = Float.parseFloat(tasker.getVariable("SIG3_" + family + "TrackTopY"));
+    bottom = Float.parseFloat(tasker.getVariable("SIG3_" + family + "TrackBottomY"));
     target = Integer.parseInt(tasker.getVariable("sig3_target"));
-    x = Float.parseFloat(tasker.getVariable("SIG3_VolumeX"));
-    y = Float.parseFloat(tasker.getVariable("SIG3_VolumeY"));
+    minimum = "Balance".equals(family) ? -8 : 0;
+    maximum = minimum + 15;
+    x = Float.parseFloat(tasker.getVariable("SIG3_" + family + "X"));
+    y = Float.parseFloat(tasker.getVariable("SIG3_" + family + "Y"));
     if (Float.isNaN(top) || Float.isNaN(bottom) || top < 0 || bottom <= top
-        || target < 0 || target > 15 || y < top || y > bottom)
-        throw new JavaCodeException("Invalid calibrated direct volume track");
-    endY = Math.round(bottom - target * (bottom - top) / 15.0f);
+        || target < minimum || target > maximum || y < top || y > bottom)
+        throw new JavaCodeException("Invalid calibrated direct " + family + " track");
+    endY = Math.round(bottom - (target - minimum) * (bottom - top) / 15.0f);
     tasker.setVariable("sig3_x", "" + x);
     tasker.setVariable("sig3_y", "" + y);
     tasker.setVariable("sig3_end_y", "" + endY);
@@ -74,11 +84,14 @@ if (Float.isNaN(x) || Float.isNaN(y) || Float.isNaN(endY)
 metrics = service.getResources().getDisplayMetrics();
 if (x >= metrics.widthPixels || y < 0 || y >= metrics.heightPixels || endY >= metrics.heightPixels)
     throw new JavaCodeException("Gesture coordinates outside display bounds");
+tasker.setVariable("SIG3_Gesture", tasker.getVariable("SIG3_Gesture") + "; actual path=" + x + "," + y + " -> " + x + "," + endY);
+minimumTap = direct && "Tinnitus".equals(family) && Integer.parseInt(tasker.getVariable("sig3_start")) == 0;
+if (minimumTap) tasker.setVariable("SIG3_Gesture", tasker.getVariable("SIG3_Gesture") + "; minimum tap released");
 movePath = new Path();
 movePath.moveTo(x, y);
 movePath.lineTo(x, endY);
 // One continuous DOWN-MOVE-UP stroke, matching the successful 650 ms USB drags.
-moveStroke = new GestureDescription.StrokeDescription(movePath, 0, 650, false);
+moveStroke = new GestureDescription.StrokeDescription(movePath, minimumTap ? 200 : 0, 650, false);
 performStroke(service, moveStroke, "move");
 tasker.setVariable("SIG3_TouchStage", "released");
 return "completed";

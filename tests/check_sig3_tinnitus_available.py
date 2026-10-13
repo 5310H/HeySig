@@ -1,12 +1,12 @@
 """Unavailable tinnitus controls must stop before clicks, drags or progress actions."""
 from heysig3_runtime import Phone
 
-for backend in ('legacy-gesture', 'accessibility'):
+for backend,mode in [('legacy-gesture','incremental'),('legacy-gesture','direct'),('accessibility','incremental')]:
     for operation in ('Current', 'Up', 'Down', 'Set', 'Max', 'Mute', 'Inspect'):
         p = Phone(0)
         p.program = p.program_capture = 'TV'
         p.tinnitus_available = False
-        p.globals.update(SIG3_SliderBackend=backend, SIG3_TinnitusKnobId='volume-knob',
+        p.globals.update(SIG3_TinnitusDragMode=mode, SIG3_SliderBackend=backend, SIG3_TinnitusKnobId='volume-knob',
                          SIG3_TinnitusStepPx='87', SIG3_TinnitusDirection='1')
         p.run('SIG3_Tinnitus' + operation, '1' if operation == 'Set' else '')
         assert p.globals['SIG3_CommandOK'] == '0', (backend, operation, p.globals)

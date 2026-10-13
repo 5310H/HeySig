@@ -391,7 +391,8 @@ class Phone:
                 if 'holdStroke.continueStroke(movePath, 0, 300, false)' in script:
                     duration = '200+300'
                 else:
-                    assert 'new GestureDescription.StrokeDescription(movePath, 0, 650, false)' in script
+                    assert ('new GestureDescription.StrokeDescription(movePath, 0, 650, false)' in script
+                            or 'new GestureDescription.StrokeDescription(movePath, minimumTap ? 200 : 0, 650, false)' in script)
                     duration = '650'
                 self.gestures.append((f"{get('sig3_x')},{get('sig3_y')}", f"{get('sig3_x')},{get('sig3_end_y')}", duration))
                 distance = float(get('sig3_y')) - float(get('sig3_end_y'))

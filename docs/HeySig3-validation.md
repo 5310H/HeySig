@@ -1,6 +1,6 @@
 # Tasker XML static validation — 2026-10-12
 
-Checked 91 XML files and 6713 task actions. Found 0 failures.
+Checked 91 XML files and 6725 task actions. Found 0 failures.
 
 Action numbers were compared with [Tasker’s official definitions](https://tasker.joaoapps.com/code/ActionCodes.java). Checks include XML parsing, task IDs, action numbering, nested control flow, explicit condition fields, selected built-in argument layouts, plugin bundle presence, and JSON syntax.
 
