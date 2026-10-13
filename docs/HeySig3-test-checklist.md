@@ -37,7 +37,7 @@ Successful app labels do not independently acknowledge acoustic receipt by the a
 
 ## Passed in repository checks
 
-- [x] Static validation: 91 XML files, 6,683 task actions, zero failures.
+- [x] Static validation: 91 XML files, 6,713 task actions, zero failures.
 - [x] Numeric simulation: 768 source/target transitions, invalid targets, repeated targets, endpoints and readback failures.
 - [x] Backend simulation: native prerequisites, accepted-but-unchanged progress, and per-family backend isolation.
 - [x] Missing tinnitus simulation: Current, Up, Down, Set, Max, Mute, Inspect, and voice request stop without movement.
@@ -148,3 +148,13 @@ Additional executable checks: `check_sig3_voice_preferences.py`, `check_sig3_voi
 October 12 closeout: all 19 repository checks passed after the readiness and wake-profile corrections.
 
 Background observation: after returning to Home, AutoVoice Continuous remained a foreground service for more than two minutes. The user reported the subsequent background wake command did not work. Background wake acceptance failed. Full phone reboot and long-duration battery/endurance checks remain untested.
+
+## October 12 direct-volume trial
+
+- [x] Actual BeanShell geometry: all 16 target endpoints and eight rejection guards.
+- [x] All 256 direct start/target pairs in simulation, one stroke per changed target and stop after failed readback.
+- [x] Normal Tasker VolumeSet 10 → 7 → 10 in the captured program Universal: user confirmed smooth movement and restoration; Tasker result and restore-success flag agreed.
+- [x] Tasker accessibility enabled and Bluetooth audio disconnected to satisfy existing guards.
+- [ ] Direct-drag endpoints, other layouts and longer real-device changes remain separate acceptance.
+
+See [direct-volume setup and verification](HeySig3-direct-volume.md). All 20 repository checks passed; static validation checked 91 XML files and 6,713 actions.

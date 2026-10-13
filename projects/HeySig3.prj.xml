@@ -2415,7 +2415,7 @@ return "verified";
 		</Action>
 		<Action sr="act8" ve="7">
 			<code>547</code>
-			<Str sr="arg0" ve="3">%SIG3_VolumeOK</Str>
+			<Str sr="arg0" ve="3">%sig3_drag_direct</Str>
 			<Str sr="arg1" ve="3">0</Str>
 			<Int sr="arg2" val="0" />
 			<Int sr="arg3" val="0" />
@@ -2425,6 +2425,16 @@ return "verified";
 		</Action>
 		<Action sr="act9" ve="7">
 			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_VolumeOK</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act10" ve="7">
+			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3" />
 			<Int sr="arg2" val="0" />
@@ -2433,7 +2443,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act10" ve="7">
+		<Action sr="act11" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig3_target</Str>
 			<Str sr="arg1" ve="3">%par1</Str>
@@ -2443,7 +2453,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act11" ve="7">
+		<Action sr="act12" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -2454,7 +2464,7 @@ return "verified";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act12" ve="7">
+		<Action sr="act13" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -2464,7 +2474,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act13" ve="7">
+		<Action sr="act14" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Volume target must be an integer</Str>
@@ -2474,15 +2484,15 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act14" ve="7">
+		<Action sr="act15" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act15" ve="7">
+		<Action sr="act16" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act16" ve="7">
+		<Action sr="act17" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -2493,7 +2503,7 @@ return "verified";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act17" ve="7">
+		<Action sr="act18" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -2503,7 +2513,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act18" ve="7">
+		<Action sr="act19" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Volume target below minimum</Str>
@@ -2513,15 +2523,15 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act19" ve="7">
+		<Action sr="act20" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act20" ve="7">
+		<Action sr="act21" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act21" ve="7">
+		<Action sr="act22" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -2532,7 +2542,7 @@ return "verified";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act22" ve="7">
+		<Action sr="act23" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -2542,7 +2552,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act23" ve="7">
+		<Action sr="act24" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Volume target above maximum</Str>
@@ -2552,15 +2562,15 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act24" ve="7">
+		<Action sr="act25" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act25" ve="7">
+		<Action sr="act26" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act26" ve="7">
+		<Action sr="act27" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VolumeTarget</Str>
 			<Str sr="arg1" ve="3">%sig3_target</Str>
@@ -2570,7 +2580,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act27" ve="7">
+		<Action sr="act28" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Target</Str>
 			<Str sr="arg1" ve="3">%sig3_target</Str>
@@ -2580,7 +2590,31 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act28" ve="7">
+		<Action sr="act29" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%SIG3_VolumeDragMode</lhs>
+					<op>2</op>
+					<rhs>direct</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act30" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%sig3_drag_direct</Str>
+			<Str sr="arg1" ve="3">1</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act31" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act32" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -2591,7 +2625,7 @@ return "verified";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act29" ve="7">
+		<Action sr="act33" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VolumeStepPx</Str>
 			<Str sr="arg1" ve="3">40</Str>
@@ -2601,10 +2635,10 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act30" ve="7">
+		<Action sr="act34" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act31" ve="7">
+		<Action sr="act35" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -2615,7 +2649,7 @@ return "verified";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act32" ve="7">
+		<Action sr="act36" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VolumeDirection</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -2625,10 +2659,10 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act33" ve="7">
+		<Action sr="act37" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act34" ve="7">
+		<Action sr="act38" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -2639,7 +2673,7 @@ return "verified";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act35" ve="7">
+		<Action sr="act39" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -2649,7 +2683,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act36" ve="7">
+		<Action sr="act40" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Configure calibrated direction: 1=up increases, -1=down increases</Str>
@@ -2659,15 +2693,15 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act37" ve="7">
+		<Action sr="act41" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act38" ve="7">
+		<Action sr="act42" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act39" ve="7">
+		<Action sr="act43" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -2678,7 +2712,7 @@ return "verified";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act40" ve="7">
+		<Action sr="act44" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -2688,7 +2722,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act41" ve="7">
+		<Action sr="act45" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Measure and configure %SIG3_VolumeStepPx</Str>
@@ -2698,15 +2732,15 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act42" ve="7">
+		<Action sr="act46" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act43" ve="7">
+		<Action sr="act47" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act44" ve="7">
+		<Action sr="act48" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -2717,7 +2751,7 @@ return "verified";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act45" ve="7">
+		<Action sr="act49" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -2727,7 +2761,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act46" ve="7">
+		<Action sr="act50" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Invalid step distance</Str>
@@ -2737,15 +2771,15 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act47" ve="7">
+		<Action sr="act51" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act48" ve="7">
+		<Action sr="act52" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act49" ve="7">
+		<Action sr="act53" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -2756,7 +2790,7 @@ return "verified";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act50" ve="7">
+		<Action sr="act54" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -2766,7 +2800,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act51" ve="7">
+		<Action sr="act55" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Invalid step distance</Str>
@@ -2776,15 +2810,15 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act52" ve="7">
+		<Action sr="act56" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act53" ve="7">
+		<Action sr="act57" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act54" ve="7">
+		<Action sr="act58" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_InternalVolumeCurrent</Str>
@@ -2801,7 +2835,7 @@ return "verified";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act55" ve="7">
+		<Action sr="act59" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -2812,7 +2846,7 @@ return "verified";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act56" ve="7">
+		<Action sr="act60" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -2822,7 +2856,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act57" ve="7">
+		<Action sr="act61" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -2833,7 +2867,7 @@ return "verified";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act58" ve="7">
+		<Action sr="act62" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Volume initial query failed</Str>
@@ -2843,24 +2877,24 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act59" ve="7">
+		<Action sr="act63" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act60" ve="7">
+		<Action sr="act64" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act61" ve="7">
+		<Action sr="act65" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act62" ve="7">
+		<Action sr="act66" ve="7">
 			<code>39</code>
 			<Str sr="arg0" ve="3">%sig3_iteration</Str>
 			<Str sr="arg1" ve="3">1:16</Str>
 			<Int sr="arg2" val="1" />
 		</Action>
-		<Action sr="act63" ve="7">
+		<Action sr="act67" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -2871,7 +2905,7 @@ return "verified";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act64" ve="7">
+		<Action sr="act68" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VolumeOK</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -2881,7 +2915,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act65" ve="7">
+		<Action sr="act69" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_MoveStage</Str>
 			<Str sr="arg1" ve="3">complete</Str>
@@ -2891,15 +2925,15 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act66" ve="7">
+		<Action sr="act70" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act67" ve="7">
+		<Action sr="act71" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act68" ve="7">
+		<Action sr="act72" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig3_start</Str>
 			<Str sr="arg1" ve="3">%SIG3_Level</Str>
@@ -2909,7 +2943,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act69" ve="7">
+		<Action sr="act73" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Previous</Str>
 			<Str sr="arg1" ve="3">%SIG3_Level</Str>
@@ -2919,7 +2953,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act70" ve="7">
+		<Action sr="act74" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig3_delta</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -2929,7 +2963,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act71" ve="7">
+		<Action sr="act75" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -2940,7 +2974,7 @@ return "verified";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act72" ve="7">
+		<Action sr="act76" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig3_delta</Str>
 			<Str sr="arg1" ve="3">-1</Str>
@@ -2950,10 +2984,34 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act73" ve="7">
+		<Action sr="act77" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act74" ve="7">
+		<Action sr="act78" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%sig3_drag_direct</lhs>
+					<op>8</op>
+					<rhs>1</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act79" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%sig3_delta</Str>
+			<Str sr="arg1" ve="3">%sig3_target - %sig3_start</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="1" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act80" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act81" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig3_expected</Str>
 			<Str sr="arg1" ve="3">%sig3_start + %sig3_delta</Str>
@@ -2963,7 +3021,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act75" ve="7">
+		<Action sr="act82" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Expected</Str>
 			<Str sr="arg1" ve="3">%sig3_expected</Str>
@@ -2973,7 +3031,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act76" ve="7">
+		<Action sr="act83" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig3_x</Str>
 			<Str sr="arg1" ve="3">%SIG3_VolumeX</Str>
@@ -2983,7 +3041,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act77" ve="7">
+		<Action sr="act84" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig3_y</Str>
 			<Str sr="arg1" ve="3">%SIG3_VolumeY</Str>
@@ -2993,7 +3051,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act78" ve="7">
+		<Action sr="act85" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig3_end_y</Str>
 			<Str sr="arg1" ve="3">%sig3_y - %sig3_delta * %SIG3_VolumeStepPx * %SIG3_VolumeDirection</Str>
@@ -3003,7 +3061,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act79" ve="7">
+		<Action sr="act86" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -3013,7 +3071,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act80" ve="7">
+		<Action sr="act87" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_MoveStage</Str>
 			<Str sr="arg1" ve="3">gesture</Str>
@@ -3023,7 +3081,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act81" ve="7">
+		<Action sr="act88" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Volume gesture did not complete</Str>
@@ -3033,7 +3091,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act82" ve="7">
+		<Action sr="act89" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Gesture</Str>
 			<Str sr="arg1" ve="3">Volume target=%sig3_target expected=%sig3_expected; DOWN-MOVE-UP: one pointer; MOVE 650 ms; dispatchGesture; %sig3_x,%sig3_y -&gt; %sig3_x,%sig3_end_y; UP only at end</Str>
@@ -3043,7 +3101,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act83" ve="7">
+		<Action sr="act90" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_MoveStage</Str>
 			<Str sr="arg1" ve="3">audio-preflight</Str>
@@ -3053,7 +3111,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act84" ve="7">
+		<Action sr="act91" ve="7">
 			<code>474</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">/* Read-only preflight: no volume, route, DND or lock settings are changed. */
@@ -3122,7 +3180,7 @@ return "ready";
 			<Str sr="arg1" ve="3" />
 			<Int sr="arg2" val="1" />
 		</Action>
-		<Action sr="act85" ve="7">
+		<Action sr="act92" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -3133,7 +3191,7 @@ return "ready";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act86" ve="7">
+		<Action sr="act93" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -3143,7 +3201,7 @@ return "ready";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act87" ve="7">
+		<Action sr="act94" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Volume audio preflight failed: %errmsg</Str>
@@ -3153,15 +3211,15 @@ return "ready";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act88" ve="7">
+		<Action sr="act95" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act89" ve="7">
+		<Action sr="act96" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act90" ve="7">
+		<Action sr="act97" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_MoveStage</Str>
 			<Str sr="arg1" ve="3">control-check</Str>
@@ -3171,7 +3229,7 @@ return "ready";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act91" ve="7">
+		<Action sr="act98" ve="7">
 			<code>474</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">/* Read-only live UI guard. Defaults are APK-derived and must be confirmed on the phone. */
@@ -3264,7 +3322,7 @@ return "verified";
 			<Str sr="arg1" ve="3" />
 			<Int sr="arg2" val="1" />
 		</Action>
-		<Action sr="act92" ve="7">
+		<Action sr="act99" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -3275,7 +3333,7 @@ return "verified";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act93" ve="7">
+		<Action sr="act100" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -3285,7 +3343,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act94" ve="7">
+		<Action sr="act101" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Volume control/program check failed: %errmsg</Str>
@@ -3295,15 +3353,15 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act95" ve="7">
+		<Action sr="act102" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act96" ve="7">
+		<Action sr="act103" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act97" ve="7">
+		<Action sr="act104" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_MoveStage</Str>
 			<Str sr="arg1" ve="3">gesture-dispatch</Str>
@@ -3313,7 +3371,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act98" ve="7">
+		<Action sr="act105" ve="7">
 			<code>474</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">/* Tasker 6.6.20 Java Code (BeanShell). No root, ADB or helper app. */
@@ -3369,7 +3427,25 @@ if (service == null)
 x = Float.parseFloat(tasker.getVariable("sig3_x"));
 y = Float.parseFloat(tasker.getVariable("sig3_y"));
 endY = Float.parseFloat(tasker.getVariable("sig3_end_y"));
-if (x &lt; 0 || endY &lt; 0 || Math.abs(y - endY) &lt; 1 || Math.abs(y - endY) &gt; 200)
+direct = "1".equals(tasker.getVariable("sig3_drag_direct"));
+if (direct) {
+    if (!"Volume".equals(tasker.getVariable("SIG3_Family")))
+        throw new JavaCodeException("Direct drag is only supported for volume");
+    top = Float.parseFloat(tasker.getVariable("SIG3_VolumeTrackTopY"));
+    bottom = Float.parseFloat(tasker.getVariable("SIG3_VolumeTrackBottomY"));
+    target = Integer.parseInt(tasker.getVariable("sig3_target"));
+    x = Float.parseFloat(tasker.getVariable("SIG3_VolumeX"));
+    y = Float.parseFloat(tasker.getVariable("SIG3_VolumeY"));
+    if (Float.isNaN(top) || Float.isNaN(bottom) || top &lt; 0 || bottom &lt;= top
+        || target &lt; 0 || target &gt; 15 || y &lt; top || y &gt; bottom)
+        throw new JavaCodeException("Invalid calibrated direct volume track");
+    endY = Math.round(bottom - target * (bottom - top) / 15.0f);
+    tasker.setVariable("sig3_x", "" + x);
+    tasker.setVariable("sig3_y", "" + y);
+    tasker.setVariable("sig3_end_y", "" + endY);
+}
+if (Float.isNaN(x) || Float.isNaN(y) || Float.isNaN(endY)
+    || x &lt; 0 || endY &lt; 0 || Math.abs(y - endY) &lt; 1 || (!direct &amp;&amp; Math.abs(y - endY) &gt; 200))
     throw new JavaCodeException("Invalid calibrated step coordinates");
 metrics = service.getResources().getDisplayMetrics();
 if (x &gt;= metrics.widthPixels || y &lt; 0 || y &gt;= metrics.heightPixels || endY &gt;= metrics.heightPixels)
@@ -3391,7 +3467,7 @@ return "completed";
 			<Str sr="arg1" ve="3" />
 			<Int sr="arg2" val="1" />
 		</Action>
-		<Action sr="act99" ve="7">
+		<Action sr="act106" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -3402,7 +3478,7 @@ return "completed";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act100" ve="7">
+		<Action sr="act107" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -3412,7 +3488,7 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act101" ve="7">
+		<Action sr="act108" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Volume continuous gesture failed: %errmsg</Str>
@@ -3422,15 +3498,15 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act102" ve="7">
+		<Action sr="act109" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act103" ve="7">
+		<Action sr="act110" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act104" ve="7">
+		<Action sr="act111" ve="7">
 			<code>30</code>
 			<Int sr="arg0" val="500" />
 			<Int sr="arg1" val="0" />
@@ -3438,7 +3514,7 @@ return "completed";
 			<Int sr="arg3" val="0" />
 			<Int sr="arg4" val="0" />
 		</Action>
-		<Action sr="act105" ve="7">
+		<Action sr="act112" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_MoveStage</Str>
 			<Str sr="arg1" ve="3">readback</Str>
@@ -3448,7 +3524,7 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act106" ve="7">
+		<Action sr="act113" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_InternalVolumeCurrent</Str>
@@ -3465,7 +3541,7 @@ return "completed";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act107" ve="7">
+		<Action sr="act114" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Observed</Str>
 			<Str sr="arg1" ve="3">%SIG3_Level</Str>
@@ -3475,7 +3551,7 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act108" ve="7">
+		<Action sr="act115" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -3483,59 +3559,6 @@ return "completed";
 					<lhs>%SIG3_VolumeOK</lhs>
 					<op>3</op>
 					<rhs>1</rhs>
-				</Condition>
-			</ConditionList>
-		</Action>
-		<Action sr="act109" ve="7">
-			<code>547</code>
-			<Str sr="arg0" ve="3">%SIG3_VolumeOK</Str>
-			<Str sr="arg1" ve="3">0</Str>
-			<Int sr="arg2" val="0" />
-			<Int sr="arg3" val="0" />
-			<Int sr="arg4" val="0" />
-			<Int sr="arg5" val="3" />
-			<Int sr="arg6" val="1" />
-		</Action>
-		<Action sr="act110" ve="7">
-			<code>37</code>
-			<coll>false</coll>
-			<ConditionList sr="if">
-				<Condition sr="c0" ve="3">
-					<lhs>%SIG3_Error</lhs>
-					<op>13</op>
-					<rhs />
-				</Condition>
-			</ConditionList>
-		</Action>
-		<Action sr="act111" ve="7">
-			<code>547</code>
-			<Str sr="arg0" ve="3">%SIG3_Error</Str>
-			<Str sr="arg1" ve="3">Volume post-gesture query failed</Str>
-			<Int sr="arg2" val="0" />
-			<Int sr="arg3" val="0" />
-			<Int sr="arg4" val="0" />
-			<Int sr="arg5" val="3" />
-			<Int sr="arg6" val="1" />
-		</Action>
-		<Action sr="act112" ve="7">
-			<code>38</code>
-		</Action>
-		<Action sr="act113" ve="7">
-			<code>137</code>
-			<Int sr="arg0" val="0" />
-			<Str sr="arg1" ve="3" />
-		</Action>
-		<Action sr="act114" ve="7">
-			<code>38</code>
-		</Action>
-		<Action sr="act115" ve="7">
-			<code>37</code>
-			<coll>false</coll>
-			<ConditionList sr="if">
-				<Condition sr="c0" ve="3">
-					<lhs>%SIG3_Level</lhs>
-					<op>9</op>
-					<rhs>%sig3_expected</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -3550,6 +3573,59 @@ return "completed";
 			<Int sr="arg6" val="1" />
 		</Action>
 		<Action sr="act117" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%SIG3_Error</lhs>
+					<op>13</op>
+					<rhs />
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act118" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_Error</Str>
+			<Str sr="arg1" ve="3">Volume post-gesture query failed</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act119" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act120" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
+		</Action>
+		<Action sr="act121" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act122" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%SIG3_Level</lhs>
+					<op>9</op>
+					<rhs>%sig3_expected</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act123" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_VolumeOK</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act124" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Volume unexpected readback=%SIG3_Level expected=%sig3_expected; stopped</Str>
@@ -3559,75 +3635,16 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act118" ve="7">
-			<code>137</code>
-			<Int sr="arg0" val="0" />
-			<Str sr="arg1" ve="3" />
-		</Action>
-		<Action sr="act119" ve="7">
-			<code>38</code>
-		</Action>
-		<Action sr="act120" ve="7">
-			<code>40</code>
-		</Action>
-		<Action sr="act121" ve="7">
-			<code>547</code>
-			<Str sr="arg0" ve="3">%SIG3_VolumeOK</Str>
-			<Str sr="arg1" ve="3">0</Str>
-			<Int sr="arg2" val="0" />
-			<Int sr="arg3" val="0" />
-			<Int sr="arg4" val="0" />
-			<Int sr="arg5" val="3" />
-			<Int sr="arg6" val="1" />
-		</Action>
-		<Action sr="act122" ve="7">
-			<code>547</code>
-			<Str sr="arg0" ve="3">%SIG3_Error</Str>
-			<Str sr="arg1" ve="3">Volume target not reached within bounded steps</Str>
-			<Int sr="arg2" val="0" />
-			<Int sr="arg3" val="0" />
-			<Int sr="arg4" val="0" />
-			<Int sr="arg5" val="3" />
-			<Int sr="arg6" val="1" />
-		</Action>
-		<Action sr="act123" ve="7">
-			<code>137</code>
-			<Int sr="arg0" val="0" />
-			<Str sr="arg1" ve="3" />
-		</Action>
-		<Action sr="act124" ve="7">
-			<code>43</code>
-		</Action>
 		<Action sr="act125" ve="7">
-			<code>547</code>
-			<Str sr="arg0" ve="3">%SIG3_VolumeOK</Str>
-			<Str sr="arg1" ve="3">0</Str>
-			<Int sr="arg2" val="0" />
-			<Int sr="arg3" val="0" />
-			<Int sr="arg4" val="0" />
-			<Int sr="arg5" val="3" />
-			<Int sr="arg6" val="1" />
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
 		</Action>
 		<Action sr="act126" ve="7">
-			<code>547</code>
-			<Str sr="arg0" ve="3">%sig3_target</Str>
-			<Str sr="arg1" ve="3">%par1</Str>
-			<Int sr="arg2" val="0" />
-			<Int sr="arg3" val="0" />
-			<Int sr="arg4" val="0" />
-			<Int sr="arg5" val="3" />
-			<Int sr="arg6" val="1" />
+			<code>38</code>
 		</Action>
 		<Action sr="act127" ve="7">
-			<code>37</code>
-			<coll>false</coll>
-			<ConditionList sr="if">
-				<Condition sr="c0" ve="3">
-					<lhs>%sig3_target</lhs>
-					<op>5</op>
-					<rhs>^-?[0-9]+$</rhs>
-				</Condition>
-			</ConditionList>
+			<code>40</code>
 		</Action>
 		<Action sr="act128" ve="7">
 			<code>547</code>
@@ -3642,7 +3659,7 @@ return "completed";
 		<Action sr="act129" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
-			<Str sr="arg1" ve="3">Volume target must be an integer</Str>
+			<Str sr="arg1" ve="3">Volume target not reached within bounded steps</Str>
 			<Int sr="arg2" val="0" />
 			<Int sr="arg3" val="0" />
 			<Int sr="arg4" val="0" />
@@ -3655,9 +3672,68 @@ return "completed";
 			<Str sr="arg1" ve="3" />
 		</Action>
 		<Action sr="act131" ve="7">
-			<code>38</code>
+			<code>43</code>
 		</Action>
 		<Action sr="act132" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_VolumeOK</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act133" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%sig3_target</Str>
+			<Str sr="arg1" ve="3">%par1</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act134" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%sig3_target</lhs>
+					<op>5</op>
+					<rhs>^-?[0-9]+$</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act135" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_VolumeOK</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act136" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_Error</Str>
+			<Str sr="arg1" ve="3">Volume target must be an integer</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act137" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
+		</Action>
+		<Action sr="act138" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act139" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -3668,7 +3744,7 @@ return "completed";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act133" ve="7">
+		<Action sr="act140" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -3678,7 +3754,7 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act134" ve="7">
+		<Action sr="act141" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Volume target below minimum</Str>
@@ -3688,15 +3764,15 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act135" ve="7">
+		<Action sr="act142" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act136" ve="7">
+		<Action sr="act143" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act137" ve="7">
+		<Action sr="act144" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -3707,7 +3783,7 @@ return "completed";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act138" ve="7">
+		<Action sr="act145" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -3717,7 +3793,7 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act139" ve="7">
+		<Action sr="act146" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Volume target above maximum</Str>
@@ -3727,15 +3803,15 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act140" ve="7">
+		<Action sr="act147" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act141" ve="7">
+		<Action sr="act148" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act142" ve="7">
+		<Action sr="act149" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Target</Str>
 			<Str sr="arg1" ve="3">%sig3_target</Str>
@@ -3745,7 +3821,7 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act143" ve="7">
+		<Action sr="act150" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VolumeTarget</Str>
 			<Str sr="arg1" ve="3">%sig3_target</Str>
@@ -3755,7 +3831,7 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act144" ve="7">
+		<Action sr="act151" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_InternalVolumeCurrent</Str>
@@ -3772,7 +3848,7 @@ return "completed";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act145" ve="7">
+		<Action sr="act152" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -3783,7 +3859,7 @@ return "completed";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act146" ve="7">
+		<Action sr="act153" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -3793,7 +3869,7 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act147" ve="7">
+		<Action sr="act154" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -3804,7 +3880,7 @@ return "completed";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act148" ve="7">
+		<Action sr="act155" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Initial slider query failed</Str>
@@ -3814,18 +3890,18 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act149" ve="7">
+		<Action sr="act156" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act150" ve="7">
+		<Action sr="act157" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act151" ve="7">
+		<Action sr="act158" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act152" ve="7">
+		<Action sr="act159" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -3836,7 +3912,7 @@ return "completed";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act153" ve="7">
+		<Action sr="act160" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Observed</Str>
 			<Str sr="arg1" ve="3">%SIG3_Level</Str>
@@ -3846,15 +3922,15 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act154" ve="7">
+		<Action sr="act161" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act155" ve="7">
+		<Action sr="act162" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act156" ve="7">
+		<Action sr="act163" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Previous</Str>
 			<Str sr="arg1" ve="3">%SIG3_Level</Str>
@@ -3864,7 +3940,7 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act157" ve="7">
+		<Action sr="act164" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Expected</Str>
 			<Str sr="arg1" ve="3">%sig3_target</Str>
@@ -3874,7 +3950,7 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act158" ve="7">
+		<Action sr="act165" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -3884,7 +3960,7 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act159" ve="7">
+		<Action sr="act166" ve="7">
 			<code>474</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">/* Read-only preflight: no volume, route, DND or lock settings are changed. */
@@ -3953,7 +4029,7 @@ return "ready";
 			<Str sr="arg1" ve="3" />
 			<Int sr="arg2" val="1" />
 		</Action>
-		<Action sr="act160" ve="7">
+		<Action sr="act167" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -3964,7 +4040,7 @@ return "ready";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act161" ve="7">
+		<Action sr="act168" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -3974,7 +4050,7 @@ return "ready";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act162" ve="7">
+		<Action sr="act169" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Audio preflight failed: %errmsg</Str>
@@ -3984,15 +4060,15 @@ return "ready";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act163" ve="7">
+		<Action sr="act170" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act164" ve="7">
+		<Action sr="act171" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act165" ve="7">
+		<Action sr="act172" ve="7">
 			<code>474</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">/* Read-only live UI guard. Defaults are APK-derived and must be confirmed on the phone. */
@@ -4085,7 +4161,7 @@ return "verified";
 			<Str sr="arg1" ve="3" />
 			<Int sr="arg2" val="1" />
 		</Action>
-		<Action sr="act166" ve="7">
+		<Action sr="act173" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -4096,7 +4172,7 @@ return "verified";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act167" ve="7">
+		<Action sr="act174" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -4106,7 +4182,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act168" ve="7">
+		<Action sr="act175" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Slider/program guard failed: %errmsg</Str>
@@ -4116,15 +4192,15 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act169" ve="7">
+		<Action sr="act176" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act170" ve="7">
+		<Action sr="act177" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act171" ve="7">
+		<Action sr="act178" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig3_slider_mode</Str>
 			<Str sr="arg1" ve="3">Set</Str>
@@ -4134,7 +4210,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act172" ve="7">
+		<Action sr="act179" ve="7">
 			<code>474</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">/* Direct numeric slider action: no simulated touch and no automatic touch fallback. */
@@ -4258,7 +4334,7 @@ return "accepted; verify displayed target and audible aid response separately";
 			<Str sr="arg1" ve="3" />
 			<Int sr="arg2" val="1" />
 		</Action>
-		<Action sr="act173" ve="7">
+		<Action sr="act180" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -4269,7 +4345,7 @@ return "accepted; verify displayed target and audible aid response separately";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act174" ve="7">
+		<Action sr="act181" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VolumeOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -4279,7 +4355,7 @@ return "accepted; verify displayed target and audible aid response separately";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act175" ve="7">
+		<Action sr="act182" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Numeric slider action failed: %errmsg</Str>
@@ -4289,15 +4365,15 @@ return "accepted; verify displayed target and audible aid response separately";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act176" ve="7">
+		<Action sr="act183" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act177" ve="7">
+		<Action sr="act184" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act178" ve="7">
+		<Action sr="act185" ve="7">
 			<code>30</code>
 			<Int sr="arg0" val="500" />
 			<Int sr="arg1" val="0" />
@@ -4305,7 +4381,7 @@ return "accepted; verify displayed target and audible aid response separately";
 			<Int sr="arg3" val="0" />
 			<Int sr="arg4" val="0" />
 		</Action>
-		<Action sr="act179" ve="7">
+		<Action sr="act186" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_MoveStage</Str>
 			<Str sr="arg1" ve="3">readback</Str>
@@ -4315,7 +4391,7 @@ return "accepted; verify displayed target and audible aid response separately";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act180" ve="7">
+		<Action sr="act187" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_InternalVolumeCurrent</Str>
@@ -4332,7 +4408,7 @@ return "accepted; verify displayed target and audible aid response separately";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act181" ve="7">
+		<Action sr="act188" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Observed</Str>
 			<Str sr="arg1" ve="3">%SIG3_Level</Str>
@@ -4342,7 +4418,7 @@ return "accepted; verify displayed target and audible aid response separately";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act182" ve="7">
+		<Action sr="act189" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -4350,59 +4426,6 @@ return "accepted; verify displayed target and audible aid response separately";
 					<lhs>%SIG3_VolumeOK</lhs>
 					<op>3</op>
 					<rhs>1</rhs>
-				</Condition>
-			</ConditionList>
-		</Action>
-		<Action sr="act183" ve="7">
-			<code>547</code>
-			<Str sr="arg0" ve="3">%SIG3_VolumeOK</Str>
-			<Str sr="arg1" ve="3">0</Str>
-			<Int sr="arg2" val="0" />
-			<Int sr="arg3" val="0" />
-			<Int sr="arg4" val="0" />
-			<Int sr="arg5" val="3" />
-			<Int sr="arg6" val="1" />
-		</Action>
-		<Action sr="act184" ve="7">
-			<code>37</code>
-			<coll>false</coll>
-			<ConditionList sr="if">
-				<Condition sr="c0" ve="3">
-					<lhs>%SIG3_Error</lhs>
-					<op>13</op>
-					<rhs />
-				</Condition>
-			</ConditionList>
-		</Action>
-		<Action sr="act185" ve="7">
-			<code>547</code>
-			<Str sr="arg0" ve="3">%SIG3_Error</Str>
-			<Str sr="arg1" ve="3">Slider readback failed</Str>
-			<Int sr="arg2" val="0" />
-			<Int sr="arg3" val="0" />
-			<Int sr="arg4" val="0" />
-			<Int sr="arg5" val="3" />
-			<Int sr="arg6" val="1" />
-		</Action>
-		<Action sr="act186" ve="7">
-			<code>38</code>
-		</Action>
-		<Action sr="act187" ve="7">
-			<code>137</code>
-			<Int sr="arg0" val="0" />
-			<Str sr="arg1" ve="3" />
-		</Action>
-		<Action sr="act188" ve="7">
-			<code>38</code>
-		</Action>
-		<Action sr="act189" ve="7">
-			<code>37</code>
-			<coll>false</coll>
-			<ConditionList sr="if">
-				<Condition sr="c0" ve="3">
-					<lhs>%SIG3_Level</lhs>
-					<op>9</op>
-					<rhs>%sig3_target</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -4417,6 +4440,59 @@ return "accepted; verify displayed target and audible aid response separately";
 			<Int sr="arg6" val="1" />
 		</Action>
 		<Action sr="act191" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%SIG3_Error</lhs>
+					<op>13</op>
+					<rhs />
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act192" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_Error</Str>
+			<Str sr="arg1" ve="3">Slider readback failed</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act193" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act194" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
+		</Action>
+		<Action sr="act195" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act196" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%SIG3_Level</lhs>
+					<op>9</op>
+					<rhs>%sig3_target</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act197" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_VolumeOK</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act198" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Displayed target not reached; observed=%SIG3_Level requested=%sig3_target</Str>
@@ -4426,15 +4502,15 @@ return "accepted; verify displayed target and audible aid response separately";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act192" ve="7">
+		<Action sr="act199" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act193" ve="7">
+		<Action sr="act200" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act194" ve="7">
+		<Action sr="act201" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VolumeOK</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -4444,7 +4520,7 @@ return "accepted; verify displayed target and audible aid response separately";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act195" ve="7">
+		<Action sr="act202" ve="7">
 			<code>38</code>
 		</Action>
 	</Task>
@@ -6302,7 +6378,7 @@ return "verified";
 		</Action>
 		<Action sr="act8" ve="7">
 			<code>547</code>
-			<Str sr="arg0" ve="3">%SIG3_BalanceOK</Str>
+			<Str sr="arg0" ve="3">%sig3_drag_direct</Str>
 			<Str sr="arg1" ve="3">0</Str>
 			<Int sr="arg2" val="0" />
 			<Int sr="arg3" val="0" />
@@ -6312,6 +6388,16 @@ return "verified";
 		</Action>
 		<Action sr="act9" ve="7">
 			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_BalanceOK</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act10" ve="7">
+			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3" />
 			<Int sr="arg2" val="0" />
@@ -6320,7 +6406,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act10" ve="7">
+		<Action sr="act11" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig3_target</Str>
 			<Str sr="arg1" ve="3">%par1</Str>
@@ -6330,7 +6416,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act11" ve="7">
+		<Action sr="act12" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -6341,7 +6427,7 @@ return "verified";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act12" ve="7">
+		<Action sr="act13" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_BalanceOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -6351,7 +6437,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act13" ve="7">
+		<Action sr="act14" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Balance target must be an integer</Str>
@@ -6361,15 +6447,15 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act14" ve="7">
+		<Action sr="act15" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act15" ve="7">
+		<Action sr="act16" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act16" ve="7">
+		<Action sr="act17" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -6380,7 +6466,7 @@ return "verified";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act17" ve="7">
+		<Action sr="act18" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_BalanceOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -6390,7 +6476,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act18" ve="7">
+		<Action sr="act19" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Balance target below minimum</Str>
@@ -6400,15 +6486,15 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act19" ve="7">
+		<Action sr="act20" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act20" ve="7">
+		<Action sr="act21" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act21" ve="7">
+		<Action sr="act22" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -6419,7 +6505,7 @@ return "verified";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act22" ve="7">
+		<Action sr="act23" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_BalanceOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -6429,7 +6515,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act23" ve="7">
+		<Action sr="act24" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Balance target above maximum</Str>
@@ -6439,15 +6525,15 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act24" ve="7">
+		<Action sr="act25" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act25" ve="7">
+		<Action sr="act26" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act26" ve="7">
+		<Action sr="act27" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_BalanceTarget</Str>
 			<Str sr="arg1" ve="3">%sig3_target</Str>
@@ -6457,7 +6543,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act27" ve="7">
+		<Action sr="act28" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Target</Str>
 			<Str sr="arg1" ve="3">%sig3_target</Str>
@@ -6467,7 +6553,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act28" ve="7">
+		<Action sr="act29" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -6478,7 +6564,7 @@ return "verified";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act29" ve="7">
+		<Action sr="act30" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_BalanceOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -6488,7 +6574,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act30" ve="7">
+		<Action sr="act31" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Configure calibrated direction: 1=up increases, -1=down increases</Str>
@@ -6498,15 +6584,15 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act31" ve="7">
+		<Action sr="act32" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act32" ve="7">
+		<Action sr="act33" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act33" ve="7">
+		<Action sr="act34" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -6517,7 +6603,7 @@ return "verified";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act34" ve="7">
+		<Action sr="act35" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_BalanceOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -6527,7 +6613,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act35" ve="7">
+		<Action sr="act36" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Measure and configure %SIG3_BalanceStepPx</Str>
@@ -6537,15 +6623,15 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act36" ve="7">
+		<Action sr="act37" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act37" ve="7">
+		<Action sr="act38" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act38" ve="7">
+		<Action sr="act39" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -6556,7 +6642,7 @@ return "verified";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act39" ve="7">
+		<Action sr="act40" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_BalanceOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -6566,7 +6652,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act40" ve="7">
+		<Action sr="act41" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Invalid step distance</Str>
@@ -6576,15 +6662,15 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act41" ve="7">
+		<Action sr="act42" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act42" ve="7">
+		<Action sr="act43" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act43" ve="7">
+		<Action sr="act44" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -6595,7 +6681,7 @@ return "verified";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act44" ve="7">
+		<Action sr="act45" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_BalanceOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -6605,7 +6691,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act45" ve="7">
+		<Action sr="act46" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Invalid step distance</Str>
@@ -6615,15 +6701,15 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act46" ve="7">
+		<Action sr="act47" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act47" ve="7">
+		<Action sr="act48" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act48" ve="7">
+		<Action sr="act49" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_InternalBalanceCurrent</Str>
@@ -6640,7 +6726,7 @@ return "verified";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act49" ve="7">
+		<Action sr="act50" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -6651,7 +6737,7 @@ return "verified";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act50" ve="7">
+		<Action sr="act51" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_BalanceOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -6661,7 +6747,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act51" ve="7">
+		<Action sr="act52" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -6672,7 +6758,7 @@ return "verified";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act52" ve="7">
+		<Action sr="act53" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Balance initial query failed</Str>
@@ -6682,24 +6768,24 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act53" ve="7">
+		<Action sr="act54" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act54" ve="7">
+		<Action sr="act55" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act55" ve="7">
+		<Action sr="act56" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act56" ve="7">
+		<Action sr="act57" ve="7">
 			<code>39</code>
 			<Str sr="arg0" ve="3">%sig3_iteration</Str>
 			<Str sr="arg1" ve="3">1:16</Str>
 			<Int sr="arg2" val="1" />
 		</Action>
-		<Action sr="act57" ve="7">
+		<Action sr="act58" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -6710,7 +6796,7 @@ return "verified";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act58" ve="7">
+		<Action sr="act59" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_BalanceOK</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -6720,7 +6806,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act59" ve="7">
+		<Action sr="act60" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_MoveStage</Str>
 			<Str sr="arg1" ve="3">complete</Str>
@@ -6730,15 +6816,15 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act60" ve="7">
+		<Action sr="act61" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act61" ve="7">
+		<Action sr="act62" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act62" ve="7">
+		<Action sr="act63" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig3_start</Str>
 			<Str sr="arg1" ve="3">%SIG3_BalanceLevel</Str>
@@ -6748,7 +6834,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act63" ve="7">
+		<Action sr="act64" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Previous</Str>
 			<Str sr="arg1" ve="3">%SIG3_BalanceLevel</Str>
@@ -6758,7 +6844,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act64" ve="7">
+		<Action sr="act65" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig3_delta</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -6768,7 +6854,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act65" ve="7">
+		<Action sr="act66" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -6779,7 +6865,7 @@ return "verified";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act66" ve="7">
+		<Action sr="act67" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig3_delta</Str>
 			<Str sr="arg1" ve="3">-1</Str>
@@ -6789,10 +6875,34 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act67" ve="7">
+		<Action sr="act68" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act68" ve="7">
+		<Action sr="act69" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%sig3_drag_direct</lhs>
+					<op>8</op>
+					<rhs>1</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act70" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%sig3_delta</Str>
+			<Str sr="arg1" ve="3">%sig3_target - %sig3_start</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="1" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act71" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act72" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig3_expected</Str>
 			<Str sr="arg1" ve="3">%sig3_start + %sig3_delta</Str>
@@ -6802,7 +6912,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act69" ve="7">
+		<Action sr="act73" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Expected</Str>
 			<Str sr="arg1" ve="3">%sig3_expected</Str>
@@ -6812,7 +6922,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act70" ve="7">
+		<Action sr="act74" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig3_x</Str>
 			<Str sr="arg1" ve="3">%SIG3_BalanceX</Str>
@@ -6822,7 +6932,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act71" ve="7">
+		<Action sr="act75" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig3_y</Str>
 			<Str sr="arg1" ve="3">%SIG3_BalanceY</Str>
@@ -6832,7 +6942,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act72" ve="7">
+		<Action sr="act76" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig3_end_y</Str>
 			<Str sr="arg1" ve="3">%sig3_y - %sig3_delta * %SIG3_BalanceStepPx * %SIG3_BalanceDirection</Str>
@@ -6842,7 +6952,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act73" ve="7">
+		<Action sr="act77" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_BalanceOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -6852,7 +6962,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act74" ve="7">
+		<Action sr="act78" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_MoveStage</Str>
 			<Str sr="arg1" ve="3">gesture</Str>
@@ -6862,7 +6972,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act75" ve="7">
+		<Action sr="act79" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Balance gesture did not complete</Str>
@@ -6872,7 +6982,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act76" ve="7">
+		<Action sr="act80" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Gesture</Str>
 			<Str sr="arg1" ve="3">Balance target=%sig3_target expected=%sig3_expected; DOWN-MOVE-UP: one pointer; MOVE 650 ms; dispatchGesture; %sig3_x,%sig3_y -&gt; %sig3_x,%sig3_end_y; UP only at end</Str>
@@ -6882,7 +6992,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act77" ve="7">
+		<Action sr="act81" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_MoveStage</Str>
 			<Str sr="arg1" ve="3">audio-preflight</Str>
@@ -6892,7 +7002,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act78" ve="7">
+		<Action sr="act82" ve="7">
 			<code>474</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">/* Read-only preflight: no volume, route, DND or lock settings are changed. */
@@ -6961,7 +7071,7 @@ return "ready";
 			<Str sr="arg1" ve="3" />
 			<Int sr="arg2" val="1" />
 		</Action>
-		<Action sr="act79" ve="7">
+		<Action sr="act83" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -6972,7 +7082,7 @@ return "ready";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act80" ve="7">
+		<Action sr="act84" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_BalanceOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -6982,7 +7092,7 @@ return "ready";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act81" ve="7">
+		<Action sr="act85" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Balance audio preflight failed: %errmsg</Str>
@@ -6992,15 +7102,15 @@ return "ready";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act82" ve="7">
+		<Action sr="act86" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act83" ve="7">
+		<Action sr="act87" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act84" ve="7">
+		<Action sr="act88" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_MoveStage</Str>
 			<Str sr="arg1" ve="3">control-check</Str>
@@ -7010,7 +7120,7 @@ return "ready";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act85" ve="7">
+		<Action sr="act89" ve="7">
 			<code>474</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">/* Read-only live UI guard. Defaults are APK-derived and must be confirmed on the phone. */
@@ -7103,7 +7213,7 @@ return "verified";
 			<Str sr="arg1" ve="3" />
 			<Int sr="arg2" val="1" />
 		</Action>
-		<Action sr="act86" ve="7">
+		<Action sr="act90" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -7114,7 +7224,7 @@ return "verified";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act87" ve="7">
+		<Action sr="act91" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_BalanceOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -7124,7 +7234,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act88" ve="7">
+		<Action sr="act92" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Balance control/program check failed: %errmsg</Str>
@@ -7134,15 +7244,15 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act89" ve="7">
+		<Action sr="act93" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act90" ve="7">
+		<Action sr="act94" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act91" ve="7">
+		<Action sr="act95" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_MoveStage</Str>
 			<Str sr="arg1" ve="3">gesture-dispatch</Str>
@@ -7152,7 +7262,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act92" ve="7">
+		<Action sr="act96" ve="7">
 			<code>474</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">/* Tasker 6.6.20 Java Code (BeanShell). No root, ADB or helper app. */
@@ -7208,7 +7318,25 @@ if (service == null)
 x = Float.parseFloat(tasker.getVariable("sig3_x"));
 y = Float.parseFloat(tasker.getVariable("sig3_y"));
 endY = Float.parseFloat(tasker.getVariable("sig3_end_y"));
-if (x &lt; 0 || endY &lt; 0 || Math.abs(y - endY) &lt; 1 || Math.abs(y - endY) &gt; 200)
+direct = "1".equals(tasker.getVariable("sig3_drag_direct"));
+if (direct) {
+    if (!"Volume".equals(tasker.getVariable("SIG3_Family")))
+        throw new JavaCodeException("Direct drag is only supported for volume");
+    top = Float.parseFloat(tasker.getVariable("SIG3_VolumeTrackTopY"));
+    bottom = Float.parseFloat(tasker.getVariable("SIG3_VolumeTrackBottomY"));
+    target = Integer.parseInt(tasker.getVariable("sig3_target"));
+    x = Float.parseFloat(tasker.getVariable("SIG3_VolumeX"));
+    y = Float.parseFloat(tasker.getVariable("SIG3_VolumeY"));
+    if (Float.isNaN(top) || Float.isNaN(bottom) || top &lt; 0 || bottom &lt;= top
+        || target &lt; 0 || target &gt; 15 || y &lt; top || y &gt; bottom)
+        throw new JavaCodeException("Invalid calibrated direct volume track");
+    endY = Math.round(bottom - target * (bottom - top) / 15.0f);
+    tasker.setVariable("sig3_x", "" + x);
+    tasker.setVariable("sig3_y", "" + y);
+    tasker.setVariable("sig3_end_y", "" + endY);
+}
+if (Float.isNaN(x) || Float.isNaN(y) || Float.isNaN(endY)
+    || x &lt; 0 || endY &lt; 0 || Math.abs(y - endY) &lt; 1 || (!direct &amp;&amp; Math.abs(y - endY) &gt; 200))
     throw new JavaCodeException("Invalid calibrated step coordinates");
 metrics = service.getResources().getDisplayMetrics();
 if (x &gt;= metrics.widthPixels || y &lt; 0 || y &gt;= metrics.heightPixels || endY &gt;= metrics.heightPixels)
@@ -7230,7 +7358,7 @@ return "completed";
 			<Str sr="arg1" ve="3" />
 			<Int sr="arg2" val="1" />
 		</Action>
-		<Action sr="act93" ve="7">
+		<Action sr="act97" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -7241,7 +7369,7 @@ return "completed";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act94" ve="7">
+		<Action sr="act98" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_BalanceOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -7251,7 +7379,7 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act95" ve="7">
+		<Action sr="act99" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Balance continuous gesture failed: %errmsg</Str>
@@ -7261,15 +7389,15 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act96" ve="7">
+		<Action sr="act100" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act97" ve="7">
+		<Action sr="act101" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act98" ve="7">
+		<Action sr="act102" ve="7">
 			<code>30</code>
 			<Int sr="arg0" val="500" />
 			<Int sr="arg1" val="0" />
@@ -7277,7 +7405,7 @@ return "completed";
 			<Int sr="arg3" val="0" />
 			<Int sr="arg4" val="0" />
 		</Action>
-		<Action sr="act99" ve="7">
+		<Action sr="act103" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_MoveStage</Str>
 			<Str sr="arg1" ve="3">readback</Str>
@@ -7287,7 +7415,7 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act100" ve="7">
+		<Action sr="act104" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_InternalBalanceCurrent</Str>
@@ -7304,7 +7432,7 @@ return "completed";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act101" ve="7">
+		<Action sr="act105" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Observed</Str>
 			<Str sr="arg1" ve="3">%SIG3_BalanceLevel</Str>
@@ -7314,7 +7442,7 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act102" ve="7">
+		<Action sr="act106" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -7325,7 +7453,7 @@ return "completed";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act103" ve="7">
+		<Action sr="act107" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_BalanceOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -7335,7 +7463,7 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act104" ve="7">
+		<Action sr="act108" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -7346,7 +7474,7 @@ return "completed";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act105" ve="7">
+		<Action sr="act109" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Balance post-gesture query failed</Str>
@@ -7356,18 +7484,18 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act106" ve="7">
+		<Action sr="act110" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act107" ve="7">
+		<Action sr="act111" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act108" ve="7">
+		<Action sr="act112" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act109" ve="7">
+		<Action sr="act113" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -7378,7 +7506,7 @@ return "completed";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act110" ve="7">
+		<Action sr="act114" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_BalanceOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -7388,7 +7516,7 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act111" ve="7">
+		<Action sr="act115" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Balance unexpected readback=%SIG3_BalanceLevel expected=%sig3_expected; stopped</Str>
@@ -7398,44 +7526,16 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act112" ve="7">
+		<Action sr="act116" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
-		</Action>
-		<Action sr="act113" ve="7">
-			<code>38</code>
-		</Action>
-		<Action sr="act114" ve="7">
-			<code>40</code>
-		</Action>
-		<Action sr="act115" ve="7">
-			<code>547</code>
-			<Str sr="arg0" ve="3">%SIG3_BalanceOK</Str>
-			<Str sr="arg1" ve="3">0</Str>
-			<Int sr="arg2" val="0" />
-			<Int sr="arg3" val="0" />
-			<Int sr="arg4" val="0" />
-			<Int sr="arg5" val="3" />
-			<Int sr="arg6" val="1" />
-		</Action>
-		<Action sr="act116" ve="7">
-			<code>547</code>
-			<Str sr="arg0" ve="3">%SIG3_Error</Str>
-			<Str sr="arg1" ve="3">Balance target not reached within bounded steps</Str>
-			<Int sr="arg2" val="0" />
-			<Int sr="arg3" val="0" />
-			<Int sr="arg4" val="0" />
-			<Int sr="arg5" val="3" />
-			<Int sr="arg6" val="1" />
 		</Action>
 		<Action sr="act117" ve="7">
-			<code>137</code>
-			<Int sr="arg0" val="0" />
-			<Str sr="arg1" ve="3" />
+			<code>38</code>
 		</Action>
 		<Action sr="act118" ve="7">
-			<code>43</code>
+			<code>40</code>
 		</Action>
 		<Action sr="act119" ve="7">
 			<code>547</code>
@@ -7449,6 +7549,34 @@ return "completed";
 		</Action>
 		<Action sr="act120" ve="7">
 			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_Error</Str>
+			<Str sr="arg1" ve="3">Balance target not reached within bounded steps</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act121" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
+		</Action>
+		<Action sr="act122" ve="7">
+			<code>43</code>
+		</Action>
+		<Action sr="act123" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_BalanceOK</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act124" ve="7">
+			<code>547</code>
 			<Str sr="arg0" ve="3">%sig3_target</Str>
 			<Str sr="arg1" ve="3">%par1</Str>
 			<Int sr="arg2" val="0" />
@@ -7457,7 +7585,7 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act121" ve="7">
+		<Action sr="act125" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -7468,7 +7596,7 @@ return "completed";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act122" ve="7">
+		<Action sr="act126" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_BalanceOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -7478,7 +7606,7 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act123" ve="7">
+		<Action sr="act127" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Balance target must be an integer</Str>
@@ -7488,15 +7616,15 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act124" ve="7">
+		<Action sr="act128" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act125" ve="7">
+		<Action sr="act129" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act126" ve="7">
+		<Action sr="act130" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -7507,7 +7635,7 @@ return "completed";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act127" ve="7">
+		<Action sr="act131" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_BalanceOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -7517,7 +7645,7 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act128" ve="7">
+		<Action sr="act132" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Balance target below minimum</Str>
@@ -7527,15 +7655,15 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act129" ve="7">
+		<Action sr="act133" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act130" ve="7">
+		<Action sr="act134" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act131" ve="7">
+		<Action sr="act135" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -7546,7 +7674,7 @@ return "completed";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act132" ve="7">
+		<Action sr="act136" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_BalanceOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -7556,7 +7684,7 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act133" ve="7">
+		<Action sr="act137" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Balance target above maximum</Str>
@@ -7566,15 +7694,15 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act134" ve="7">
+		<Action sr="act138" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act135" ve="7">
+		<Action sr="act139" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act136" ve="7">
+		<Action sr="act140" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Target</Str>
 			<Str sr="arg1" ve="3">%sig3_target</Str>
@@ -7584,7 +7712,7 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act137" ve="7">
+		<Action sr="act141" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_BalanceTarget</Str>
 			<Str sr="arg1" ve="3">%sig3_target</Str>
@@ -7594,7 +7722,7 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act138" ve="7">
+		<Action sr="act142" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_InternalBalanceCurrent</Str>
@@ -7611,7 +7739,7 @@ return "completed";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act139" ve="7">
+		<Action sr="act143" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -7622,7 +7750,7 @@ return "completed";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act140" ve="7">
+		<Action sr="act144" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_BalanceOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -7632,7 +7760,7 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act141" ve="7">
+		<Action sr="act145" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -7643,7 +7771,7 @@ return "completed";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act142" ve="7">
+		<Action sr="act146" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Initial slider query failed</Str>
@@ -7653,37 +7781,8 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act143" ve="7">
-			<code>38</code>
-		</Action>
-		<Action sr="act144" ve="7">
-			<code>137</code>
-			<Int sr="arg0" val="0" />
-			<Str sr="arg1" ve="3" />
-		</Action>
-		<Action sr="act145" ve="7">
-			<code>38</code>
-		</Action>
-		<Action sr="act146" ve="7">
-			<code>37</code>
-			<coll>false</coll>
-			<ConditionList sr="if">
-				<Condition sr="c0" ve="3">
-					<lhs>%SIG3_BalanceLevel</lhs>
-					<op>8</op>
-					<rhs>%sig3_target</rhs>
-				</Condition>
-			</ConditionList>
-		</Action>
 		<Action sr="act147" ve="7">
-			<code>547</code>
-			<Str sr="arg0" ve="3">%SIG3_Observed</Str>
-			<Str sr="arg1" ve="3">%SIG3_BalanceLevel</Str>
-			<Int sr="arg2" val="0" />
-			<Int sr="arg3" val="0" />
-			<Int sr="arg4" val="0" />
-			<Int sr="arg5" val="3" />
-			<Int sr="arg6" val="1" />
+			<code>38</code>
 		</Action>
 		<Action sr="act148" ve="7">
 			<code>137</code>
@@ -7694,6 +7793,35 @@ return "completed";
 			<code>38</code>
 		</Action>
 		<Action sr="act150" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%SIG3_BalanceLevel</lhs>
+					<op>8</op>
+					<rhs>%sig3_target</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act151" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_Observed</Str>
+			<Str sr="arg1" ve="3">%SIG3_BalanceLevel</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act152" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
+		</Action>
+		<Action sr="act153" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act154" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Previous</Str>
 			<Str sr="arg1" ve="3">%SIG3_BalanceLevel</Str>
@@ -7703,7 +7831,7 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act151" ve="7">
+		<Action sr="act155" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Expected</Str>
 			<Str sr="arg1" ve="3">%sig3_target</Str>
@@ -7713,7 +7841,7 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act152" ve="7">
+		<Action sr="act156" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_BalanceOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -7723,7 +7851,7 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act153" ve="7">
+		<Action sr="act157" ve="7">
 			<code>474</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">/* Read-only preflight: no volume, route, DND or lock settings are changed. */
@@ -7792,7 +7920,7 @@ return "ready";
 			<Str sr="arg1" ve="3" />
 			<Int sr="arg2" val="1" />
 		</Action>
-		<Action sr="act154" ve="7">
+		<Action sr="act158" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -7803,7 +7931,7 @@ return "ready";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act155" ve="7">
+		<Action sr="act159" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_BalanceOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -7813,7 +7941,7 @@ return "ready";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act156" ve="7">
+		<Action sr="act160" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Audio preflight failed: %errmsg</Str>
@@ -7823,15 +7951,15 @@ return "ready";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act157" ve="7">
+		<Action sr="act161" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act158" ve="7">
+		<Action sr="act162" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act159" ve="7">
+		<Action sr="act163" ve="7">
 			<code>474</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">/* Read-only live UI guard. Defaults are APK-derived and must be confirmed on the phone. */
@@ -7924,7 +8052,7 @@ return "verified";
 			<Str sr="arg1" ve="3" />
 			<Int sr="arg2" val="1" />
 		</Action>
-		<Action sr="act160" ve="7">
+		<Action sr="act164" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -7935,7 +8063,7 @@ return "verified";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act161" ve="7">
+		<Action sr="act165" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_BalanceOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -7945,7 +8073,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act162" ve="7">
+		<Action sr="act166" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Slider/program guard failed: %errmsg</Str>
@@ -7955,15 +8083,15 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act163" ve="7">
+		<Action sr="act167" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act164" ve="7">
+		<Action sr="act168" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act165" ve="7">
+		<Action sr="act169" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig3_slider_mode</Str>
 			<Str sr="arg1" ve="3">Set</Str>
@@ -7973,7 +8101,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act166" ve="7">
+		<Action sr="act170" ve="7">
 			<code>474</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">/* Direct numeric slider action: no simulated touch and no automatic touch fallback. */
@@ -8097,7 +8225,7 @@ return "accepted; verify displayed target and audible aid response separately";
 			<Str sr="arg1" ve="3" />
 			<Int sr="arg2" val="1" />
 		</Action>
-		<Action sr="act167" ve="7">
+		<Action sr="act171" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -8108,7 +8236,7 @@ return "accepted; verify displayed target and audible aid response separately";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act168" ve="7">
+		<Action sr="act172" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_BalanceOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -8118,7 +8246,7 @@ return "accepted; verify displayed target and audible aid response separately";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act169" ve="7">
+		<Action sr="act173" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Numeric slider action failed: %errmsg</Str>
@@ -8128,15 +8256,15 @@ return "accepted; verify displayed target and audible aid response separately";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act170" ve="7">
+		<Action sr="act174" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act171" ve="7">
+		<Action sr="act175" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act172" ve="7">
+		<Action sr="act176" ve="7">
 			<code>30</code>
 			<Int sr="arg0" val="500" />
 			<Int sr="arg1" val="0" />
@@ -8144,7 +8272,7 @@ return "accepted; verify displayed target and audible aid response separately";
 			<Int sr="arg3" val="0" />
 			<Int sr="arg4" val="0" />
 		</Action>
-		<Action sr="act173" ve="7">
+		<Action sr="act177" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_MoveStage</Str>
 			<Str sr="arg1" ve="3">readback</Str>
@@ -8154,7 +8282,7 @@ return "accepted; verify displayed target and audible aid response separately";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act174" ve="7">
+		<Action sr="act178" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_InternalBalanceCurrent</Str>
@@ -8171,7 +8299,7 @@ return "accepted; verify displayed target and audible aid response separately";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act175" ve="7">
+		<Action sr="act179" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Observed</Str>
 			<Str sr="arg1" ve="3">%SIG3_BalanceLevel</Str>
@@ -8181,7 +8309,7 @@ return "accepted; verify displayed target and audible aid response separately";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act176" ve="7">
+		<Action sr="act180" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -8192,7 +8320,7 @@ return "accepted; verify displayed target and audible aid response separately";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act177" ve="7">
+		<Action sr="act181" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_BalanceOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -8202,7 +8330,7 @@ return "accepted; verify displayed target and audible aid response separately";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act178" ve="7">
+		<Action sr="act182" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -8213,7 +8341,7 @@ return "accepted; verify displayed target and audible aid response separately";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act179" ve="7">
+		<Action sr="act183" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Slider readback failed</Str>
@@ -8223,18 +8351,18 @@ return "accepted; verify displayed target and audible aid response separately";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act180" ve="7">
+		<Action sr="act184" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act181" ve="7">
+		<Action sr="act185" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act182" ve="7">
+		<Action sr="act186" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act183" ve="7">
+		<Action sr="act187" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -8245,7 +8373,7 @@ return "accepted; verify displayed target and audible aid response separately";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act184" ve="7">
+		<Action sr="act188" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_BalanceOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -8255,7 +8383,7 @@ return "accepted; verify displayed target and audible aid response separately";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act185" ve="7">
+		<Action sr="act189" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Displayed target not reached; observed=%SIG3_BalanceLevel requested=%sig3_target</Str>
@@ -8265,15 +8393,15 @@ return "accepted; verify displayed target and audible aid response separately";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act186" ve="7">
+		<Action sr="act190" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act187" ve="7">
+		<Action sr="act191" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act188" ve="7">
+		<Action sr="act192" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_BalanceOK</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -8283,7 +8411,7 @@ return "accepted; verify displayed target and audible aid response separately";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act189" ve="7">
+		<Action sr="act193" ve="7">
 			<code>38</code>
 		</Action>
 	</Task>
@@ -10641,7 +10769,7 @@ return "verified";
 		</Action>
 		<Action sr="act8" ve="7">
 			<code>547</code>
-			<Str sr="arg0" ve="3">%SIG3_TinnitusOK</Str>
+			<Str sr="arg0" ve="3">%sig3_drag_direct</Str>
 			<Str sr="arg1" ve="3">0</Str>
 			<Int sr="arg2" val="0" />
 			<Int sr="arg3" val="0" />
@@ -10651,6 +10779,16 @@ return "verified";
 		</Action>
 		<Action sr="act9" ve="7">
 			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_TinnitusOK</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act10" ve="7">
+			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3" />
 			<Int sr="arg2" val="0" />
@@ -10659,7 +10797,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act10" ve="7">
+		<Action sr="act11" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig3_target</Str>
 			<Str sr="arg1" ve="3">%par1</Str>
@@ -10669,7 +10807,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act11" ve="7">
+		<Action sr="act12" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -10680,7 +10818,7 @@ return "verified";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act12" ve="7">
+		<Action sr="act13" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_TinnitusOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -10690,7 +10828,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act13" ve="7">
+		<Action sr="act14" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Tinnitus target must be an integer</Str>
@@ -10700,15 +10838,15 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act14" ve="7">
+		<Action sr="act15" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act15" ve="7">
+		<Action sr="act16" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act16" ve="7">
+		<Action sr="act17" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -10719,7 +10857,7 @@ return "verified";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act17" ve="7">
+		<Action sr="act18" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_TinnitusOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -10729,7 +10867,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act18" ve="7">
+		<Action sr="act19" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Tinnitus target below minimum</Str>
@@ -10739,15 +10877,15 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act19" ve="7">
+		<Action sr="act20" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act20" ve="7">
+		<Action sr="act21" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act21" ve="7">
+		<Action sr="act22" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -10758,7 +10896,7 @@ return "verified";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act22" ve="7">
+		<Action sr="act23" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_TinnitusOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -10768,7 +10906,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act23" ve="7">
+		<Action sr="act24" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Tinnitus target above maximum</Str>
@@ -10778,15 +10916,15 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act24" ve="7">
+		<Action sr="act25" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act25" ve="7">
+		<Action sr="act26" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act26" ve="7">
+		<Action sr="act27" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_TinnitusTarget</Str>
 			<Str sr="arg1" ve="3">%sig3_target</Str>
@@ -10796,7 +10934,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act27" ve="7">
+		<Action sr="act28" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Target</Str>
 			<Str sr="arg1" ve="3">%sig3_target</Str>
@@ -10806,7 +10944,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act28" ve="7">
+		<Action sr="act29" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -10817,7 +10955,7 @@ return "verified";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act29" ve="7">
+		<Action sr="act30" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_TinnitusOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -10827,7 +10965,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act30" ve="7">
+		<Action sr="act31" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Configure calibrated direction: 1=up increases, -1=down increases</Str>
@@ -10837,15 +10975,15 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act31" ve="7">
+		<Action sr="act32" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act32" ve="7">
+		<Action sr="act33" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act33" ve="7">
+		<Action sr="act34" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -10856,7 +10994,7 @@ return "verified";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act34" ve="7">
+		<Action sr="act35" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_TinnitusOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -10866,7 +11004,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act35" ve="7">
+		<Action sr="act36" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Measure and configure %SIG3_TinnitusStepPx</Str>
@@ -10876,15 +11014,15 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act36" ve="7">
+		<Action sr="act37" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act37" ve="7">
+		<Action sr="act38" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act38" ve="7">
+		<Action sr="act39" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -10895,7 +11033,7 @@ return "verified";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act39" ve="7">
+		<Action sr="act40" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_TinnitusOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -10905,7 +11043,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act40" ve="7">
+		<Action sr="act41" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Invalid step distance</Str>
@@ -10915,15 +11053,15 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act41" ve="7">
+		<Action sr="act42" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act42" ve="7">
+		<Action sr="act43" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act43" ve="7">
+		<Action sr="act44" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -10934,7 +11072,7 @@ return "verified";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act44" ve="7">
+		<Action sr="act45" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_TinnitusOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -10944,7 +11082,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act45" ve="7">
+		<Action sr="act46" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Invalid step distance</Str>
@@ -10954,15 +11092,15 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act46" ve="7">
+		<Action sr="act47" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act47" ve="7">
+		<Action sr="act48" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act48" ve="7">
+		<Action sr="act49" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_InternalTinnitusCurrent</Str>
@@ -10979,7 +11117,7 @@ return "verified";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act49" ve="7">
+		<Action sr="act50" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -10990,7 +11128,7 @@ return "verified";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act50" ve="7">
+		<Action sr="act51" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_TinnitusOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -11000,7 +11138,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act51" ve="7">
+		<Action sr="act52" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -11011,7 +11149,7 @@ return "verified";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act52" ve="7">
+		<Action sr="act53" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Tinnitus initial query failed</Str>
@@ -11021,24 +11159,24 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act53" ve="7">
+		<Action sr="act54" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act54" ve="7">
+		<Action sr="act55" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act55" ve="7">
+		<Action sr="act56" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act56" ve="7">
+		<Action sr="act57" ve="7">
 			<code>39</code>
 			<Str sr="arg0" ve="3">%sig3_iteration</Str>
 			<Str sr="arg1" ve="3">1:16</Str>
 			<Int sr="arg2" val="1" />
 		</Action>
-		<Action sr="act57" ve="7">
+		<Action sr="act58" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -11049,7 +11187,7 @@ return "verified";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act58" ve="7">
+		<Action sr="act59" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_TinnitusOK</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -11059,7 +11197,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act59" ve="7">
+		<Action sr="act60" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_MoveStage</Str>
 			<Str sr="arg1" ve="3">complete</Str>
@@ -11069,15 +11207,15 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act60" ve="7">
+		<Action sr="act61" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act61" ve="7">
+		<Action sr="act62" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act62" ve="7">
+		<Action sr="act63" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig3_start</Str>
 			<Str sr="arg1" ve="3">%SIG3_TinnitusLevel</Str>
@@ -11087,7 +11225,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act63" ve="7">
+		<Action sr="act64" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Previous</Str>
 			<Str sr="arg1" ve="3">%SIG3_TinnitusLevel</Str>
@@ -11097,7 +11235,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act64" ve="7">
+		<Action sr="act65" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig3_delta</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -11107,7 +11245,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act65" ve="7">
+		<Action sr="act66" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -11118,7 +11256,7 @@ return "verified";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act66" ve="7">
+		<Action sr="act67" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig3_delta</Str>
 			<Str sr="arg1" ve="3">-1</Str>
@@ -11128,10 +11266,34 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act67" ve="7">
+		<Action sr="act68" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act68" ve="7">
+		<Action sr="act69" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%sig3_drag_direct</lhs>
+					<op>8</op>
+					<rhs>1</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act70" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%sig3_delta</Str>
+			<Str sr="arg1" ve="3">%sig3_target - %sig3_start</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="1" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act71" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act72" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig3_expected</Str>
 			<Str sr="arg1" ve="3">%sig3_start + %sig3_delta</Str>
@@ -11141,7 +11303,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act69" ve="7">
+		<Action sr="act73" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Expected</Str>
 			<Str sr="arg1" ve="3">%sig3_expected</Str>
@@ -11151,7 +11313,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act70" ve="7">
+		<Action sr="act74" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig3_x</Str>
 			<Str sr="arg1" ve="3">%SIG3_TinnitusX</Str>
@@ -11161,7 +11323,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act71" ve="7">
+		<Action sr="act75" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig3_y</Str>
 			<Str sr="arg1" ve="3">%SIG3_TinnitusY</Str>
@@ -11171,7 +11333,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act72" ve="7">
+		<Action sr="act76" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig3_end_y</Str>
 			<Str sr="arg1" ve="3">%sig3_y - %sig3_delta * %SIG3_TinnitusStepPx * %SIG3_TinnitusDirection</Str>
@@ -11181,7 +11343,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act73" ve="7">
+		<Action sr="act77" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_TinnitusOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -11191,7 +11353,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act74" ve="7">
+		<Action sr="act78" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_MoveStage</Str>
 			<Str sr="arg1" ve="3">gesture</Str>
@@ -11201,7 +11363,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act75" ve="7">
+		<Action sr="act79" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Tinnitus gesture did not complete</Str>
@@ -11211,7 +11373,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act76" ve="7">
+		<Action sr="act80" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Gesture</Str>
 			<Str sr="arg1" ve="3">Tinnitus target=%sig3_target expected=%sig3_expected; DOWN-MOVE-UP: one pointer; MOVE 650 ms; dispatchGesture; %sig3_x,%sig3_y -&gt; %sig3_x,%sig3_end_y; UP only at end</Str>
@@ -11221,7 +11383,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act77" ve="7">
+		<Action sr="act81" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_MoveStage</Str>
 			<Str sr="arg1" ve="3">audio-preflight</Str>
@@ -11231,7 +11393,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act78" ve="7">
+		<Action sr="act82" ve="7">
 			<code>474</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">/* Read-only preflight: no volume, route, DND or lock settings are changed. */
@@ -11300,7 +11462,7 @@ return "ready";
 			<Str sr="arg1" ve="3" />
 			<Int sr="arg2" val="1" />
 		</Action>
-		<Action sr="act79" ve="7">
+		<Action sr="act83" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -11311,7 +11473,7 @@ return "ready";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act80" ve="7">
+		<Action sr="act84" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_TinnitusOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -11321,7 +11483,7 @@ return "ready";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act81" ve="7">
+		<Action sr="act85" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Tinnitus audio preflight failed: %errmsg</Str>
@@ -11331,15 +11493,15 @@ return "ready";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act82" ve="7">
+		<Action sr="act86" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act83" ve="7">
+		<Action sr="act87" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act84" ve="7">
+		<Action sr="act88" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_MoveStage</Str>
 			<Str sr="arg1" ve="3">control-check</Str>
@@ -11349,7 +11511,7 @@ return "ready";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act85" ve="7">
+		<Action sr="act89" ve="7">
 			<code>474</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">/* Read-only live UI guard. Defaults are APK-derived and must be confirmed on the phone. */
@@ -11442,7 +11604,7 @@ return "verified";
 			<Str sr="arg1" ve="3" />
 			<Int sr="arg2" val="1" />
 		</Action>
-		<Action sr="act86" ve="7">
+		<Action sr="act90" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -11453,7 +11615,7 @@ return "verified";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act87" ve="7">
+		<Action sr="act91" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_TinnitusOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -11463,7 +11625,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act88" ve="7">
+		<Action sr="act92" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Tinnitus control/program check failed: %errmsg</Str>
@@ -11473,15 +11635,15 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act89" ve="7">
+		<Action sr="act93" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act90" ve="7">
+		<Action sr="act94" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act91" ve="7">
+		<Action sr="act95" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_MoveStage</Str>
 			<Str sr="arg1" ve="3">gesture-dispatch</Str>
@@ -11491,7 +11653,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act92" ve="7">
+		<Action sr="act96" ve="7">
 			<code>474</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">/* Tasker 6.6.20 Java Code (BeanShell). No root, ADB or helper app. */
@@ -11547,7 +11709,25 @@ if (service == null)
 x = Float.parseFloat(tasker.getVariable("sig3_x"));
 y = Float.parseFloat(tasker.getVariable("sig3_y"));
 endY = Float.parseFloat(tasker.getVariable("sig3_end_y"));
-if (x &lt; 0 || endY &lt; 0 || Math.abs(y - endY) &lt; 1 || Math.abs(y - endY) &gt; 200)
+direct = "1".equals(tasker.getVariable("sig3_drag_direct"));
+if (direct) {
+    if (!"Volume".equals(tasker.getVariable("SIG3_Family")))
+        throw new JavaCodeException("Direct drag is only supported for volume");
+    top = Float.parseFloat(tasker.getVariable("SIG3_VolumeTrackTopY"));
+    bottom = Float.parseFloat(tasker.getVariable("SIG3_VolumeTrackBottomY"));
+    target = Integer.parseInt(tasker.getVariable("sig3_target"));
+    x = Float.parseFloat(tasker.getVariable("SIG3_VolumeX"));
+    y = Float.parseFloat(tasker.getVariable("SIG3_VolumeY"));
+    if (Float.isNaN(top) || Float.isNaN(bottom) || top &lt; 0 || bottom &lt;= top
+        || target &lt; 0 || target &gt; 15 || y &lt; top || y &gt; bottom)
+        throw new JavaCodeException("Invalid calibrated direct volume track");
+    endY = Math.round(bottom - target * (bottom - top) / 15.0f);
+    tasker.setVariable("sig3_x", "" + x);
+    tasker.setVariable("sig3_y", "" + y);
+    tasker.setVariable("sig3_end_y", "" + endY);
+}
+if (Float.isNaN(x) || Float.isNaN(y) || Float.isNaN(endY)
+    || x &lt; 0 || endY &lt; 0 || Math.abs(y - endY) &lt; 1 || (!direct &amp;&amp; Math.abs(y - endY) &gt; 200))
     throw new JavaCodeException("Invalid calibrated step coordinates");
 metrics = service.getResources().getDisplayMetrics();
 if (x &gt;= metrics.widthPixels || y &lt; 0 || y &gt;= metrics.heightPixels || endY &gt;= metrics.heightPixels)
@@ -11569,7 +11749,7 @@ return "completed";
 			<Str sr="arg1" ve="3" />
 			<Int sr="arg2" val="1" />
 		</Action>
-		<Action sr="act93" ve="7">
+		<Action sr="act97" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -11580,7 +11760,7 @@ return "completed";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act94" ve="7">
+		<Action sr="act98" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_TinnitusOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -11590,7 +11770,7 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act95" ve="7">
+		<Action sr="act99" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Tinnitus continuous gesture failed: %errmsg</Str>
@@ -11600,15 +11780,15 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act96" ve="7">
+		<Action sr="act100" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act97" ve="7">
+		<Action sr="act101" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act98" ve="7">
+		<Action sr="act102" ve="7">
 			<code>30</code>
 			<Int sr="arg0" val="500" />
 			<Int sr="arg1" val="0" />
@@ -11616,7 +11796,7 @@ return "completed";
 			<Int sr="arg3" val="0" />
 			<Int sr="arg4" val="0" />
 		</Action>
-		<Action sr="act99" ve="7">
+		<Action sr="act103" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_MoveStage</Str>
 			<Str sr="arg1" ve="3">readback</Str>
@@ -11626,7 +11806,7 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act100" ve="7">
+		<Action sr="act104" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_InternalTinnitusCurrent</Str>
@@ -11643,7 +11823,7 @@ return "completed";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act101" ve="7">
+		<Action sr="act105" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Observed</Str>
 			<Str sr="arg1" ve="3">%SIG3_TinnitusLevel</Str>
@@ -11653,7 +11833,7 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act102" ve="7">
+		<Action sr="act106" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -11664,7 +11844,7 @@ return "completed";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act103" ve="7">
+		<Action sr="act107" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_TinnitusOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -11674,7 +11854,7 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act104" ve="7">
+		<Action sr="act108" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -11685,7 +11865,7 @@ return "completed";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act105" ve="7">
+		<Action sr="act109" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Tinnitus post-gesture query failed</Str>
@@ -11695,18 +11875,18 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act106" ve="7">
+		<Action sr="act110" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act107" ve="7">
+		<Action sr="act111" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act108" ve="7">
+		<Action sr="act112" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act109" ve="7">
+		<Action sr="act113" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -11717,7 +11897,7 @@ return "completed";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act110" ve="7">
+		<Action sr="act114" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_TinnitusOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -11727,7 +11907,7 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act111" ve="7">
+		<Action sr="act115" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Tinnitus unexpected readback=%SIG3_TinnitusLevel expected=%sig3_expected; stopped</Str>
@@ -11737,44 +11917,16 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act112" ve="7">
+		<Action sr="act116" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
-		</Action>
-		<Action sr="act113" ve="7">
-			<code>38</code>
-		</Action>
-		<Action sr="act114" ve="7">
-			<code>40</code>
-		</Action>
-		<Action sr="act115" ve="7">
-			<code>547</code>
-			<Str sr="arg0" ve="3">%SIG3_TinnitusOK</Str>
-			<Str sr="arg1" ve="3">0</Str>
-			<Int sr="arg2" val="0" />
-			<Int sr="arg3" val="0" />
-			<Int sr="arg4" val="0" />
-			<Int sr="arg5" val="3" />
-			<Int sr="arg6" val="1" />
-		</Action>
-		<Action sr="act116" ve="7">
-			<code>547</code>
-			<Str sr="arg0" ve="3">%SIG3_Error</Str>
-			<Str sr="arg1" ve="3">Tinnitus target not reached within bounded steps</Str>
-			<Int sr="arg2" val="0" />
-			<Int sr="arg3" val="0" />
-			<Int sr="arg4" val="0" />
-			<Int sr="arg5" val="3" />
-			<Int sr="arg6" val="1" />
 		</Action>
 		<Action sr="act117" ve="7">
-			<code>137</code>
-			<Int sr="arg0" val="0" />
-			<Str sr="arg1" ve="3" />
+			<code>38</code>
 		</Action>
 		<Action sr="act118" ve="7">
-			<code>43</code>
+			<code>40</code>
 		</Action>
 		<Action sr="act119" ve="7">
 			<code>547</code>
@@ -11788,6 +11940,34 @@ return "completed";
 		</Action>
 		<Action sr="act120" ve="7">
 			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_Error</Str>
+			<Str sr="arg1" ve="3">Tinnitus target not reached within bounded steps</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act121" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
+		</Action>
+		<Action sr="act122" ve="7">
+			<code>43</code>
+		</Action>
+		<Action sr="act123" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_TinnitusOK</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act124" ve="7">
+			<code>547</code>
 			<Str sr="arg0" ve="3">%sig3_target</Str>
 			<Str sr="arg1" ve="3">%par1</Str>
 			<Int sr="arg2" val="0" />
@@ -11796,7 +11976,7 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act121" ve="7">
+		<Action sr="act125" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -11807,7 +11987,7 @@ return "completed";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act122" ve="7">
+		<Action sr="act126" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_TinnitusOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -11817,7 +11997,7 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act123" ve="7">
+		<Action sr="act127" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Tinnitus target must be an integer</Str>
@@ -11827,15 +12007,15 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act124" ve="7">
+		<Action sr="act128" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act125" ve="7">
+		<Action sr="act129" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act126" ve="7">
+		<Action sr="act130" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -11846,7 +12026,7 @@ return "completed";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act127" ve="7">
+		<Action sr="act131" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_TinnitusOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -11856,7 +12036,7 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act128" ve="7">
+		<Action sr="act132" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Tinnitus target below minimum</Str>
@@ -11866,15 +12046,15 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act129" ve="7">
+		<Action sr="act133" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act130" ve="7">
+		<Action sr="act134" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act131" ve="7">
+		<Action sr="act135" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -11885,7 +12065,7 @@ return "completed";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act132" ve="7">
+		<Action sr="act136" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_TinnitusOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -11895,7 +12075,7 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act133" ve="7">
+		<Action sr="act137" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Tinnitus target above maximum</Str>
@@ -11905,15 +12085,15 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act134" ve="7">
+		<Action sr="act138" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act135" ve="7">
+		<Action sr="act139" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act136" ve="7">
+		<Action sr="act140" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Target</Str>
 			<Str sr="arg1" ve="3">%sig3_target</Str>
@@ -11923,7 +12103,7 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act137" ve="7">
+		<Action sr="act141" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_TinnitusTarget</Str>
 			<Str sr="arg1" ve="3">%sig3_target</Str>
@@ -11933,7 +12113,7 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act138" ve="7">
+		<Action sr="act142" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_InternalTinnitusCurrent</Str>
@@ -11950,7 +12130,7 @@ return "completed";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act139" ve="7">
+		<Action sr="act143" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -11961,7 +12141,7 @@ return "completed";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act140" ve="7">
+		<Action sr="act144" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_TinnitusOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -11971,7 +12151,7 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act141" ve="7">
+		<Action sr="act145" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -11982,7 +12162,7 @@ return "completed";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act142" ve="7">
+		<Action sr="act146" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Initial slider query failed</Str>
@@ -11992,37 +12172,8 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act143" ve="7">
-			<code>38</code>
-		</Action>
-		<Action sr="act144" ve="7">
-			<code>137</code>
-			<Int sr="arg0" val="0" />
-			<Str sr="arg1" ve="3" />
-		</Action>
-		<Action sr="act145" ve="7">
-			<code>38</code>
-		</Action>
-		<Action sr="act146" ve="7">
-			<code>37</code>
-			<coll>false</coll>
-			<ConditionList sr="if">
-				<Condition sr="c0" ve="3">
-					<lhs>%SIG3_TinnitusLevel</lhs>
-					<op>8</op>
-					<rhs>%sig3_target</rhs>
-				</Condition>
-			</ConditionList>
-		</Action>
 		<Action sr="act147" ve="7">
-			<code>547</code>
-			<Str sr="arg0" ve="3">%SIG3_Observed</Str>
-			<Str sr="arg1" ve="3">%SIG3_TinnitusLevel</Str>
-			<Int sr="arg2" val="0" />
-			<Int sr="arg3" val="0" />
-			<Int sr="arg4" val="0" />
-			<Int sr="arg5" val="3" />
-			<Int sr="arg6" val="1" />
+			<code>38</code>
 		</Action>
 		<Action sr="act148" ve="7">
 			<code>137</code>
@@ -12033,6 +12184,35 @@ return "completed";
 			<code>38</code>
 		</Action>
 		<Action sr="act150" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%SIG3_TinnitusLevel</lhs>
+					<op>8</op>
+					<rhs>%sig3_target</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act151" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_Observed</Str>
+			<Str sr="arg1" ve="3">%SIG3_TinnitusLevel</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act152" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
+		</Action>
+		<Action sr="act153" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act154" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Previous</Str>
 			<Str sr="arg1" ve="3">%SIG3_TinnitusLevel</Str>
@@ -12042,7 +12222,7 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act151" ve="7">
+		<Action sr="act155" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Expected</Str>
 			<Str sr="arg1" ve="3">%sig3_target</Str>
@@ -12052,7 +12232,7 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act152" ve="7">
+		<Action sr="act156" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_TinnitusOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -12062,7 +12242,7 @@ return "completed";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act153" ve="7">
+		<Action sr="act157" ve="7">
 			<code>474</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">/* Read-only preflight: no volume, route, DND or lock settings are changed. */
@@ -12131,7 +12311,7 @@ return "ready";
 			<Str sr="arg1" ve="3" />
 			<Int sr="arg2" val="1" />
 		</Action>
-		<Action sr="act154" ve="7">
+		<Action sr="act158" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -12142,7 +12322,7 @@ return "ready";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act155" ve="7">
+		<Action sr="act159" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_TinnitusOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -12152,7 +12332,7 @@ return "ready";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act156" ve="7">
+		<Action sr="act160" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Audio preflight failed: %errmsg</Str>
@@ -12162,15 +12342,15 @@ return "ready";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act157" ve="7">
+		<Action sr="act161" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act158" ve="7">
+		<Action sr="act162" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act159" ve="7">
+		<Action sr="act163" ve="7">
 			<code>474</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">/* Read-only live UI guard. Defaults are APK-derived and must be confirmed on the phone. */
@@ -12263,7 +12443,7 @@ return "verified";
 			<Str sr="arg1" ve="3" />
 			<Int sr="arg2" val="1" />
 		</Action>
-		<Action sr="act160" ve="7">
+		<Action sr="act164" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -12274,7 +12454,7 @@ return "verified";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act161" ve="7">
+		<Action sr="act165" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_TinnitusOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -12284,7 +12464,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act162" ve="7">
+		<Action sr="act166" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Slider/program guard failed: %errmsg</Str>
@@ -12294,15 +12474,15 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act163" ve="7">
+		<Action sr="act167" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act164" ve="7">
+		<Action sr="act168" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act165" ve="7">
+		<Action sr="act169" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%sig3_slider_mode</Str>
 			<Str sr="arg1" ve="3">Set</Str>
@@ -12312,7 +12492,7 @@ return "verified";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act166" ve="7">
+		<Action sr="act170" ve="7">
 			<code>474</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">/* Direct numeric slider action: no simulated touch and no automatic touch fallback. */
@@ -12436,7 +12616,7 @@ return "accepted; verify displayed target and audible aid response separately";
 			<Str sr="arg1" ve="3" />
 			<Int sr="arg2" val="1" />
 		</Action>
-		<Action sr="act167" ve="7">
+		<Action sr="act171" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -12447,7 +12627,7 @@ return "accepted; verify displayed target and audible aid response separately";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act168" ve="7">
+		<Action sr="act172" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_TinnitusOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -12457,7 +12637,7 @@ return "accepted; verify displayed target and audible aid response separately";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act169" ve="7">
+		<Action sr="act173" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Numeric slider action failed: %errmsg</Str>
@@ -12467,15 +12647,15 @@ return "accepted; verify displayed target and audible aid response separately";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act170" ve="7">
+		<Action sr="act174" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act171" ve="7">
+		<Action sr="act175" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act172" ve="7">
+		<Action sr="act176" ve="7">
 			<code>30</code>
 			<Int sr="arg0" val="500" />
 			<Int sr="arg1" val="0" />
@@ -12483,7 +12663,7 @@ return "accepted; verify displayed target and audible aid response separately";
 			<Int sr="arg3" val="0" />
 			<Int sr="arg4" val="0" />
 		</Action>
-		<Action sr="act173" ve="7">
+		<Action sr="act177" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_MoveStage</Str>
 			<Str sr="arg1" ve="3">readback</Str>
@@ -12493,7 +12673,7 @@ return "accepted; verify displayed target and audible aid response separately";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act174" ve="7">
+		<Action sr="act178" ve="7">
 			<code>130</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">SIG3_InternalTinnitusCurrent</Str>
@@ -12510,7 +12690,7 @@ return "accepted; verify displayed target and audible aid response separately";
 			<Int sr="arg8" val="0" />
 			<Int sr="arg9" val="0" />
 		</Action>
-		<Action sr="act175" ve="7">
+		<Action sr="act179" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Observed</Str>
 			<Str sr="arg1" ve="3">%SIG3_TinnitusLevel</Str>
@@ -12520,7 +12700,7 @@ return "accepted; verify displayed target and audible aid response separately";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act176" ve="7">
+		<Action sr="act180" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -12531,7 +12711,7 @@ return "accepted; verify displayed target and audible aid response separately";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act177" ve="7">
+		<Action sr="act181" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_TinnitusOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -12541,7 +12721,7 @@ return "accepted; verify displayed target and audible aid response separately";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act178" ve="7">
+		<Action sr="act182" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -12552,7 +12732,7 @@ return "accepted; verify displayed target and audible aid response separately";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act179" ve="7">
+		<Action sr="act183" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Slider readback failed</Str>
@@ -12562,18 +12742,18 @@ return "accepted; verify displayed target and audible aid response separately";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act180" ve="7">
+		<Action sr="act184" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act181" ve="7">
+		<Action sr="act185" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act182" ve="7">
+		<Action sr="act186" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act183" ve="7">
+		<Action sr="act187" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -12584,7 +12764,7 @@ return "accepted; verify displayed target and audible aid response separately";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act184" ve="7">
+		<Action sr="act188" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_TinnitusOK</Str>
 			<Str sr="arg1" ve="3">0</Str>
@@ -12594,7 +12774,7 @@ return "accepted; verify displayed target and audible aid response separately";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act185" ve="7">
+		<Action sr="act189" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_Error</Str>
 			<Str sr="arg1" ve="3">Displayed target not reached; observed=%SIG3_TinnitusLevel requested=%sig3_target</Str>
@@ -12604,15 +12784,15 @@ return "accepted; verify displayed target and audible aid response separately";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act186" ve="7">
+		<Action sr="act190" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act187" ve="7">
+		<Action sr="act191" ve="7">
 			<code>38</code>
 		</Action>
-		<Action sr="act188" ve="7">
+		<Action sr="act192" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_TinnitusOK</Str>
 			<Str sr="arg1" ve="3">1</Str>
@@ -12622,7 +12802,7 @@ return "accepted; verify displayed target and audible aid response separately";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act189" ve="7">
+		<Action sr="act193" ve="7">
 			<code>38</code>
 		</Action>
 	</Task>

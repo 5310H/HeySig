@@ -395,10 +395,12 @@ class Phone:
                     duration = '650'
                 self.gestures.append((f"{get('sig3_x')},{get('sig3_y')}", f"{get('sig3_x')},{get('sig3_end_y')}", duration))
                 distance = float(get('sig3_y')) - float(get('sig3_end_y'))
-                assert 1 <= abs(distance) <= 200
+                assert 1 <= abs(distance) <= (3000 if get('sig3_drag_direct') == '1' else 200)
                 self.drags.append(distance)
                 put('SIG3_TouchStage', 'released')
-                if abs(distance) >= self.threshold: self.level = max(self.bounds[0], min(self.bounds[1], self.level + (self.jump if distance > 0 else -self.jump)))
+                if abs(distance) >= self.threshold:
+                    movement = int(get('sig3_expected')) - self.level if get('sig3_drag_direct') == '1' and self.jump == 1 else (self.jump if distance > 0 else -self.jump)
+                    self.level = max(self.bounds[0], min(self.bounds[1], self.level + movement))
             elif code == 778682267:
                 params = json.loads(a.findtext('Bundle/Vals/parameters'))
                 self.gestures.append((expand(params['initialPoint']), expand(params['endPoint']), expand(params['duration'])))

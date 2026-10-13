@@ -51,7 +51,25 @@ if (service == null)
 x = Float.parseFloat(tasker.getVariable("sig3_x"));
 y = Float.parseFloat(tasker.getVariable("sig3_y"));
 endY = Float.parseFloat(tasker.getVariable("sig3_end_y"));
-if (x < 0 || endY < 0 || Math.abs(y - endY) < 1 || Math.abs(y - endY) > 200)
+direct = "1".equals(tasker.getVariable("sig3_drag_direct"));
+if (direct) {
+    if (!"Volume".equals(tasker.getVariable("SIG3_Family")))
+        throw new JavaCodeException("Direct drag is only supported for volume");
+    top = Float.parseFloat(tasker.getVariable("SIG3_VolumeTrackTopY"));
+    bottom = Float.parseFloat(tasker.getVariable("SIG3_VolumeTrackBottomY"));
+    target = Integer.parseInt(tasker.getVariable("sig3_target"));
+    x = Float.parseFloat(tasker.getVariable("SIG3_VolumeX"));
+    y = Float.parseFloat(tasker.getVariable("SIG3_VolumeY"));
+    if (Float.isNaN(top) || Float.isNaN(bottom) || top < 0 || bottom <= top
+        || target < 0 || target > 15 || y < top || y > bottom)
+        throw new JavaCodeException("Invalid calibrated direct volume track");
+    endY = Math.round(bottom - target * (bottom - top) / 15.0f);
+    tasker.setVariable("sig3_x", "" + x);
+    tasker.setVariable("sig3_y", "" + y);
+    tasker.setVariable("sig3_end_y", "" + endY);
+}
+if (Float.isNaN(x) || Float.isNaN(y) || Float.isNaN(endY)
+    || x < 0 || endY < 0 || Math.abs(y - endY) < 1 || (!direct && Math.abs(y - endY) > 200))
     throw new JavaCodeException("Invalid calibrated step coordinates");
 metrics = service.getResources().getDisplayMetrics();
 if (x >= metrics.widthPixels || y < 0 || y >= metrics.heightPixels || endY >= metrics.heightPixels)

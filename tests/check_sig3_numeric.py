@@ -53,3 +53,14 @@ for command in ['tin four','set tin to four','change tin to four']:
 p=phone('Tinnitus',2);p.run('SIG3_VoiceRouter','current tin')
 assert p.level==2 and not p.drags and p.globals['SIG3_Family']=='Tinnitus'
 print('Tin shorthand routes numeric changes and current query to tinnitus.')
+
+# Direct volume requests use a single stroke and stop on an unexpected readback.
+for start in range(16):
+    for target in range(16):
+        p=phone('Volume',start);p.globals['SIG3_VolumeDragMode']='direct'
+        p.run('SIG3_VolumeSet',str(target))
+        assert p.level==target and p.globals['SIG3_CommandOK']=='1', (start,target,p.globals)
+        assert len(p.drags)==int(start!=target), (start,target,p.drags)
+p=phone('Volume',5,jump=2);p.globals['SIG3_VolumeDragMode']='direct';p.run('SIG3_VolumeSet','9')
+assert p.globals['SIG3_CommandOK']=='0' and len(p.drags)==1
+print('Direct volume: 256 transitions, single stroke, no-op and failed-readback stop passed.')

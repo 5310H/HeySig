@@ -260,13 +260,13 @@ def legacy_target_set(family):
     step = '%SIG3_' + family + 'StepPx'
     direction = '%SIG3_' + family + 'Direction'
     g = lambda lhs, op, rhs, msg: family_guard(family, lhs, op, rhs, msg)
-    aa = [setvar(ok, 0), setvar('%SIG3_Error', ''), setvar('%sig3_target', '%par1'),
+    aa = [setvar('%sig3_drag_direct', 0), setvar(ok, 0), setvar('%SIG3_Error', ''), setvar('%sig3_target', '%par1'),
           *g('%sig3_target', 5, r'^-?[0-9]+$', family + ' target must be an integer'),
           *g('%sig3_target', 6, lo, family + ' target below minimum'),
           *g('%sig3_target', 7, hi, family + ' target above maximum'),
           setvar('%SIG3_' + family + 'Target', '%sig3_target'), setvar('%SIG3_Target', '%sig3_target')]
     if family == 'Volume':
-        aa += [condition(step, 13), setvar(step, 40), action(38), condition(direction, 13), setvar(direction, 1), action(38)]
+        aa += [condition('%SIG3_VolumeDragMode', 2, 'direct'), setvar('%sig3_drag_direct', 1), action(38), condition(step, 13), setvar(step, 40), action(38), condition(direction, 13), setvar(direction, 1), action(38)]
     aa += [*g(direction, 5, r'^(?:1|-1)$', 'Configure calibrated direction: 1=up increases, -1=down increases'), *g(step, 5, r'^[0-9]+$', 'Measure and configure ' + step),
            *g(step, 6, 1, 'Invalid step distance'), *g(step, 7, 200, 'Invalid step distance'),
            call('SIG3_Internal' + family + 'Current', '%par2'), *g(ok, 3, 1, family + ' initial query failed: %SIG3_Error'),
@@ -274,6 +274,7 @@ def legacy_target_set(family):
            condition(level, 8, '%sig3_target'), setvar(ok, 1), setvar('%SIG3_MoveStage', 'complete'), stop(), action(38),
            setvar('%sig3_start', level), setvar('%SIG3_Previous', level), setvar('%sig3_delta', 1),
            condition(level, 7, '%sig3_target'), setvar('%sig3_delta', -1), action(38),
+           condition('%sig3_drag_direct', 8, 1), setvar('%sig3_delta', '%sig3_target - %sig3_start', True), action(38),
            setvar('%sig3_expected', '%sig3_start + %sig3_delta', True), setvar('%SIG3_Expected', '%sig3_expected'),
            setvar('%sig3_x', '%SIG3_' + family + 'X'), setvar('%sig3_y', '%SIG3_' + family + 'Y'),
            setvar('%sig3_end_y', '%sig3_y - %sig3_delta * ' + step + ' * ' + direction, True),

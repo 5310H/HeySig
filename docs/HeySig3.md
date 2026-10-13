@@ -1,3 +1,4 @@
+
 # HeySig3 user manual
 
 Updated October 12, 2026. Use this manual for operation, the [test checklist](HeySig3-test-checklist.md) for completed and remaining checks, and the [phone verification notes](HeySig3-verified-usb-drags.md) for measured results. [Completion and event wiring](HeySig3-completion.md) covers profiles and optional automation.
@@ -53,6 +54,8 @@ Pass spoken text in Parameter 1 of `SIG3_VoiceRouter`, or use the configured Aut
 
 Short forms such as `volume 10`, `balance 0`, and `tin one` also work. **Tin** is a shorthand for tinnitus: `current tin`, `tin 3`, and `tin mute`. The live `current tin` test correctly reported unavailable for the active program. Volume/tinnitus mute requests 0; balance soft/sharp requests −8/7. Invalid targets fail rather than clamp. Repeating a target is a no-op after a fresh current query. Router behavior has simulated coverage; actual recognition and event delivery remain on the checklist.
 
+The gesture backend defaults to one-level steps with fresh readback after each step. An opt-in **direct volume drag** uses one continuous 650 ms stroke to the requested position, then checks the final value. Set `%SIG3_VolumeDragMode=direct` with the volume `legacy-gesture` backend and measured `%SIG3_VolumeTrackTopY`, `%SIG3_VolumeTrackBottomY` and `%SIG3_VolumeTrackBounds`. Changed bounds stop the operation. A missed target reports failure after that one stroke; it does not retry automatically. Set the mode to `incremental` to return to the existing method. Both modes show/speak only the finished result. See [direct-volume setup and verification](HeySig3-direct-volume.md). Direct mode passed the normal Tasker 10 → 7 → 10 trial on October 12; the separate native accessibility backend remains independently unverified.
+
 For manual numbered requests, use `SIG3_VolumeSet`, `SIG3_BalanceSet`, or `SIG3_TinnitusSet` with an integer in Parameter 1. Public Up/Down tasks are compatibility wrappers around Set; balance/tinnitus wrappers passed the adjacent phone tests above. Relative Up/Down voice phrases are not routed. Use public SIG3 tasks, not Internal tasks.
 
 All public UI commands use `SIG3_Worker`. Keep its Tasker collision setting **Abort New Task**: a new command while it is running is rejected, not queued. No persistent busy flag needs resetting after failure or manual Stop. Do not enable competing legacy profiles during acceptance testing.
@@ -87,7 +90,7 @@ Signia remains open by default (`%SIG3_CompletionPolicy=stay`). `home` returns t
 
 ## Testing status
 
-Follow the [completed and remaining checklist](HeySig3-test-checklist.md). All 19 repository checks passed after the October 12 wake/readiness fixes. [Static validation](HeySig3-validation.md) checked 91 XML files and 6,683 actions with zero failures. Some checks execute actual Java bodies in local BeanShell; simulations do not replace Android/plugin or live recognition acceptance. Background wake, full phone reboot, long-duration endurance, native accessibility movement and broader endpoint checks remain open.
+Follow the [completed and remaining checklist](HeySig3-test-checklist.md). All 20 repository checks passed after the October 12 direct-volume changes. [Static validation](HeySig3-validation.md) checked 91 XML files and 6,713 actions with zero failures. Some checks execute actual Java bodies in local BeanShell; simulations do not replace Android/plugin or live recognition acceptance. Background wake, full phone reboot, long-duration endurance, native accessibility movement and broader endpoint checks remain open.
 The Chromebook generates/validates the project; Signia runs on the phone. USB and authorized wireless ADB were used for inspection/import/testing, not as a requirement for the Tasker balance/tinnitus control path.
 
 ## Priority 3 setup
