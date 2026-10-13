@@ -1,8 +1,8 @@
 # HeySig3 voice commands
 
-These phrases are supported by `SIG3_VoiceRouter`. Say them through a connected AutoVoice or AutoWear command event, or pass the text in Parameter 1 of the router. Recognition and event delivery still need phone verification; the command list describes the implemented routing.
+These phrases are supported by `SIG3_VoiceRouter`. Say them through a connected AutoVoice or AutoWear command event, or pass the text in Parameter 1 of the router. General phone voice commands have live acceptance; watch events remain untested because no watch was available. The list describes supported routing, including endpoints with separate live acceptance still pending.
 
-Run `SIG3_VoiceCommand` in Tasker to open its built-in voice-recognition prompt for any command below. It sends recognized text directly to `SIG3_VoiceRouter` and does not require an AutoVoice event profile. Cancelled or empty recognition sends no command. The spoken **current program** query passed on the phone; see [voice verification](HeySig3-voice-verification-2026-10-11.md). Other spoken commands still need individual acceptance.
+Run `SIG3_VoiceCommand` in Tasker to open its built-in voice-recognition prompt for any command below. It sends recognized text directly to `SIG3_VoiceRouter` and does not require an AutoVoice event profile. Cancelled or empty recognition sends no command. The spoken **current program** query passed on the phone; see [voice verification](HeySig3-voice-verification-2026-10-11.md). Live program, volume, balance, tinnitus and battery commands also passed; see the [test checklist](HeySig3-test-checklist.md).
 
 ## Everyday controls
 
@@ -17,13 +17,16 @@ Run `SIG3_VoiceCommand` in Tasker to open its built-in voice-recognition prompt 
 | Center balance | “balance zero” | “set balance to 0” |
 | Softest balance | “balance soft” | “soft balance”; sets −8 |
 | Sharpest balance | “balance sharp” | “sharp balance”; sets 7 |
-| Set tinnitus level | “tinnitus one” | “change tinnitus to 1”; 0–15 |
-| Read tinnitus | “current tinnitus” | “current tinnitus level”, “what is the tinnitus level?”; read-only when available |
-| Mute tinnitus | “tinnitus mute” | “mute tinnitus”; sets 0 |
+| Set tinnitus level | “tin one” | “tinnitus one”, “change tin to 1”; 0–15 when available |
+| Read tinnitus | “current tin” | “current tinnitus”, “current tinnitus level”, “what is the tinnitus level?”; read-only when available |
+| Mute tinnitus | “tin mute” | “tinnitus mute”, “mute tinnitus”; sets 0 |
 | Maximum tinnitus | “maximum tinnitus” | “tinnitus max”; sets 15 |
 | Select a program | “program two” | “mode 2”, “change program to two”; slots 1–6 |
 | Select by program name | “change program to <your program name>” | Use the exact name configured for an actual Signia program slot |
 | Read selected program | “current program” | “current mode”, “what program”, “what mode”, “what is the current program?” |
+| Restore last saved settings | “restore settings” | Restores saved program, volume, balance and tinnitus when available |
+| Refresh saved settings | “save settings” | Optional; successful HeySig3 changes save automatically |
+| End microphone session | “cancel” | No command sent; no retry dialog |
 | Check both batteries | “battery check” | “battery”, “check battery”, “battery listen”, “listen to battery” |
 
 Numbers can be digits or English words. Numeric controls accept an optional “set” or “change”, and an optional “to”. Negative balance numbers accept “minus” or “negative”. An optional leading “sig” or “sig3” is removed; it is a command prefix, not an installed wake word.
@@ -34,11 +37,11 @@ Program slot 2 also accepts “program too” (or “mode too”) because speech
 
 The general voice task also speaks a short result after a fresh completed command: the actual selected program, verified volume/balance/tinnitus level, or the failure instruction. Unrecognized speech speaks the retry instruction before showing its buttons. Responses use the default phone text-to-speech engine and media stream, with a two-second settling gap; speech waits until finished before the task continues. They are skipped while the SIG3 worker is active. This gap is not a measured confirmation of hearing-aid acoustic completion.
 
-Set `%SIG3_VoiceResponses=0` to disable spoken responses; an unset value or `1` enables them. Speech does not change phone volume or DND, and on-screen results remain available when those settings prevent hearing the message. AutoVoice/watch event adapters and the separate mode/battery prompts do not yet use this general-task speech path.
+Run **SIG3_VoiceSettings** to independently switch **Spoken results** and **Voice prompts** on/off and Save. Both may be off. Cancel/Back preserves choices. These switches do not control wake listening. See [voice settings](HeySig3-voice-settings.md). Result speech does not change phone volume or DND, and on-screen results remain available when those settings prevent hearing the message. AutoVoice/watch event adapters and the separate mode/battery prompts do not yet use this general-task speech path.
 
 Program names are **not hardcoded**. Configure `%SIG3_ProgramName1` through `%SIG3_ProgramName6` from the names actually shown in Signia; leave unused slots unset. Numbered requests also require a configured slot. “normal” and “conversation” use `%SIG3_ModeConversationProgram`; “noisy” uses `%SIG3_ModeNoisyProgram`; “very noisy”, “verynoisy”, and “vnoisy” use `%SIG3_ModeVeryNoisyProgram`. These aliases also accept a “program” or “mode” prefix and require an explicitly configured slot.
 
-Tinnitus commands stop when the current program has no tinnitus tab. Repeating the current target reads it again and makes no movement. Out-of-range targets fail. Relative voice phrases such as “volume up” and “tinnitus down” are not supported by this router.
+Use **tin** as a shorthand for tinnitus in control phrases. Tinnitus commands use the program icon first; when it identifies unavailable tinnitus, they stop without looking for a tab. Unknown icons use visible-tab fallback. Repeating the current target reads it again and makes no movement. Out-of-range targets fail. Relative voice phrases such as “volume up” and “tinnitus down” are not supported by this router.
 
 Battery check presses the top-right question-mark battery icon, requests left and right checks, acknowledges the prompts, then closes the battery page. Battery has no slider. The phone screen confirms the app sequence; hearing-aid indications require listening.
 
@@ -62,3 +65,7 @@ Keep the phone unlocked, Tasker accessibility enabled, and Signia ready. If Do N
 For a read-only phone audio check, run `SIG3_PhoneAudioCheck` in Tasker. There is currently no voice phrase for that task or the page-only battery `open` option.
 
 Successful results show the app state; they do not independently verify hearing-aid receipt. See the [user manual](HeySig3.md) for setup and the [test checklist](HeySig3-test-checklist.md) for remaining verification.
+
+## Optional wake phrase
+
+Run `SIG3_WakeEnable`, say **Hey Sig**, pause until the cue and microphone, then say one command. **Hey Cig** is an accepted recognition alias. To turn listening off, run `SIG3_WakeDisable`. AutoVoice requires regex on/exact command off and Stream to Mute set to Media. Two consecutive commands and locked-phone unlock guidance passed; background wake still failed. Use `SIG3_VoiceCommand` for direct capture. See [wake setup](HeySig3-wake-phrase.md).

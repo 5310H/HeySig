@@ -1,6 +1,6 @@
 # HeySig3 completion and event wiring
 
-Updated October 10, 2026. See the [user manual](HeySig3.md), [completed/remaining test checklist](HeySig3-test-checklist.md), and [phone verification notes](HeySig3-verified-usb-drags.md). Import `projects/HeySig3.prj.xml` and run `SIG3_Init`. Existing settings are preserved. Automatic noise/sleep changes remain disabled until configured and tested. SoundWear is removed.
+Updated October 12, 2026. See the [user manual](HeySig3.md), [completed/remaining test checklist](HeySig3-test-checklist.md), and [phone verification notes](HeySig3-verified-usb-drags.md). Import `projects/HeySig3.prj.xml` and run `SIG3_Init`. Existing settings are preserved. Automatic noise/sleep changes remain disabled until configured and tested. SoundWear is removed.
 
 ## User commands
 
@@ -38,10 +38,11 @@ Read `%SIG3_Program` for current program; `%SIG3_Level`, `%SIG3_BalanceLevel`, `
 
 ## Phone profiles to connect
 
-The repository supplies adapters, not fabricated AutoVoice/AutoWear/sleep-provider event configurations. On the phone:
+The project includes the opt-in AutoVoice Continuous wake profile. Configure other AutoVoice/AutoWear/sleep-provider events separately. On the phone:
 
 | Event | Entry task | Input |
 |---|---|---|
+| AutoVoice Continuous Hey Sig / Hey Cig | SIG3_WakeTrigger | Whole wake phrase; regex on, Exact Command off |
 | AutoVoice Recognized | SIG3_AutoVoiceCommand | Event recognition text; adapter prefers avcommnofilter then avcomm |
 | AutoWear Command | SIG3_WatchCommand | Event text; adapter prefers awcomm then awmessage |
 | Periodic phone noise | SIG3_CurrentNoise | None; choose the polling interval in the actual Time profile |
@@ -51,12 +52,14 @@ The repository supplies adapters, not fabricated AutoVoice/AutoWear/sleep-provid
 
 Tasker event variables are local to the event task. If a profile needs an intermediate task, use Perform Task to pass the event value explicitly. Export actual configured event profiles from the phone before treating their setup as version-portable XML. No SoundWear profiles should remain active on the phone.
 
-## Verified sliders and acceptance still required
+## Verified setup and remaining acceptance
 
-Tasker balance and tinnitus passed 0 → 1 → 0 in Universal using the explicitly configured Pixel 9a gesture backend. TV's missing tinnitus tab was checked on the phone: TinnitusUp stopped with `Tinnitus unavailable for this program` and no gesture. Updated read-only checks also passed for tinnitus in Universal and balance in TV. Universal was restored; balance/tinnitus finished at 0.
+Direct Tasker volume 8 → 7 → 8 in Noisy, balance/tinnitus adjacent changes, repeated-target no-ops and restoration passed using fresh Signia readback. Known unavailable program icons stop tinnitus requests without a tab search. Native accessibility movement and broader endpoint checks remain separate. Physical aid responses are not required for program/slider acceptance; battery indications already work.
 
-The project default remains native accessibility, and that separate path has not passed a live movement/commit test. Captured touch exploration was off, so its Set gate remains closed. The working per-family gesture settings do not automatically change Volume's backend. The ADB volume tests do not certify Tasker's Volume Set.
+The general voice task passed program/current-value queries, numeric changes, battery, retry and cancellation. Spoken **cancel** exits cleanly; **tin** is a tinnitus shorthand. Automatic saved settings and **restore settings** passed app-only checks. See the [manual](HeySig3.md) and [saved settings](HeySig3-saved-settings.md).
 
-Follow the [acceptance guide](HeySig3-slider-acceptance.md) and [test checklist](HeySig3-test-checklist.md) for direct numbered entry, repeated-target behavior, other programs and actual aid response. Live voice/watch events, program-switch/current tasks, prompts, automation and SIG3 battery operation still need phone verification. The original battery sequence is user-confirmed; its migrated SIG3 export remains unverified.
+`SIG3_VoiceSettings` independently controls voice prompts and results. All four combinations and two Tasker application restarts passed. Full phone reboot remains untested.
 
-Repository checks cover XML structure, all 768 numeric transitions, per-family backend isolation, missing tinnitus tabs, worker coordination, battery sequence, program read/switch, prompts/cancellation, aliases, override, three-tier noise, watch sample routing and legacy adapter flow. These simulations do not execute Android/BeanShell, plugin events or acoustic delivery.
+The wake profile requires regex on and Exact Command off; AutoVoice Stream to Mute must be Media. Two consecutive cue/microphone/reply flows, locked unlock guidance/manual recovery and restoration of media to 22/25 after stopping passed. Background wake subsequently failed despite the foreground service remaining active. Listening was left off; use the direct voice task. See [wake limitations](HeySig3-wake-phrase.md).
+
+All 19 repository checks passed after the October 12 changes. Some helper checks execute actual Java in local BeanShell; simulations do not establish Android/plugin delivery. Watch events, optional noise/sleep automation, long-duration background/battery endurance and other unchecked phone paths remain open in the [checklist](HeySig3-test-checklist.md).

@@ -1,6 +1,6 @@
 # HeySig3 completed work and test checklist
 
-Updated October 11, 2026. Checked phone items below were actually observed on the Pixel 9a; repository checks are listed separately. Unchecked items remain to be tested. See the [user manual](HeySig3.md) and [recorded phone evidence](HeySig3-verified-usb-drags.md).
+Updated October 12, 2026. Checked phone items below were actually observed on the Pixel 9a; repository checks are listed separately. Unchecked items remain to be tested. See the [user manual](HeySig3.md) and [recorded phone evidence](HeySig3-verified-usb-drags.md).
 
 ## Completed implementation
 
@@ -37,7 +37,7 @@ Successful app labels do not independently acknowledge acoustic receipt by the a
 
 ## Passed in repository checks
 
-- [x] Static validation: 82 XML files, 5,461 task actions, zero failures.
+- [x] Static validation: 91 XML files, 6,683 task actions, zero failures.
 - [x] Numeric simulation: 768 source/target transitions, invalid targets, repeated targets, endpoints and readback failures.
 - [x] Backend simulation: native prerequisites, accepted-but-unchanged progress, and per-family backend isolation.
 - [x] Missing tinnitus simulation: Current, Up, Down, Set, Max, Mute, Inspect, and voice request stop without movement.

@@ -1,10 +1,12 @@
 # HeySig3 user manual
 
-Updated October 10, 2026. Use this manual for operation, the [test checklist](HeySig3-test-checklist.md) for completed and remaining checks, and the [phone verification notes](HeySig3-verified-usb-drags.md) for measured results. [Completion and event wiring](HeySig3-completion.md) covers profiles and optional automation.
+Updated October 12, 2026. Use this manual for operation, the [test checklist](HeySig3-test-checklist.md) for completed and remaining checks, and the [phone verification notes](HeySig3-verified-usb-drags.md) for measured results. [Completion and event wiring](HeySig3-completion.md) covers profiles and optional automation.
 
 ## Current verified setup
 
-The Pixel 9a passed Tasker balance **0 → 1 → 0** and tinnitus **0 → 1 → 0** in Universal. Both finished at 0, and Universal was restored after testing TV. TV has no tinnitus tab: a tinnitus request now stops with **Tinnitus unavailable for this program** before selecting a tab or sending a gesture. Availability is checked from the actual visible tab, not a list of program names.
+The Pixel 9a passed direct Tasker volume 8 → 7 → 8 in Noisy, balance and tinnitus adjacent changes, repeated-target no-ops, and restoration using fresh Signia app readback. See the [checklist](HeySig3-test-checklist.md) for individual results and untested endpoints. Physical hearing-aid confirmation is not required for program/slider acceptance; battery indications already work.
+
+Tinnitus availability comes first from the icon left of the active program name. A known unavailable icon stops with **Tinnitus unavailable for this program**, without searching for a tinnitus tab. Unknown icons use visible-tab detection as a fallback. Program names and availability are not hardcoded. TV's two-tab layout and programs with three tabs passed phone checks.
 
 Balance displays **−8 through 0 through +7**. Native step 0 maps to −8, step 8 to 0, and step 15 to +7. Volume and tinnitus display 0–15. Signia app readback does not independently acknowledge receipt by the hearing aids.
 
@@ -12,7 +14,7 @@ Balance and tinnitus use the explicitly configured `legacy-gesture` backend on t
 
 The general project default remains `accessibility`, which uses one `ACTION_SET_PROGRESS`. That path requires confirmed native/display mapping and touch exploration. Inspection reported touch exploration off on this phone, so native Set remains gated and has not passed a live movement test. Backend selection never falls back automatically. Per-family settings let balance/tinnitus use gestures without changing the Volume backend.
 
-Volume inspection passed on the phone. The separate ADB volume tests **7 → 8**, **8 → 9**, and **9 → 0** worked and were user-confirmed; they do not certify Tasker's Volume Set backend.
+Direct Tasker VolumeSet passed 8 → 7 → 8 in Noisy using the configured dispatchGesture backend, including repeated targets without movement and restoration. This does not certify the separate native accessibility backend or all endpoints.
 
 ## Import and setup
 
@@ -27,9 +29,19 @@ The setup was already run on the tested phone. Its calibration is portrait 1080�
 
 See the [voice command list](HeySig3-voice-commands.md) for every supported phrase, numeric ranges, configured program aliases, and optional automation commands.
 
-Run `SIG3_VoiceCommand` in Tasker for a general speech prompt. It says **Sig here** before microphone capture; the cue and spoken current-program reply passed together on October 11. The spoken **current program** query passed on the Pixel 9a on October 11; [voice verification](HeySig3-voice-verification-2026-10-11.md) separates this working entry from AutoVoice microphone capture, which remains unresolved.
+Run `SIG3_VoiceCommand` in Tasker for the general microphone prompt. With voice prompts enabled it says **Sig here**, then opens the microphone. Speak one command; the task speaks the verified result when spoken results are enabled. Program, numeric controls, battery, cancellation and retry have live phone acceptance; see [voice verification](HeySig3-voice-verification-2026-10-11.md).
 
-The general task now offers Try again / Cancel for unrecognized speech and speaks a short result after verified command completion. Both retry and a spoken current-program response passed on the phone. Set `%SIG3_VoiceResponses=0` to silence replies; on-screen results remain. Other spoken results still require live acceptance.
+Run `SIG3_VoiceSettings` to independently turn **Voice prompts** and **Spoken results** on or off, then tap **Save**. Cancel or Back preserves the previous choices. Both may be off while capture and on-screen results continue. All four combinations and two Tasker application restarts passed; full phone reboot remains untested. These switches do not turn wake listening on or off. See [voice settings](HeySig3-voice-settings.md).
+
+Say **cancel** in the microphone prompt to close cleanly without sending a command or opening Try again. Unsupported speech offers **Try again / Cancel**; retry opens a new prompt. Empty input, Back and timeout end quietly.
+
+### Optional Hey Sig listening
+
+Run `SIG3_WakeEnable` to start, or `SIG3_WakeDisable` to stop. Say **Hey Sig**, wait for **Sig here** and the microphone, then say your command. **Hey Cig** is a recognition alias; speaking the wake phrase and command together is unsupported. AutoVoice's wake event needs **Use Regex on** and **Exact Command off**. Set AutoVoice **General Settings → AutoVoice Continuous → Stream to Mute → Media** to suppress repeated tones.
+
+Two consecutive full wake commands passed without tones. A locked phone gave the spoken unlock instruction, and the command worked after manual unlock. **Background wake still failed**, even though its service remained running; use the direct voice task when wake listening does not respond. Full phone reboot and long-duration battery/endurance remain untested. See [wake setup and limitations](HeySig3-wake-phrase.md).
+
+Media suppression temporarily mutes media while continuous listening is active. Pausing/stopping restores the captured level before speech; stopping restored the tested 22/25 level. Listening was left off after testing. To turn the listening microphone off, run `SIG3_WakeDisable`; silencing prompts does not stop listening.
 
 Pass spoken text in Parameter 1 of `SIG3_VoiceRouter`, or use the configured AutoVoice adapter:
 
@@ -37,9 +49,9 @@ Pass spoken text in Parameter 1 of `SIG3_VoiceRouter`, or use the configured Aut
 |---|---|---|
 | Volume | `change volume to 10` | 0–15 |
 | Balance | `change balance to minus 3` | −8–7 |
-| Tinnitus | `change tinnitus to 1` | 0–15, only when the tab is present |
+| Tinnitus | `change tinnitus to 1` | 0–15, only when available |
 
-Short forms such as `volume 10`, `balance 0`, and `tinnitus one` also work. Volume/tinnitus mute requests 0; balance soft/sharp requests −8/7. Invalid targets fail rather than clamp. Repeating a target is a no-op after a fresh current query. Router behavior has simulated coverage; actual recognition and event delivery remain on the checklist.
+Short forms such as `volume 10`, `balance 0`, and `tin one` also work. **Tin** is a shorthand for tinnitus: `current tin`, `tin 3`, and `tin mute`. The live `current tin` test correctly reported unavailable for the active program. Volume/tinnitus mute requests 0; balance soft/sharp requests −8/7. Invalid targets fail rather than clamp. Repeating a target is a no-op after a fresh current query. Router behavior has simulated coverage; actual recognition and event delivery remain on the checklist.
 
 For manual numbered requests, use `SIG3_VolumeSet`, `SIG3_BalanceSet`, or `SIG3_TinnitusSet` with an integer in Parameter 1. Public Up/Down tasks are compatibility wrappers around Set; balance/tinnitus wrappers passed the adjacent phone tests above. Relative Up/Down voice phrases are not routed. Use public SIG3 tasks, not Internal tasks.
 
@@ -63,7 +75,7 @@ Current tasks publish `%SIG3_Level` for volume, `%SIG3_BalanceLevel`, and `%SIG3
 
 ## Audio checks and results
 
-Set `%SIG3_AudioStream` to `media` or `ring`, matching Signia. Preflight reads stream volume, call/audio mode, DND, and connected outputs without changing them. It stops with instructions when DND/bedtime mode is active, the phone is silent, the selected stream is below the configured minimum, a call/communication mode is active, or a known external output is connected. Ring sound also requires normal ringer mode. Settings are never changed automatically. The tested Media sound stream was unmuted and routed to the speaker. Connected-output checks are conservative presence checks, not proof of the active route.
+Set `%SIG3_AudioStream` to `media` or `ring`, matching Signia. Preflight reads stream volume, call/audio mode, DND, and connected outputs without changing them. It stops with instructions when DND/bedtime mode is active, the phone is silent, the selected stream is below the configured minimum, a call/communication mode is active, or a known external output is connected. Ring sound also requires normal ringer mode. Command audio preflight does not change those settings. Optional wake listening separately restores its captured media level as described above. The tested Media sound stream was unmuted and routed to the speaker. Connected-output checks are conservative presence checks, not proof of the active route.
 
 Run `SIG3_PhoneAudioCheck` to check Android phone audio without opening Signia or sending a hearing-aid command. `%SIG3_AudioReady` is 1 on success and 0 on failure; `%SIG3_Error` tells you what to change, and `%SIG3_AudioDiagnostics` includes the measured volume and required level. This checks phone volume, not hearing-aid volume.
 
@@ -75,8 +87,7 @@ Signia remains open by default (`%SIG3_CompletionPolicy=stay`). `home` returns t
 
 ## Testing status
 
-Follow the [completed and remaining checklist](HeySig3-test-checklist.md). Local simulations cover all 768 numeric transitions and missing tinnitus tabs, but they do not execute Android, BeanShell, recognition, plugin events, or acoustic playback. [Static validation](HeySig3-validation.md) checked 81 XML files and 5,089 actions with zero failures. The [acceptance guide](HeySig3-slider-acceptance.md) describes the next phone checks and the separate native backend gate.
-
+Follow the [completed and remaining checklist](HeySig3-test-checklist.md). All 19 repository checks passed after the October 12 wake/readiness fixes. [Static validation](HeySig3-validation.md) checked 91 XML files and 6,683 actions with zero failures. Some checks execute actual Java bodies in local BeanShell; simulations do not replace Android/plugin or live recognition acceptance. Background wake, full phone reboot, long-duration endurance, native accessibility movement and broader endpoint checks remain open.
 The Chromebook generates/validates the project; Signia runs on the phone. USB and authorized wireless ADB were used for inspection/import/testing, not as a requirement for the Tasker balance/tinnitus control path.
 
 ## Priority 3 setup
@@ -97,7 +108,7 @@ Additional APK-derived IDs require confirmation from the phone:
 
 `SIG3_BatteryCheck` defaults to `listen`, preserving the user-confirmed working HeySig battery check: open the battery page, click `Check Left Battery Button`, acknowledge `TA-PopupButton2`, click `Check Right Battery Button`, acknowledge again, and close the battery page. The original waits and AutoInput settings are preserved. Both `battery check` and `battery listen` run this sequence through the SIG3 worker. No `%SIG3_BatteryRequestId` configuration is needed. Plugin errors stop the sequence and report which action failed.
 
-Parameter 1 `open` remains an optional page-only inspection that records visible text in `%SIG3_BatteryText` and leaves the page open. Normal checks close the battery page and leave Signia open, following SIG3's completion policy. Battery indications are heard from the aids; no numeric percentage is inferred. The repaired SIG3 battery sequence passed its phone import/run check and the user confirmed it worked. Acoustic battery indications remain unverified in this run.
+Parameter 1 `open` remains an optional page-only inspection that records visible text in `%SIG3_BatteryText` and leaves the page open. Normal checks close the battery page and leave Signia open, following SIG3's completion policy. Battery indications are heard from the aids; no numeric percentage is inferred. The repaired SIG3 battery sequence passed its phone import/run check and the user confirmed it worked. The user confirmed battery indications already work.
 
 ### Voice and watch events
 
@@ -121,7 +132,7 @@ With NoiseMiddleProgram unset, the middle band clears the candidate/count; confi
 
 `SIG3_SleepState` accepts `asleep` or `awake`. It requires `%SIG3_SleepEnabled=1`, configured `%SIG3_SleepProgram` / `%SIG3_WakeProgram` slots, and no manual override. A real time/sleep-provider profile must supply that state. The task selects and verifies the configured program before updating `%SIG3_SleepActive`. It does not infer sleep, use a hearing-aid standby enum, or assume that a program mutes the microphone.
 
-Priority 3 tests model initialization preservation, program routing/readback failures, voice/watch inputs, battery sequence and page-only mode, native noise capture, sign handling, thresholds/strike count, override, and sleep transitions. They do not execute Android accessibility, BeanShell, plugin events, or acoustic playback. On-phone import and capture remain the acceptance step.
+Priority 3 tests model initialization preservation, program routing/readback failures, voice/watch inputs, battery sequence and page-only mode, native noise capture, sign handling, thresholds/strike count, override, and sleep transitions. These workflow simulations do not execute Android accessibility, plugin events or acoustic playback; separate helper checks execute Java in local BeanShell. On-phone import and capture remain the acceptance step.
 
 ## Battery page entry
 
