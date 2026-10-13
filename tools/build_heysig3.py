@@ -448,9 +448,9 @@ def voice_ready():
     speech.find("Int[@sr='arg7']").set('val','0')
     se=E.Element('se');se.text='true';speech.insert(1,se)
     return [*voice_preferences_load(),java_file('sig3_voice_ready.java'),condition('%err',12),stop(),action(38),
-            condition('%SIG3_VoiceCaptureAllowed',3,1),stop(),action(38),
             condition('%sig3_ready_speech',12),speech,condition('%err',12),
             setvar('%SIG3_VoiceStatus','Readiness cue could not be spoken'),stop(),action(38),action(38),
+            condition('%SIG3_VoiceCaptureAllowed',3,1),stop(),action(38),
             wait(300),setvar('%SIG3_VoiceReady',1),setvar('%SIG3_VoiceStatus','Listening for command')]
 
 
@@ -798,6 +798,7 @@ def build():
     E.SubElement(wake_profile,'nme').text = 'SIG3_HeySigWake'
     wake_profile.find('Event/Bundle/Vals/Source').text = 'continuous'
     wake_profile.find('Event/Bundle/Vals/configcommand').text = r'(?i)^hey\s+(?:sig|cig)[.!?]?$'
+    wake_profile.find('Event/Bundle/Vals/configexactsub').text = 'false'
     wake_profile.find('Event/Bundle/Vals/configregexsub').text = 'true'
     wake_profile.find('Event/Bundle/Vals/com.twofortyfouram.locale.intent.extra.BLURB').text = 'Command: Hey Sig (recognition alias Hey Cig; full phrase)\nSource: continuous'
     wake_profile.find('Event/Bundle/Vals/plugininstanceid').text = str(uuid.uuid5(uuid.NAMESPACE_URL,'HeySig3:HeySigWake'))

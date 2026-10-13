@@ -140,7 +140,11 @@ Actual hearing-aid receipt is not independently observable for program/slider co
 - [x] Voice prompts off, spoken results on: no readiness cue, microphone capture and spoken current-program reply accepted.
 - [x] Spoken “cancel” closes the general voice session cleanly without an unrecognized reply or Try again.
 - [x] “Current tin” shorthand recognized; current program correctly reported tinnitus unavailable.
-- [ ] Physical restart persistence of the speech controls.
-- [ ] Reliable repeated wake commands, phone wake-regex alias configuration, locked-screen guidance, and volume preservation. Continuous listening is off at the user’s request.
+- [x] Two Tasker application restarts preserved mixed speech-control choices; original on/on choices restored. Full phone reboot remains untested.
+- [x] Two consecutive tone-free wake/cue/reply commands, verified regex-on/exact-off profile, locked spoken guidance and manual-unlock recovery, and media restoration to 22/25 after stopping listening. Long-duration endurance remains untested.
 
 Additional executable checks: `check_sig3_voice_preferences.py`, `check_sig3_voice_ready.py`, `check_sig3_voice_retry.py`, `check_sig3_wake.py`, `check_sig3_wake_audio.py`, `check_sig3_settings_snapshot.py`, and `check_sig3_settings_flow.py`. These do not substitute for unfinished phone acceptance. See [voice settings](HeySig3-voice-settings.md) and [wake status](HeySig3-wake-phrase.md).
+
+October 12 closeout: all 19 repository checks passed after the readiness and wake-profile corrections.
+
+Background observation: after returning to Home, AutoVoice Continuous remained a foreground service for more than two minutes. The user reported the subsequent background wake command did not work. Background wake acceptance failed. Full phone reboot and long-duration battery/endurance checks remain untested.

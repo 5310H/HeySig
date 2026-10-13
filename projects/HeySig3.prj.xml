@@ -59,7 +59,7 @@ Source: continuous</com.twofortyfouram.locale.intent.extra.BLURB>
 					<configcommandid-type>java.lang.String</configcommandid-type>
 					<configcommandinvert>false</configcommandinvert>
 					<configcommandinvert-type>java.lang.Boolean</configcommandinvert-type>
-					<configexactsub>true</configexactsub>
+					<configexactsub>false</configexactsub>
 					<configexactsub-type>java.lang.Boolean</configexactsub-type>
 					<configlastcommand>&lt;null&gt;</configlastcommand>
 					<configlastcommand-type>java.lang.String</configlastcommand-type>
@@ -29183,7 +29183,19 @@ if (!pm.isInteractive() || km.isKeyguardLocked()) status = "Turn on and unlock t
 else if (context.checkSelfPermission("android.permission.RECORD_AUDIO") != PackageManager.PERMISSION_GRANTED) status = "Allow Tasker microphone access to speak a command";
 else if (readyValue("TRUN").matches("(?s).*(?:^|,)SIG3_Worker(?:,|$).*")) status = "Wait for the current command to finish";
 if (status.length() &gt; 0) {
-    tasker.setVariable("SIG3_VoiceStatus", status); tasker.showToast(status); return "capture blocked";
+    tasker.setVariable("SIG3_VoiceStatus", status); tasker.showToast(status);
+    if (status.equals("Turn on and unlock the phone to speak a command")) {
+        audio = context.getSystemService("audio"); notification = context.getSystemService("notification");
+        preference = readyValue("SIG3_VoicePrompts");
+        if (preference.length() == 0) preference = readyValue("SIG3_VoiceResponses");
+        if (!"0".equals(preference)
+            &amp;&amp; notification.getCurrentInterruptionFilter() == NotificationManager.INTERRUPTION_FILTER_ALL
+            &amp;&amp; !audio.isStreamMute(AudioManager.STREAM_MUSIC)
+            &amp;&amp; audio.getStreamVolume(AudioManager.STREAM_MUSIC) &gt; 0
+            &amp;&amp; audio.getMode() == AudioManager.MODE_NORMAL)
+            tasker.setVariable("sig3_ready_speech", "Unlock the phone, then say Hey Sig again.");
+    }
+    return "capture blocked";
 }
 tasker.setVariable("SIG3_VoiceCaptureAllowed", "1");
 tasker.setVariable("SIG3_VoiceStatus", "Opening command prompt");
@@ -29233,32 +29245,13 @@ return "cue prepared";
 			<coll>false</coll>
 			<ConditionList sr="if">
 				<Condition sr="c0" ve="3">
-					<lhs>%SIG3_VoiceCaptureAllowed</lhs>
-					<op>3</op>
-					<rhs>1</rhs>
-				</Condition>
-			</ConditionList>
-		</Action>
-		<Action sr="act16" ve="7">
-			<code>137</code>
-			<Int sr="arg0" val="0" />
-			<Str sr="arg1" ve="3" />
-		</Action>
-		<Action sr="act17" ve="7">
-			<code>38</code>
-		</Action>
-		<Action sr="act18" ve="7">
-			<code>37</code>
-			<coll>false</coll>
-			<ConditionList sr="if">
-				<Condition sr="c0" ve="3">
 					<lhs>%sig3_ready_speech</lhs>
 					<op>12</op>
 					<rhs />
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act19" ve="7">
+		<Action sr="act16" ve="7">
 			<code>559</code>
 			<se>true</se>
 			<Str sr="arg0" ve="3">%sig3_ready_speech</Str>
@@ -29270,7 +29263,7 @@ return "cue prepared";
 			<Int sr="arg6" val="0" />
 			<Int sr="arg7" val="0" />
 		</Action>
-		<Action sr="act20" ve="7">
+		<Action sr="act17" ve="7">
 			<code>37</code>
 			<coll>false</coll>
 			<ConditionList sr="if">
@@ -29281,7 +29274,7 @@ return "cue prepared";
 				</Condition>
 			</ConditionList>
 		</Action>
-		<Action sr="act21" ve="7">
+		<Action sr="act18" ve="7">
 			<code>547</code>
 			<Str sr="arg0" ve="3">%SIG3_VoiceStatus</Str>
 			<Str sr="arg1" ve="3">Readiness cue could not be spoken</Str>
@@ -29291,13 +29284,32 @@ return "cue prepared";
 			<Int sr="arg5" val="3" />
 			<Int sr="arg6" val="1" />
 		</Action>
-		<Action sr="act22" ve="7">
+		<Action sr="act19" ve="7">
 			<code>137</code>
 			<Int sr="arg0" val="0" />
 			<Str sr="arg1" ve="3" />
 		</Action>
-		<Action sr="act23" ve="7">
+		<Action sr="act20" ve="7">
 			<code>38</code>
+		</Action>
+		<Action sr="act21" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act22" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%SIG3_VoiceCaptureAllowed</lhs>
+					<op>3</op>
+					<rhs>1</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act23" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
 		</Action>
 		<Action sr="act24" ve="7">
 			<code>38</code>

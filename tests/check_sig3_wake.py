@@ -1,9 +1,13 @@
 """Verify listener handoff, cancellation cleanup and wake-only dispatch."""
-import json,subprocess,tempfile
+import json,subprocess,tempfile,xml.etree.ElementTree as E
 from pathlib import Path
 from check_sig3_migration import phone
 root=Path(__file__).resolve().parents[1]
 source=(root/'tools/sig3_wake_trigger.java').read_text()
+profile=E.parse(root/'projects/HeySig3.prj.xml').find('Profile')
+assert profile.findtext('Event/Bundle/Vals/configregexsub')=='true'
+assert profile.findtext('Event/Bundle/Vals/configexactsub')=='false', 'Exact Command disables regex in AutoVoice'
+
 stub='class Tasker {java.util.Map vars=new java.util.HashMap();String getVariable(String n){return (String)vars.get(n);}void setVariable(String n,String v){vars.put(n,v);}}tasker=new Tasker();'
 cases=[({'SIG3_WakeEnabled':'1','par1':'hey cig'},True),({'SIG3_WakeEnabled':'1','par1':'hey cig volume 10'},False),({'SIG3_WakeEnabled':'1','par1':'Hey Sig'},True),({'SIG3_WakeEnabled':'1','avcommnofilter':'hey sig!'},True),({'SIG3_WakeEnabled':'0','par1':'hey sig'},False),({'SIG3_WakeEnabled':'1','SIG3_VoiceBusy':'1','par1':'hey sig'},False),({'SIG3_WakeEnabled':'1','TRUN':',SIG3_Worker,','par1':'hey sig'},False),({'SIG3_WakeEnabled':'1','par1':'hey sig volume 10'},False),({'SIG3_WakeEnabled':'1','par1':'volume 10'},False)]
 for variables,accepted in cases:

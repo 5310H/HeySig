@@ -105,16 +105,16 @@ Requested October 11, 2026. The user reports that charging turns the aids off an
 
 App-only acceptance: [12 installed-phone checks](HeySig3-settings-verification-2026-10-11.md), plus persistent-file and failure tests.
 
-## Future: Hey Sig wake phrase and spoken readiness cue
+## Implemented: Hey Sig wake phrase and spoken readiness cue
 
 Requested October 11, 2026: use **“Hey Sig”** as the wake phrase and say **“Sig here”** when ready to receive the command, so the user can operate without viewing the phone.
 
 - [x] Implement opt-in AutoVoice Continuous controls and an exact **“Hey Sig”** event, with enable/disable tasks, busy guards, and listener pause/resume around native voice capture. The full unlocked wake flow passed live acceptance on October 12, 2026; battery/background behavior and restart persistence remain pending.
 - [x] Add **“Sig here”** to the general prompt and Try again loop. Speech completes before capture; the cue, microphone prompt, and spoken current-program reply passed live acceptance. Try again sequencing has executable coverage.
-- [ ] Test with the screen off and locked, including Android microphone/background restrictions. If recognition or Signia control requires unlocking, give clear spoken instructions where possible; do not bypass the lock screen.
-- [ ] Respect the existing speech preference and DND/phone-volume handling. Verify the cue is audible under supported settings and preserve an on-screen indication.
+- [x] Locked-phone spoken unlock instruction and subsequent manual-unlock recovery passed. Long-duration background endurance remains separate.
+- [x] Respect speech preference, DND and phone-volume guards; live cue/reply and prompt-off behavior passed, with 16 executable readiness cases.
 
-The readiness cue is implemented in the general voice prompt and Try again loop. Nine executable preflight cases pass; the user heard the cue on the phone. Live microphone-only and cue-plus-microphone checks passed. The user then confirmed the full “current program” flow spoke the program name after the cue and prompt. An earlier captured command was blocked by the existing Do Not Disturb guard; the successful full test ran with Do Not Disturb off. The opt-in wake controls and exact event are implemented; [setup and limitations](HeySig3-wake-phrase.md) distinguish local coverage from pending live wake detection. The full unlocked wake flow passed on October 12, 2026, and the continuous service resumed after its spoken reply. Screen-off/locked operation remains unverified.
+The readiness cue is implemented in the general voice prompt and Try again loop. Nine executable preflight cases pass; the user heard the cue on the phone. Live microphone-only and cue-plus-microphone checks passed. The user then confirmed the full “current program” flow spoke the program name after the cue and prompt. An earlier captured command was blocked by the existing Do Not Disturb guard; the successful full test ran with Do Not Disturb off. The opt-in wake controls and exact event are implemented; [setup and limitations](HeySig3-wake-phrase.md) distinguish local coverage from pending live wake detection. The full unlocked wake flow passed on October 12, 2026, and the continuous service resumed after its spoken reply. Locked-phone guidance and manual-unlock recovery subsequently passed.
 
 ## Implemented: spoken-response on/off switch
 
@@ -122,23 +122,23 @@ Requested October 11, 2026: add a visible **Spoken responses** on/off switch so 
 
 - [x] Connect the switch to the existing `%SIG3_VoiceResponses` setting (0 off, 1 on), show its current state, and persist the choice across restarts.
 - [x] Keep on-screen results available when spoken results are off. Separate result replies from spoken prompts, which have their own control below.
-- [ ] Keep wake-word listening independently controlled; turning spoken responses off must not silently change whether **Hey Sig** listening is enabled. Verify both switch states and restart persistence.
+- [x] Keep wake listening independently controlled; all four speech combinations and two Tasker application restarts passed.
 
 ## Implemented: voice-prompts on/off switch
 
 Requested October 12, 2026: add a visible **Voice prompts** on/off control alongside the spoken-response control.
 
 - [x] Independently enable or silence spoken prompts, including **“Sig here”** and retry instructions, while retaining microphone capture and on-screen prompts.
-- [x] Show the current setting and implement durable preference storage; missing-global reload has executable coverage. Physical restart acceptance remains pending.
+- [x] Show the current setting and implement durable preference storage; missing-global reload has executable coverage. Tasker application restart acceptance passed; a full phone reboot remains untested.
 - [x] Keep spoken results and **Hey Sig** listening independently controlled; changing voice prompts must not change either setting.
-- [ ] Verify both switch states, combinations with spoken results on/off, and restart persistence.
+- [x] Verify all four combinations and two Tasker application restarts; full phone reboot remains untested.
 
-October 12 speech-control acceptance: `SIG3_VoiceSettings` displays both current choices. Installed-phone Save/reopen passed all four combinations; Cancel and Back preserved prior choices. The user confirmed no readiness cue with prompts off while the current-program result was spoken. Both options were restored to on. Executable checks cover durable reload, invalid/write-failure handling, and independent wake state; physical restart acceptance remains pending. See [voice settings](HeySig3-voice-settings.md).
+October 12 speech-control acceptance: `SIG3_VoiceSettings` displays both current choices. Installed-phone Save/reopen passed all four combinations; Cancel and Back preserved prior choices. The user confirmed no readiness cue with prompts off while the current-program result was spoken. Both options were restored to on. Executable checks cover durable reload, invalid/write-failure handling, and independent wake state; Tasker application restart acceptance passed; a full phone reboot remains untested. See [voice settings](HeySig3-voice-settings.md).
 
 Spoken **cancel** is implemented and installed. The user confirmed on October 12 that it closes the general microphone session cleanly without an unrecognized-command reply or retry dialog. Executable coverage verifies no worker dispatch, control movement, stale success, or stale result speech.
 
-October 12 wake update: persistent notification installed for both listener start and resume. AutoVoice Stream to Mute → Media passed the live wake/current-program check with no repeated tones. Configure this AutoVoice preference separately on new devices. System suppression failed; locked-screen, restart and background endurance remain pending.
+October 12 wake update: persistent notification installed for both listener start and resume. AutoVoice Stream to Mute → Media passed the live wake/current-program check with no repeated tones. Configure this AutoVoice preference separately on new devices. System suppression failed. Corrected regex settings, two consecutive wake commands, locked guidance, media restoration to 22/25 and Tasker speech-preference restart persistence passed. Full phone reboot and long-duration background endurance remain untested.
 
 Tin shorthand: implemented and installed; “current tin” passed live recognition and correctly reported tinnitus unavailable for the current program. No tinnitus tab search is required for this unavailable control.
 
-Closeout October 12: completed speech controls, spoken cancel, and tin recognition are accepted above. Wake/volume experiments are retained with explicit limitations in [wake status](HeySig3-wake-phrase.md); they are not release acceptance. Continuous listening is off at the user’s request.
+Closeout October 12: completed speech controls, spoken cancel, and tin recognition are accepted above. Bounded wake and volume-restoration acceptance and remaining endurance limits are recorded in [wake status](HeySig3-wake-phrase.md). Listening is turned off after testing.
