@@ -20,7 +20,9 @@ p.run('SIG3_NoiseMonitor','50'); assert p.program=='Music'
 p.run('SIG3_CancelAutomation')
 for i in range(3): p.run('SIG3_NoiseMonitor','70')
 assert p.program=='Music' and p.globals['SIG3_CommandOK']=='0'
-p.run('SIG3_ResumeAutomation'); p.run('SIG3_NoiseMonitor','70'); assert p.program=='Outdoor'
+p.run('SIG3_ResumeAutomation')
+p.run('SIG3_NoiseMonitor','70'); assert p.program=='Music', 'Resume must require fresh confirmation'
+p.run('SIG3_NoiseMonitor','70'); assert p.program=='Outdoor'
 p.globals['SIG3_NoiseSource']='watch'; p.run('SIG3_WatchNoise','20'); p.run('SIG3_WatchNoise','20'); assert p.program=='Universal'
 p.run('SIG3_LegacyCommand','SIG_ProgramSwitch','2'); assert p.program=='Music'
 p.run('SIG3_LegacyCommand','SIG_VolumeSet','10'); assert p.level==10

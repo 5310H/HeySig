@@ -1,0 +1,267 @@
+<TaskerData sr="" dvi="1" tv="6.6.20">
+	<Task sr="task534">
+		<cdate>1791396000000</cdate>
+		<edate>1791396000000</edate>
+		<id>534</id>
+		<nme>SIG3_NoiseAuto</nme>
+		<pri>100</pri>
+		<Action sr="act0" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%TRUN</lhs>
+					<op>4</op>
+					<rhs>(^|,)SIG3_NoisePoll(,|$)</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act1" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
+		</Action>
+		<Action sr="act2" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act3" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%sig3_noise_pref_mode</Str>
+			<Str sr="arg1" ve="3">load</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act4" ve="7">
+			<code>474</code>
+			<se>true</se>
+			<Str sr="arg0" ve="3">/* Save role assignments and noise-index settings atomically; never enable on save. */
+import org.json.*;
+nv(key) { v=tasker.getVariable(key); return v==null || v.startsWith("%") ? "" : v; }
+programs() {
+    a=new JSONArray();
+    for(i=1;i&lt;=6;i++) {
+        v=nv("SIG3_ProgramName"+i).trim();
+        if(v.length()==0) throw new Exception("Configure all six program names");
+        for(j=0;j&lt;a.length();j++) if(v.equals(a.getString(j))) throw new Exception("Program names must be unique");
+        a.put(v);
+    }
+    return a;
+}
+validate(c) {
+    for(k:new String[]{"quiet","middle","loud"}) if(!c.getString(k).matches("[1-6]")) throw new Exception("Choose all three programs");
+    low=c.getDouble("low"); high=c.getDouble("high"); margin=c.getDouble("margin");
+    if(Double.isNaN(low)||Double.isNaN(high)||Double.isNaN(margin)||Double.isInfinite(low)||Double.isInfinite(high)||Double.isInfinite(margin)||low&gt;=high||margin&lt;0||2*margin&gt;=high-low) throw new Exception("Choose ordered thresholds and a smaller hysteresis margin");
+    if(c.getInt("strikes")&lt;1||c.getInt("strikes")&gt;20) throw new Exception("Confirmation count must be 1–20");
+    if(c.getInt("cooldown")&lt;0||c.getInt("cooldown")&gt;3600) throw new Exception("Cooldown must be 0–3600 seconds");
+    if(!"phone".equals(c.getString("source"))) throw new Exception("Only the verified phone sampler is supported by these settings");
+}
+prefs=context.getSharedPreferences("heysig3-noise",0);
+mode=nv("sig3_noise_pref_mode");
+if("save".equals(mode)) {
+    config=new JSONObject();config.put("version",1);config.put("programs",programs());
+    for(k:new String[]{"quiet","middle","loud","low","high","margin","strikes","cooldown"}) config.put(k,nv("sig3_noise_choice_"+k));
+    config.put("source","phone");config.put("confirmed","1".equals(nv("sig3_noise_choice_confirmed")));
+    validate(config);
+    if(!prefs.edit().putString("configuration",config.toString()).commit()) throw new Exception("Could not save noise settings; previous settings retained");
+} else if("load".equals(mode)) {
+    saved=prefs.getString("configuration","");
+    if(saved.length()==0) {
+        tasker.setVariable("SIG3_NoiseEnabled","0");
+        tasker.setVariable("SIG3_NoiseSettingsReady","0");
+        tasker.setVariable("SIG3_NoiseSettingsStatus","Choose programs and measured noise-index thresholds");
+        return "unconfigured";
+    }
+    config=new JSONObject(saved);
+    if(config.getInt("version")!=1||!config.getJSONArray("programs").toString().equals(programs().toString())) {
+        tasker.setVariable("SIG3_NoiseEnabled","0");tasker.setVariable("SIG3_NoiseSettingsReady","0");
+        tasker.setVariable("SIG3_NoiseSettingsStatus","Program mapping changed; choose noise programs again");
+        return "mapping-changed";
+    }
+    validate(config);
+} else throw new Exception("Unknown noise settings operation");
+fields=new String[]{"QuietProgram","MiddleProgram","LoudProgram","Low","High","Hysteresis","StrikeLimit","CooldownSeconds"};
+keys=new String[]{"quiet","middle","loud","low","high","margin","strikes","cooldown"};
+changed="save".equals(mode)||!"phone".equals(nv("SIG3_NoiseSource"))||!"0".equals(nv("SIG3_NoiseInvert"));
+for(i=0;i&lt;fields.length;i++) if(!config.getString(keys[i]).equals(nv("SIG3_Noise"+fields[i]))) changed=true;
+confirmed=config.getBoolean("confirmed")?"1":"0";
+if(!confirmed.equals(nv("SIG3_NoiseScaleConfirmed"))) changed=true;
+if(changed) {
+    tasker.setVariable("SIG3_NoiseEnabled","0");tasker.setVariable("SIG3_NoiseMode","observe");
+    for(k:new String[]{"Candidate","StableTier","LastSource","LastSampleTime","LastSwitchTime","ProposedSlot"}) tasker.setVariable("SIG3_Noise"+k,"");
+    tasker.setVariable("SIG3_NoiseStrikes","0");tasker.setVariable("SIG3_AutoProgramSlot","");
+}
+for(i=0;i&lt;fields.length;i++) tasker.setVariable("SIG3_Noise"+fields[i],config.getString(keys[i]));
+tasker.setVariable("SIG3_NoiseSource","phone");tasker.setVariable("SIG3_NoiseInvert","0");tasker.setVariable("SIG3_NoiseScaleConfirmed",confirmed);
+tasker.setVariable("SIG3_NoiseSettingsReady","1");
+tasker.setVariable("SIG3_NoiseSettingsStatus","Quiet: "+config.getJSONArray("programs").getString(Integer.parseInt(config.getString("quiet"))-1)+"; Noisy: "+config.getJSONArray("programs").getString(Integer.parseInt(config.getString("middle"))-1)+"; Very noisy: "+config.getJSONArray("programs").getString(Integer.parseInt(config.getString("loud"))-1)+"; saved with switching off");
+return "noise settings "+mode;
+</Str>
+			<Str sr="arg1" ve="3" />
+			<Int sr="arg2" val="1" />
+		</Action>
+		<Action sr="act5" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%err</lhs>
+					<op>12</op>
+					<rhs />
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act6" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_NoiseEnabled</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act7" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_NoiseSettingsStatus</Str>
+			<Str sr="arg1" ve="3">Could not load noise settings: %errmsg</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act8" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
+		</Action>
+		<Action sr="act9" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act10" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%SIG3_NoiseSettingsReady</lhs>
+					<op>3</op>
+					<rhs>1</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act11" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
+		</Action>
+		<Action sr="act12" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act13" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%SIG3_NoiseScaleConfirmed</lhs>
+					<op>3</op>
+					<rhs>1</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act14" ve="7">
+			<code>474</code>
+			<se>true</se>
+			<Str sr="arg0" ve="3">tasker.showToast("Check the noise index direction in NoiseSettings first");return "not-confirmed";</Str>
+			<Str sr="arg1" ve="3" />
+			<Int sr="arg2" val="1" />
+		</Action>
+		<Action sr="act15" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
+		</Action>
+		<Action sr="act16" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act17" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_NoiseCandidate</Str>
+			<Str sr="arg1" ve="3" />
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act18" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_NoiseStrikes</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act19" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_NoiseStableTier</Str>
+			<Str sr="arg1" ve="3" />
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act20" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_NoiseLastSampleTime</Str>
+			<Str sr="arg1" ve="3" />
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act21" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_NoiseMode</Str>
+			<Str sr="arg1" ve="3">auto</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act22" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_NoiseEnabled</Str>
+			<Str sr="arg1" ve="3">1</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act23" ve="7">
+			<code>130</code>
+			<se>true</se>
+			<Str sr="arg0" ve="3">SIG3_NoisePoll</Str>
+			<Int sr="arg1">
+				<var>%priority+1</var>
+			</Int>
+			<Int sr="arg10" val="1" />
+			<Str sr="arg2" ve="3" />
+			<Str sr="arg3" ve="3" />
+			<Str sr="arg4" ve="3" />
+			<Int sr="arg5" val="0" />
+			<Int sr="arg6" val="0" />
+			<Str sr="arg7" ve="3" />
+			<Int sr="arg8" val="0" />
+			<Int sr="arg9" val="0" />
+		</Action>
+	</Task>
+</TaskerData>

@@ -119,6 +119,8 @@ Create or edit an actual AutoVoice recognition profile on the phone to run `SIG3
 
 ### Noise and sleep
 
+Use [selectable phone noise settings](HeySig3-noise-settings.md) to choose Quiet/Noisy/Very noisy roles and tuning. `SIG3_NoiseObserve` starts observation-only sampling; `SIG3_NoiseAuto` enables guarded switching; `SIG3_NoiseStop` stops either mode. Save leaves switching off. Final environment thresholds and background endurance still need acceptance.
+
 `SIG3_CurrentNoise` uses the existing repository's AutoVoice Current Noise action envelope, then processes `%avnoiselevel`. Five quiet-room samples passed on Pixel 9a after correcting the plugin timeout; see [phone noise verification](HeySig3-phone-noise-2026-10-14.md). Measurement calibration and switching acceptance remain pending. `SIG3_NoiseMonitor` instead accepts a numeric sample in Parameter 1. Both use the worker, so sampling and Signia operations cannot interleave through SIG3. `%SIG3_NoiseRaw` preserves the input and `%SIG3_NoiseIndex` records the optionally inverted value. These values are **uncalibrated indices**, not established sound-pressure dB.
 
 To enable noise-driven program selection after manual controls work, confirm the sample's units/sign on the phone, set `%SIG3_NoiseScaleConfirmed=1`, and configure:

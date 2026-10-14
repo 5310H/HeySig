@@ -428,6 +428,10 @@ def worker():
                    condition('%err', 12), setvar('%SIG3_Error', 'Internal task failed: %errmsg'), setvar('%SIG3_' + family + 'OK', 0), action(38),
                    setvar('%SIG3_CommandOK', '%SIG3_' + family + 'OK'), action(38)]
         aa += [action(38)]
+    aa += [condition('%sig3_request1',2,'Program'),condition('%sig3_request2',2,'Switch'),
+           condition('%SIG3_CommandOK',2,1),condition('%SIG3_NoiseSettingsReady',2,1),condition('%SIG3_NoiseEnabled',2,1),
+           setvar('%SIG3_ManualOverride',1),setvar('%SIG3_NoiseCandidate',''),setvar('%SIG3_NoiseStrikes',0),setvar('%SIG3_NoiseStableTier',''),
+           action(38),action(38),action(38),action(38),action(38)]
     aa += [setvar('%sig3_settings_auto_mode','prepare'), java_file('sig3_settings_auto.java'),
            condition('%SIG3_SettingsAutoMode',2,'full'), call('SIG3_InternalSettingsSave'), action(38),
            condition('%SIG3_SettingsAutoMode',2,'update'), setvar('%sig3_settings_mode','commit'), java_file('sig3_settings_snapshot.java'), action(38),
@@ -576,8 +580,9 @@ def extra_tasks():
     toggle = [java_code('value = tasker.getVariable("SIG3_ManualOverride"); tasker.setVariable("sig3_override", "1".equals(value) ? "0" : "1"); return "toggled";'),call('SIG3_InternalSetupOverride','%sig3_override')]
     add('SIG3_InternalSetupToggle',494,toggle,True)
     add('SIG3_OverrideToggle',394,[request('Setup','Toggle')])
-    add('SIG3_CancelAutomation',395,[setvar('%SIG3_AutomationCancelled',1),java_code('tasker.showToast("Automatic changes cancelled; run SIG3_ResumeAutomation to allow future changes"); return "cancelled";')])
-    add('SIG3_ResumeAutomation',396,[setvar('%SIG3_AutomationCancelled',0)])
+    reset_noise = [setvar('%SIG3_NoiseCandidate',''),setvar('%SIG3_NoiseStrikes',0),setvar('%SIG3_NoiseStableTier',''),setvar('%SIG3_NoiseLastSampleTime','')]
+    add('SIG3_CancelAutomation',395,[setvar('%SIG3_AutomationCancelled',1),*reset_noise,java_code('tasker.showToast("Automatic changes cancelled; run SIG3_ResumeAutomation to allow future changes"); return "cancelled";')])
+    add('SIG3_ResumeAutomation',396,[setvar('%SIG3_AutomationCancelled',0),*reset_noise])
 
     program = [setvar('%SIG3_ProgramOK',0),call('SIG3_InternalAppLaunch'),*g('Program','%SIG3_AppOK',3,1,'Program launch failed: %SIG3_Error'),
                java_file('sig3_phone_check.java'),*g('Program','%err',12,'','Program audio preflight failed: %errmsg'),
@@ -634,12 +639,33 @@ def extra_tasks():
     if e is not None: sample_action.remove(e)
     e = E.Element('se'); e.text = 'true'; sample_action.insert(1,e)
     noise_process = [setvar('%SIG3_NoiseOK',0),setvar('%sig3_noise_raw','%par1'),java_file('sig3_noise.java'),*g('Noise','%err',12,'','Noise processing failed: %errmsg'),
-                     condition('%SIG3_AutoProgramSlot',12),java_file('sig3_automation_guard.java'),*g('Noise','%err',12,'','Automatic change deferred/cancelled: %errmsg'),call('SIG3_InternalProgramSwitch','%SIG3_AutoProgramSlot'),*g('Noise','%SIG3_ProgramOK',3,1,'Automatic program switch failed: %SIG3_Error'),action(38),setvar('%SIG3_NoiseOK',1)]
+                     condition('%SIG3_AutoProgramSlot',12),setvar('%SIG3_ProgramOK',0),java_file('sig3_automation_guard.java'),*g('Noise','%err',12,'','Automatic change deferred/cancelled: %errmsg'),call('SIG3_InternalProgramSwitch','%SIG3_AutoProgramSlot'),java_file('sig3_noise_finish.java'),*g('Noise','%SIG3_ProgramOK',3,1,'Automatic program switch failed: %SIG3_Error'),action(38),setvar('%SIG3_NoiseOK',1)]
     add('SIG3_InternalNoiseProcess',474,noise_process,True)
     noise_sample = [setvar('%SIG3_NoiseOK',0),sample_action,*g('Noise','%err',12,'','Noise plugin failed: %errmsg'),call('SIG3_InternalNoiseProcess','%avnoiselevel')]
     add('SIG3_InternalNoiseSample',475,noise_sample,True)
     add('SIG3_CurrentNoise',364,[condition('%SIG3_NoiseSource',3,'watch'),request('Noise','Sample'),action(38)])
     add('SIG3_NoiseMonitor',365,[request('Noise','Process','%par1')])
+    def noise_load():
+        return [setvar('%sig3_noise_pref_mode','load'),java_file('sig3_noise_preferences.java'),
+                condition('%err',12),setvar('%SIG3_NoiseEnabled',0),
+                setvar('%SIG3_NoiseSettingsStatus','Could not load noise settings: %errmsg'),stop(),action(38)]
+    add('SIG3_NoiseSettings',532,[*noise_load(),java_file('sig3_noise_settings.java'),
+        condition('%err',12),setvar('%SIG3_NoiseSettingsStatus','Could not open noise settings: %errmsg'),stop(),action(38),
+        condition('%sig3_noise_settings_decision',2,'save'),setvar('%sig3_noise_pref_mode','save'),java_file('sig3_noise_preferences.java'),
+        condition('%err',12),setvar('%SIG3_NoiseSettingsStatus','Could not save noise settings: %errmsg'),action(38),
+        java_code('tasker.showToast(tasker.getVariable("SIG3_NoiseSettingsStatus"));return "noise-settings-status";'),action(38)])
+    for name,number,mode in [('SIG3_NoiseObserve',533,'observe'),('SIG3_NoiseAuto',534,'auto')]:
+        add(name,number,[condition('%TRUN',4,r'(^|,)SIG3_NoisePoll(,|$)'),stop(),action(38),*noise_load(),
+            condition('%SIG3_NoiseSettingsReady',3,1),stop(),action(38),
+            condition('%SIG3_NoiseScaleConfirmed',3,1),java_code('tasker.showToast("Check the noise index direction in NoiseSettings first");return "not-confirmed";'),stop(),action(38),
+            setvar('%SIG3_NoiseCandidate',''),setvar('%SIG3_NoiseStrikes',0),setvar('%SIG3_NoiseStableTier',''),setvar('%SIG3_NoiseLastSampleTime',''),
+            setvar('%SIG3_NoiseMode',mode),setvar('%SIG3_NoiseEnabled',1),call('SIG3_NoisePoll')])
+    add('SIG3_NoiseStop',535,[setvar('%SIG3_NoiseEnabled',0),setvar('%SIG3_NoiseCandidate',''),setvar('%SIG3_NoiseStrikes',0),setvar('%SIG3_NoiseStableTier',''),setvar('%SIG3_NoiseStatus','stopped')])
+    add('SIG3_NoisePoll',536,[loop('%sig3_noise_tick','1:1000000'),
+        condition('%SIG3_NoiseEnabled',3,1),stop(),action(38),
+        condition('%TRUN',5,r'(^|,)SIG3_Worker(,|$)'),condition('%SIG3_VoiceBusy',3,1),condition('%SIG3_WakeEnabled',3,1),
+        *noise_load(),condition('%SIG3_NoiseEnabled',2,1),call('SIG3_CurrentNoise'),action(38),
+        action(38),action(38),action(38),wait(10000),action(40)])
     sleep = [setvar('%SIG3_SleepOK',0),*g('Sleep','%SIG3_SleepEnabled',3,1,'Sleep automation is disabled'),
              *g('Sleep','%SIG3_ManualOverride',8,1,'Manual override blocks sleep automation'),
              *g('Sleep','%par1',5,r'^(?:asleep|awake)$','Sleep input must be asleep or awake'),
