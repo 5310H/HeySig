@@ -1,6 +1,6 @@
 # HeySig3 completed work and test checklist
 
-Updated October 13, 2026. Checked phone items below were actually observed on the Pixel 9a; repository checks are listed separately. Unchecked items remain to be tested. See the [user manual](HeySig3.md) and [recorded phone evidence](HeySig3-verified-usb-drags.md). The [October 13 handoff](HeySig3-verification-2026-10-13.md) records new endpoint failures, diagnostic successes, and the remaining acceptance for the revised gesture implementation.
+Updated October 14, 2026. Checked phone items below were actually observed on the Pixel 9a; repository checks are listed separately. Unchecked items remain to be tested. See the [user manual](HeySig3.md) and [recorded phone evidence](HeySig3-verified-usb-drags.md). The [October 13 handoff](HeySig3-verification-2026-10-13.md) records new endpoint failures, diagnostic successes, and the remaining acceptance for the revised gesture implementation.
 
 ## Completed implementation
 
@@ -155,8 +155,17 @@ Background observation: after returning to Home, AutoVoice Continuous remained a
 - [x] All 256 direct start/target pairs in simulation, one stroke per changed target and stop after failed readback.
 - [x] Normal Tasker VolumeSet 10 → 7 → 10 in the captured program Universal: user confirmed smooth movement and restoration; Tasker result and restore-success flag agreed.
 - [x] Tasker accessibility enabled and Bluetooth audio disconnected to satisfy existing guards.
-- [ ] Direct-drag endpoints, other layouts and longer real-device changes remain separate acceptance.
+- [x] Direct-drag endpoints and representative long jumps passed for all three families on October 14; other layouts and endurance remain uncertified. See [focused acceptance](HeySig3-slider-acceptance-2026-10-14.md).
 
 See [direct-volume setup and verification](HeySig3-direct-volume.md). All 20 repository checks passed; static validation checked 91 XML files and 6,725 actions.
 
 October 12 direct-slider extension: normal Tasker BalanceSet passed Universal −4 → −1 → −4 with fresh final readback. TinnitusSet passed 0 → 3 → 0 after combining a brief minimum-thumb activation tap and continuous drag in one Android gesture request. Both moves recorded CommandOK=1 and fresh expected readback. Balance and tinnitus direct modes remain enabled, with starting levels restored. Tinnitus interior 3 → 4 → 3 and downward 3 → 0 also passed. Broader endpoints and other layouts remain untested.
+
+## October 14 slider closeout
+
+- [x] Final helpers imported and verified against the cleaned phone export.
+- [x] 28 focused public commands passed: representative changes, known failing transitions, both endpoints, and six repeated-target no-ops.
+- [x] Starting Universal/10/−4/0 restored; original saved record independently verified byte-for-byte.
+- [x] Nine temporary slider callers removed; cleaned tested project exported on the phone and preserved locally.
+
+Slider acceptance is complete for the configured Pixel 9a gesture backend and occasional-use scope selected by the user. Exhaustive phone transitions, endurance, other layouts, and native accessibility remain uncertified. See [exact evidence](HeySig3-slider-acceptance-2026-10-14.md).

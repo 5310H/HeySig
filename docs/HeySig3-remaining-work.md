@@ -1,10 +1,12 @@
 # HeySig3 remaining work
 
-Updated October 13, 2026. This is the prioritized completion list, based on the [current test checklist](HeySig3-test-checklist.md), [phone evidence](HeySig3-verified-usb-drags.md), and [event wiring](HeySig3-completion.md). Unchecked items are pending, not necessarily missing implementations. Historical gaps in the main-parity review may already be implemented.
+Updated October 14, 2026. This is the prioritized completion list, based on the [current test checklist](HeySig3-test-checklist.md), [phone evidence](HeySig3-verified-usb-drags.md), and [event wiring](HeySig3-completion.md). Unchecked items are pending, not necessarily missing implementations. Historical gaps in the main-parity review may already be implemented.
 
 October 13 repository recheck: all 20 check scripts passed, plus XML validation of 91 files and 6,725 actions with zero failures. The persistent-snapshot check initially lacked its test-only `org.json` dependency; after downloading it, all 33 actual BeanShell snapshot cases passed. These checks do not complete the unchecked live-phone items. No Pixel 9a was connected at the start of this session.
 
 October 13 handoff: endpoint testing exposed unreliable direct volume movement. Separate thumb-start calibration and a single-request activation/drag revision were added; a short volume diagnostic passed, but the final all-family run was blocked by loss of the phone connection. Selectable sleep settings are implemented; their dialog, schedule events, and phone noise measurements remain unverified. See the [session evidence and exact resume steps](HeySig3-verification-2026-10-13.md). Optional features remain in the requested completion scope; user chose phone noise and selectable sleep/wake choices.
+
+October 14 slider closeout: all 28 focused phone checks passed with the final helpers, including endpoints, known failing transitions, six no-op repeats, and verified restoration of all starting values and the exact saved record. Slider acceptance is complete for occasional use on the configured Pixel 9a; exhaustive device transitions and other layouts are outside this selected scope. See [acceptance evidence](HeySig3-slider-acceptance-2026-10-14.md).
 
 Acceptance clarification: the user reports that the aids provide confirmation only for battery checks, which already work. Program and slider tests use fresh Signia readback and command results; audible aid confirmation is not a completion requirement. This readback does not independently prove acoustic receipt.
 
@@ -17,7 +19,7 @@ Program names must come from actual Signia readback or configured slots, never h
 - [x] Test balance 0 → −1 → 0 with fresh app readback and spoken results.
 - [x] Test additional small balance targets and repeat/reverse behavior: captured start −3 in Universal, adjacent levels −2/−1/−4/−5, no movement on repeated −1/−5/−3, and final restoration to −3 passed. See [small-target acceptance](HeySig3-balance-small-targets-2026-10-11.md).
 - [x] Run **TinnitusSet** directly in Universal: 1 → 0, then repeat 0 and verify no gesture. Public tasks passed with fresh readback, no movement on repeated 0, and starting tinnitus 0 restored; see [direct acceptance](HeySig3-tinnitus-acceptance-2026-10-11.md).
-- [ ] After small moves pass, test other numbered targets, long jumps and endpoints: volume/tinnitus 0–15, balance −8–7. Restore starting values after testing.
+- [x] Verify representative numbered targets, long jumps and endpoints: volume/tinnitus 0–15, balance −8–7; repeat both endpoints without movement and restore starting values. All 28 focused checks passed on October 14. User selected occasional-use acceptance rather than exhaustive phone transitions; see [evidence](HeySig3-slider-acceptance-2026-10-14.md).
 - [x] Availability and current readback passed in Off just Tinnitus, Noisy, Outdoor and Very Noisy, including repeated-selection no-ops and restoration; see [program readback](HeySig3-program-readback-2026-10-11.md).
 - [x] Noisy Balance 0→−1→0 and Tinnitus 7→6→7 passed, including repeated targets without movement and restoration; see [acceptance](HeySig3-other-program-movement-2026-10-11.md).
 - [x] In TV, TinnitusCurrent, Set 1, Mute, Max and Inspect returned unavailable without movement or a program switch. Volume/Balance reads afterward and restoration passed; see [acceptance](HeySig3-tv-unavailable-2026-10-11.md).

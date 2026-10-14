@@ -9,7 +9,9 @@ Restored workflows and event wiring: [HeySig3 completion](docs/HeySig3-completio
 
 Prioritized work still needed: [HeySig3 remaining work](docs/HeySig3-remaining-work.md).
 
-October 13 work in progress: [slider endpoint findings and handoff](docs/HeySig3-verification-2026-10-13.md) and [selectable sleep settings](docs/HeySig3-sleep-settings.md). The revised activation/drag sequence needs full-family phone acceptance; sleep schedule events and phone noise calibration are still pending.
+October 14: [slider acceptance passed](docs/HeySig3-slider-acceptance-2026-10-14.md) for occasional use on the configured Pixel 9a: 28 focused checks, all three controls restored, and exact saved-record verification. Sleep/noise automation and broader reliability checks remain pending.
+
+October 13 work in progress: [slider endpoint findings and handoff](docs/HeySig3-verification-2026-10-13.md) and [selectable sleep settings](docs/HeySig3-sleep-settings.md). The revised activation/drag sequence now has the October 14 focused phone acceptance linked above; sleep schedule events and phone noise calibration are still pending.
 
 Spoken phrases and supported alternatives: [HeySig3 voice commands](docs/HeySig3-voice-commands.md).
 
