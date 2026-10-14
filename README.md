@@ -29,3 +29,5 @@ Optional **Hey Sig** listening passed two consecutive tone-free commands and loc
 Use the [completed and remaining test checklist](docs/HeySig3-test-checklist.md) to resume testing, and the [phone verification notes](docs/HeySig3-verified-usb-drags.md) for exact evidence. The [Pixel 9a setup task](tasks/SIG3_Pixel9aGestureSetup.tsk.xml) is imported separately from the project and applies only to the measured layout.
 
 Opt-in [direct slider dragging](docs/HeySig3-direct-volume.md) moves to a requested level with one continuous stroke and verifies the final value. Volume 10 → 7 → 10 and balance −4 → −1 → −4 passed through normal Tasker commands. Tinnitus 0 → 3 → 0 also passed with a brief activation tap at zero; the existing one-level method remains selectable.
+
+[October 14 reliability checks](docs/HeySig3-reliability-2026-10-14.md): full reboot preserved measured noise choices, speech preferences and the original saved-settings hash, with automation off. Eight-hour observation and battery result collection remain pending.

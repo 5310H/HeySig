@@ -187,6 +187,7 @@ Sleep acceptance covers an unlocked phone with Signia open and existing audio re
 - [x] Manual priority, override/resume and foreground deferral passed the controlled phone trial.
 - [x] Hidden-Tasker observation passed 732.095 seconds; two fresh screen-off samples passed.
 - [x] Injected voice-busy flag skipped capture and clearing it resumed fresh sampling; simultaneous live speech remains untested.
-- [ ] Overnight endurance, full phone reboot and battery impact.
+- [x] Full reboot preserved measured noise choices, speech preferences, disabled automation and the exact private settings hash; [reliability evidence](HeySig3-reliability-2026-10-14.md).
+- [ ] Eight-hour endurance and battery-use result collection; isolated app battery impact needs an idle comparison.
 
 See [noise acceptance](HeySig3-noise-settings-acceptance-2026-10-14.md) for measured choices, restoration and precise limits.
