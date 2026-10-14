@@ -28644,7 +28644,7 @@ Only available if you select &amp;lt;b&amp;gt;Continue Task After Error&amp;lt;/
 			</Bundle>
 			<Str sr="arg1" ve="3">com.joaomgcd.autovoice</Str>
 			<Str sr="arg2" ve="3">com.joaomgcd.autovoice.activity.ActivityConfigGetCurrentAmbientNoise</Str>
-			<Int sr="arg3" val="1" />
+			<Int sr="arg3" val="15" />
 			<Int sr="arg4" val="1" />
 		</Action>
 		<Action sr="act5" ve="7">

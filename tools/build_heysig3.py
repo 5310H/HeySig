@@ -628,6 +628,8 @@ def extra_tasks():
     # Reuse the exported AutoVoice capture envelope; no invented microphone implementation.
     noise_reference = E.parse(ROOT / 'tasks/SIG_Current_dB.tsk.xml').getroot()
     sample_action = deepcopy(next(a for a in noise_reference.findall('.//Action') if a.findtext('code') == '1218739680'))
+    # The five-second capture needs time to finish and return its result.
+    sample_action.find("Int[@sr='arg3']").set('val', '15')
     e = sample_action.find('se')
     if e is not None: sample_action.remove(e)
     e = E.Element('se'); e.text = 'true'; sample_action.insert(1,e)

@@ -9,6 +9,8 @@ Restored workflows and event wiring: [HeySig3 completion](docs/HeySig3-completio
 
 Prioritized work still needed: [HeySig3 remaining work](docs/HeySig3-remaining-work.md).
 
+Phone noise sampling: [October 14 verification](docs/HeySig3-phone-noise-2026-10-14.md) corrected a plugin timeout and passed ten public-worker samples across quiet and conversation/TV surroundings. Automatic switching remains disabled pending configuration and stability checks.
+
 October 14 acoustic investigation: [REA command and control-bit validation](docs/HeySig3-chirp-validation-2026-10-14.md) passed 131,072 comparisons against the installed Signia encoder. Active address/profile and full waveform comparison remain pending. Only battery checks give an audible aid response.
 
 October 14: [slider acceptance passed](docs/HeySig3-slider-acceptance-2026-10-14.md) for occasional use on the configured Pixel 9a: 28 focused checks, all three controls restored, and exact saved-record verification. [Selectable sleep schedules also passed phone acceptance](docs/HeySig3-sleep-acceptance-2026-10-14.md) with Signia open; automation is left off for your own choices. Phone noise automation and broader reliability checks remain pending.

@@ -1,0 +1,119 @@
+{
+  "date": "2026-10-14",
+  "device": "Pixel 9a",
+  "source": "phone",
+  "environment": "Quiet room (user confirmed)",
+  "captureSeconds": 5,
+  "pluginTimeoutSeconds": 15,
+  "automationDuringRun": "disabled",
+  "directPlugin": {
+    "avnoiselevel": "-56",
+    "avreadings": "",
+    "err": "",
+    "errmsg": "",
+    "time": 1792007285637
+  },
+  "publicWorkerSamples": [
+    {
+      "time": 1792007697848,
+      "CommandOK": "1",
+      "Error": "",
+      "NoiseRaw": "-64",
+      "NoiseIndex": "-64.0",
+      "Observed": "Uncalibrated noise index -64.0",
+      "Result": "Noise: Uncalibrated noise index -64.0 (app state; aid receipt unverified)"
+    },
+    {
+      "time": 1792007704387,
+      "CommandOK": "1",
+      "Error": "",
+      "NoiseRaw": "-63",
+      "NoiseIndex": "-63.0",
+      "Observed": "Uncalibrated noise index -63.0",
+      "Result": "Noise: Uncalibrated noise index -63.0 (app state; aid receipt unverified)"
+    },
+    {
+      "time": 1792007710862,
+      "CommandOK": "1",
+      "Error": "",
+      "NoiseRaw": "-66",
+      "NoiseIndex": "-66.0",
+      "Observed": "Uncalibrated noise index -66.0",
+      "Result": "Noise: Uncalibrated noise index -66.0 (app state; aid receipt unverified)"
+    },
+    {
+      "time": 1792007717286,
+      "CommandOK": "1",
+      "Error": "",
+      "NoiseRaw": "-65",
+      "NoiseIndex": "-65.0",
+      "Observed": "Uncalibrated noise index -65.0",
+      "Result": "Noise: Uncalibrated noise index -65.0 (app state; aid receipt unverified)"
+    },
+    {
+      "time": 1792007723728,
+      "CommandOK": "1",
+      "Error": "",
+      "NoiseRaw": "-65",
+      "NoiseIndex": "-65.0",
+      "Observed": "Uncalibrated noise index -65.0",
+      "Result": "Noise: Uncalibrated noise index -65.0 (app state; aid receipt unverified)"
+    }
+  ],
+  "units": "uncalibrated noise index",
+  "thresholdsChosen": false,
+  "hearingAidCommandsSent": false,
+  "postQuietTrialSettings": {
+    "NoiseEnabled": "",
+    "NoiseSource": "",
+    "interpretation": "Prior unset settings restored; defaults are disabled and phone"
+  },
+  "conversationTvSamples": [
+    {
+      "time": 1792007968242,
+      "CommandOK": "1",
+      "Error": "",
+      "NoiseRaw": "-49",
+      "NoiseIndex": "-49.0",
+      "Observed": "Uncalibrated noise index -49.0",
+      "Result": "Noise: Uncalibrated noise index -49.0 (app state; aid receipt unverified)"
+    },
+    {
+      "time": 1792007974708,
+      "CommandOK": "1",
+      "Error": "",
+      "NoiseRaw": "-53",
+      "NoiseIndex": "-53.0",
+      "Observed": "Uncalibrated noise index -53.0",
+      "Result": "Noise: Uncalibrated noise index -53.0 (app state; aid receipt unverified)"
+    },
+    {
+      "time": 1792007981171,
+      "CommandOK": "1",
+      "Error": "",
+      "NoiseRaw": "-54",
+      "NoiseIndex": "-54.0",
+      "Observed": "Uncalibrated noise index -54.0",
+      "Result": "Noise: Uncalibrated noise index -54.0 (app state; aid receipt unverified)"
+    },
+    {
+      "time": 1792007987627,
+      "CommandOK": "1",
+      "Error": "",
+      "NoiseRaw": "-65",
+      "NoiseIndex": "-65.0",
+      "Observed": "Uncalibrated noise index -65.0",
+      "Result": "Noise: Uncalibrated noise index -65.0 (app state; aid receipt unverified)"
+    },
+    {
+      "time": 1792007994086,
+      "CommandOK": "1",
+      "Error": "",
+      "NoiseRaw": "-53",
+      "NoiseIndex": "-53.0",
+      "Observed": "Uncalibrated noise index -53.0",
+      "Result": "Noise: Uncalibrated noise index -53.0 (app state; aid receipt unverified)"
+    }
+  ],
+  "comparison": "Higher, less-negative readings during conversation/TV; one sample overlaps the quiet range. No calibrated units or switching thresholds established."
+}

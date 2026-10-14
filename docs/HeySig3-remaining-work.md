@@ -76,6 +76,8 @@ The generated project includes the opt-in AutoVoice wake profile; other phone/wa
 
 ## 5. Complete optional automation if it will be used
 
+October 14 sampling progress: the five-second phone sampler's one-second timeout was corrected to fifteen seconds. Five public-worker samples in a user-confirmed quiet room passed, with indices −66 to −63. See [phone noise evidence](HeySig3-phone-noise-2026-10-14.md). Thresholds and automatic switching remain unverified.
+
 Keep noise/sleep automation disabled until the relevant items pass. These tasks are implemented; real source configuration and live tests remain.
 
 - [ ] Choose phone or watch noise source and wire the actual polling/sample event. Measure sample sign, units, inversion, low/high thresholds and strike count; do not describe uncalibrated indices as sound-pressure dB.
