@@ -1,5 +1,7 @@
 # Signia reverse engineering: Tasker microphone volume
 
+Latest evidence, October 14: [REA acoustic command and control-bit validation](docs/HeySig3-chirp-validation-2026-10-14.md) checks the installed app and records 131,072 successful original-CIL comparisons. Full waveform and active configuration validation remain pending. Only battery checks give an audible aid response. The report below preserves the October 9 findings; its gesture status is superseded by [October 14 slider acceptance](docs/HeySig3-slider-acceptance-2026-10-14.md).
+
 Reviewed October 9, 2026 (America/New_York). **User-confirmed configuration: acoustic control; BLE is not used.** Static analysis only. Existing Tasker projects, exports, generators and Java code were not changed. No APK was patched, signed, installed or run; no hearing-aid command was transmitted.
 
 ## 1. Executive Summary
