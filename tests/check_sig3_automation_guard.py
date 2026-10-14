@@ -7,9 +7,14 @@ stub='''
 class Root {String name="com.signia.rta";String getPackageName(){return name;}}
 class Service {Root root=new Root();Root getRootInActiveWindow(){return root;}}
 class Tasker {java.util.Map vars=new java.util.HashMap();Service service=new Service();String getVariable(String k){return (String)vars.get(k);}void setVariable(String k,String v){vars.put(k,v);}Service getAccessibilityService(){return service;}}
-tasker=new Tasker();
+class Lock {boolean locked=false;boolean isKeyguardLocked(){return locked;}}
+class Context {Lock lock=new Lock();Lock getSystemService(String name){return lock;}}
+tasker=new Tasker();context=new Context();
 require(ok,message){if(!ok)throw new Exception(message);}
 require(operation().equals("allowed"),"foreground allowed");
+context.lock.locked=true;tasker.setVariable("SIG3_Family","Noise");
+for(value:new String[]{"0","1"}){tasker.setVariable("SIG3_DeferAutomation",value);tasker.setVariable("SIG3_NoiseStrikes","3");tasker.setVariable("SIG3_AutoProgramSlot","6");blocked=false;try{operation();}catch(Exception e){blocked=true;}require(blocked&&tasker.getVariable("SIG3_Error").contains("unlocked")&&tasker.getVariable("SIG3_NoiseStrikes").equals("0")&&tasker.getVariable("SIG3_AutoProgramSlot").equals(""),"lock clears pending changes even with foreground deferral off");}
+context.lock.locked=false;
 for(key:new String[]{"SIG3_ManualOverride","SIG3_AutomationCancelled"}){tasker.setVariable(key,"1");blocked=false;try{operation();}catch(Exception e){blocked=true;}require(blocked&&tasker.getVariable("SIG3_Error").length()>0,"blocked reason preserved "+key);tasker.setVariable(key,"0");}
 tasker.service.root.name="another.app";blocked=false;try{operation();}catch(Exception e){blocked=true;}
 require(blocked&&tasker.getVariable("SIG3_Error").equals("Automatic change deferred until Signia is foreground"),"foreground reason preserved");

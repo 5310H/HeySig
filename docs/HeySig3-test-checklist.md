@@ -178,3 +178,15 @@ Slider acceptance is complete for the configured Pixel 9a gesture backend and oc
 - [x] Starting Universal/10/−4/0 and exact saved record restored; test choices cleared; automation off.
 
 Sleep acceptance covers an unlocked phone with Signia open and existing audio requirements satisfied. Overnight/endurance, restart recovery, locked-phone switching, and external sleep providers remain unverified. See [sleep evidence](HeySig3-sleep-acceptance-2026-10-14.md).
+
+## October 14 measured noise closeout
+
+- [x] All 27 regression scripts passed; 101 XML files / 7,115 actions validated with zero failures.
+- [x] Fixed-position phone calibration: seven quiet, thirteen normal TV/music and nine louder TV/music samples.
+- [x] Measured automatic polling selected Noisy, Very Noisy, Noisy and Universal with fresh Signia readback.
+- [x] Manual priority, override/resume and foreground deferral passed the controlled phone trial.
+- [x] Hidden-Tasker observation passed 732.095 seconds; two fresh screen-off samples passed.
+- [x] Injected voice-busy flag skipped capture and clearing it resumed fresh sampling; simultaneous live speech remains untested.
+- [ ] Overnight endurance, full phone reboot and battery impact.
+
+See [noise acceptance](HeySig3-noise-settings-acceptance-2026-10-14.md) for measured choices, restoration and precise limits.

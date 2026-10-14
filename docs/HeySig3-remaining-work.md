@@ -82,10 +82,10 @@ October 14 settings closeout: selectable roles, tuning and guarded polling are i
 
 Keep noise/sleep automation disabled until the relevant items pass. These tasks are implemented; real source configuration and live tests remain.
 
-- [ ] Choose phone or watch noise source and wire the actual polling/sample event. Measure sample sign, units, inversion, low/high thresholds and strike count; do not describe uncalibrated indices as sound-pressure dB.
-- [ ] Configure actual quiet/loud program slots and, if wanted, a middle slot; verify consecutive samples, two-tier dead band or three-tier selection, and source isolation.
+- [x] Phone source and public polling loop accepted. Fixed-position quiet/normal/louder samples established uncalibrated-index boundaries −54.5 / −43, margin 1.5, three confirmations and 60-second cooldown. [October 14 acceptance](HeySig3-noise-settings-acceptance-2026-10-14.md).
+- [x] Selectable Quiet/Noisy/Very noisy roles, consecutive confirmation, hysteresis and source isolation passed executable checks. Controlled phone dispatch and the measured full loop selected Noisy and Very Noisy with fresh readback.
 - [x] Wire selectable phone sleep/wake clock events through the worker with explicit asleep/awake input; verify settings and both program transitions on Pixel 9a with Signia open. [October 14 evidence](HeySig3-sleep-acceptance-2026-10-14.md). Locked-phone/overnight and restart behavior remain unverified.
-- [ ] Verify foreground deferral, manual override, cancellation/resume and retry on subsequent events. Confirm manual controls remain usable.
+- [x] Foreground deferral, manual override, resumed automatic selection and manual program priority passed controlled phone acceptance; cancellation/reset and locked-phone denial passed executable checks. Locked overnight operation remains unverified.
 - [ ] If Home completion is selected, verify it occurs only after success while Signia remains foreground. Default completion is stay.
 
 ## 6. Resolve native accessibility support separately
@@ -154,3 +154,5 @@ October 12 wake update: persistent notification installed for both listener star
 Tin shorthand: implemented and installed; “current tin” passed live recognition and correctly reported tinnitus unavailable for the current program. No tinnitus tab search is required for this unavailable control.
 
 Closeout October 12: completed speech controls, spoken cancel, and tin recognition are accepted above. Bounded wake and volume-restoration acceptance and remaining endurance limits are recorded in [wake status](HeySig3-wake-phrase.md). Listening is turned off after testing.
+
+October 14 noise closeout: 27 regression scripts passed and 101 XML files / 7,115 actions validated without failures. Hidden-Tasker observation passed 47 samples over 732.095 seconds; two fresh screen-off samples passed. This bounded check does not certify overnight endurance, full reboot, battery impact or simultaneous live microphone use. See [measured noise acceptance](HeySig3-noise-settings-acceptance-2026-10-14.md).

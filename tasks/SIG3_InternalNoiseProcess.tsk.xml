@@ -183,6 +183,8 @@ denyAutomation(message) {
 }
 if ("1".equals(tasker.getVariable("SIG3_AutomationCancelled"))) denyAutomation("Automatic change cancelled");
 if ("1".equals(tasker.getVariable("SIG3_ManualOverride"))) denyAutomation("Manual override blocks automatic changes");
+lock = context.getSystemService("keyguard");
+if (lock != null &amp;&amp; lock.isKeyguardLocked()) denyAutomation("Automatic change deferred until the phone is unlocked");
 if (!"0".equals(tasker.getVariable("SIG3_DeferAutomation"))) {
     service = tasker.getAccessibilityService();
     root = service == null ? null : service.getRootInActiveWindow();

@@ -662,10 +662,11 @@ def extra_tasks():
             setvar('%SIG3_NoiseMode',mode),setvar('%SIG3_NoiseEnabled',1),call('SIG3_NoisePoll')])
     add('SIG3_NoiseStop',535,[setvar('%SIG3_NoiseEnabled',0),setvar('%SIG3_NoiseCandidate',''),setvar('%SIG3_NoiseStrikes',0),setvar('%SIG3_NoiseStableTier',''),setvar('%SIG3_NoiseStatus','stopped')])
     add('SIG3_NoisePoll',536,[loop('%sig3_noise_tick','1:1000000'),
+        setvar('%SIG3_NoisePollSampled',0),
         condition('%SIG3_NoiseEnabled',3,1),stop(),action(38),
         condition('%TRUN',5,r'(^|,)SIG3_Worker(,|$)'),condition('%SIG3_VoiceBusy',3,1),condition('%SIG3_WakeEnabled',3,1),
-        *noise_load(),condition('%SIG3_NoiseEnabled',2,1),call('SIG3_CurrentNoise'),action(38),
-        action(38),action(38),action(38),wait(10000),action(40)])
+        *noise_load(),condition('%SIG3_NoiseEnabled',2,1),setvar('%SIG3_NoisePollSampled',1),call('SIG3_CurrentNoise'),action(38),
+        action(38),action(38),action(38),java_file('sig3_noise_log.java'),wait(10000),action(40)])
     sleep = [setvar('%SIG3_SleepOK',0),*g('Sleep','%SIG3_SleepEnabled',3,1,'Sleep automation is disabled'),
              *g('Sleep','%SIG3_ManualOverride',8,1,'Manual override blocks sleep automation'),
              *g('Sleep','%par1',5,r'^(?:asleep|awake)$','Sleep input must be asleep or awake'),

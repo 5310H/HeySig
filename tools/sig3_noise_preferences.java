@@ -57,5 +57,5 @@ if(changed) {
 for(i=0;i<fields.length;i++) tasker.setVariable("SIG3_Noise"+fields[i],config.getString(keys[i]));
 tasker.setVariable("SIG3_NoiseSource","phone");tasker.setVariable("SIG3_NoiseInvert","0");tasker.setVariable("SIG3_NoiseScaleConfirmed",confirmed);
 tasker.setVariable("SIG3_NoiseSettingsReady","1");
-tasker.setVariable("SIG3_NoiseSettingsStatus","Quiet: "+config.getJSONArray("programs").getString(Integer.parseInt(config.getString("quiet"))-1)+"; Noisy: "+config.getJSONArray("programs").getString(Integer.parseInt(config.getString("middle"))-1)+"; Very noisy: "+config.getJSONArray("programs").getString(Integer.parseInt(config.getString("loud"))-1)+"; saved with switching off");
+tasker.setVariable("SIG3_NoiseSettingsStatus","Quiet: "+config.getJSONArray("programs").getString(Integer.parseInt(config.getString("quiet"))-1)+"; Noisy: "+config.getJSONArray("programs").getString(Integer.parseInt(config.getString("middle"))-1)+"; Very noisy: "+config.getJSONArray("programs").getString(Integer.parseInt(config.getString("loud"))-1)+ "; " + ("1".equals(nv("SIG3_NoiseEnabled")) ? ("observe".equals(nv("SIG3_NoiseMode")) ? "observation active" : "automatic selection active") : "stopped"));
 return "noise settings "+mode;

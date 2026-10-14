@@ -119,9 +119,9 @@ Create or edit an actual AutoVoice recognition profile on the phone to run `SIG3
 
 ### Noise and sleep
 
-Use [selectable phone noise settings](HeySig3-noise-settings.md) to choose Quiet/Noisy/Very noisy roles and tuning. `SIG3_NoiseObserve` starts observation-only sampling; `SIG3_NoiseAuto` enables guarded switching; `SIG3_NoiseStop` stops either mode. Save leaves switching off. Final environment thresholds and background endurance still need acceptance.
+Use [selectable phone noise settings](HeySig3-noise-settings.md) to choose Quiet/Noisy/Very noisy roles and tuning. `SIG3_NoiseObserve` starts observation-only sampling; `SIG3_NoiseAuto` enables guarded switching; `SIG3_NoiseStop` stops either mode. Save leaves switching off. Measured Pixel boundaries −54.5 / −43, margin 1.5, three confirmations and 60-second cooldown passed real polling. Hidden-Tasker observation passed over twelve minutes, plus two screen-off captures; [acceptance and limits](HeySig3-noise-settings-acceptance-2026-10-14.md).
 
-`SIG3_CurrentNoise` uses the existing repository's AutoVoice Current Noise action envelope, then processes `%avnoiselevel`. Five quiet-room samples passed on Pixel 9a after correcting the plugin timeout; see [phone noise verification](HeySig3-phone-noise-2026-10-14.md). Measurement calibration and switching acceptance remain pending. `SIG3_NoiseMonitor` instead accepts a numeric sample in Parameter 1. Both use the worker, so sampling and Signia operations cannot interleave through SIG3. `%SIG3_NoiseRaw` preserves the input and `%SIG3_NoiseIndex` records the optionally inverted value. These values are **uncalibrated indices**, not established sound-pressure dB.
+`SIG3_CurrentNoise` uses the existing repository's AutoVoice Current Noise action envelope, then processes `%avnoiselevel`. Five quiet-room samples passed on Pixel 9a after correcting the plugin timeout; see [phone noise verification](HeySig3-phone-noise-2026-10-14.md). Later fixed-position quiet/normal/louder measurements and automatic program selection passed the measured acceptance linked above. `SIG3_NoiseMonitor` instead accepts a numeric sample in Parameter 1. Both use the worker, so sampling and Signia operations cannot interleave through SIG3. `%SIG3_NoiseRaw` preserves the input and `%SIG3_NoiseIndex` records the optionally inverted value. These values are **uncalibrated indices**, not established sound-pressure dB.
 
 To enable noise-driven program selection after manual controls work, confirm the sample's units/sign on the phone, set `%SIG3_NoiseScaleConfirmed=1`, and configure:
 
@@ -131,7 +131,7 @@ To enable noise-driven program selection after manual controls work, confirm the
 - `%SIG3_NoiseStrikeLimit`: consecutive samples required, 1–20; default 3.
 - `%SIG3_NoiseEnabled=1`: enable automatic selection.
 
-With NoiseMiddleProgram unset, the middle band clears the candidate/count; configuring that slot enables three-tier selection. Changing quiet/loud classification restarts the count. Once the count reaches the limit, program selection runs through the same worker and readback path. Sampling frequency is supplied by a phone profile; no timer is activated here. `%SIG3_SleepActive=1` suppresses noise changes.
+With NoiseMiddleProgram unset, the middle band clears the candidate/count; configuring that slot enables three-tier selection. Changing quiet/loud classification restarts the count. Once the count reaches the limit, program selection runs through the same worker and readback path. `SIG3_NoiseObserve` and `SIG3_NoiseAuto` explicitly start the polling task, with a five-second capture and ten-second wait; actual cadence also includes processing and switching time. No automatic startup profile is installed. `%SIG3_SleepActive=1` suppresses noise changes.
 
 `SIG3_Override` takes `1` for manual override or `0` to release it; voice accepts `override on/off` and `manual/automatic mode`. Override blocks noise/sleep program changes and resets noise history. Releasing override does not itself enable either automation.
 
