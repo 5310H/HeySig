@@ -12,6 +12,8 @@ def build():
                          (f'SIG3_{family}Direction', '1'),
                          (f'SIG3_{family}TrackTopY', '695'),
                          (f'SIG3_{family}TrackBottomY', '2000'),
+                         (f'SIG3_{family}ThumbTopY', '748'),
+                         (f'SIG3_{family}ThumbBottomY', '1959'),
                          (f'SIG3_{family}TrackBounds', '501,652,580,2047')])
     root = E.Element('TaskerData', sr='', dvi='1', tv='6.6.20')
     root.append(b.task('SIG3_Pixel9aGestureSetup', 990,

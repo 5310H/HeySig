@@ -963,6 +963,17 @@ if (topText != null &amp;&amp; bottomText != null) {
     range = control.getRangeInfo();
     if (range == null || range.getMax() &lt;= range.getMin() || top &lt; rect.top || bottom &gt; rect.bottom || bottom &lt;= top)
         throw new JavaCodeException("Invalid slider position calibration");
+    thumbTopText = tasker.getVariable("SIG3_" + family + "ThumbTopY");
+    thumbBottomText = tasker.getVariable("SIG3_" + family + "ThumbBottomY");
+    thumbTopSet = thumbTopText != null &amp;&amp; thumbTopText.length() &gt; 0 &amp;&amp; !thumbTopText.startsWith("%");
+    thumbBottomSet = thumbBottomText != null &amp;&amp; thumbBottomText.length() &gt; 0 &amp;&amp; !thumbBottomText.startsWith("%");
+    if (thumbTopSet != thumbBottomSet) throw new JavaCodeException("Configure both slider thumb endpoints");
+    if (thumbTopSet) {
+        top = Float.parseFloat(thumbTopText); bottom = Float.parseFloat(thumbBottomText);
+        if (Float.isNaN(top) || Float.isInfinite(top) || Float.isNaN(bottom) || Float.isInfinite(bottom)
+            || top &lt; rect.top || bottom &gt; rect.bottom || bottom &lt;= top)
+            throw new JavaCodeException("Invalid slider thumb calibration");
+    }
     fraction = (range.getCurrent() - range.getMin()) / (range.getMax() - range.getMin());
     if (Float.isNaN(fraction) || fraction &lt; 0 || fraction &gt; 1) throw new JavaCodeException("Invalid current native progress");
     tasker.setVariable("SIG3_" + family + "X", "" + rect.centerX());
@@ -1066,10 +1077,9 @@ performStroke(service, stroke, phase) {
         });
     tasker.setVariable("SIG3_TouchStage", phase);
     builder = new GestureDescription.Builder();
-    if (phase.equals("move") &amp;&amp; direct &amp;&amp; "Tinnitus".equals(family)
-        &amp;&amp; Integer.parseInt(tasker.getVariable("sig3_start")) == 0) {
-        tapPath = new Path(); tapPath.moveTo(x, y);
-        builder.addStroke(new GestureDescription.StrokeDescription(tapPath, 0, 50, false));
+    if (phase.equals("move") &amp;&amp; direct) {
+        activationPath = new Path(); activationPath.moveTo(x, y);
+        builder.addStroke(new GestureDescription.StrokeDescription(activationPath, 0, 100, false));
     }
     gesture = builder.addStroke(stroke).build();
     if (!service.dispatchGesture(gesture, callback, new Handler(Looper.getMainLooper())))
@@ -1117,13 +1127,12 @@ metrics = service.getResources().getDisplayMetrics();
 if (x &gt;= metrics.widthPixels || y &lt; 0 || y &gt;= metrics.heightPixels || endY &gt;= metrics.heightPixels)
     throw new JavaCodeException("Gesture coordinates outside display bounds");
 tasker.setVariable("SIG3_Gesture", tasker.getVariable("SIG3_Gesture") + "; actual path=" + x + "," + y + " -&gt; " + x + "," + endY);
-minimumTap = direct &amp;&amp; "Tinnitus".equals(family) &amp;&amp; Integer.parseInt(tasker.getVariable("sig3_start")) == 0;
-if (minimumTap) tasker.setVariable("SIG3_Gesture", tasker.getVariable("SIG3_Gesture") + "; minimum tap released");
 movePath = new Path();
 movePath.moveTo(x, y);
 movePath.lineTo(x, endY);
 // One continuous DOWN-MOVE-UP stroke, matching the successful 650 ms USB drags.
-moveStroke = new GestureDescription.StrokeDescription(movePath, minimumTap ? 200 : 0, 650, false);
+if (direct) tasker.setVariable("SIG3_Gesture", tasker.getVariable("SIG3_Gesture") + "; activation 100 ms; settle 500 ms; one gesture request");
+moveStroke = new GestureDescription.StrokeDescription(movePath, direct ? 600 : 0, 650, false);
 performStroke(service, moveStroke, "move");
 tasker.setVariable("SIG3_TouchStage", "released");
 return "completed";
@@ -1815,6 +1824,17 @@ if (topText != null &amp;&amp; bottomText != null) {
     range = control.getRangeInfo();
     if (range == null || range.getMax() &lt;= range.getMin() || top &lt; rect.top || bottom &gt; rect.bottom || bottom &lt;= top)
         throw new JavaCodeException("Invalid slider position calibration");
+    thumbTopText = tasker.getVariable("SIG3_" + family + "ThumbTopY");
+    thumbBottomText = tasker.getVariable("SIG3_" + family + "ThumbBottomY");
+    thumbTopSet = thumbTopText != null &amp;&amp; thumbTopText.length() &gt; 0 &amp;&amp; !thumbTopText.startsWith("%");
+    thumbBottomSet = thumbBottomText != null &amp;&amp; thumbBottomText.length() &gt; 0 &amp;&amp; !thumbBottomText.startsWith("%");
+    if (thumbTopSet != thumbBottomSet) throw new JavaCodeException("Configure both slider thumb endpoints");
+    if (thumbTopSet) {
+        top = Float.parseFloat(thumbTopText); bottom = Float.parseFloat(thumbBottomText);
+        if (Float.isNaN(top) || Float.isInfinite(top) || Float.isNaN(bottom) || Float.isInfinite(bottom)
+            || top &lt; rect.top || bottom &gt; rect.bottom || bottom &lt;= top)
+            throw new JavaCodeException("Invalid slider thumb calibration");
+    }
     fraction = (range.getCurrent() - range.getMin()) / (range.getMax() - range.getMin());
     if (Float.isNaN(fraction) || fraction &lt; 0 || fraction &gt; 1) throw new JavaCodeException("Invalid current native progress");
     tasker.setVariable("SIG3_" + family + "X", "" + rect.centerX());

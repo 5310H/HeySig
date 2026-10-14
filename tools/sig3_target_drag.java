@@ -34,10 +34,9 @@ performStroke(service, stroke, phase) {
         });
     tasker.setVariable("SIG3_TouchStage", phase);
     builder = new GestureDescription.Builder();
-    if (phase.equals("move") && direct && "Tinnitus".equals(family)
-        && Integer.parseInt(tasker.getVariable("sig3_start")) == 0) {
-        tapPath = new Path(); tapPath.moveTo(x, y);
-        builder.addStroke(new GestureDescription.StrokeDescription(tapPath, 0, 50, false));
+    if (phase.equals("move") && direct) {
+        activationPath = new Path(); activationPath.moveTo(x, y);
+        builder.addStroke(new GestureDescription.StrokeDescription(activationPath, 0, 100, false));
     }
     gesture = builder.addStroke(stroke).build();
     if (!service.dispatchGesture(gesture, callback, new Handler(Looper.getMainLooper())))
@@ -85,13 +84,12 @@ metrics = service.getResources().getDisplayMetrics();
 if (x >= metrics.widthPixels || y < 0 || y >= metrics.heightPixels || endY >= metrics.heightPixels)
     throw new JavaCodeException("Gesture coordinates outside display bounds");
 tasker.setVariable("SIG3_Gesture", tasker.getVariable("SIG3_Gesture") + "; actual path=" + x + "," + y + " -> " + x + "," + endY);
-minimumTap = direct && "Tinnitus".equals(family) && Integer.parseInt(tasker.getVariable("sig3_start")) == 0;
-if (minimumTap) tasker.setVariable("SIG3_Gesture", tasker.getVariable("SIG3_Gesture") + "; minimum tap released");
 movePath = new Path();
 movePath.moveTo(x, y);
 movePath.lineTo(x, endY);
 // One continuous DOWN-MOVE-UP stroke, matching the successful 650 ms USB drags.
-moveStroke = new GestureDescription.StrokeDescription(movePath, minimumTap ? 200 : 0, 650, false);
+if (direct) tasker.setVariable("SIG3_Gesture", tasker.getVariable("SIG3_Gesture") + "; activation 100 ms; settle 500 ms; one gesture request");
+moveStroke = new GestureDescription.StrokeDescription(movePath, direct ? 600 : 0, 650, false);
 performStroke(service, moveStroke, "move");
 tasker.setVariable("SIG3_TouchStage", "released");
 return "completed";

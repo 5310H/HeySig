@@ -1566,6 +1566,17 @@ if (topText != null &amp;&amp; bottomText != null) {
     range = control.getRangeInfo();
     if (range == null || range.getMax() &lt;= range.getMin() || top &lt; rect.top || bottom &gt; rect.bottom || bottom &lt;= top)
         throw new JavaCodeException("Invalid slider position calibration");
+    thumbTopText = tasker.getVariable("SIG3_" + family + "ThumbTopY");
+    thumbBottomText = tasker.getVariable("SIG3_" + family + "ThumbBottomY");
+    thumbTopSet = thumbTopText != null &amp;&amp; thumbTopText.length() &gt; 0 &amp;&amp; !thumbTopText.startsWith("%");
+    thumbBottomSet = thumbBottomText != null &amp;&amp; thumbBottomText.length() &gt; 0 &amp;&amp; !thumbBottomText.startsWith("%");
+    if (thumbTopSet != thumbBottomSet) throw new JavaCodeException("Configure both slider thumb endpoints");
+    if (thumbTopSet) {
+        top = Float.parseFloat(thumbTopText); bottom = Float.parseFloat(thumbBottomText);
+        if (Float.isNaN(top) || Float.isInfinite(top) || Float.isNaN(bottom) || Float.isInfinite(bottom)
+            || top &lt; rect.top || bottom &gt; rect.bottom || bottom &lt;= top)
+            throw new JavaCodeException("Invalid slider thumb calibration");
+    }
     fraction = (range.getCurrent() - range.getMin()) / (range.getMax() - range.getMin());
     if (Float.isNaN(fraction) || fraction &lt; 0 || fraction &gt; 1) throw new JavaCodeException("Invalid current native progress");
     tasker.setVariable("SIG3_" + family + "X", "" + rect.centerX());

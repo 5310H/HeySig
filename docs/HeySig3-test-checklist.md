@@ -1,6 +1,6 @@
 # HeySig3 completed work and test checklist
 
-Updated October 12, 2026. Checked phone items below were actually observed on the Pixel 9a; repository checks are listed separately. Unchecked items remain to be tested. See the [user manual](HeySig3.md) and [recorded phone evidence](HeySig3-verified-usb-drags.md).
+Updated October 13, 2026. Checked phone items below were actually observed on the Pixel 9a; repository checks are listed separately. Unchecked items remain to be tested. See the [user manual](HeySig3.md) and [recorded phone evidence](HeySig3-verified-usb-drags.md). The [October 13 handoff](HeySig3-verification-2026-10-13.md) records new endpoint failures, diagnostic successes, and the remaining acceptance for the revised gesture implementation.
 
 ## Completed implementation
 
@@ -33,11 +33,11 @@ Updated October 12, 2026. Checked phone items below were actually observed on th
 - [x] Updated BalanceCurrent in TV: displayed 0, program TV, empty Error despite the configured label ID being Universal.
 - [x] Restore Universal after TV testing; balance and tinnitus finished at 0.
 
-Successful app labels do not independently acknowledge acoustic receipt by the aids. The volume ADB moves have user confirmation; separate aid-response checks for balance/tinnitus remain below.
+Successful app labels do not independently acknowledge acoustic receipt by the aids. Program and slider acceptance uses fresh Signia readback and command results, as agreed with the user; separate aid-response checks are not required. Battery indications already work.
 
 ## Passed in repository checks
 
-- [x] Static validation: 91 XML files, 6,725 task actions, zero failures.
+- [x] Static validation: 92 XML files, 6,769 task actions, zero failures; all 23 repository checks passed on October 13.
 - [x] Numeric simulation: 768 source/target transitions, invalid targets, repeated targets, endpoints and readback failures.
 - [x] Backend simulation: native prerequisites, accepted-but-unchanged progress, and per-family backend isolation.
 - [x] Missing tinnitus simulation: Current, Up, Down, Set, Max, Mute, Inspect, and voice request stop without movement.

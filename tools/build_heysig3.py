@@ -647,6 +647,12 @@ def extra_tasks():
              condition('%par1',2,'asleep'),setvar('%SIG3_SleepActive',1),action(43),setvar('%SIG3_SleepActive',0),action(38),setvar('%SIG3_SleepOK',1)]
     add('SIG3_InternalSleepSet',476,sleep,True)
     add('SIG3_SleepState',366,[request('Sleep','Set','%par1')])
+    add('SIG3_SleepSettings',525,[setvar('%sig3_sleep_pref_mode','load'),java_file('sig3_sleep_preferences.java'),
+        condition('%err',12),setvar('%SIG3_SleepSettingsStatus','Could not load sleep settings: %errmsg'),stop(),action(38),
+        java_file('sig3_sleep_settings.java'),condition('%err',12),setvar('%SIG3_SleepSettingsStatus','Could not open sleep settings: %errmsg'),stop(),action(38),
+        condition('%sig3_sleep_settings_decision',2,'save'),setvar('%sig3_sleep_pref_mode','save'),java_file('sig3_sleep_preferences.java'),
+        condition('%err',12),setvar('%SIG3_SleepSettingsStatus','Could not save sleep settings: %errmsg'),action(38),
+        java_code('tasker.showToast(tasker.getVariable("SIG3_SleepSettingsStatus")); return "sleep-settings-status";'),action(38)])
     voice_reference = E.parse(ROOT / 'tasks/SIG_Voice_Mode.tsk.xml').getroot()
     voice_template = next(a for a in voice_reference.findall('.//Action') if a.findtext('code') == '903')
     for name, number, prompt, prefix in [('SIG3_VoiceMode',397,'What mode would you like?','program '),('SIG3_VoiceBattery',398,'Say battery check to check both batteries',''),('SIG3_VoiceCommand',380,'Say a HeySig3 command','')]:

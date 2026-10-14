@@ -1,6 +1,10 @@
 # HeySig3 remaining work
 
-Updated October 12, 2026. This is the prioritized completion list, based on the [current test checklist](HeySig3-test-checklist.md), [phone evidence](HeySig3-verified-usb-drags.md), and [event wiring](HeySig3-completion.md). Unchecked items are pending, not necessarily missing implementations. Historical gaps in the main-parity review may already be implemented.
+Updated October 13, 2026. This is the prioritized completion list, based on the [current test checklist](HeySig3-test-checklist.md), [phone evidence](HeySig3-verified-usb-drags.md), and [event wiring](HeySig3-completion.md). Unchecked items are pending, not necessarily missing implementations. Historical gaps in the main-parity review may already be implemented.
+
+October 13 repository recheck: all 20 check scripts passed, plus XML validation of 91 files and 6,725 actions with zero failures. The persistent-snapshot check initially lacked its test-only `org.json` dependency; after downloading it, all 33 actual BeanShell snapshot cases passed. These checks do not complete the unchecked live-phone items. No Pixel 9a was connected at the start of this session.
+
+October 13 handoff: endpoint testing exposed unreliable direct volume movement. Separate thumb-start calibration and a single-request activation/drag revision were added; a short volume diagnostic passed, but the final all-family run was blocked by loss of the phone connection. Selectable sleep settings are implemented; their dialog, schedule events, and phone noise measurements remain unverified. See the [session evidence and exact resume steps](HeySig3-verification-2026-10-13.md). Optional features remain in the requested completion scope; user chose phone noise and selectable sleep/wake choices.
 
 Acceptance clarification: the user reports that the aids provide confirmation only for battery checks, which already work. Program and slider tests use fresh Signia readback and command results; audible aid confirmation is not a completion requirement. This readback does not independently prove acoustic receipt.
 

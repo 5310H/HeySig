@@ -1,0 +1,66 @@
+[
+  {
+    "family": "Balance",
+    "value": -4,
+    "thumbCenter": 1636,
+    "selected": [
+      "Selected Sound Sharpness Tab"
+    ]
+  },
+  {
+    "family": "Balance",
+    "value": 7,
+    "thumbCenter": 748,
+    "selected": [
+      "Selected Sound Sharpness Tab"
+    ]
+  },
+  {
+    "family": "Balance",
+    "value": -8,
+    "thumbCenter": 1959,
+    "selected": [
+      "Selected Sound Sharpness Tab"
+    ]
+  },
+  {
+    "family": "Balance",
+    "value": -4,
+    "thumbCenter": 1636,
+    "selected": [
+      "Selected Sound Sharpness Tab"
+    ]
+  },
+  {
+    "family": "Tinnitus",
+    "value": 0,
+    "thumbCenter": 1959,
+    "selected": [
+      "Selected Tinnitus Signal Tab"
+    ]
+  },
+  {
+    "family": "Tinnitus",
+    "value": 15,
+    "thumbCenter": 748,
+    "selected": [
+      "Selected Tinnitus Signal Tab"
+    ]
+  },
+  {
+    "family": "Tinnitus",
+    "value": 0,
+    "thumbCenter": 1959,
+    "selected": [
+      "Selected Tinnitus Signal Tab"
+    ]
+  },
+  {
+    "family": "Tinnitus",
+    "value": 0,
+    "thumbCenter": 1959,
+    "selected": [
+      "Selected Tinnitus Signal Tab"
+    ]
+  }
+]

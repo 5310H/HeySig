@@ -1,5 +1,7 @@
 """Static Tasker XML checks; not a substitute for Tasker's Android parser."""
 from pathlib import Path
+from datetime import datetime
+from zoneinfo import ZoneInfo
 import json
 import re
 import sys
@@ -95,7 +97,8 @@ for path in files:
                     except json.JSONDecodeError as ex: issue(path, where, f'plugin parameters JSON: {ex}')
         if stack: issue(path, name, 'unclosed control-flow blocks')
 
-report = '# Tasker XML static validation — 2026-10-10\n\n'
+report_date = datetime.now(ZoneInfo('America/New_York')).date().isoformat()
+report = f'# Tasker XML static validation — {report_date}\n\n'
 report += f'Checked {len(files)} XML files and {actions_count} task actions. Found {len(issues)} failures.\n\n'
 report += 'Action numbers were compared with [Tasker’s official definitions](' + catalog['source'] + '). Checks include XML parsing, task IDs, action numbering, nested control flow, explicit condition fields, selected built-in argument layouts, plugin bundle presence, and JSON syntax.\n\n'
 report += 'This is not full schema certification. Static checks do not establish Android runtime behavior; selected live checks are recorded in [phone verification notes](HeySig3-verified-usb-drags.md). The selected argument layouts are repository-derived checks, not an official XSD. Plugin settings, Android components, scene/profile layouts, unresolved external task references, and all remaining action arguments need runtime or authoritative format verification.\n\n'

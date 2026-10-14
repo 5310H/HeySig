@@ -73,6 +73,17 @@ if (topText != null && bottomText != null) {
     range = control.getRangeInfo();
     if (range == null || range.getMax() <= range.getMin() || top < rect.top || bottom > rect.bottom || bottom <= top)
         throw new JavaCodeException("Invalid slider position calibration");
+    thumbTopText = tasker.getVariable("SIG3_" + family + "ThumbTopY");
+    thumbBottomText = tasker.getVariable("SIG3_" + family + "ThumbBottomY");
+    thumbTopSet = thumbTopText != null && thumbTopText.length() > 0 && !thumbTopText.startsWith("%");
+    thumbBottomSet = thumbBottomText != null && thumbBottomText.length() > 0 && !thumbBottomText.startsWith("%");
+    if (thumbTopSet != thumbBottomSet) throw new JavaCodeException("Configure both slider thumb endpoints");
+    if (thumbTopSet) {
+        top = Float.parseFloat(thumbTopText); bottom = Float.parseFloat(thumbBottomText);
+        if (Float.isNaN(top) || Float.isInfinite(top) || Float.isNaN(bottom) || Float.isInfinite(bottom)
+            || top < rect.top || bottom > rect.bottom || bottom <= top)
+            throw new JavaCodeException("Invalid slider thumb calibration");
+    }
     fraction = (range.getCurrent() - range.getMin()) / (range.getMax() - range.getMin());
     if (Float.isNaN(fraction) || fraction < 0 || fraction > 1) throw new JavaCodeException("Invalid current native progress");
     tasker.setVariable("SIG3_" + family + "X", "" + rect.centerX());
