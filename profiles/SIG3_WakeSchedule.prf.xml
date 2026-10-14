@@ -1,0 +1,209 @@
+<TaskerData sr="" dvi="1" tv="6.6.20">
+	<Profile sr="prof531" ve="2">
+		<cdate>1791396000000</cdate>
+		<edate>1791396000000</edate>
+		<flags>8</flags>
+		<id>531</id>
+		<mid0>529</mid0>
+		<Time sr="con0">
+			<fromvar>%SIG3_WakeTime</fromvar>
+			<tovar>%SIG3_WakeTime</tovar>
+		</Time>
+		<nme>SIG3_WakeSchedule</nme>
+	</Profile>
+	<Task sr="task529">
+		<cdate>1791396000000</cdate>
+		<edate>1791396000000</edate>
+		<id>529</id>
+		<nme>SIG3_ScheduledWake</nme>
+		<pri>100</pri>
+		<Action sr="act0" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%SIG3_SleepEnabled</lhs>
+					<op>3</op>
+					<rhs>1</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act1" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
+		</Action>
+		<Action sr="act2" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act3" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%sig3_sleep_pref_mode</Str>
+			<Str sr="arg1" ve="3">load</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act4" ve="7">
+			<code>474</code>
+			<se>true</se>
+			<Str sr="arg0" ve="3">/* Persist selectable times and program mappings together; Cancel never calls save. */
+import org.json.JSONObject;
+import org.json.JSONArray;
+sleepValue(key) {
+    value = tasker.getVariable(key);
+    return value == null || value.startsWith("%") ? "" : value;
+}
+sleepPrograms() {
+    names = new JSONArray();
+    for (i = 1; i &lt;= 6; i++) {
+        name = sleepValue("SIG3_ProgramName" + i).trim();
+        if (name.length() == 0) throw new Exception("Configure all six program names");
+        for (j = 0; j &lt; names.length(); j++)
+            if (name.equals(names.getString(j))) throw new Exception("Program names must be unique");
+        names.put(name);
+    }
+    return names;
+}
+sleepTimeValid(value) { return value.matches("(?:[01][0-9]|2[0-3])\\.[0-5][0-9]"); }
+prefs = context.getSharedPreferences("heysig3-sleep", 0);
+mode = sleepValue("sig3_sleep_pref_mode");
+if ("save".equals(mode)) {
+    sleepSlot = sleepValue("sig3_sleep_program_choice"); wakeSlot = sleepValue("sig3_wake_program_choice");
+    sleepTime = sleepValue("sig3_sleep_time_choice"); wakeTime = sleepValue("sig3_wake_time_choice");
+    if (!sleepSlot.matches("[1-6]") || !wakeSlot.matches("[1-6]")) throw new Exception("Choose both programs");
+    if (!sleepTimeValid(sleepTime) || !sleepTimeValid(wakeTime) || sleepTime.equals(wakeTime))
+        throw new Exception("Choose two different valid clock times");
+    config = new JSONObject(); config.put("version", 1); config.put("programs", sleepPrograms());
+    config.put("sleepSlot", sleepSlot); config.put("wakeSlot", wakeSlot);
+    config.put("sleepTime", sleepTime); config.put("wakeTime", wakeTime);
+    if (!prefs.edit().putString("configuration", config.toString()).commit())
+        throw new Exception("Could not save sleep settings; previous settings retained");
+} else if ("load".equals(mode)) {
+    saved = prefs.getString("configuration", "");
+    if (saved.length() == 0) {
+        tasker.setVariable("SIG3_SleepEnabled", "0"); tasker.setVariable("SIG3_SleepActive", "0");
+        tasker.setVariable("SIG3_SleepProgram", ""); tasker.setVariable("SIG3_WakeProgram", "");
+        tasker.setVariable("SIG3_SleepTime", ""); tasker.setVariable("SIG3_WakeTime", "");
+        tasker.setVariable("SIG3_SleepSettingsStatus", "Choose sleep and wake programs and times"); return "unconfigured";
+    }
+    config = new JSONObject(saved);
+    if (config.getInt("version") != 1 || !config.getJSONArray("programs").toString().equals(sleepPrograms().toString())) {
+        tasker.setVariable("SIG3_SleepEnabled", "0");
+        tasker.setVariable("SIG3_SleepActive", "0");
+        tasker.setVariable("SIG3_SleepProgram", ""); tasker.setVariable("SIG3_WakeProgram", "");
+        tasker.setVariable("SIG3_SleepSettingsStatus", "Program mapping changed; choose sleep programs again");
+        return "mapping-changed";
+    }
+    sleepSlot = config.getString("sleepSlot"); wakeSlot = config.getString("wakeSlot");
+    sleepTime = config.getString("sleepTime"); wakeTime = config.getString("wakeTime");
+    if (!sleepSlot.matches("[1-6]") || !wakeSlot.matches("[1-6]") || !sleepTimeValid(sleepTime)
+        || !sleepTimeValid(wakeTime) || sleepTime.equals(wakeTime)) throw new Exception("Invalid saved sleep settings");
+} else throw new Exception("Unknown sleep settings operation");
+// Time contexts reevaluate immediately when their variables change.
+if ("save".equals(mode) || !sleepTime.equals(sleepValue("SIG3_SleepTime"))
+        || !wakeTime.equals(sleepValue("SIG3_WakeTime"))
+        || !sleepSlot.equals(sleepValue("SIG3_SleepProgram"))
+        || !wakeSlot.equals(sleepValue("SIG3_WakeProgram"))) {
+    tasker.setVariable("SIG3_SleepEnabled", "0"); tasker.setVariable("SIG3_SleepActive", "0");
+}
+tasker.setVariable("SIG3_SleepProgram", sleepSlot); tasker.setVariable("SIG3_WakeProgram", wakeSlot);
+// Do not reevaluate Time contexts when a scheduled event reloads unchanged settings.
+if (!sleepTime.equals(sleepValue("SIG3_SleepTime"))) tasker.setVariable("SIG3_SleepTime", sleepTime);
+if (!wakeTime.equals(sleepValue("SIG3_WakeTime"))) tasker.setVariable("SIG3_WakeTime", wakeTime);
+tasker.setVariable("SIG3_SleepSettingsStatus", "Sleep " + sleepTime.replace('.', ':') + ": " + config.getJSONArray("programs").getString(Integer.parseInt(sleepSlot)-1)
+    + "; wake " + wakeTime.replace('.', ':') + ": " + config.getJSONArray("programs").getString(Integer.parseInt(wakeSlot)-1));
+return "sleep settings " + mode;
+</Str>
+			<Str sr="arg1" ve="3" />
+			<Int sr="arg2" val="1" />
+		</Action>
+		<Action sr="act5" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%err</lhs>
+					<op>12</op>
+					<rhs />
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act6" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_SleepEnabled</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act7" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_SleepActive</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act8" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%SIG3_SleepSettingsStatus</Str>
+			<Str sr="arg1" ve="3">Could not load sleep settings: %errmsg</Str>
+			<Int sr="arg2" val="0" />
+			<Int sr="arg3" val="0" />
+			<Int sr="arg4" val="0" />
+			<Int sr="arg5" val="3" />
+			<Int sr="arg6" val="1" />
+		</Action>
+		<Action sr="act9" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
+		</Action>
+		<Action sr="act10" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act11" ve="7">
+			<code>37</code>
+			<coll>false</coll>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%SIG3_SleepEnabled</lhs>
+					<op>3</op>
+					<rhs>1</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act12" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0" />
+			<Str sr="arg1" ve="3" />
+		</Action>
+		<Action sr="act13" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act14" ve="7">
+			<code>130</code>
+			<se>true</se>
+			<Str sr="arg0" ve="3">SIG3_Worker</Str>
+			<Int sr="arg1">
+				<var>%priority+1</var>
+			</Int>
+			<Int sr="arg10" val="1" />
+			<Str sr="arg2" ve="3">Sleep,Set,awake</Str>
+			<Str sr="arg3" ve="3" />
+			<Str sr="arg4" ve="3" />
+			<Int sr="arg5" val="0" />
+			<Int sr="arg6" val="0" />
+			<Str sr="arg7" ve="3" />
+			<Int sr="arg8" val="0" />
+			<Int sr="arg9" val="0" />
+		</Action>
+	</Task>
+</TaskerData>

@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TaskerData sr="" dvi="1" tv="6.6.20">
+  <Profile sr="prof55" ve="2">
+    <cdate>1791996113138</cdate>
+    <edate>1791996113138</edate>
+    <flags>10</flags>
+    <id>55</id>
+    <mid0>307</mid0>
+    <Time sr="con0">
+      <fromvar>%SIG3_SleepTime</fromvar>
+      <tovar>%SIG3_SleepTime</tovar>
+    </Time>
+  </Profile>
+</TaskerData>

@@ -70,7 +70,7 @@ try {
                 }
             });
             note = new TextView(screen);
-            note.setText("Times use the phone's local clock. Save keeps automation off; enable it after schedule verification.");
+            note.setText("Times use the phone's local clock. Save turns the schedule off. Run SIG3_SleepEnable to enable it, or SIG3_SleepDisable to stop it. Switching requires Signia open and the phone unlocked.");
             layout.addView(note);
             dialog = new AlertDialog.Builder(screen).setTitle("HeySig3 sleep settings").setView(layout)
                 .setPositiveButton("Save", null).setNegativeButton("Cancel", null).create();

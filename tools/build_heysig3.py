@@ -647,8 +647,23 @@ def extra_tasks():
              condition('%par1',2,'asleep'),setvar('%SIG3_SleepActive',1),action(43),setvar('%SIG3_SleepActive',0),action(38),setvar('%SIG3_SleepOK',1)]
     add('SIG3_InternalSleepSet',476,sleep,True)
     add('SIG3_SleepState',366,[request('Sleep','Set','%par1')])
-    add('SIG3_SleepSettings',525,[setvar('%sig3_sleep_pref_mode','load'),java_file('sig3_sleep_preferences.java'),
-        condition('%err',12),setvar('%SIG3_SleepSettingsStatus','Could not load sleep settings: %errmsg'),stop(),action(38),
+    def sleep_load():
+        return [setvar('%sig3_sleep_pref_mode','load'),java_file('sig3_sleep_preferences.java'),
+            condition('%err',12),setvar('%SIG3_SleepEnabled',0),setvar('%SIG3_SleepActive',0),
+            setvar('%SIG3_SleepSettingsStatus','Could not load sleep settings: %errmsg'),stop(),action(38)]
+    add('SIG3_SleepEnable',526,[*sleep_load(),
+        condition('%SIG3_SleepProgram',4,r'^[1-6]$'),condition('%SIG3_WakeProgram',4,r'^[1-6]$'),
+        setvar('%SIG3_SleepEnabled',1),
+        java_code('tasker.showToast("Sleep schedule enabled. " + tasker.getVariable("SIG3_SleepSettingsStatus")); return "enabled";'),
+        stop(),action(38),action(38),
+        java_code('tasker.showToast("Choose and save sleep settings first."); return "unconfigured";')])
+    add('SIG3_SleepDisable',527,[setvar('%SIG3_SleepEnabled',0),setvar('%SIG3_SleepActive',0),
+        java_code('tasker.showToast("Sleep schedule disabled"); return "disabled";')])
+    for name, number, state in [('SIG3_ScheduledSleep',528,'asleep'),('SIG3_ScheduledWake',529,'awake')]:
+        add(name,number,[condition('%SIG3_SleepEnabled',3,1),stop(),action(38),
+            *sleep_load(),condition('%SIG3_SleepEnabled',3,1),stop(),action(38),
+            request('Sleep','Set',state)])
+    add('SIG3_SleepSettings',525,[*sleep_load(),
         java_file('sig3_sleep_settings.java'),condition('%err',12),setvar('%SIG3_SleepSettingsStatus','Could not open sleep settings: %errmsg'),stop(),action(38),
         condition('%sig3_sleep_settings_decision',2,'save'),setvar('%sig3_sleep_pref_mode','save'),java_file('sig3_sleep_preferences.java'),
         condition('%err',12),setvar('%SIG3_SleepSettingsStatus','Could not save sleep settings: %errmsg'),action(38),
@@ -810,8 +825,20 @@ def build():
     wake_profile.find('Event/Bundle/Vals/configregexsub').text = 'true'
     wake_profile.find('Event/Bundle/Vals/com.twofortyfouram.locale.intent.extra.BLURB').text = 'Command: Hey Sig (recognition alias Hey Cig; full phrase)\nSource: continuous'
     wake_profile.find('Event/Bundle/Vals/plugininstanceid').text = str(uuid.uuid5(uuid.NAMESPACE_URL,'HeySig3:HeySigWake'))
-    E.SubElement(p,'pids').text = '523'
+    E.SubElement(p,'pids').text = '523,530,531'
     r.append(wake_profile)
+    for number, name, time, entry in [(530,'SIG3_SleepSchedule','SleepTime',528),(531,'SIG3_WakeSchedule','WakeTime',529)]:
+        profile = deepcopy(E.parse(ROOT / 'tools/sig3-time-profile-reference.xml').find('Profile'))
+        profile.set('sr','prof'+str(number))
+        for tag, value in [('id',str(number)),('mid0',str(entry)),('cdate',STAMP),('edate',STAMP),('flags','8')]:
+            profile.find(tag).text = value
+        E.SubElement(profile,'nme').text = name
+        for tag in ('fromvar','tovar'): profile.find('Time/'+tag).text = '%SIG3_'+time
+        r.append(profile)
+        export = E.Element('TaskerData',sr='',dvi='1',tv='6.6.20')
+        export.append(deepcopy(profile)); export.append(deepcopy(next(t for t in tasks if t.findtext('id') == str(entry))))
+        (ROOT / 'profiles').mkdir(exist_ok=True)
+        write(ROOT / 'profiles' / (name+'.prf.xml'),export)
     r.extend(tasks); write(ROOT / 'projects/HeySig3.prj.xml', r)
 
 

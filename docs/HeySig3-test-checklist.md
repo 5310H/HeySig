@@ -169,3 +169,12 @@ October 12 direct-slider extension: normal Tasker BalanceSet passed Universal âˆ
 - [x] Nine temporary slider callers removed; cleaned tested project exported on the phone and preserved locally.
 
 Slider acceptance is complete for the configured Pixel 9a gesture backend and occasional-use scope selected by the user. Exhaustive phone transitions, endurance, other layouts, and native accessibility remain uncertified. See [exact evidence](HeySig3-slider-acceptance-2026-10-14.md).
+
+## October 14 selectable sleep closeout
+
+- [x] Program selectors, 24-hour clock edit, Save/reopen persistence and Cancel passed on Pixel 9a.
+- [x] Native clock events selected Noisy for sleep and Universal for wake with verified worker results and visible app state.
+- [x] Foreground blocking preserves its reason in the failed command result.
+- [x] Starting Universal/10/âˆ’4/0 and exact saved record restored; test choices cleared; automation off.
+
+Sleep acceptance covers an unlocked phone with Signia open and existing audio requirements satisfied. Overnight/endurance, restart recovery, locked-phone switching, and external sleep providers remain unverified. See [sleep evidence](HeySig3-sleep-acceptance-2026-10-14.md).

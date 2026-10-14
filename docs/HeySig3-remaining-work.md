@@ -8,6 +8,8 @@ October 13 handoff: endpoint testing exposed unreliable direct volume movement. 
 
 October 14 slider closeout: all 28 focused phone checks passed with the final helpers, including endpoints, known failing transitions, six no-op repeats, and verified restoration of all starting values and the exact saved record. Slider acceptance is complete for occasional use on the configured Pixel 9a; exhaustive device transitions and other layouts are outside this selected scope. See [acceptance evidence](HeySig3-slider-acceptance-2026-10-14.md).
 
+October 14 sleep closeout: selectable programs/times, saved settings, sleep and wake clock events, foreground denial reporting, and restoration passed on Pixel 9a. Exactly one profile per event is installed; test choices are cleared and automation is off. See [sleep acceptance](HeySig3-sleep-acceptance-2026-10-14.md). Phone noise sampling/calibration and broader reliability checks remain pending.
+
 Acceptance clarification: the user reports that the aids provide confirmation only for battery checks, which already work. Program and slider tests use fresh Signia readback and command results; audible aid confirmation is not a completion requirement. This readback does not independently prove acoustic receipt.
 
 Program names must come from actual Signia readback or configured slots, never hardcoded into controls or test guards. Named programs in historical evidence describe what was tested. New tests should capture their starting program and verify that it remains unchanged.
@@ -78,7 +80,7 @@ Keep noise/sleep automation disabled until the relevant items pass. These tasks 
 
 - [ ] Choose phone or watch noise source and wire the actual polling/sample event. Measure sample sign, units, inversion, low/high thresholds and strike count; do not describe uncalibrated indices as sound-pressure dB.
 - [ ] Configure actual quiet/loud program slots and, if wanted, a middle slot; verify consecutive samples, two-tier dead band or three-tier selection, and source isolation.
-- [ ] Wire actual sleep/time-provider events to SleepState with explicit asleep/awake input; configure and verify sleep/wake program behavior.
+- [x] Wire selectable phone sleep/wake clock events through the worker with explicit asleep/awake input; verify settings and both program transitions on Pixel 9a with Signia open. [October 14 evidence](HeySig3-sleep-acceptance-2026-10-14.md). Locked-phone/overnight and restart behavior remain unverified.
 - [ ] Verify foreground deferral, manual override, cancellation/resume and retry on subsequent events. Confirm manual controls remain usable.
 - [ ] If Home completion is selected, verify it occurs only after success while Signia remains foreground. Default completion is stay.
 

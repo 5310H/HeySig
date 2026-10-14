@@ -32,10 +32,16 @@ if ("save".equals(mode)) {
         throw new Exception("Could not save sleep settings; previous settings retained");
 } else if ("load".equals(mode)) {
     saved = prefs.getString("configuration", "");
-    if (saved.length() == 0) { tasker.setVariable("SIG3_SleepSettingsStatus", "Choose sleep and wake programs and times"); return "unconfigured"; }
+    if (saved.length() == 0) {
+        tasker.setVariable("SIG3_SleepEnabled", "0"); tasker.setVariable("SIG3_SleepActive", "0");
+        tasker.setVariable("SIG3_SleepProgram", ""); tasker.setVariable("SIG3_WakeProgram", "");
+        tasker.setVariable("SIG3_SleepTime", ""); tasker.setVariable("SIG3_WakeTime", "");
+        tasker.setVariable("SIG3_SleepSettingsStatus", "Choose sleep and wake programs and times"); return "unconfigured";
+    }
     config = new JSONObject(saved);
     if (config.getInt("version") != 1 || !config.getJSONArray("programs").toString().equals(sleepPrograms().toString())) {
         tasker.setVariable("SIG3_SleepEnabled", "0");
+        tasker.setVariable("SIG3_SleepActive", "0");
         tasker.setVariable("SIG3_SleepProgram", ""); tasker.setVariable("SIG3_WakeProgram", "");
         tasker.setVariable("SIG3_SleepSettingsStatus", "Program mapping changed; choose sleep programs again");
         return "mapping-changed";
@@ -46,9 +52,16 @@ if ("save".equals(mode)) {
         || !sleepTimeValid(wakeTime) || sleepTime.equals(wakeTime)) throw new Exception("Invalid saved sleep settings");
 } else throw new Exception("Unknown sleep settings operation");
 // Time contexts reevaluate immediately when their variables change.
-if ("save".equals(mode)) tasker.setVariable("SIG3_SleepEnabled", "0");
+if ("save".equals(mode) || !sleepTime.equals(sleepValue("SIG3_SleepTime"))
+        || !wakeTime.equals(sleepValue("SIG3_WakeTime"))
+        || !sleepSlot.equals(sleepValue("SIG3_SleepProgram"))
+        || !wakeSlot.equals(sleepValue("SIG3_WakeProgram"))) {
+    tasker.setVariable("SIG3_SleepEnabled", "0"); tasker.setVariable("SIG3_SleepActive", "0");
+}
 tasker.setVariable("SIG3_SleepProgram", sleepSlot); tasker.setVariable("SIG3_WakeProgram", wakeSlot);
-tasker.setVariable("SIG3_SleepTime", sleepTime); tasker.setVariable("SIG3_WakeTime", wakeTime);
+// Do not reevaluate Time contexts when a scheduled event reloads unchanged settings.
+if (!sleepTime.equals(sleepValue("SIG3_SleepTime"))) tasker.setVariable("SIG3_SleepTime", sleepTime);
+if (!wakeTime.equals(sleepValue("SIG3_WakeTime"))) tasker.setVariable("SIG3_WakeTime", wakeTime);
 tasker.setVariable("SIG3_SleepSettingsStatus", "Sleep " + sleepTime.replace('.', ':') + ": " + config.getJSONArray("programs").getString(Integer.parseInt(sleepSlot)-1)
     + "; wake " + wakeTime.replace('.', ':') + ": " + config.getJSONArray("programs").getString(Integer.parseInt(wakeSlot)-1));
 return "sleep settings " + mode;
