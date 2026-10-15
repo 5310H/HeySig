@@ -1,150 +1,322 @@
+# HeySig: setup and everyday use
 
-# HeySig3 user manual
+For the configured Pixel phone and Pixel Watch 3 · Updated October 15, 2026
 
-Updated October 12, 2026. Use this manual for operation, the [test checklist](HeySig3-test-checklist.md) for completed and remaining checks, and the [phone verification notes](HeySig3-verified-usb-drags.md) for measured results. [Completion and event wiring](HeySig3-completion.md) covers profiles and optional automation.
+HeySig lets you speak commands to operate Signia on your phone. You can choose a hearing program, change volume, balance or tinnitus level, and request battery checks. The phone must be available to operate Signia even when you speak into the watch.
 
-## Current verified setup
+**Already using HeySig on this phone? Start with Everyday use. You do not need to reinstall it.** For a new installation, follow Set up the phone, then Set up the watch.
 
-The Pixel 9a passed direct Tasker volume 8 → 7 → 8 in Noisy, balance and tinnitus adjacent changes, repeated-target no-ops, and restoration using fresh Signia app readback. See the [checklist](HeySig3-test-checklist.md) for individual results and untested endpoints. Physical hearing-aid confirmation is not required for program/slider acceptance; battery indications already work.
+[Print this manual (PDF)](HeySig-user-manual.pdf) · [Browser print version](HeySig-user-manual-print.html)
 
-Tinnitus availability comes first from the icon left of the active program name. A known unavailable icon stops with **Tinnitus unavailable for this program**, without searching for a tinnitus tab. Unknown icons use visible-tab detection as a fallback. Program names and availability are not hardcoded. TV's two-tab layout and programs with three tabs passed phone checks.
+[Printable command sheet](HeySig-voice-cheat-sheet.html) · [Command sheet in text](HeySig-voice-cheat-sheet.md)
 
-Balance displays **−8 through 0 through +7**. Native step 0 maps to −8, step 8 to 0, and step 15 to +7. Volume and tinnitus display 0–15. Signia app readback does not independently acknowledge receipt by the hearing aids.
+## Everyday use
 
-Balance and tinnitus use the explicitly configured `legacy-gesture` backend on this phone. It now sends one continuous 650 ms stroke, locates the thumb from native progress and calibrated track endpoints, and checks the displayed result after each step. Despite its compatibility name, this is the path that passed the Tasker phone tests. It needs no ongoing ADB connection or helper app.
+### Get the phone ready
 
-The general project default remains `accessibility`, which uses one `ACTION_SET_PROGRESS`. That path requires confirmed native/display mapping and touch exploration. Inspection reported touch exploration off on this phone, so native Set remains gated and has not passed a live movement test. Backend selection never falls back automatically. Per-family settings let balance/tinnitus use gestures without changing the Volume backend.
+1. Unlock the phone.
+2. Open Signia and go to **Controls**, where the program and volume are shown.
+3. Keep the phone available while the command runs. If HeySig asks you to turn off Do Not Disturb or raise phone volume, do that before trying again.
 
-Direct Tasker VolumeSet passed 8 → 7 → 8 in Noisy using the configured dispatchGesture backend, including repeated targets without movement and restoration. This does not certify the separate native accessibility backend or all endpoints.
+Phone sound volume and hearing-aid volume are different controls. **“Volume ten”** changes the hearing-aid setting. A message about **phone media volume** means use the phone's own volume buttons or slider.
 
-## Import and setup
+### Speak using the phone
 
-1. Import [HeySig3.prj.xml](../projects/HeySig3.prj.xml) as the separate HeySig3 project, preserving phone-side settings. Keep the original HeySig exports as backups and disable competing old slider profiles while testing.
-2. Enable Tasker accessibility, keep the phone on and unlocked, and open Signia's **Controls** page. Launching Signia while it was left on App settings failed the launch check during testing.
-3. Run `SIG3_Init` to fill missing defaults. Existing settings are preserved; noise/sleep automation defaults off.
-4. For the measured Pixel 9a layout only, import [SIG3_Pixel9aGestureSetup.tsk.xml](../tasks/SIG3_Pixel9aGestureSetup.tsk.xml) as a separate task and run `SIG3_Pixel9aGestureSetup`. This selects the balance/tinnitus gesture backends and stores their calibration. It fills an unset audio-stream setting with `media`, matching the observed Signia **Media sound** setting. It does not change an existing audio-stream setting or the Volume backend.
+1. Open **Tasker**.
+2. Select the **HeySig3** project at the bottom, then **TASKS** at the top.
+3. Tap **SIG3_VoiceCommand** to open it.
+4. Tap the triangular **Play** button.
+5. Wait for the microphone. With Voice prompts on, you first hear **“Sig here.”**
+6. Say one command, such as **“current program.”** Wait for the result before giving another command.
 
-The setup was already run on the tested phone. Its calibration is portrait 1080×2424, slider bounds `[501,652][580,2047]`, track endpoints Y=695/2000, StepPx=87, and Direction=1 (up increases). It overwrites balance/tinnitus calibration settings when run; do not apply these measurements to another device or layout. Changed bounds stop the calibrated position check and require fresh measurements.
+**How to run a task:** Whenever this guide says “run” a task, use TASKS → the task name → Play. Press Back to return from the task editor. Use the public tasks named here, not tasks containing **Internal**. See [Tasker's guide](https://tasker.joaoapps.com/userguide_summary.html) for its project and task controls.
 
-## Commands
+### Speak using the watch
 
-See the [voice command list](HeySig3-voice-commands.md) for every supported phrase, numeric ranges, configured program aliases, and optional automation commands.
+1. Wake the Pixel Watch 3.
+2. Swipe sideways from the clock face to the **HeySig** tile. Its name in the tile picker is **AutoWear Tile 1**.
+3. Tap the command button. It is configured as **👂**, with **HeySig** above it.
+4. When **“AutoWear Listening…”** or the microphone appears, say one command.
+5. Listen for the result from the **phone**. Watch-speaker replies are not configured.
 
-Run `SIG3_VoiceCommand` in Tasker for the general microphone prompt. With voice prompts enabled it says **Sig here**, then opens the microphone. Speak one command; the task speaks the verified result when spoken results are enabled. Program, numeric controls, battery, cancellation and retry have live phone acceptance; see [voice verification](HeySig3-voice-verification-2026-10-11.md).
+The HeySig control is on a separate tile. Tapping a weather shortcut on the clock face opens weather. If the tile is missing, follow Add the watch tile below.
 
-Run `SIG3_VoiceSettings` to independently turn **Voice prompts** and **Spoken results** on or off, then tap **Save**. Cancel or Back preserves the previous choices. Both may be off while capture and on-screen results continue. All four combinations and two Tasker application restarts passed; full phone reboot remains untested. These switches do not turn wake listening on or off. See [voice settings](HeySig3-voice-settings.md).
+### First commands to try
 
-Say **cancel** in the microphone prompt to close cleanly without sending a command or opening Try again. Unsupported speech offers **Try again / Cancel**; retry opens a new prompt. Empty input, Back and timeout end quietly.
-
-### Optional Hey Sig listening
-
-Run `SIG3_WakeEnable` to start, or `SIG3_WakeDisable` to stop. Say **Hey Sig**, wait for **Sig here** and the microphone, then say your command. **Hey Cig** is a recognition alias; speaking the wake phrase and command together is unsupported. AutoVoice's wake event needs **Use Regex on** and **Exact Command off**. Set AutoVoice **General Settings → AutoVoice Continuous → Stream to Mute → Media** to suppress repeated tones.
-
-Two consecutive full wake commands passed without tones. A locked phone gave the spoken unlock instruction, and the command worked after manual unlock. **Background wake still failed**, even though its service remained running; use the direct voice task when wake listening does not respond. Full phone reboot and long-duration battery/endurance remain untested. See [wake setup and limitations](HeySig3-wake-phrase.md).
-
-Media suppression temporarily mutes media while continuous listening is active. Pausing/stopping restores the captured level before speech; stopping restored the tested 22/25 level. Listening was left off after testing. To turn the listening microphone off, run `SIG3_WakeDisable`; silencing prompts does not stop listening.
-
-Pass spoken text in Parameter 1 of `SIG3_VoiceRouter`, or use the configured AutoVoice adapter:
-
-| Request | Example | Range |
-|---|---|---|
-| Volume | `change volume to 10` | 0–15 |
-| Balance | `change balance to minus 3` | −8–7 |
-| Tinnitus | `change tinnitus to 1` | 0–15, only when available |
-
-Short forms such as `volume 10`, `balance 0`, and `tin one` also work. **Tin** is a shorthand for tinnitus: `current tin`, `tin 3`, and `tin mute`. The live `current tin` test correctly reported unavailable for the active program. Volume/tinnitus mute requests 0; balance soft/sharp requests −8/7. Invalid targets fail rather than clamp. Repeating a target is a no-op after a fresh current query. Router behavior has simulated coverage; actual recognition and event delivery remain on the checklist.
-
-The gesture backend defaults to one-level steps with fresh readback after each step. An opt-in **direct slider drag** uses one continuous 650 ms stroke to the requested position, then checks the final value. Set the desired family’s DragMode to `direct` (`%SIG3_VolumeDragMode`, `%SIG3_BalanceDragMode` or `%SIG3_TinnitusDragMode`) with its `legacy-gesture` backend and measured track endpoints/bounds. Changed bounds stop the operation. A missed target reports failure after that one stroke; it does not retry automatically. Set the mode to `incremental` to return to the existing method. Both modes show/speak only the finished result. See [direct-slider setup and verification](HeySig3-direct-volume.md). Direct mode passed normal Tasker volume 10 → 7 → 10 and balance −4 → −1 → −4 on October 12; tinnitus 0 → 3 → 0 also passed with a brief activation tap at zero. The separate native accessibility backend remains independently unverified.
-
-For manual numbered requests, use `SIG3_VolumeSet`, `SIG3_BalanceSet`, or `SIG3_TinnitusSet` with an integer in Parameter 1. Public Up/Down tasks are compatibility wrappers around Set; balance/tinnitus wrappers passed the adjacent phone tests above. Relative Up/Down voice phrases are not routed. Use public SIG3 tasks, not Internal tasks.
-
-All public UI commands use `SIG3_Worker`. Keep its Tasker collision setting **Abort New Task**: a new command while it is running is rejected, not queued. No persistent busy flag needs resetting after failure or manual Stop. Do not enable competing legacy profiles during acceptance testing.
-
-## Readback and program checks
-
-The verified current-value ID is `com.signia.rta:id/TA-SliderValue`. Volume uses `%SIG3_KnobId`; balance/tinnitus use `%SIG3_BalanceKnobId` / `%SIG3_TinnitusKnobId`. A calibrated selector region remains an alternative. The numeric label's oversized accessibility bounds do not locate its thumb reliably; the Pixel setup supplies track calibration instead.
-
-| Family | Verified control ID | Actual tab description |
-|---|---|---|
-| Volume | `com.signia.rta:id/VolumeSlider` | `Volume Tab` |
-| Balance | `com.signia.rta:id/TA-SoundBalanceSlider` | `Sound Sharpness Tab` |
-| Tinnitus | `com.signia.rta:id/TA-TinnitusSlider` | `Tinnitus Signal Tab` |
-
-Direct view-ID lookup returned zero matches on this phone. The repaired inspection/UI guards traverse the accessibility tree and require the exact visible enabled control. Inspection does not move a slider.
-
-Signia changes the program label ID with the selected program (`Universal`, `TV`, etc.). The slider guard also recognizes the uniquely visible **Hearing program … Active** accessibility header when the configured `%SIG3_ProgramId` label is absent. Ambiguity, disagreement, or a program change during an operation fails the guard. Read-only balance detection passed in TV. ProgramCurrent and a program change followed by restoration also passed on the phone; program names came from the actual picker.
-
-Current tasks publish `%SIG3_Level` for volume, `%SIG3_BalanceLevel`, and `%SIG3_TinnitusLevel`, plus their family X/Y coordinates. The controls are common sliders; no separate left/right operation is introduced.
-
-## Audio checks and results
-
-Set `%SIG3_AudioStream` to `media` or `ring`, matching Signia. Preflight reads stream volume, call/audio mode, DND, and connected outputs without changing them. It stops with instructions when DND/bedtime mode is active, the phone is silent, the selected stream is below the configured minimum, a call/communication mode is active, or a known external output is connected. Ring sound also requires normal ringer mode. Command audio preflight does not change those settings. Optional wake listening separately restores its captured media level as described above. The tested Media sound stream was unmuted and routed to the speaker. Connected-output checks are conservative presence checks, not proof of the active route.
-
-Run `SIG3_PhoneAudioCheck` to check Android phone audio without opening Signia or sending a hearing-aid command. `%SIG3_AudioReady` is 1 on success and 0 on failure; `%SIG3_Error` tells you what to change, and `%SIG3_AudioDiagnostics` includes the measured volume and required level. This checks phone volume, not hearing-aid volume.
-
-`%SIG3_MinAudioPercent` defaults to 50, matching the inspected Signia APK audio manager default. For a 25-step stream this requires 13/25, rounding up. Signia can configure its own threshold; if its volume-slider prompt requires a higher level, set this variable to that confirmed minimum. Match `%SIG3_AudioStream` to Signia’s Media sound or Ring sound selection. Check before retrying; HeySig3 does not move the phone volume slider or dismiss Signia’s prompt automatically. Battery `listen` also runs audio preflight before either acoustic check; battery `open` remains read-only.
-
-Read `%SIG3_CommandOK`, `%SIG3_Error`, and `%SIG3_Result` after a command. `%SIG3_Previous`, `%SIG3_Expected`, `%SIG3_Observed`, `%SIG3_Program`, `%SIG3_MoveStage`, `%SIG3_Gesture`, and `%SIG3_AudioDiagnostics` help diagnose it. Java checks preserve their error messages; parent guards avoid overwriting them with a literal `%SIG3_Error`. A stopped command may retain a pending result; busy/unrecognized requests do not represent a new successful operation. No automatic retry is made.
-
-Signia remains open by default (`%SIG3_CompletionPolicy=stay`). `home` returns to Android Home only after successful work while Signia is still foreground. See [completion policies](HeySig3-completion.md#completion-navigation).
-
-## Testing status
-
-Follow the [completed and remaining checklist](HeySig3-test-checklist.md). All 20 repository checks passed after the October 12 direct-slider changes. [Static validation](HeySig3-validation.md) checked 91 XML files and 6,725 actions with zero failures. Some checks execute actual Java bodies in local BeanShell; simulations do not replace Android/plugin or live recognition acceptance. Background wake, full phone reboot, long-duration endurance, native accessibility movement and broader endpoint checks remain open.
-The Chromebook generates/validates the project; Signia runs on the phone. USB and authorized wireless ADB were used for inspection/import/testing, not as a requirement for the Tasker balance/tinnitus control path.
-
-## Priority 3 setup
-
-Run `SIG3_Init` once after import. It fills missing settings and preserves existing ones. Noise and sleep automation default to **disabled**. The export includes the exact-match AutoVoice wake profile; its listener remains off until `SIG3_WakeEnable` runs. See [Hey Sig wake setup](HeySig3-wake-phrase.md).
-
-Configure `%SIG3_ProgramName1` through `%SIG3_ProgramName6` with the exact names of programs actually available in Signia; leave unused slots unset. `SIG3_ProgramSwitch` accepts the slot number in Parameter 1. Voice accepts `program two` or `change program to Music`. It reads the current program, opens the picker, selects a uniquely matching visible name, and verifies the displayed program with bounded waits. `%SIG3_ProgramBackend=accessibility-click` uses clickable accessibility ancestors; `gesture-tap` explicitly taps centers of the current visible node bounds and waits for Android completion. There is no automatic fallback between them. The phone-specific tap choice does not alter slider backends. Repeating the current program is a no-op. No coordinate fractions or cached success assignments are used.
-
-Run `SIG3_ProgramCurrent` to read the current displayed program without changing it. Voice accepts `current program`, `current mode`, or `what is the current program?`. The result is stored in `%SIG3_Program` and `%SIG3_Observed`, with `%SIG3_ProgramOK` / `%SIG3_CommandOK` reporting success. It launches Signia if needed, reads the configured visible program label or the unique visible **Hearing program … Active** header, rejects ambiguous or disagreeing readings, and leaves the app open. It does not require audio settings or configured program slots; it does not open the program picker or send an acoustic command. The worker shows/logs the result. A missing or ambiguous program fails instead of returning stale state.
-
-Additional APK-derived IDs require confirmation from the phone:
-
-| Variable | Initial ID |
+| What you want | Say |
 |---|---|
-| `%SIG3_ProgramOpenId` | `com.signia.rta:id/TA_HomePage_ProgramSwitch_Icon` |
-| `%SIG3_BatteryOpenId` | `com.signia.rta:id/TA-BatteryIcon` |
-| `%SIG3_BatteryPageId` | `com.signia.rta:id/TA-BluetoothAndBatteryPageCloseIcon` |
+| Hear the active program | **current program** |
+| Hear the volume | **current volume** |
+| Hear the balance | **current balance** |
+| Hear the tinnitus level | **current tin** |
+| Select Sleep | **set program to Sleep** |
+| Return to Universal | **set program to Universal** |
+| Set hearing-aid volume | **volume ten** |
+| Center the balance | **balance zero** |
+| Set tinnitus to 1 | **tin one** |
+| Request battery indications | **battery check** |
+| End voice capture | **cancel** |
 
-`SIG3_BatteryCheck` defaults to `listen`, preserving the user-confirmed working HeySig battery check: open the battery page, click `Check Left Battery Button`, acknowledge `TA-PopupButton2`, click `Check Right Battery Button`, acknowledge again, and close the battery page. The original waits and AutoInput settings are preserved. Both `battery check` and `battery listen` run this sequence through the SIG3 worker. No `%SIG3_BatteryRequestId` configuration is needed. Plugin errors stop the sequence and report which action failed.
+“Tin” means tinnitus. If the hearing program does not provide tinnitus control, HeySig reports that it is unavailable. Battery checks request indications from both aids; listen to the aids. HeySig does not invent a battery percentage.
 
-Parameter 1 `open` remains an optional page-only inspection that records visible text in `%SIG3_BatteryText` and leaves the page open. Normal checks close the battery page and leave Signia open, following SIG3's completion policy. Battery indications are heard from the aids; no numeric percentage is inferred. The repaired SIG3 battery sequence passed its phone import/run check and the user confirmed it worked. The user confirmed battery indications already work.
+## Choose programs and levels
 
-### Voice and watch events
+Your current program list is:
 
-Create or edit an actual AutoVoice recognition profile on the phone to run `SIG3_AutoVoiceCommand`. It prefers the event's `%avcommnofilter`, falling back to `%avcomm`. Connect the actual AutoWear command event to `SIG3_WatchCommand`; it prefers `%awcomm`, falling back to `%awmessage`. Both adapters accept explicit command text in Parameter 1, trim it, remove an optional leading `sig3 `, and pass it to the same router. Verify which event variables your installed plugins expose; use Parameter 1 explicitly when necessary. The wake profile uses an authentic installed AutoVoice event export. General command and AutoWear profiles still require phone configuration. Disable competing legacy profiles while testing.
+| Number | Program | Spoken example |
+|---|---|---|
+| 1 | Universal | **program one** |
+| 2 | Sleep | **program two** |
+| 3 | Noisy | **program three** |
+| 4 | Outdoor | **program four** |
+| 5 | TV | **program five** |
+| 6 | Very Noisy | **program six** |
 
-### Noise and sleep
+You can use a number or say **“set program to”** followed by the exact name. Slot 2 was previously Off just Tinnitus. Its rename to Sleep has already been updated in this phone's HeySig mappings.
 
-Use [selectable phone noise settings](HeySig3-noise-settings.md) to choose Quiet/Noisy/Very noisy roles and tuning. `SIG3_NoiseObserve` starts observation-only sampling; `SIG3_NoiseAuto` enables guarded switching; `SIG3_NoiseStop` stops either mode. Save leaves switching off. Measured Pixel boundaries −54.5 / −43, margin 1.5, three confirmations and 60-second cooldown passed real polling. Hidden-Tasker observation passed over twelve minutes, plus two screen-off captures; [acceptance and limits](HeySig3-noise-settings-acceptance-2026-10-14.md).
+**For the Sleep program, say “program two” or “set program to Sleep.”** Saying **“sleep”** alone invokes separate sleep automation, which needs configuration and must be enabled.
 
-`SIG3_CurrentNoise` uses the existing repository's AutoVoice Current Noise action envelope, then processes `%avnoiselevel`. Five quiet-room samples passed on Pixel 9a after correcting the plugin timeout; see [phone noise verification](HeySig3-phone-noise-2026-10-14.md). Later fixed-position quiet/normal/louder measurements and automatic program selection passed the measured acceptance linked above. `SIG3_NoiseMonitor` instead accepts a numeric sample in Parameter 1. Both use the worker, so sampling and Signia operations cannot interleave through SIG3. `%SIG3_NoiseRaw` preserves the input and `%SIG3_NoiseIndex` records the optionally inverted value. These values are **uncalibrated indices**, not established sound-pressure dB.
+| Control | Allowed values | Examples |
+|---|---|---|
+| Volume | 0–15 | **volume eight**, **mute**, **maximum volume** |
+| Balance | −8 to +7; 0 is center | **balance minus three**, **balance zero**, **balance soft**, **balance sharp** |
+| Tinnitus | 0–15, when available | **tin three**, **tin mute**, **maximum tinnitus** |
 
-To enable noise-driven program selection after manual controls work, confirm the sample's units/sign on the phone, set `%SIG3_NoiseScaleConfirmed=1`, and configure:
+**Mute / maximum volume** set volume to 0 / 15. **Tin mute / maximum tinnitus** set tinnitus to 0 / 15. **Balance soft / balance sharp** select −8 / +7.
 
-- `%SIG3_NoiseInvert`: `0` to preserve the sign, `1` to negate it.
-- `%SIG3_NoiseLow` and `%SIG3_NoiseHigh`: measured thresholds, low strictly below high.
-- `%SIG3_NoiseQuietProgram` and `%SIG3_NoiseLoudProgram`: configured slots 1–6.
-- `%SIG3_NoiseStrikeLimit`: consecutive samples required, 1–20; default 3.
-- `%SIG3_NoiseEnabled=1`: enable automatic selection.
+Spoken **“volume up/down”** and **“tin up/down”** are not supported. Say the target number instead. Up/Down tasks exist in Tasker, separately from the spoken command list. See [all supported phrases](HeySig3-voice-commands.md) for alternatives.
 
-With NoiseMiddleProgram unset, the middle band clears the candidate/count; configuring that slot enables three-tier selection. Changing quiet/loud classification restarts the count. Once the count reaches the limit, program selection runs through the same worker and readback path. `SIG3_NoiseObserve` and `SIG3_NoiseAuto` explicitly start the polling task, with a five-second capture and ten-second wait; actual cadence also includes processing and switching time. No automatic startup profile is installed. `%SIG3_SleepActive=1` suppresses noise changes.
+## Change spoken prompts and results
 
-`SIG3_Override` takes `1` for manual override or `0` to release it; voice accepts `override on/off` and `manual/automatic mode`. Override blocks noise/sleep program changes and resets noise history. Releasing override does not itself enable either automation.
+1. Run **SIG3_VoiceSettings** in Tasker.
+2. Set the two choices independently:
 
-`SIG3_SleepState` accepts `asleep` or `awake`. It requires `%SIG3_SleepEnabled=1`, configured `%SIG3_SleepProgram` / `%SIG3_WakeProgram` slots, and no manual override. `SIG3_SleepSettings` selects both programs and clock times. The exported `SIG3_SleepSchedule` / `SIG3_WakeSchedule` profiles submit the same asleep/awake requests to the worker at those times. Save leaves switching off; `SIG3_SleepEnable` arms the schedule and `SIG3_SleepDisable` stops it. External sleep providers can still call `SIG3_SleepState` directly. See [selectable sleep settings](HeySig3-sleep-settings.md). The task selects and verifies the configured program before updating `%SIG3_SleepActive`. It does not infer sleep, use a hearing-aid standby enum, or assume that a program mutes the microphone.
+| Choice | What it controls |
+|---|---|
+| **Voice prompts** | The phone's “Sig here” readiness cue and retry instructions |
+| **Spoken results** | Command confirmations and failure messages |
 
-Priority 3 tests model initialization preservation, program routing/readback failures, voice/watch inputs, battery sequence and page-only mode, native noise capture, sign handling, thresholds/strike count, override, and sleep transitions. These workflow simulations do not execute Android accessibility, plugin events or acoustic playback; separate helper checks execute Java in local BeanShell. On-phone import and capture remain the acceptance step.
+3. Tap **Save**. Cancel or Back keeps the previous choices.
 
-## Battery page entry
+Both may be on, both off, or either one on by itself. These settings do not start or stop listening. The watch uses its AutoWear listening screen; a spoken watch setup wizard and the phone's readiness cue are not part of that tile-launch flow.
 
-`SIG3_BatteryCheck` defaults to `listen`: phone audio preflight, open the top-right question-mark battery icon, request left, acknowledge, request right, acknowledge, then close. Parameter1 `open` only opens the page and records visible text; it has no audio preflight and sends no battery-check request. Neither mode uses a slider.
+**Cancel or retry:** Say **“cancel”** in the phone voice prompt to end without a control command. Unsupported speech offers **Try again / Cancel**; Try again opens a fresh microphone prompt. On the watch, reopen the tile's microphone to try again. The phone's retry dialog is not implemented on the watch.
 
-The current app’s top-right opener has content description `TA-BatteryToolbarItem`. `%SIG3_BatteryOpenDescription` supplies that captured selector when `%SIG3_BatteryOpenId` has no match. The `TA-BatteryIcon` ID appears twice inside the page on this phone; it is not a unique Controls toolbar selector. The close marker is `%SIG3_BatteryPageId`. Open mode rejects ambiguous markers/openers, and `%SIG3_MoveStage` identifies each listen step.
+## Save and restore settings
 
-## Save and restore the last settings
+Successful changes through HeySig save automatically. **“Restore settings”** returns to the last saved program and its saved volume, balance and available tinnitus value.
 
-Successful HeySig3 changes automatically save the current program, volume, balance and tinnitus level when available. For a known program, the changed value updates the complete saved record. Say **“restore settings”** to apply that record after charging. An optional **“save settings”** command refreshes all current readings. See [saved-settings behavior and verification](HeySig3-saved-settings.md). Verification covers saved settings and Signia app readback; a physical charging test is outside the requested scope.
+If you adjust settings **directly in Signia**, say **“save settings”** afterward if you want those values to become your restore point. Direct Signia edits are not automatically tracked.
+
+There is one last-saved record, not a library of named presets. Restoration can change both the program and its control levels. If it reports a failure, inspect the phone before retrying; earlier steps may already have completed.
+
+## Set up the phone
+
+This section is for a new installation or recovery after reinstalling. The existing Pixel setup is already configured.
+
+### 1. Install the apps and permissions
+
+You need **Signia**, **Tasker**, and **AutoInput** on the phone. Add **AutoWear** on both devices for watch use. **AutoVoice** is needed for optional continuous Hey Sig listening and phone-noise sampling; the general phone voice task uses Tasker's recognition prompt.
+
+1. Set up Signia with your aids and confirm its own controls work.
+2. Open the installed plugins once and complete their requested initial setup.
+3. In Android Settings, find **Accessibility**, then installed/downloaded app services. Enable **Tasker** and **AutoInput**. Menu wording varies by Android version.
+4. Allow microphone access when the voice app requests it. Allow AutoWear notifications when requested for its watch connection.
+
+The tested phone uses Tasker 6.6.20. This project needs Tasker's **Java Code** action; older Tasker versions without it cannot run these tasks.
+
+### 2. Import HeySig3
+
+1. Download [HeySig3.prj.xml](../projects/HeySig3.prj.xml) to the phone. Keep the **.prj.xml** ending.
+2. Open Tasker. Long-press a **project tab at the bottom** → **Import Project**. Choose the file.
+3. Select the new **HeySig3** project.
+4. Disable old HeySig or SoundWear profiles that also control the aids, so they do not compete.
+5. If Tasker shows an **Apply/checkmark** after editing, tap it to apply changes.
+6. In TASKS, run **SIG3_Init** to fill missing defaults. Existing settings are preserved.
+
+Keep a Tasker backup before replacing a working configuration. Do not use the old `xml/backup.xml` or `tasks/sig.tasks.tsk.xml` as this installation. Importing the project does not create the separate AutoWear screen/tile automatically.
+
+### 3. Enter the exact program names
+
+Skip this on the configured phone unless you rename or reorder Signia programs. For a new setup, use the actual names and order shown by Signia.
+
+You can enter them through a one-time setup task without editing the control tasks:
+
+1. Tasker → **TASKS** → **+**. Name it **My HeySig setup** and confirm.
+2. In the task, tap **+** → **Variables** → **Variable Set**.
+3. Enter `%SIG3_ProgramName1` in **Name**, and your first program's exact name in **To**. Press Back to keep the action.
+4. Repeat for each actual slot:
+
+| Variable Set: Name | To, for the current phone |
+|---|---|
+| `%SIG3_ProgramName1` | `Universal` |
+| `%SIG3_ProgramName2` | `Sleep` |
+| `%SIG3_ProgramName3` | `Noisy` |
+| `%SIG3_ProgramName4` | `Outdoor` |
+| `%SIG3_ProgramName5` | `TV` |
+| `%SIG3_ProgramName6` | `Very Noisy` |
+
+5. Add a Variable Set action for `%SIG3_AudioStream`: use `media` if Signia uses **Media sound**, or `ring` if it uses **Ring sound**.
+6. For the tested Pixel setup, add a Variable Set action for `%SIG3_ProgramBackend` with `gesture-tap`. This makes program selection use a tap on the visible program button.
+7. Play **My HeySig setup** once. Update its values before rerunning it after a rename.
+
+Leave unused slots unset; optional noise settings currently require six configured names. A rename also affects saved noise, sleep and restore mappings. Stop automation and update those mappings before relying on them. This phone's Sleep rename has already been migrated with saved values preserved.
+
+### 4. Configure sliders for the measured Pixel 9a layout
+
+The supplied calibration belongs to the measured Pixel 9a portrait layout. **A different phone, screen size, font scale or Signia layout needs its own calibration.** Entering program names alone does not configure sliders on another phone.
+
+For the matching measured layout:
+
+1. Download [SIG3_Pixel9aGestureSetup.tsk.xml](../tasks/SIG3_Pixel9aGestureSetup.tsk.xml) and [SIG3_Pixel9aVolumeGestureSetup.tsk.xml](../tasks/SIG3_Pixel9aVolumeGestureSetup.tsk.xml).
+2. In Tasker, long-press **TASKS** → **Import Task**. Import each file.
+3. Run **SIG3_Pixel9aGestureSetup** for balance/tinnitus.
+4. Run **SIG3_Pixel9aVolumeGestureSetup** for volume.
+5. Open Signia Controls. First check **“current program”** and **“current volume.”** Then test a small change from a known starting value and confirm the displayed result.
+
+These tasks overwrite the corresponding calibration. Do not rerun them on a changed layout to force a failed slider to work. For a calibration/bounds failure, use Signia manually until the layout is measured again. Calibration details are in the [technical reference](HeySig3-technical-reference.md).
+
+### 5. Verify the phone before adding the watch
+
+Unlock the phone, open Signia Controls, and run **SIG3_VoiceCommand**. Say **“current program”** and check it matches Signia. Repeat with **“current volume.”** If both work, set your speech choices in **SIG3_VoiceSettings** and continue with watch setup.
+
+An ongoing computer or ADB connection is not required for everyday use after setup.
+
+## Set up the watch
+
+AutoWear's voice screen and tile are configured in **AutoWear on the phone**, then added to the Pixel Watch 3.
+
+### 1. Connect AutoWear
+
+1. Install and open **AutoWear** on both devices.
+2. On the watch, allow **Display over other apps** and microphone access when requested. Return to AutoWear afterward.
+3. In phone AutoWear, tap **Wear Device** and select **Pixel Watch 3**. If it is absent, check the watch's phone connection first.
+
+### 2. Create the microphone screen
+
+Phone AutoWear → **Screens** → **+** → **Voice Screen**. Close introductory help if it appears.
+
+| Field | Enter / select |
+|---|---|
+| Screen Name | `HeySigVoice` |
+| Command to show | Choose **No** to predefined events; enter `heysig_listen` |
+| Prompt | `AutoWear Listening...` |
+| Choices | Leave empty |
+| Command Prefix | `sig3` followed by one space |
+| Trigger Events | On |
+
+Tap **Accept/checkmark**. The stored screen is **ScreenHeySigVoice**. A phone “created/shown” message confirms a request was sent; check that the watch actually displays its microphone.
+
+When editing, remove the entire old value before entering its replacement. Reopen the saved item to verify it. Appending text to an old trigger or image path can break it.
+
+### 3. Connect watch commands to Tasker
+
+1. Phone Tasker → **HeySig3** → **PROFILES** → **+** → **Event** → **Plugin** → **AutoWear**.
+2. Tap **Edit/pencil** beside Configuration.
+3. Enter `sig3` in **Command Filter**.
+4. Turn **Case Insensitive** on and leave **Exact** off.
+5. Accept, then press Back from Event Edit.
+6. Choose the existing **SIG3_WatchCommand** task as the entry task.
+7. Leave the profile enabled and apply changes.
+
+Keep one copy of this profile. A troubleshooting filter of `current program` accepts only that phrase; normal use needs `sig3`.
+
+### 4. Create the tile
+
+Phone AutoWear → **Tiles** → **+**. Enter:
+
+| Field | Enter / select |
+|---|---|
+| Tiles Name | `HeySigTile` |
+| Tile To Update | **AutoWear Tile 1** |
+| Tile Type | **Buttons** |
+| Texts | `👂` — copy this ear symbol |
+| Top Label | `HeySig` |
+| Buttons → Commands | `heysig_listen` |
+| Buttons → Command Prefix | Leave empty |
+| Buttons → Button Icons | Leave empty; use the ear text |
+| Apply Now | On |
+
+Accept. The stored item is **TilesHeySigTile**. The native ear symbol replaced a file-based image that showed only a circle. Its final appearance still needs confirmation; the tile command flow worked before that appearance change.
+
+### Add the watch tile
+
+1. Show the normal watch face.
+2. Swipe sideways through tiles until **Add tile (+)** appears.
+3. Choose **AutoWear Tile 1**.
+4. Open it, tap its button, and say **“current program.”**
+
+These are AutoWear's [documented tile-addition steps](https://joaoapps.com/AutoApps/Help/Info/com.joaomgcd.autowear/com.joaomgcd.autowear.activity.ActivityConfigTiles.html). Use the tile, not the unused floating-overlay button.
+
+## Optional sleep and wake schedule
+
+You do not need scheduling to choose the Sleep program by voice.
+
+1. Run **SIG3_SleepSettings**.
+2. Choose a **sleep program**, such as Sleep, and **wake program**, such as Universal.
+3. Choose different sleep/wake times using the 24-hour clock pickers.
+4. Tap **Save**. Saving leaves scheduling off.
+5. Run **SIG3_SleepEnable** for future events. Run **SIG3_SleepDisable** to stop future events.
+
+With sleep automation enabled, **“sleep”** and **“wake”** request those configured programs. **“Override on”** blocks automatic changes; **“override off”** releases the block without enabling a schedule.
+
+The schedule cannot unlock the phone. Signia and normal audio conditions must be available. Blocked/missed events are not automatically retried. Overnight locked-phone switching is unverified; do not rely on it for an unattended overnight change. No schedule was saved on this phone after the Sleep rename.
+
+## Optional noise-based selection
+
+Leave this off if you only want manual voice commands. It samples the **phone** microphone, not watch noise.
+
+1. Run **SIG3_CurrentNoise** in your intended quiet, normal and loud environments, with the phone in a consistent position.
+2. Run **SIG3_NoiseSettings**.
+3. Choose **Quiet program**, **Noisy program**, and **Very noisy program**.
+4. Enter boundaries based on those samples. Higher, less-negative readings mean more sound on this phone. They are a noise index, not calibrated decibels.
+5. Set the remaining fields. This phone's measured choices are examples, not universal defaults:
+
+| Field | Current measured value |
+|---|---|
+| Quiet/noisy boundary | −54.5 |
+| Noisy/very-noisy boundary | −43 |
+| Hysteresis margin | 1.5 |
+| Consecutive samples | 3 |
+| Cooldown seconds | 60 |
+
+6. Check **I checked that louder sound gives a higher noise index** only after comparing samples. Tap **Save**.
+7. Run **SIG3_NoiseObserve** first. It proposes choices without switching programs.
+8. If the proposals suit you, run **SIG3_NoiseStop**, then **SIG3_NoiseAuto** to allow switching.
+9. Run **SIG3_NoiseStop** to stop either mode. The current capture/wait may finish first.
+
+Saving leaves automation off. Manual program choices block noise switching until **“override off.”** Sleep can suppress noise changes. Keep continuous Hey Sig listening off during sampling.
+
+The eight-hour trial crashed in Tasker after about 5 hours 34 minutes. A later 30-minute unplugged run completed, but overnight reliability is unresolved. Noise sampling does not start automatically after reboot; explicitly start the desired mode.
+
+## Optional “Hey Sig” wake phrase
+
+Use the phone task or watch tile as your normal entry point. Background wake recognition has failed in testing.
+
+If the AutoVoice wake profile is configured, run **SIG3_WakeEnable** to listen or **SIG3_WakeDisable** to stop. Say **“Hey Sig,”** wait for the readiness cue and microphone, then speak the command. Do not combine wake phrase and command in one utterance.
+
+Silencing Voice prompts does not stop listening. For a fresh wake-profile installation, follow the separate [wake setup guide](HeySig3-wake-phrase.md). Locked/background recognition is not a dependable entry method.
+
+## Troubleshooting
+
+| What happens | What to do |
+|---|---|
+| Tapping opens weather | Swipe to **HeySig / AutoWear Tile 1**. Do not tap the weather shortcut on the clock face. |
+| No HeySig tile | Use the watch's **Add tile** control and choose **AutoWear Tile 1**. |
+| Button shows only a circle | In phone AutoWear, use Texts `👂` and clear Button Icons completely. Apply, then swipe away and back. |
+| No watch microphone | Open watch AutoWear; check connection and display-over-apps permission. Verify both voice screen and tile use `heysig_listen`. |
+| Speech but no phone reply | Unlock the phone. Check the Tasker AutoWear profile is enabled, filter `sig3`, Exact off. Check **Spoken results** in **SIG3_VoiceSettings**. |
+| “Unlock the phone” | Unlock manually, open Signia Controls and retry. |
+| Audio/DND instruction | Change the specified **phone** audio setting and retry. HeySig does not change it for you. |
+| Tinnitus unavailable | Choose a program that provides tinnitus, or use another control. |
+| Command still running | Wait for completion; give one command at a time. |
+| Signia is on Programs or battery page | Updated current-program/switch tasks recover to Controls. If recovery fails, return manually and retry. Other settings pages are not automatically navigated. |
+| Slider calibration/bounds error | Stop retrying movement. Restore the measured layout or get fresh calibration. Use Signia manually meanwhile. |
+| Program mapping changed | Match names to Signia and update saved mappings. Do not overwrite a wanted restore point merely to dismiss the error. |
+| Tasker stopped or phone rebooted | Check permissions and try **current program**. Start optional listeners/automation explicitly if wanted. |
+
+When reporting a bug, include **the exact phrase**, **phone or watch**, **the Signia page**, and **the full error**. Keep the failed state available if possible rather than repeatedly sending the command.
+
+## Technical information and verification
+
+The former manual is preserved as the [technical reference](HeySig3-technical-reference.md). For implementation and test records, see the [checklist](HeySig3-test-checklist.md), [page-recovery tests](HeySig3-program-page-recovery-2026-10-15.md), and [reliability record](HeySig3-reliability-2026-10-14.md).

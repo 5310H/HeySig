@@ -26870,7 +26870,74 @@ return "ready";
 		<Action sr="act18" ve="7">
 			<code>474</code>
 			<se>true</se>
-			<Str sr="arg0" ve="3">/* Program selection through visible accessibility nodes, never fixed coordinates. */
+			<Str sr="arg0" ve="3">/* BEGIN PICKER DETECTION */
+pickerProgram(root) {
+    if(root==null||root.getPackageName()==null||!"com.signia.rta".contentEquals(root.getPackageName()))return "";
+    queue=new java.util.ArrayList();queue.add(root);heading=0;selected=0;program="";
+    for(scan=0;scan&lt;queue.size()&amp;&amp;scan&lt;300;scan++) {
+        node=queue.get(scan);
+        if(node.isVisibleToUser()&amp;&amp;node.isEnabled()) {
+            text=node.getText();description=node.getContentDescription();
+            if(text!=null&amp;&amp;"Programs".equals(text.toString()))heading++;
+            if(description!=null&amp;&amp;description.toString().endsWith(" Selected Button")) {
+                name=description.toString().substring(0,description.toString().length()-" Selected Button".length());
+                matches=0;for(slot=1;slot&lt;=6;slot++)if(name.equals(tasker.getVariable("SIG3_ProgramName"+slot)))matches++;
+                if(matches!=1)throw new JavaCodeException("Program picker selection is not uniquely configured");
+                selected++;program=name;
+            }
+        }
+        for(childIndex=0;childIndex&lt;node.getChildCount();childIndex++) {
+            child=node.getChild(childIndex);if(child!=null)queue.add(child);
+        }
+    }
+    if(queue.size()&gt;300)throw new JavaCodeException("Program picker tree exceeds inspection limit");
+    if(heading==0)return "";
+    if(heading!=1||selected!=1)throw new JavaCodeException("Cannot identify selected program in picker");
+    return program;
+}
+/* END PICKER DETECTION */
+controlsLabel(root) {
+    if(root==null||root.getPackageName()==null||!"com.signia.rta".contentEquals(root.getPackageName()))return "";
+    queue=new java.util.ArrayList();queue.add(root);labels=0;headers=0;label="";header="";
+    id=tasker.getVariable("SIG3_ProgramId");
+    for(scan=0;scan&lt;queue.size()&amp;&amp;scan&lt;300;scan++) {
+        node=queue.get(scan);
+        if(node.isVisibleToUser()&amp;&amp;node.isEnabled()) {
+            text=node.getText();description=node.getContentDescription();
+            if(id!=null&amp;&amp;id.equals(node.getViewIdResourceName())&amp;&amp;text!=null&amp;&amp;text.toString().trim().length()&gt;0){labels++;label=text.toString().trim();}
+            if(description!=null&amp;&amp;description.toString().startsWith("Hearing program ")&amp;&amp;description.toString().endsWith(" Active")) {
+                headers++;header=description.toString().substring(16,description.toString().length()-7).trim();
+            }
+        }
+        for(i=0;i&lt;node.getChildCount();i++){child=node.getChild(i);if(child!=null)queue.add(child);}
+    }
+    if(queue.size()&gt;300||headers&gt;1||labels&gt;1)return "";
+    if(labels==1&amp;&amp;(headers==0||label.equals(header)))return label;
+    return labels==0&amp;&amp;headers==1?header:"";
+}
+prepareProgramRead(service) {
+    root=service.getRootInActiveWindow();picker=pickerProgram(root);
+    if(root==null||root.getPackageName()==null||!"com.signia.rta".contentEquals(root.getPackageName()))throw new JavaCodeException("Signia is not foreground");
+    queue=new java.util.ArrayList();queue.add(root);battery=0;pageId=tasker.getVariable("SIG3_BatteryPageId");
+    for(scan=0;scan&lt;queue.size()&amp;&amp;scan&lt;300;scan++) {
+        node=queue.get(scan);
+        if(node.isVisibleToUser()&amp;&amp;node.isEnabled()&amp;&amp;pageId!=null&amp;&amp;pageId.equals(node.getViewIdResourceName()))battery++;
+        for(i=0;i&lt;node.getChildCount();i++){child=node.getChild(i);if(child!=null)queue.add(child);}
+    }
+    if(queue.size()&gt;300||battery&gt;1||(battery==1&amp;&amp;picker.length()&gt;0))throw new JavaCodeException("Signia page is ambiguous");
+    if(battery==0&amp;&amp;picker.length()==0)return root;
+    if(!service.performGlobalAction(1))throw new JavaCodeException("Could not return to Signia Controls");
+    for(attempt=0;attempt&lt;20;attempt++) {
+        android.os.SystemClock.sleep(150);root=service.getRootInActiveWindow();current=controlsLabel(root);
+        if(current.length()&gt;0) {
+            if(picker.length()&gt;0&amp;&amp;!picker.equals(current))throw new JavaCodeException("Program changed while returning to Controls; retry");
+            return root;
+        }
+    }
+    throw new JavaCodeException("Signia Controls did not return; open Controls and retry");
+}
+
+/* Program selection through visible accessibility nodes, never fixed coordinates. */
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.accessibilityservice.AccessibilityServiceInfo;
 import com.joaomgcd.taskerm.action.java.JavaCodeException;
@@ -26953,6 +27020,7 @@ clickNode(service, node, backend) {
     }
     throw new JavaCodeException("No clickable ancestor for selected node");
 }
+
 readProgram(service, id) {
     if (id == null || id.trim().length() == 0 || id.startsWith("%")) throw new JavaCodeException("Configure SIG3_ProgramId");
     root = service.getRootInActiveWindow();
@@ -27002,6 +27070,7 @@ target = tasker.getVariable("SIG3_ProgramName" + requested);
 if (target == null || target.trim().length() == 0 || target.startsWith("%")) throw new JavaCodeException("Configure SIG3_ProgramName" + requested + " from the actual program list");
 target = target.trim();
 id = tasker.getVariable("SIG3_ProgramId");
+prepareProgramRead(service);
 previous = readProgram(service, id);
 tasker.setVariable("SIG3_Previous", previous);
 tasker.setVariable("SIG3_Expected", target);
@@ -27233,7 +27302,74 @@ throw new JavaCodeException("Program did not become the configured target; inspe
 		<Action sr="act12" ve="7">
 			<code>474</code>
 			<se>true</se>
-			<Str sr="arg0" ve="3">/* Read-only current program query; no picker click or acoustic command. */
+			<Str sr="arg0" ve="3">/* BEGIN PICKER DETECTION */
+pickerProgram(root) {
+    if(root==null||root.getPackageName()==null||!"com.signia.rta".contentEquals(root.getPackageName()))return "";
+    queue=new java.util.ArrayList();queue.add(root);heading=0;selected=0;program="";
+    for(scan=0;scan&lt;queue.size()&amp;&amp;scan&lt;300;scan++) {
+        node=queue.get(scan);
+        if(node.isVisibleToUser()&amp;&amp;node.isEnabled()) {
+            text=node.getText();description=node.getContentDescription();
+            if(text!=null&amp;&amp;"Programs".equals(text.toString()))heading++;
+            if(description!=null&amp;&amp;description.toString().endsWith(" Selected Button")) {
+                name=description.toString().substring(0,description.toString().length()-" Selected Button".length());
+                matches=0;for(slot=1;slot&lt;=6;slot++)if(name.equals(tasker.getVariable("SIG3_ProgramName"+slot)))matches++;
+                if(matches!=1)throw new JavaCodeException("Program picker selection is not uniquely configured");
+                selected++;program=name;
+            }
+        }
+        for(childIndex=0;childIndex&lt;node.getChildCount();childIndex++) {
+            child=node.getChild(childIndex);if(child!=null)queue.add(child);
+        }
+    }
+    if(queue.size()&gt;300)throw new JavaCodeException("Program picker tree exceeds inspection limit");
+    if(heading==0)return "";
+    if(heading!=1||selected!=1)throw new JavaCodeException("Cannot identify selected program in picker");
+    return program;
+}
+/* END PICKER DETECTION */
+controlsLabel(root) {
+    if(root==null||root.getPackageName()==null||!"com.signia.rta".contentEquals(root.getPackageName()))return "";
+    queue=new java.util.ArrayList();queue.add(root);labels=0;headers=0;label="";header="";
+    id=tasker.getVariable("SIG3_ProgramId");
+    for(scan=0;scan&lt;queue.size()&amp;&amp;scan&lt;300;scan++) {
+        node=queue.get(scan);
+        if(node.isVisibleToUser()&amp;&amp;node.isEnabled()) {
+            text=node.getText();description=node.getContentDescription();
+            if(id!=null&amp;&amp;id.equals(node.getViewIdResourceName())&amp;&amp;text!=null&amp;&amp;text.toString().trim().length()&gt;0){labels++;label=text.toString().trim();}
+            if(description!=null&amp;&amp;description.toString().startsWith("Hearing program ")&amp;&amp;description.toString().endsWith(" Active")) {
+                headers++;header=description.toString().substring(16,description.toString().length()-7).trim();
+            }
+        }
+        for(i=0;i&lt;node.getChildCount();i++){child=node.getChild(i);if(child!=null)queue.add(child);}
+    }
+    if(queue.size()&gt;300||headers&gt;1||labels&gt;1)return "";
+    if(labels==1&amp;&amp;(headers==0||label.equals(header)))return label;
+    return labels==0&amp;&amp;headers==1?header:"";
+}
+prepareProgramRead(service) {
+    root=service.getRootInActiveWindow();picker=pickerProgram(root);
+    if(root==null||root.getPackageName()==null||!"com.signia.rta".contentEquals(root.getPackageName()))throw new JavaCodeException("Signia is not foreground");
+    queue=new java.util.ArrayList();queue.add(root);battery=0;pageId=tasker.getVariable("SIG3_BatteryPageId");
+    for(scan=0;scan&lt;queue.size()&amp;&amp;scan&lt;300;scan++) {
+        node=queue.get(scan);
+        if(node.isVisibleToUser()&amp;&amp;node.isEnabled()&amp;&amp;pageId!=null&amp;&amp;pageId.equals(node.getViewIdResourceName()))battery++;
+        for(i=0;i&lt;node.getChildCount();i++){child=node.getChild(i);if(child!=null)queue.add(child);}
+    }
+    if(queue.size()&gt;300||battery&gt;1||(battery==1&amp;&amp;picker.length()&gt;0))throw new JavaCodeException("Signia page is ambiguous");
+    if(battery==0&amp;&amp;picker.length()==0)return root;
+    if(!service.performGlobalAction(1))throw new JavaCodeException("Could not return to Signia Controls");
+    for(attempt=0;attempt&lt;20;attempt++) {
+        android.os.SystemClock.sleep(150);root=service.getRootInActiveWindow();current=controlsLabel(root);
+        if(current.length()&gt;0) {
+            if(picker.length()&gt;0&amp;&amp;!picker.equals(current))throw new JavaCodeException("Program changed while returning to Controls; retry");
+            return root;
+        }
+    }
+    throw new JavaCodeException("Signia Controls did not return; open Controls and retry");
+}
+
+/* Read-only current program query; no picker click or acoustic command. */
 import android.accessibilityservice.AccessibilityServiceInfo;
 import android.view.accessibility.AccessibilityNodeInfo;
 import com.joaomgcd.taskerm.action.java.JavaCodeException;
@@ -27244,7 +27380,7 @@ info = service.getServiceInfo();
 if (info == null) throw new JavaCodeException("Tasker accessibility information unavailable");
 info.flags = info.flags | AccessibilityServiceInfo.FLAG_REPORT_VIEW_IDS;
 service.setServiceInfo(info);
-root = service.getRootInActiveWindow();
+root = prepareProgramRead(service);
 if (root == null || root.getPackageName() == null || !"com.signia.rta".contentEquals(root.getPackageName()))
     throw new JavaCodeException("Signia is not foreground");
 id = tasker.getVariable("SIG3_ProgramId");
@@ -27661,7 +27797,74 @@ return "ready";
 		<Action sr="act28" ve="7">
 			<code>474</code>
 			<se>true</se>
-			<Str sr="arg0" ve="3">/* Opens battery UI and records visible information; never invents acoustic percentages. */
+			<Str sr="arg0" ve="3">/* BEGIN PICKER DETECTION */
+pickerProgram(root) {
+    if(root==null||root.getPackageName()==null||!"com.signia.rta".contentEquals(root.getPackageName()))return "";
+    queue=new java.util.ArrayList();queue.add(root);heading=0;selected=0;program="";
+    for(scan=0;scan&lt;queue.size()&amp;&amp;scan&lt;300;scan++) {
+        node=queue.get(scan);
+        if(node.isVisibleToUser()&amp;&amp;node.isEnabled()) {
+            text=node.getText();description=node.getContentDescription();
+            if(text!=null&amp;&amp;"Programs".equals(text.toString()))heading++;
+            if(description!=null&amp;&amp;description.toString().endsWith(" Selected Button")) {
+                name=description.toString().substring(0,description.toString().length()-" Selected Button".length());
+                matches=0;for(slot=1;slot&lt;=6;slot++)if(name.equals(tasker.getVariable("SIG3_ProgramName"+slot)))matches++;
+                if(matches!=1)throw new JavaCodeException("Program picker selection is not uniquely configured");
+                selected++;program=name;
+            }
+        }
+        for(childIndex=0;childIndex&lt;node.getChildCount();childIndex++) {
+            child=node.getChild(childIndex);if(child!=null)queue.add(child);
+        }
+    }
+    if(queue.size()&gt;300)throw new JavaCodeException("Program picker tree exceeds inspection limit");
+    if(heading==0)return "";
+    if(heading!=1||selected!=1)throw new JavaCodeException("Cannot identify selected program in picker");
+    return program;
+}
+/* END PICKER DETECTION */
+controlsLabel(root) {
+    if(root==null||root.getPackageName()==null||!"com.signia.rta".contentEquals(root.getPackageName()))return "";
+    queue=new java.util.ArrayList();queue.add(root);labels=0;headers=0;label="";header="";
+    id=tasker.getVariable("SIG3_ProgramId");
+    for(scan=0;scan&lt;queue.size()&amp;&amp;scan&lt;300;scan++) {
+        node=queue.get(scan);
+        if(node.isVisibleToUser()&amp;&amp;node.isEnabled()) {
+            text=node.getText();description=node.getContentDescription();
+            if(id!=null&amp;&amp;id.equals(node.getViewIdResourceName())&amp;&amp;text!=null&amp;&amp;text.toString().trim().length()&gt;0){labels++;label=text.toString().trim();}
+            if(description!=null&amp;&amp;description.toString().startsWith("Hearing program ")&amp;&amp;description.toString().endsWith(" Active")) {
+                headers++;header=description.toString().substring(16,description.toString().length()-7).trim();
+            }
+        }
+        for(i=0;i&lt;node.getChildCount();i++){child=node.getChild(i);if(child!=null)queue.add(child);}
+    }
+    if(queue.size()&gt;300||headers&gt;1||labels&gt;1)return "";
+    if(labels==1&amp;&amp;(headers==0||label.equals(header)))return label;
+    return labels==0&amp;&amp;headers==1?header:"";
+}
+prepareProgramRead(service) {
+    root=service.getRootInActiveWindow();picker=pickerProgram(root);
+    if(root==null||root.getPackageName()==null||!"com.signia.rta".contentEquals(root.getPackageName()))throw new JavaCodeException("Signia is not foreground");
+    queue=new java.util.ArrayList();queue.add(root);battery=0;pageId=tasker.getVariable("SIG3_BatteryPageId");
+    for(scan=0;scan&lt;queue.size()&amp;&amp;scan&lt;300;scan++) {
+        node=queue.get(scan);
+        if(node.isVisibleToUser()&amp;&amp;node.isEnabled()&amp;&amp;pageId!=null&amp;&amp;pageId.equals(node.getViewIdResourceName()))battery++;
+        for(i=0;i&lt;node.getChildCount();i++){child=node.getChild(i);if(child!=null)queue.add(child);}
+    }
+    if(queue.size()&gt;300||battery&gt;1||(battery==1&amp;&amp;picker.length()&gt;0))throw new JavaCodeException("Signia page is ambiguous");
+    if(battery==0&amp;&amp;picker.length()==0)return root;
+    if(!service.performGlobalAction(1))throw new JavaCodeException("Could not return to Signia Controls");
+    for(attempt=0;attempt&lt;20;attempt++) {
+        android.os.SystemClock.sleep(150);root=service.getRootInActiveWindow();current=controlsLabel(root);
+        if(current.length()&gt;0) {
+            if(picker.length()&gt;0&amp;&amp;!picker.equals(current))throw new JavaCodeException("Program changed while returning to Controls; retry");
+            return root;
+        }
+    }
+    throw new JavaCodeException("Signia Controls did not return; open Controls and retry");
+}
+
+/* Opens battery UI and records visible information; never invents acoustic percentages. */
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.accessibilityservice.AccessibilityServiceInfo;
 import android.os.SystemClock;
@@ -27701,6 +27904,7 @@ mode = tasker.getVariable("par1");
 if (!"open".equals(mode) &amp;&amp; !"listen".equals(mode)) throw new JavaCodeException("Battery mode must be open or listen");
 pageId = tasker.getVariable("SIG3_BatteryPageId");
 if (pageId == null || pageId.length() == 0 || pageId.startsWith("%")) throw new JavaCodeException("Configure SIG3_BatteryPageId");
+if (pickerProgram(service.getRootInActiveWindow()).length() &gt; 0) prepareProgramRead(service);
 nodes = visibleTree(service);
 page = matching(nodes, pageId, null);
 if (page.size() &gt; 1) throw new JavaCodeException("Battery page marker is ambiguous");

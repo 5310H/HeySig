@@ -81,6 +81,7 @@ clickNode(service, node, backend) {
     }
     throw new JavaCodeException("No clickable ancestor for selected node");
 }
+
 readProgram(service, id) {
     if (id == null || id.trim().length() == 0 || id.startsWith("%")) throw new JavaCodeException("Configure SIG3_ProgramId");
     root = service.getRootInActiveWindow();
@@ -130,6 +131,7 @@ target = tasker.getVariable("SIG3_ProgramName" + requested);
 if (target == null || target.trim().length() == 0 || target.startsWith("%")) throw new JavaCodeException("Configure SIG3_ProgramName" + requested + " from the actual program list");
 target = target.trim();
 id = tasker.getVariable("SIG3_ProgramId");
+prepareProgramRead(service);
 previous = readProgram(service, id);
 tasker.setVariable("SIG3_Previous", previous);
 tasker.setVariable("SIG3_Expected", target);

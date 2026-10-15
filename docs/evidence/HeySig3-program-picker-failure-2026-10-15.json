@@ -1,0 +1,15 @@
+{
+  "WatchRawInput": "set program to Universal",
+  "WatchNormalizedInput": "set program to Universal",
+  "WatchEvent_awcomm": "set program to Universal",
+  "WatchEvent_awmessage": "sig3 =:=set program to Universal",
+  "WatchEvent_awcommnofilter": "",
+  "VoiceReply": "Command stopped. com.joaomgcd.taskerm.action.java.JavaCodeException: Cannot identify current program unambiguously",
+  "CommandOK": "0",
+  "Error": "com.joaomgcd.taskerm.action.java.JavaCodeException: Cannot identify current program unambiguously",
+  "Family": "Program",
+  "Observed": "",
+  "Program": "",
+  "VoiceMatched": "1",
+  "OperationId": "1792100787104"
+}

@@ -9,7 +9,7 @@ info = service.getServiceInfo();
 if (info == null) throw new JavaCodeException("Tasker accessibility information unavailable");
 info.flags = info.flags | AccessibilityServiceInfo.FLAG_REPORT_VIEW_IDS;
 service.setServiceInfo(info);
-root = service.getRootInActiveWindow();
+root = prepareProgramRead(service);
 if (root == null || root.getPackageName() == null || !"com.signia.rta".contentEquals(root.getPackageName()))
     throw new JavaCodeException("Signia is not foreground");
 id = tasker.getVariable("SIG3_ProgramId");

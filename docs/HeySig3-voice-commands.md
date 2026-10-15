@@ -1,6 +1,8 @@
 # HeySig3 voice commands
 
-These phrases are supported by `SIG3_VoiceRouter`. Say them through a connected AutoVoice or AutoWear command event, or pass the text in Parameter 1 of the router. General phone voice commands have live acceptance; watch events remain untested because no watch was available. The list describes supported routing, including endpoints with separate live acceptance still pending.
+[Quick cheat sheet](HeySig-voice-cheat-sheet.md) · [Printable version](HeySig-voice-cheat-sheet.html)
+
+These phrases are supported by `SIG3_VoiceRouter`. Say them through a connected AutoVoice or AutoWear command event, or pass the text in Parameter 1 of the router. General phone voice commands and a Pixel Watch 3 tile command have live acceptance; individual watch command families retain their separate limits below. The list describes supported routing, including endpoints with separate live acceptance still pending.
 
 Run `SIG3_VoiceCommand` in Tasker to open its built-in voice-recognition prompt for any command below. It sends recognized text directly to `SIG3_VoiceRouter` and does not require an AutoVoice event profile. Cancelled or empty recognition sends no command. The spoken **current program** query passed on the phone; see [voice verification](HeySig3-voice-verification-2026-10-11.md). Live program, volume, balance, tinnitus and battery commands also passed; see the [test checklist](HeySig3-test-checklist.md).
 
@@ -39,7 +41,7 @@ Program slot 2 also accepts “program too” (or “mode too”) because speech
 
 The general voice task also speaks a short result after a fresh completed command: the actual selected program, verified volume/balance/tinnitus level, or the failure instruction. Unrecognized speech speaks the retry instruction before showing its buttons. Responses use the default phone text-to-speech engine and media stream, with a two-second settling gap; speech waits until finished before the task continues. They are skipped while the SIG3 worker is active. This gap is not a measured confirmation of hearing-aid acoustic completion.
 
-Run **SIG3_VoiceSettings** to independently switch **Spoken results** and **Voice prompts** on/off and Save. Both may be off. Cancel/Back preserves choices. These switches do not control wake listening. See [voice settings](HeySig3-voice-settings.md). Result speech does not change phone volume or DND, and on-screen results remain available when those settings prevent hearing the message. AutoVoice/watch event adapters and the separate mode/battery prompts do not yet use this general-task speech path.
+Run **SIG3_VoiceSettings** to independently switch **Spoken results** and **Voice prompts** on/off and Save. Both may be off. Cancel/Back preserves choices. These switches do not control wake listening. See [voice settings](HeySig3-voice-settings.md). Result speech does not change phone volume or DND, and on-screen results remain available when those settings prevent hearing the message. The watch adapter now uses this spoken-result path; the AutoVoice adapter and separate mode/battery prompts do not.
 
 Program names are **not hardcoded**. Configure `%SIG3_ProgramName1` through `%SIG3_ProgramName6` from the names actually shown in Signia; leave unused slots unset. Numbered requests also require a configured slot. “normal” and “conversation” use `%SIG3_ModeConversationProgram`; “noisy” uses `%SIG3_ModeNoisyProgram`; “very noisy”, “verynoisy”, and “vnoisy” use `%SIG3_ModeVeryNoisyProgram`. These aliases also accept a “program” or “mode” prefix and require an explicitly configured slot.
 
@@ -111,3 +113,7 @@ User confirmed the dedicated tile opened voice input and the command worked, but
 5. Add AutoWear Tile 1 to the watch carousel. Tap its ear button and speak a supported command. The user confirmed independent tile capture and a command response before the final ear-symbol appearance change. Replies use phone TTS and the saved Spoken results preference. Setup prompts and watch-speaker replies are not implemented by this setup.
 
 For Signia control, the phone still needs the existing unlock, accessibility and audio requirements. The tile does not bypass those guards. Temporary diagnostic tasks and the unused hidden overlay are not part of the release exports.
+
+## Signia program rename: Sleep
+
+October 15: the user renamed Signia slot 2 from Off just Tinnitus to Sleep. Fresh Signia Controls showed Sleep active. Applied the one-time `tools/sig3_rename_sleep.java` migration through a temporary phone task: updated SIG3_ProgramName2 and slot 2 in saved noise/snapshot mappings, retaining every other field. The sleep preference store was empty and remained empty. A private before-change backup was saved. [Before/after evidence](evidence/HeySig3-sleep-rename-2026-10-15.json) was compared structurally: only the program name changed; snapshot program Universal, controls and timestamp were preserved. The subsequent installed-router `current program.` query passed with CommandOK=1, Error empty and Program/Observed=Sleep. No Signia program selection or slider movement was requested. Say `program Sleep` for direct selection; bare `sleep` remains the separate sleep-automation command.

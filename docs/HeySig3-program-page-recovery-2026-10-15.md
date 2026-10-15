@@ -1,0 +1,9 @@
+# Signia program-page recovery — October 15, 2026
+
+The last watch request was `set program to Universal`. It reached the router, but failed because Signia was already on the program picker and the current-program reader required Controls. The picker showed Sleep selected. See [failure](evidence/HeySig3-program-picker-failure-2026-10-15.json).
+
+Added a shared, bounded page detector for the known Signia program picker and battery-page marker. Current-program queries and program switches return from these pages to Controls before reading. Picker recovery requires exactly one configured selected program and verifies that Controls reports the same selection. Battery checks recover from the picker and retain existing handling when already on the battery page. Unknown/ambiguous pages, rejected Back, missing Controls and changed selection fail explicitly. No automatic unlock or settings-page navigation was added.
+
+Installed the three updated internal tasks. A live current-program query from the picker passed and read Sleep. A page-only battery request from the picker passed; the subsequent current-program query returned to Controls and read Sleep. These tests did not request hearing-aid battery indications. All 31 regression scripts passed, including nine executable Java page-recovery/rejection cases; 101 XML files and 7,163 actions passed static validation. Final live program-switch checking is recorded separately.
+
+The final live test started with Universal already active, opened the picker, then submitted `set program to Universal`. It passed with CommandOK=1, Error empty, Program/Observed=Universal. This verifies picker recovery and same-target handling; a live different-target switch was not performed in this check. See [result](evidence/HeySig3-picker-same-program-fixed-2026-10-15.json).

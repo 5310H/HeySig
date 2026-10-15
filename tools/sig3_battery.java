@@ -38,6 +38,7 @@ mode = tasker.getVariable("par1");
 if (!"open".equals(mode) && !"listen".equals(mode)) throw new JavaCodeException("Battery mode must be open or listen");
 pageId = tasker.getVariable("SIG3_BatteryPageId");
 if (pageId == null || pageId.length() == 0 || pageId.startsWith("%")) throw new JavaCodeException("Configure SIG3_BatteryPageId");
+if (pickerProgram(service.getRootInActiveWindow()).length() > 0) prepareProgramRead(service);
 nodes = visibleTree(service);
 page = matching(nodes, pageId, null);
 if (page.size() > 1) throw new JavaCodeException("Battery page marker is ambiguous");

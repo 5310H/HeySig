@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HeySig voice command cheat sheet</title>
+<style>
+body{font:16px/1.4 system-ui,sans-serif;color:#162638;max-width:960px;margin:30px auto;padding:0 24px}h1{font-size:30px;margin-bottom:8px}h2{font-size:20px;color:#1565c0;margin:18px 0 8px}p{margin:8px 0}main{display:grid;grid-template-columns:1fr 1fr;gap:0 28px}section{break-inside:avoid}table{width:100%;border-collapse:collapse}td,th{text-align:left;padding:6px 7px;border-bottom:1px solid #d8e1ea}th{background:#eaf2fb}td:first-child{font-weight:650}.note{background:#eaf2fb;padding:12px;border-radius:8px}footer{margin-top:18px;font-size:13px;color:#455668}@media(max-width:650px){main{display:block}}@media print{@page{size:letter;margin:12mm}body{font-size:11px;margin:0;padding:0;max-width:none}h1{font-size:23px}h2{font-size:15px;margin-top:13px}main{gap:0 20px}td,th{padding:4px}footer{font-size:10px}}
+</style>
+<h1>HeySig voice commands</h1>
+<p><strong>Watch:</strong> Open the HeySig tile and tap its button. <strong>Phone:</strong> Run SIG3_VoiceCommand in Tasker.</p>
+<p>Wait for the microphone. Say one command. Spoken replies play through the phone.</p>
+<main>
+<section><h2>Read settings</h2><table><tr><th>Say</th><th>Read</th></tr>
+<tr><td>current program</td><td>Selected program</td></tr><tr><td>current volume</td><td>Hearing-aid volume</td></tr><tr><td>current balance</td><td>Sound balance</td></tr><tr><td>current tin</td><td>Tinnitus level, if available</td></tr><tr><td>battery check</td><td>Listen to both aids’ battery indications</td></tr></table>
+<h2>Choose a program</h2><table><tr><th>Say</th><th>Program</th></tr><tr><td>program one</td><td>Universal</td></tr><tr><td>program two</td><td>Sleep</td></tr><tr><td>program three</td><td>Noisy</td></tr><tr><td>program four</td><td>Outdoor</td></tr><tr><td>program five</td><td>TV</td></tr><tr><td>program six</td><td>Very Noisy</td></tr></table>
+<p>Names also work: <strong>set program to Universal</strong> or <strong>set program to Sleep</strong>.</p>
+<p class="note"><strong>Sleep program:</strong> Say <strong>program two</strong> or <strong>set program to Sleep</strong>. Saying <strong>sleep</strong> alone invokes separately configured sleep automation.</p></section>
+<section><h2>Change settings</h2><table><tr><th>Say</th><th>Action / range</th></tr><tr><td>volume ten</td><td>Volume 0–15</td></tr><tr><td>mute</td><td>Volume 0</td></tr><tr><td>maximum volume</td><td>Volume 15</td></tr><tr><td>balance minus three</td><td>Balance −8 to 7</td></tr><tr><td>balance zero</td><td>Center balance</td></tr><tr><td>balance soft</td><td>Balance −8</td></tr><tr><td>balance sharp</td><td>Balance 7</td></tr><tr><td>tin one</td><td>Tinnitus 0–15, if available</td></tr><tr><td>tin mute</td><td>Tinnitus 0</td></tr><tr><td>maximum tinnitus</td><td>Tinnitus 15</td></tr></table>
+<h2>Save, restore, cancel</h2><table><tr><td>save settings</td><td>Save current settings</td></tr><tr><td>restore settings</td><td>Restore last saved settings</td></tr><tr><td>cancel</td><td>End voice capture</td></tr></table><p>Successful HeySig changes save automatically.</p>
+<h2>Optional automation</h2><p><strong>override on / override off / override toggle</strong> — block or release automatic changes; these do not enable automation.</p><p><strong>noise sample</strong> — sample phone noise.</p><p><strong>sleep / wake</strong> — apply configured sleep/wake programs when automation is enabled.</p></section>
+</main>
+<footer><strong>Ready:</strong> Phone unlocked, Signia available, Tasker accessibility enabled. Follow any audio-volume or Do Not Disturb instruction before retrying. Numbers can be words. Say a target number rather than “volume up/down” or “tin up/down.”<br>Updated October 15, 2026 · Pixel phone + Pixel Watch 3</footer>
+</html>

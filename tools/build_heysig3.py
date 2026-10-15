@@ -155,7 +155,10 @@ def java_code(code):
 
 
 def java_file(name):
-    return java_code((ROOT / 'tools' / name).read_text())
+    source = (ROOT / 'tools' / name).read_text()
+    if name in ('sig3_program.java', 'sig3_program_current.java', 'sig3_battery.java'):
+        source = (ROOT / 'tools/sig3_program_picker.java').read_text() + '\n' + source
+    return java_code(source)
 
 
 launch = [setvar('%SIG3_AppOK', 0), setvar('%SIG3_Error', ''),

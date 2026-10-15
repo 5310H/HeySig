@@ -1,0 +1,13 @@
+{
+  "before": {
+    "ProgramName2": "Off just Tinnitus",
+    "noise": "{\"version\":1,\"programs\":[\"Universal\",\"Off just Tinnitus\",\"Noisy\",\"Outdoor\",\"TV\",\"Very Noisy\"],\"quiet\":\"1\",\"middle\":\"3\",\"loud\":\"6\",\"low\":\"-54.5\",\"high\":\"-43.0\",\"margin\":\"1.5\",\"strikes\":\"3\",\"cooldown\":\"60\",\"source\":\"phone\",\"confirmed\":true}",
+    "sleep": "",
+    "snapshot": "{\"version\":1,\"project\":\"HeySig3\",\"savedAt\":1791859481129,\"program\":\"Universal\",\"programs\":[\"Universal\",\"Off just Tinnitus\",\"Noisy\",\"Outdoor\",\"TV\",\"Very Noisy\"],\"controls\":{\"Volume\":10,\"Balance\":-4,\"Tinnitus\":0}}"
+  },
+  "ProgramName2": "Sleep",
+  "noise": "{\"version\":1,\"programs\":[\"Universal\",\"Sleep\",\"Noisy\",\"Outdoor\",\"TV\",\"Very Noisy\"],\"quiet\":\"1\",\"middle\":\"3\",\"loud\":\"6\",\"low\":\"-54.5\",\"high\":\"-43.0\",\"margin\":\"1.5\",\"strikes\":\"3\",\"cooldown\":\"60\",\"source\":\"phone\",\"confirmed\":true}",
+  "sleep": "",
+  "snapshot": "{\"version\":1,\"project\":\"HeySig3\",\"savedAt\":1791859481129,\"program\":\"Universal\",\"programs\":[\"Universal\",\"Sleep\",\"Noisy\",\"Outdoor\",\"TV\",\"Very Noisy\"],\"controls\":{\"Volume\":10,\"Balance\":-4,\"Tinnitus\":0}}",
+  "backupFile": "heysig3-before-sleep-rename-1792100678747.json"
+}
