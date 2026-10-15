@@ -68,8 +68,9 @@ input = tasker.getVariable("sig3_command");
 if (input == null || input.trim().length() == 0) throw new JavaCodeException("No command text supplied");
 input = input.trim().replaceAll("(?i)^sig(?:3)?\\s+", "");
 // A short spoken name for tinnitus; do not rewrite program names.
-input = input.replaceAll("(?i)^((?:(?:set|change|current|maximum|mute)\\s+|what is\\s+(?:the\\s+)?(?:current\\s+)?)?)tin(?=\\s|$)", "$1tinnitus");
-alias = input.toLowerCase().replaceAll("^(?:mode|program)\\s+", "");
+input = input.replaceAll("(?i)^((?:(?:set|change|current|maximum|mute)\\s+|what is\\s+(?:the\\s+)?(?:current\\s+)?)?)tin(?=\\s|[.!?]|$)", "$1tinnitus");
+// Compare semantic aliases without sentence punctuation; retain exact program names.
+alias = input.toLowerCase().replaceAll("[.!?]$", "").trim().replaceAll("^(?:mode|program)\\s+", "");
 key = null;
 if (alias.equals("conversation") || alias.equals("normal")) key = "SIG3_ModeConversationProgram";
 if (alias.equals("noisy")) key = "SIG3_ModeNoisyProgram";
@@ -209,7 +210,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?volume\s+(?:to\s+)?(?:0|zero)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?volume\s+(?:to\s+)?(?:0|zero)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -255,7 +256,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?volume\s+(?:to\s+)?(?:1|one)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?volume\s+(?:to\s+)?(?:1|one)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -301,7 +302,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?volume\s+(?:to\s+)?(?:2|two)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?volume\s+(?:to\s+)?(?:2|two)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -347,7 +348,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?volume\s+(?:to\s+)?(?:3|three)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?volume\s+(?:to\s+)?(?:3|three)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -393,7 +394,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?volume\s+(?:to\s+)?(?:4|four)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?volume\s+(?:to\s+)?(?:4|four)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -439,7 +440,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?volume\s+(?:to\s+)?(?:5|five)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?volume\s+(?:to\s+)?(?:5|five)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -485,7 +486,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?volume\s+(?:to\s+)?(?:6|six)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?volume\s+(?:to\s+)?(?:6|six)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -531,7 +532,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?volume\s+(?:to\s+)?(?:7|seven)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?volume\s+(?:to\s+)?(?:7|seven)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -577,7 +578,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?volume\s+(?:to\s+)?(?:8|eight)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?volume\s+(?:to\s+)?(?:8|eight)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -623,7 +624,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?volume\s+(?:to\s+)?(?:9|nine)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?volume\s+(?:to\s+)?(?:9|nine)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -669,7 +670,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?volume\s+(?:to\s+)?(?:10|ten)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?volume\s+(?:to\s+)?(?:10|ten)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -715,7 +716,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?volume\s+(?:to\s+)?(?:11|eleven)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?volume\s+(?:to\s+)?(?:11|eleven)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -761,7 +762,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?volume\s+(?:to\s+)?(?:12|twelve)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?volume\s+(?:to\s+)?(?:12|twelve)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -807,7 +808,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?volume\s+(?:to\s+)?(?:13|thirteen)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?volume\s+(?:to\s+)?(?:13|thirteen)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -853,7 +854,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?volume\s+(?:to\s+)?(?:14|fourteen)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?volume\s+(?:to\s+)?(?:14|fourteen)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -899,7 +900,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?volume\s+(?:to\s+)?(?:15|fifteen)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?volume\s+(?:to\s+)?(?:15|fifteen)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -945,7 +946,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?balance\s+(?:to\s+)?(?:-8|(?:minus|negative)\s+(?:8|eight))\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?balance\s+(?:to\s+)?(?:-8|(?:minus|negative)\s+(?:8|eight))[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -991,7 +992,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?balance\s+(?:to\s+)?(?:-7|(?:minus|negative)\s+(?:7|seven))\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?balance\s+(?:to\s+)?(?:-7|(?:minus|negative)\s+(?:7|seven))[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -1037,7 +1038,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?balance\s+(?:to\s+)?(?:-6|(?:minus|negative)\s+(?:6|six))\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?balance\s+(?:to\s+)?(?:-6|(?:minus|negative)\s+(?:6|six))[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -1083,7 +1084,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?balance\s+(?:to\s+)?(?:-5|(?:minus|negative)\s+(?:5|five))\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?balance\s+(?:to\s+)?(?:-5|(?:minus|negative)\s+(?:5|five))[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -1129,7 +1130,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?balance\s+(?:to\s+)?(?:-4|(?:minus|negative)\s+(?:4|four))\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?balance\s+(?:to\s+)?(?:-4|(?:minus|negative)\s+(?:4|four))[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -1175,7 +1176,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?balance\s+(?:to\s+)?(?:-3|(?:minus|negative)\s+(?:3|three))\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?balance\s+(?:to\s+)?(?:-3|(?:minus|negative)\s+(?:3|three))[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -1221,7 +1222,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?balance\s+(?:to\s+)?(?:-2|(?:minus|negative)\s+(?:2|two))\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?balance\s+(?:to\s+)?(?:-2|(?:minus|negative)\s+(?:2|two))[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -1267,7 +1268,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?balance\s+(?:to\s+)?(?:-1|(?:minus|negative)\s+(?:1|one))\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?balance\s+(?:to\s+)?(?:-1|(?:minus|negative)\s+(?:1|one))[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -1313,7 +1314,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?balance\s+(?:to\s+)?(?:0|zero)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?balance\s+(?:to\s+)?(?:0|zero)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -1359,7 +1360,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?balance\s+(?:to\s+)?(?:1|one)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?balance\s+(?:to\s+)?(?:1|one)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -1405,7 +1406,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?balance\s+(?:to\s+)?(?:2|two)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?balance\s+(?:to\s+)?(?:2|two)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -1451,7 +1452,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?balance\s+(?:to\s+)?(?:3|three)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?balance\s+(?:to\s+)?(?:3|three)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -1497,7 +1498,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?balance\s+(?:to\s+)?(?:4|four)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?balance\s+(?:to\s+)?(?:4|four)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -1543,7 +1544,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?balance\s+(?:to\s+)?(?:5|five)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?balance\s+(?:to\s+)?(?:5|five)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -1589,7 +1590,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?balance\s+(?:to\s+)?(?:6|six)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?balance\s+(?:to\s+)?(?:6|six)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -1635,7 +1636,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?balance\s+(?:to\s+)?(?:7|seven)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?balance\s+(?:to\s+)?(?:7|seven)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -1681,7 +1682,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?tinnitus\s+(?:to\s+)?(?:0|zero)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?tinnitus\s+(?:to\s+)?(?:0|zero)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -1727,7 +1728,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?tinnitus\s+(?:to\s+)?(?:1|one)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?tinnitus\s+(?:to\s+)?(?:1|one)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -1773,7 +1774,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?tinnitus\s+(?:to\s+)?(?:2|two)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?tinnitus\s+(?:to\s+)?(?:2|two)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -1819,7 +1820,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?tinnitus\s+(?:to\s+)?(?:3|three)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?tinnitus\s+(?:to\s+)?(?:3|three)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -1865,7 +1866,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?tinnitus\s+(?:to\s+)?(?:4|four)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?tinnitus\s+(?:to\s+)?(?:4|four)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -1911,7 +1912,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?tinnitus\s+(?:to\s+)?(?:5|five)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?tinnitus\s+(?:to\s+)?(?:5|five)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -1957,7 +1958,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?tinnitus\s+(?:to\s+)?(?:6|six)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?tinnitus\s+(?:to\s+)?(?:6|six)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -2003,7 +2004,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?tinnitus\s+(?:to\s+)?(?:7|seven)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?tinnitus\s+(?:to\s+)?(?:7|seven)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -2049,7 +2050,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?tinnitus\s+(?:to\s+)?(?:8|eight)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?tinnitus\s+(?:to\s+)?(?:8|eight)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -2095,7 +2096,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?tinnitus\s+(?:to\s+)?(?:9|nine)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?tinnitus\s+(?:to\s+)?(?:9|nine)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -2141,7 +2142,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?tinnitus\s+(?:to\s+)?(?:10|ten)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?tinnitus\s+(?:to\s+)?(?:10|ten)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -2187,7 +2188,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?tinnitus\s+(?:to\s+)?(?:11|eleven)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?tinnitus\s+(?:to\s+)?(?:11|eleven)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -2233,7 +2234,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?tinnitus\s+(?:to\s+)?(?:12|twelve)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?tinnitus\s+(?:to\s+)?(?:12|twelve)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -2279,7 +2280,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?tinnitus\s+(?:to\s+)?(?:13|thirteen)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?tinnitus\s+(?:to\s+)?(?:13|thirteen)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -2325,7 +2326,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?tinnitus\s+(?:to\s+)?(?:14|fourteen)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?tinnitus\s+(?:to\s+)?(?:14|fourteen)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -2371,7 +2372,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?tinnitus\s+(?:to\s+)?(?:15|fifteen)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?tinnitus\s+(?:to\s+)?(?:15|fifteen)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -2417,7 +2418,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:maximum volume|volume max|volume maximum)\s*$</rhs>
+					<rhs>(?i)^\s*(?:maximum volume|volume max|volume maximum)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -2463,7 +2464,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:mute|volume mute|mute volume)\s*$</rhs>
+					<rhs>(?i)^\s*(?:mute|volume mute|mute volume)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -2509,7 +2510,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:balance sharp|sharp balance)\s*$</rhs>
+					<rhs>(?i)^\s*(?:balance sharp|sharp balance)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -2555,7 +2556,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:balance soft|soft balance)\s*$</rhs>
+					<rhs>(?i)^\s*(?:balance soft|soft balance)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -2601,7 +2602,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:maximum tinnitus|tinnitus max)\s*$</rhs>
+					<rhs>(?i)^\s*(?:maximum tinnitus|tinnitus max)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -2647,7 +2648,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:tinnitus mute|mute tinnitus)\s*$</rhs>
+					<rhs>(?i)^\s*(?:tinnitus mute|mute tinnitus)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -2693,7 +2694,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?(?:program|mode)\s+(?:to\s+)?(?:1|one|\Q%SIG3_ProgramName1\E)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?(?:program|mode)\s+(?:to\s+)?(?:1|one|\Q%SIG3_ProgramName1\E)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -2739,7 +2740,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?(?:program|mode)\s+(?:to\s+)?(?:2|(?:two|too)|\Q%SIG3_ProgramName2\E)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?(?:program|mode)\s+(?:to\s+)?(?:2|(?:two|too)|\Q%SIG3_ProgramName2\E)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -2785,7 +2786,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?(?:program|mode)\s+(?:to\s+)?(?:3|three|\Q%SIG3_ProgramName3\E)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?(?:program|mode)\s+(?:to\s+)?(?:3|three|\Q%SIG3_ProgramName3\E)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -2831,7 +2832,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?(?:program|mode)\s+(?:to\s+)?(?:4|four|\Q%SIG3_ProgramName4\E)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?(?:program|mode)\s+(?:to\s+)?(?:4|four|\Q%SIG3_ProgramName4\E)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -2877,7 +2878,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?(?:program|mode)\s+(?:to\s+)?(?:5|five|\Q%SIG3_ProgramName5\E)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?(?:program|mode)\s+(?:to\s+)?(?:5|five|\Q%SIG3_ProgramName5\E)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -2923,7 +2924,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:(?:set|change)\s+)?(?:program|mode)\s+(?:to\s+)?(?:6|six|\Q%SIG3_ProgramName6\E)\s*$</rhs>
+					<rhs>(?i)^\s*(?:(?:set|change)\s+)?(?:program|mode)\s+(?:to\s+)?(?:6|six|\Q%SIG3_ProgramName6\E)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -2969,7 +2970,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:current volume|what is (?:the )?(?:current )?volume)\s*\??\s*$</rhs>
+					<rhs>(?i)^\s*(?:current volume|what is (?:the )?(?:current )?volume)\s*[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -3015,7 +3016,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:current balance|what is (?:the )?(?:current )?balance)\s*\??\s*$</rhs>
+					<rhs>(?i)^\s*(?:current balance|what is (?:the )?(?:current )?balance)\s*[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -3061,7 +3062,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:current tinnitus|current tinnitus level|what is (?:the )?(?:current )?tinnitus(?: level)?)\s*\??\s*$</rhs>
+					<rhs>(?i)^\s*(?:current tinnitus|current tinnitus level|what is (?:the )?(?:current )?tinnitus(?: level)?)\s*[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -3107,7 +3108,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:current program|current mode|what program|what mode|what is (?:the )?current (?:program|mode))\s*\??\s*$</rhs>
+					<rhs>(?i)^\s*(?:current program|current mode|what program|what mode|what is (?:the )?current (?:program|mode))\s*[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -3153,7 +3154,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:battery|battery check|check battery)\s*$</rhs>
+					<rhs>(?i)^\s*(?:battery|battery check|check battery)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -3199,7 +3200,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:battery listen|listen to battery)\s*$</rhs>
+					<rhs>(?i)^\s*(?:battery listen|listen to battery)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -3245,7 +3246,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*save settings\s*$</rhs>
+					<rhs>(?i)^\s*save settings[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -3291,7 +3292,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*restore settings\s*$</rhs>
+					<rhs>(?i)^\s*restore settings[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -3337,7 +3338,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:noise sample|check noise)\s*$</rhs>
+					<rhs>(?i)^\s*(?:noise sample|check noise)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -3383,7 +3384,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*override toggle\s*$</rhs>
+					<rhs>(?i)^\s*override toggle[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -3429,7 +3430,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*sleep\s*$</rhs>
+					<rhs>(?i)^\s*sleep[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -3475,7 +3476,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*wake\s*$</rhs>
+					<rhs>(?i)^\s*wake[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -3521,7 +3522,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:override on|manual mode)\s*$</rhs>
+					<rhs>(?i)^\s*(?:override on|manual mode)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>
@@ -3567,7 +3568,7 @@ return "normalized";
 				<Condition sr="c0" ve="3">
 					<lhs>%sig3_command</lhs>
 					<op>4</op>
-					<rhs>(?i)^\s*(?:override off|automatic mode)\s*$</rhs>
+					<rhs>(?i)^\s*(?:override off|automatic mode)[.!?]?\s*$</rhs>
 				</Condition>
 			</ConditionList>
 		</Action>

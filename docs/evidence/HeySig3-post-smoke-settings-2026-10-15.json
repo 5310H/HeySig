@@ -1,0 +1,26 @@
+{
+  "time": 1792080866377,
+  "uptimeMillis": 61556954,
+  "noise": {
+    "configuration": "{\"version\":1,\"programs\":[\"Universal\",\"Off just Tinnitus\",\"Noisy\",\"Outdoor\",\"TV\",\"Very Noisy\"],\"quiet\":\"1\",\"middle\":\"3\",\"loud\":\"6\",\"low\":\"-54.5\",\"high\":\"-43.0\",\"margin\":\"1.5\",\"strikes\":\"3\",\"cooldown\":\"60\",\"source\":\"phone\",\"confirmed\":true}"
+  },
+  "sleep": {},
+  "voice": {
+    "responses": "1",
+    "prompts": "1"
+  },
+  "NoiseEnabled": "0",
+  "NoiseMode": "observe",
+  "NoiseSettingsReady": "1",
+  "NoiseLow": "-54.5",
+  "NoiseHigh": "-43.0",
+  "NoiseHysteresis": "1.5",
+  "NoiseStrikeLimit": "3",
+  "NoiseCooldownSeconds": "60",
+  "WakeEnabled": "0",
+  "SleepEnabled": "0",
+  "VoiceResponses": "1",
+  "VoicePrompts": "1",
+  "NoiseLogEnabled": "0",
+  "snapshotSHA256": "a604e86648ff071b79e3e800a660b2479783287b99e82c3b85772053b4cf9f89"
+}

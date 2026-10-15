@@ -1,0 +1,68 @@
+Drop box contents: 8 entries
+Max entries: 1000
+Low priority rate limit period: 2000 ms
+Low priority tags: {data_app_wtf, keymaster, system_server_wtf, system_app_strictmode, system_app_wtf, system_server_strictmode, data_app_strictmode, netstats}
+Searching for: data_app_native_crash
+
+========================================
+2026-10-15 00:55:44 data_app_native_crash (text, 4075 bytes)
+SystemUptimeMs: 14017665
+Process: net.dinglisch.android.taskerm
+PID: 4083
+UID: 10466
+Frozen: false
+Flags: 0x3889be44
+Package: net.dinglisch.android.taskerm v5445 (6.6.20)
+Foreground: Yes
+Process-Runtime: 13985077
+Build: google/tegu/tegu:17/CP3A.260905.009/16091614:user/release-keys
+DefaultScreen-State: DOZE
+Keyguard-Locked: true
+Loading-Progress: 1.0
+Dropped-Count: 0
+
+*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+Build fingerprint: 'google/tegu/tegu:17/CP3A.260905.009/16091614:user/release-keys'
+Kernel Release: '6.1.162-android14-11-g2ec90535fa34-ab15810641'
+Revision: 'MP1.0'
+ABI: 'arm64'
+Timestamp: 2026-10-15 00:55:41.820125294-0400
+Process uptime: 20801s
+Executable: /system/bin/app_process64
+Cmdline: net.dinglisch.android.taskerm
+pid: 4083, ppid: 1051, tid: 14174, name: RenderThread  >>> net.dinglisch.android.taskerm <<<
+uid: 10466
+tagged_addr_ctrl: 0000000000000001 (PR_TAGGED_ADDR_ENABLE)
+pac_enabled_keys: 000000000000000f (PR_PAC_APIAKEY, PR_PAC_APIBKEY, PR_PAC_APDAKEY, PR_PAC_APDBKEY)
+esr: 0000000092000006 (Data Abort Exception 0x24)
+signal 6 (SIGABRT), code -1 (SI_QUEUE), fault addr --------
+Abort message: 'mprotect(0x718aaad000, 393216, 1) failed: Out of memory'
+
+    x0  0000000000000000  x1  000000000000375e  x2  0000000000000006  x3  0000006ea7d37ae0
+    x4  301f2b3530313238  x5  301f2b3530313238  x6  301f2b3530313238  x7  7f7f7f7f7f7f7f7f
+    x8  00000000000000f0  x9  adbd7c9f5cef955e  x10 0000000000000001  x11 000000718bd0d410
+    x12 000000006ad05cc9  x13 000000007fffffff  x14 00000000005e10a4  x15 0000007730e865fa
+    x16 000000718bdedd70  x17 000000718bd013c0  x18 0000006ea46fc000  x19 0000000000000ff3
+    x20 000000000000375e  x21 00000000ffffffff  x22 000000718aba9598  x23 000000718bdfe8d0
+    x24 0000000000000000  x25 000000718bdfe000  x26 0000006ea7d38c08  x27 000000718bdfe000
+    x28 0000000000001002  x29 0000006ea7d37b60
+    lr  000000718bc92e9c  sp  0000006ea7d37ae0  pc  000000718bc92ec0  pst 0000000000001000
+    esr 0000000092000006  vg  0000000000000002
+
+11 total frames
+backtrace:
+      #00 pc 0000000000092ec0  /apex/com.android.runtime/bin/linker64 (__dl_abort+160) (BuildId: 3a99a8c3127a17e6ec54a0509164b8c4)
+      #01 pc 000000000007eb10  /apex/com.android.runtime/bin/linker64 (__dl_do_dlopen(char const*, int, android_dlextinfo const*, void const*)+1392) (BuildId: 3a99a8c3127a17e6ec54a0509164b8c4)
+      #02 pc 0000000000083fbc  /apex/com.android.runtime/bin/linker64 (__dl_dlopen_ext(char const*, int, android_dlextinfo const*, void const*) (.__uniq.234527301065430621646263515731762262959)+76) (BuildId: 3a99a8c3127a17e6ec54a0509164b8c4)
+      #03 pc 0000000000004034  /apex/com.android.runtime/lib64/bionic/libdl.so (dlopen+20) (BuildId: b0cdde230eb4820952ad685f3c265f5a)
+      #04 pc 000000000071cd68  /system/lib64/libhwui.so (android::uirenderer::renderthread::HintSessionWrapper::HintSessionBinding::init()+40) (BuildId: 30cf1be2a86b4c0ed343163545550bfe)
+      #05 pc 00000000003effc8  /system/lib64/libhwui.so (android::uirenderer::renderthread::HintSessionWrapper::init()+200) (BuildId: 30cf1be2a86b4c0ed343163545550bfe)
+      #06 pc 00000000004d2e14  /system/lib64/libhwui.so (android::uirenderer::renderthread::RenderThread::threadLoop()+804) (BuildId: 30cf1be2a86b4c0ed343163545550bfe)
+      #07 pc 000000000001963c  /system/lib64/libutils.so (android::Thread::_threadLoop(void*)+252) (BuildId: 3be02a21facf1db39ea4adeb1fcde086)
+      #08 pc 000000000001b148  /system/lib64/libutils.so (libutil_thread_trampoline(void*) (.__uniq.226528677032898775202282855395389835431)+24) (BuildId: 3be02a21facf1db39ea4adeb1fcde086)
+      #09 pc 0000000000094314  /apex/com.android.runtime/lib64/bionic/libc.so (__pthread_start(void*) (.__uniq.67847048707805468364044055584648682506)+180) (BuildId: f4fb08a93372e239e4aab3ef1865ae74)
+      #10 pc 0000000000083a14  /apex/com.android.runtime/lib64/bionic/libc.so (__start_thread+68) (BuildId: f4fb08a93372e239e4aab3ef1865ae74)
+
+Note: To display stack pointer information, use the pbtombstone tool:
+        pbtombstone --display-sp tombstone_XX.pb
+

@@ -348,29 +348,29 @@ def numeric_voice():
     for family in ('Volume', 'Balance', 'Tinnitus'):
         for value in range(-8 if family == 'Balance' else 0, 8 if family == 'Balance' else 16):
             word = (r'(?:minus|negative)\s+(?:' + str(abs(value)) + '|' + words[abs(value)] + ')' if value < 0 else words[value])
-            pattern = r'(?i)^\s*(?:(?:set|change)\s+)?' + family.lower() + r'\s+(?:to\s+)?(?:' + str(value) + '|' + word + r')\s*$'
+            pattern = r'(?i)^\s*(?:(?:set|change)\s+)?' + family.lower() + r'\s+(?:to\s+)?(?:' + str(value) + '|' + word + r')[.!?]?\s*$'
             aa += [condition('%sig3_command', 4, pattern), setvar('%SIG3_VoiceMatched',1), request(family, 'Set', str(value)), stop(), action(38)]
-    for family, operation, pattern in [('Volume', 'Max', r'(?i)^\s*(?:maximum volume|volume max|volume maximum)\s*$'), ('Volume', 'Mute', r'(?i)^\s*(?:mute|volume mute|mute volume)\s*$'), ('Balance', 'Sharp', r'(?i)^\s*(?:balance sharp|sharp balance)\s*$'), ('Balance', 'Soft', r'(?i)^\s*(?:balance soft|soft balance)\s*$'), ('Tinnitus', 'Max', r'(?i)^\s*(?:maximum tinnitus|tinnitus max)\s*$'), ('Tinnitus', 'Mute', r'(?i)^\s*(?:tinnitus mute|mute tinnitus)\s*$')]:
+    for family, operation, pattern in [('Volume', 'Max', r'(?i)^\s*(?:maximum volume|volume max|volume maximum)[.!?]?\s*$'), ('Volume', 'Mute', r'(?i)^\s*(?:mute|volume mute|mute volume)[.!?]?\s*$'), ('Balance', 'Sharp', r'(?i)^\s*(?:balance sharp|sharp balance)[.!?]?\s*$'), ('Balance', 'Soft', r'(?i)^\s*(?:balance soft|soft balance)[.!?]?\s*$'), ('Tinnitus', 'Max', r'(?i)^\s*(?:maximum tinnitus|tinnitus max)[.!?]?\s*$'), ('Tinnitus', 'Mute', r'(?i)^\s*(?:tinnitus mute|mute tinnitus)[.!?]?\s*$')]:
         aa += [condition('%sig3_command', 4, pattern), setvar('%SIG3_VoiceMatched',1), request(family, 'Set', str(7 if family == 'Balance' and operation == 'Sharp' else -8 if family == 'Balance' else 15 if operation == 'Max' else 0)), stop(), action(38)]
     for slot in range(1, 7):
         word = r'(?:two|too)' if slot == 2 else words[slot]
-        pattern = r'(?i)^\s*(?:(?:set|change)\s+)?(?:program|mode)\s+(?:to\s+)?(?:' + str(slot) + '|' + word + r'|\Q%SIG3_ProgramName' + str(slot) + r'\E)\s*$'
+        pattern = r'(?i)^\s*(?:(?:set|change)\s+)?(?:program|mode)\s+(?:to\s+)?(?:' + str(slot) + '|' + word + r'|\Q%SIG3_ProgramName' + str(slot) + r'\E)[.!?]?\s*$'
         aa += [condition('%sig3_command', 4, pattern), setvar('%SIG3_VoiceMatched',1), request('Program', 'Switch', str(slot)), stop(), action(38)]
     for family, operation, target, pattern in [
-            ('Volume','Current','',r'(?i)^\s*(?:current volume|what is (?:the )?(?:current )?volume)\s*\??\s*$'),
-            ('Balance','Current','',r'(?i)^\s*(?:current balance|what is (?:the )?(?:current )?balance)\s*\??\s*$'),
-            ('Tinnitus','Current','',r'(?i)^\s*(?:current tinnitus|current tinnitus level|what is (?:the )?(?:current )?tinnitus(?: level)?)\s*\??\s*$'),
-            ('Program','Current','',r'(?i)^\s*(?:current program|current mode|what program|what mode|what is (?:the )?current (?:program|mode))\s*\??\s*$'),
-            ('Battery','Check','listen',r'(?i)^\s*(?:battery|battery check|check battery)\s*$'),
-            ('Battery','Check','listen',r'(?i)^\s*(?:battery listen|listen to battery)\s*$'),
-            ('Settings','Save','',r'(?i)^\s*save settings\s*$'),
-            ('Settings','Restore','',r'(?i)^\s*restore settings\s*$'),
-            ('Noise','Sample','',r'(?i)^\s*(?:noise sample|check noise)\s*$'),
-            ('Setup','Toggle','',r'(?i)^\s*override toggle\s*$'),
-            ('Sleep','Set','asleep',r'(?i)^\s*sleep\s*$'),
-            ('Sleep','Set','awake',r'(?i)^\s*wake\s*$'),
-            ('Setup','Override','1',r'(?i)^\s*(?:override on|manual mode)\s*$'),
-            ('Setup','Override','0',r'(?i)^\s*(?:override off|automatic mode)\s*$')]:
+            ('Volume','Current','',r'(?i)^\s*(?:current volume|what is (?:the )?(?:current )?volume)\s*[.!?]?\s*$'),
+            ('Balance','Current','',r'(?i)^\s*(?:current balance|what is (?:the )?(?:current )?balance)\s*[.!?]?\s*$'),
+            ('Tinnitus','Current','',r'(?i)^\s*(?:current tinnitus|current tinnitus level|what is (?:the )?(?:current )?tinnitus(?: level)?)\s*[.!?]?\s*$'),
+            ('Program','Current','',r'(?i)^\s*(?:current program|current mode|what program|what mode|what is (?:the )?current (?:program|mode))\s*[.!?]?\s*$'),
+            ('Battery','Check','listen',r'(?i)^\s*(?:battery|battery check|check battery)[.!?]?\s*$'),
+            ('Battery','Check','listen',r'(?i)^\s*(?:battery listen|listen to battery)[.!?]?\s*$'),
+            ('Settings','Save','',r'(?i)^\s*save settings[.!?]?\s*$'),
+            ('Settings','Restore','',r'(?i)^\s*restore settings[.!?]?\s*$'),
+            ('Noise','Sample','',r'(?i)^\s*(?:noise sample|check noise)[.!?]?\s*$'),
+            ('Setup','Toggle','',r'(?i)^\s*override toggle[.!?]?\s*$'),
+            ('Sleep','Set','asleep',r'(?i)^\s*sleep[.!?]?\s*$'),
+            ('Sleep','Set','awake',r'(?i)^\s*wake[.!?]?\s*$'),
+            ('Setup','Override','1',r'(?i)^\s*(?:override on|manual mode)[.!?]?\s*$'),
+            ('Setup','Override','0',r'(?i)^\s*(?:override off|automatic mode)[.!?]?\s*$')]:
         aa += [condition('%sig3_command', 4, pattern), setvar('%SIG3_VoiceMatched',1), request(family, operation, target), stop(), action(38)]
     return aa + [java_code('tasker.showToast("Use volume 0–15, balance minus 8–7, tinnitus 0–15, program 1–6, or battery check"); return "unrecognized";')]
 
@@ -747,6 +747,10 @@ def extra_tasks():
               condition('%par1',12),setvar('%sig3_input','%par1'),action(38),
               java_code('input = tasker.getVariable("sig3_input"); if (input == null) throw new com.joaomgcd.taskerm.action.java.JavaCodeException("No command text supplied by event"); input = input.trim().replaceAll("(?i)^sig3\\\\s+", ""); tasker.setVariable("sig3_input", input); return "normalized";'),
               condition('%err',13),call('SIG3_VoiceRouter','%sig3_input'),action(38)]
+        if name == 'SIG3_WatchCommand':
+            aa[7] = java_file('sig3_watch_input.java')
+            aa.insert(0, setvar('%sig3_reply_before', '%SIG3_OperationId'))
+            aa += [condition('%err',13), condition('%SIG3_VoiceCancelled',3,1), *voice_reply(), action(38), action(38)]
         if name == 'SIG3_AutoVoiceCommand':
             aa = [condition('%SIG3_WakeEnabled',2,1),stop(),action(38),*aa]
         add(name,number,aa)

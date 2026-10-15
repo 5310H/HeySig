@@ -1,0 +1,38 @@
+{
+  "runId": "1792083635525",
+  "started": 1792083641413,
+  "startedUptime": 64331987,
+  "deadline": 1792085435525,
+  "deadlineUptime": 66126108,
+  "ticks": 114,
+  "freshSamples": 114,
+  "failedAttempts": 0,
+  "skippedTicks": 0,
+  "lockedTicks": 13,
+  "chargingTicks": 0,
+  "maxSampleGapMillis": 16241,
+  "maxTickGapMillis": 16237,
+  "lastSampleTime": 1792085439651,
+  "startBattery": {
+    "level": 100,
+    "scale": 100,
+    "plugged": 0,
+    "temperature": 230,
+    "voltage": 4322,
+    "chargeCounterMicroAh": 4607500
+  },
+  "lastBattery": {
+    "level": 98,
+    "scale": 100,
+    "plugged": 0,
+    "temperature": 236,
+    "voltage": 4317,
+    "chargeCounterMicroAh": 4507500
+  },
+  "lastTick": 1792085439900,
+  "lastUptime": 66130475,
+  "noiseMode": "observe",
+  "lastError": "",
+  "status": "completed",
+  "stopDelayMillis": 4367
+}

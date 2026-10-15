@@ -1,0 +1,712 @@
+Drop box contents: 8 entries
+Max entries: 1000
+Low priority rate limit period: 2000 ms
+Low priority tags: {data_app_wtf, keymaster, system_server_wtf, system_app_strictmode, system_app_wtf, system_server_strictmode, data_app_strictmode, netstats}
+Searching for: SYSTEM_TOMBSTONE
+
+========================================
+2026-10-15 00:56:01 SYSTEM_TOMBSTONE (compressed text, 6127 bytes)
+isPrevious: true
+Build: google/tegu/tegu:17/CP3A.260905.009/16091614:user/release-keys
+Hardware: tegu
+Revision: MP1.0
+Bootloader: tegu-17.0-15819938
+Radio: g5300t-260604-260807-B-16036236,g5300t-260604-260807-B-16036236
+Kernel: Linux version 6.1.162-android14-11-g2ec90535fa34-ab15810641 (build-user@build-host) (Android (10087095, +pgo, +bolt, +lto, -mlgo, based on r487747c) clang version 17.0.2 (https://android.googlesource.com/toolchain/llvm-project d9f89f4d16663d5012e5c09495f3b30ece3d2362), LLD 17.0.2) #1 SMP PREEMPT Wed Jul  8 11:53:29 UTC 2026
+Boot ID: a1889174-ad4d-4398-8095-69fd17231ded
+
+Dropped-Count: 0
+*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+Build fingerprint: 'google/tegu/tegu:17/CP3A.260905.009/16091614:user/release-keys'
+Kernel Release: '6.1.162-android14-11-g2ec90535fa34-ab15810641'
+Revision: 'MP1.0'
+ABI: 'arm64'
+Timestamp: 2026-10-15 00:55:41.820125294-0400
+Process uptime: 20801s
+Executable: /system/bin/app_process64
+Cmdline: net.dinglisch.android.taskerm
+pid: 4083, ppid: 1051, tid: 14174, name: RenderThread  >>> net.dinglisch.android.taskerm <<<
+uid: 10466
+tagged_addr_ctrl: 0000000000000001 (PR_TAGGED_ADDR_ENABLE)
+pac_enabled_keys: 000000000000000f (PR_PAC_APIAKEY, PR_PAC_APIBKEY, PR_PAC_APDAKEY, PR_PAC_APDBKEY)
+esr: 0000000092000006 (Data Abort Exception 0x24)
+signal 6 (SIGABRT), code -1 (SI_QUEUE), fault addr --------
+Abort message: 'mprotect(0x718aaad000, 393216, 1) failed: Out of memory'
+
+    x0  0000000000000000  x1  000000000000375e  x2  0000000000000006  x3  0000006ea7d37ae0
+    x4  301f2b3530313238  x5  301f2b3530313238  x6  301f2b3530313238  x7  7f7f7f7f7f7f7f7f
+    x8  00000000000000f0  x9  adbd7c9f5cef955e  x10 0000000000000001  x11 000000718bd0d410
+    x12 000000006ad05cc9  x13 000000007fffffff  x14 00000000005e10a4  x15 0000007730e865fa
+    x16 000000718bdedd70  x17 000000718bd013c0  x18 0000006ea46fc000  x19 0000000000000ff3
+    x20 000000000000375e  x21 00000000ffffffff  x22 000000718aba9598  x23 000000718bdfe8d0
+    x24 0000000000000000  x25 000000718bdfe000  x26 0000006ea7d38c08  x27 000000718bdfe000
+    x28 0000000000001002  x29 0000006ea7d37b60
+    lr  000000718bc92e9c  sp  0000006ea7d37ae0  pc  000000718bc92ec0  pst 0000000000001000
+    esr 0000000092000006  vg  0000000000000002
+
+11 total frames
+backtrace:
+      #00 pc 0000000000092ec0  /apex/com.android.runtime/bin/linker64 (__dl_abort+160) (BuildId: 3a99a8c3127a17e6ec54a0509164b8c4)
+      #01 pc 000000000007eb10  /apex/com.android.runtime/bin/linker64 (__dl_do_dlopen(char const*, int, android_dlextinfo const*, void const*)+1392) (BuildId: 3a99a8c3127a17e6ec54a0509164b8c4)
+      #02 pc 0000000000083fbc  /apex/com.android.runtime/bin/linker64 (__dl_dlopen_ext(char const*, int, android_dlextinfo const*, void const*) (.__uniq.234527301065430621646263515731762262959)+76) (BuildId: 3a99a8c3127a17e6ec54a0509164b8c4)
+      #03 pc 0000000000004034  /apex/com.android.runtime/lib64/bionic/libdl.so (dlopen+20) (BuildId: b0cdde230eb4820952ad685f3c265f5a)
+      #04 pc 000000000071cd68  /system/lib64/libhwui.so (android::uirenderer::renderthread::HintSessionWrapper::HintSessionBinding::init()+40) (BuildId: 30cf1be2a86b4c0ed343163545550bfe)
+      #05 pc 00000000003effc8  /system/lib64/libhwui.so (android::uirenderer::renderthread::HintSessionWrapper::init()+200) (BuildId: 30cf1be2a86b4c0ed343163545550bfe)
+      #06 pc 00000000004d2e14  /system/lib64/libhwui.so (android::uirenderer::renderthread::RenderThread::threadLoop()+804) (BuildId: 30cf1be2a86b4c0ed343163545550bfe)
+      #07 pc 000000000001963c  /system/lib64/libutils.so (android::Thread::_threadLoop(void*)+252) (BuildId: 3be02a21facf1db39ea4adeb1fcde086)
+      #08 pc 000000000001b148  /system/lib64/libutils.so (libutil_thread_trampoline(void*) (.__uniq.226528677032898775202282855395389835431)+24) (BuildId: 3be02a21facf1db39ea4adeb1fcde086)
+      #09 pc 0000000000094314  /apex/com.android.runtime/lib64/bionic/libc.so (__pthread_start(void*) (.__uniq.67847048707805468364044055584648682506)+180) (BuildId: f4fb08a93372e239e4aab3ef1865ae74)
+      #10 pc 0000000000083a14  /apex/com.android.runtime/lib64/bionic/libc.so (__start_thread+68) (BuildId: f4fb08a93372e239e4aab3ef1865ae74)
+
+Note: To display stack pointer information, use the pbtombstone tool:
+        pbtombstone --display-sp tombstone_XX.pb
+
+memory near x3 ([anon:stack_and_tls:14174]):
+    0000006ea7d37ac0 000000718aba9598 0000000000000000  ....q...........  [ XXX, XXX ]
+    0000006ea7d37ad0 000000718aaad000 66c2d3427af291f7  ....q......zB..f  [ XXX, XXX ]
+    0000006ea7d37ae0 0000000000000000 00000000ffffffff  ................  [ XXX, XXX ]
+    0000006ea7d37af0 000028e200000ff3 0000000000000000  .....(..........  [ XXX, XXX ]
+    0000006ea7d37b00 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    0000006ea7d37b10 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    0000006ea7d37b20 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    0000006ea7d37b30 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    0000006ea7d37b40 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    0000006ea7d37b50 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    0000006ea7d37b60 0000006ea7d38cf0 000456718bc7eb14  ....n.......qV..  [ XXX, XXX ]
+    0000006ea7d37b70 0000000000000000 0000000000000020  ........ .......  [ XXX, XXX ]
+    0000006ea7d37b80 000000718aaad000 66c2d3427af291f7  ....q......zB..f  [ XXX, XXX ]
+    0000006ea7d37b90 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    0000006ea7d37ba0 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    0000006ea7d37bb0 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+
+memory near x11 (/apex/com.android.runtime/bin/linker64):
+    000000718bd0d3f0 528002c997fe06c8 b900000912800008  .......R........  [ XXX, XXX ]
+    000000718bd0d400 2a0803e0a8c17bfd 00000000d65f0bff  .{.....*.._.....  [ XXX, XXX ]
+    000000718bd0d410 b4000180d503245f 3101051f51010428  _$......(..Q...1  [ XXX, XXX ]
+    000000718bd0d420 5100042854000129 5280002af9400009  )..T(..Q..@.*..R  [ XXX, XXX ]
+    000000718bd0d430 8a2801299ac82148 2a1f03e0f9000009  H!..).(........*  [ XXX, XXX ]
+    000000718bd0d440 d503233fd65f03c0 910003fda9bf7bfd  .._.?#...{......  [ XXX, XXX ]
+    000000718bd0d450 528002c997fe06b0 b900000912800008  .......R........  [ XXX, XXX ]
+    000000718bd0d460 2a0803e0a8c17bfd 00000000d65f0bff  .{.....*.._.....  [ XXX, XXX ]
+    000000718bd0d470 b4000080d503245f 2a1f03e0f900001f  _$.............*  [ XXX, XXX ]
+    000000718bd0d480 d503233fd65f03c0 910003fda9bf7bfd  .._.?#...{......  [ XXX, XXX ]
+    000000718bd0d490 528002c997fe06a0 b900000912800008  .......R........  [ XXX, XXX ]
+    000000718bd0d4a0 2a0803e0a8c17bfd 00000000d65f0bff  .{.....*.._.....  [ XXX, XXX ]
+    000000718bd0d4b0 d10143ffd503233f f90023f3a9037bfd  ?#...C...{...#..  [ XXX, XXX ]
+    000000718bd0d4c0 d53bd0539100c3fd f940166852a20009  ....S.;....Rh.@.  [ XXX, XXX ]
+    000000718bd0d4d0 f81f83a8910023e2 910023e1a90087e9  .#...........#..  [ XXX, XXX ]
+    000000718bd0d4e0 97ffff6fa901ffff 3100041ff9400be8  ....o.....@....1  [ XXX, XXX ]
+
+memory near x16 (/apex/com.android.runtime/bin/linker64):
+    000000718bdedd50 000000718bd010c0 000000718bd022c0  ....q...."..q...  [ XXX, XXX ]
+    000000718bdedd60 000000718bd031b0 000000718bd02680  .1..q....&..q...  [ XXX, XXX ]
+    000000718bdedd70 000000718bd013c0 000000718bd01840  ....q...@...q...  [ XXX, XXX ]
+    000000718bdedd80 000000718bd013c0 000000718bd02480  ....q....$..q...  [ XXX, XXX ]
+    000000718bdedd90 000000718bd03a10 000000718bd02790  .:..q....'..q...  [ XXX, XXX ]
+    000000718bdedda0 000000718bd01980 000000718bd01bc0  ....q.......q...  [ XXX, XXX ]
+    000000718bdeddb0 000000718bd01f80 0000000000000000  ....q...........  [ XXX, XXX ]
+    000000718bdeddc0 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    000000718bdeddd0 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    000000718bdedde0 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    000000718bdeddf0 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    000000718bdede00 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    000000718bdede10 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    000000718bdede20 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    000000718bdede30 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    000000718bdede40 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+
+memory near x17 (/apex/com.android.runtime/bin/linker64):
+    000000718bd013a0 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    000000718bd013b0 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    000000718bd013c0 8b020024d503245f 54000668f102005f  _$..$..._...h..T  [ XXX, XXX ]
+    000000718bd013d0 f100805f8b020005 d503201f54000148  ...._...H..T. ..  [ XXX, XXX ]
+    000000718bd013e0 540001e3f100405f 3cdf00813dc00020  _@.....T ..=...<  [ XXX, XXX ]
+    000000718bd013f0 3c9f00a13d800000 d503201fd65f03c0  ...=...<.._.. ..  [ XXX, XXX ]
+    000000718bd01400 ad7f0c82ad400420 54000228f101005f   .@....._...(..T  [ XXX, XXX ]
+    000000718bd01410 ad3f0ca2ad000400 d503201fd65f03c0  ......?..._.. ..  [ XXX, XXX ]
+    000000718bd01420 f9400026361800c2 f9000006f85f8087  ...6&.@..._.....  [ XXX, XXX ]
+    000000718bd01430 d65f03c0f81f80a7 b9400026361001e2  ......_....6&.@.  [ XXX, XXX ]
+    000000718bd01440 b9000006b85fc088 d65f03c0b81fc0a8  .._..........._.  [ XXX, XXX ]
+    000000718bd01450 f101805fad411424 ad7e1c8654000069  $.A._...i..T..~.  [ XXX, XXX ]
+    000000718bd01460 ad000400ad3e1ca6 ad3f0ca2ad011404  ..>...........?.  [ XXX, XXX ]
+    000000718bd01470 b4000102d65f03c0 39400026d341fc4e  .._.....N.A.&.@9  [ XXX, XXX ]
+    000000718bd01480 386e6828385ff08a 382e680839000006  .._8(hn8...9.h.8  [ XXX, XXX ]
+    000000718bd01490 d65f03c0381ff0aa cb01000e8b020005  ...8.._.........  [ XXX, XXX ]
+
+memory near x18:
+    0000006ea46fc000 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    0000006ea46fc010 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    0000006ea46fc020 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    0000006ea46fc030 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    0000006ea46fc040 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    0000006ea46fc050 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    0000006ea46fc060 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    0000006ea46fc070 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    0000006ea46fc080 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    0000006ea46fc090 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    0000006ea46fc0a0 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    0000006ea46fc0b0 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    0000006ea46fc0c0 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    0000006ea46fc0d0 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    0000006ea46fc0e0 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    0000006ea46fc0f0 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+
+memory near x22 ([anon:linker_alloc]):
+    000000718aba9570 0000000000000001 0000000000000000  ................  [ XXX, XXX ]
+    000000718aba9580 0000000000000000 0000007189aea0b8  ............q...  [ XXX, XXX ]
+    000000718aba9590 0000007189aea0a0 000000715acde040  ....q...@..Zq...  [ XXX, XXX ]
+    000000718aba95a0 000000000000000d 000000715acde000  ...........Zq...  [ XXX, XXX ]
+    000000718aba95b0 0000000000c0a000 000000715b71a030  ........0.q[q...  [ XXX, XXX ]
+    000000718aba95c0 000000718aba9850 0000000040000541  P...q...A..@....  [ XXX, XXX ]
+    000000718aba95d0 000000715ace67a0 000000715acde388  .g.Zq......Zq...  [ XXX, XXX ]
+    000000718aba95e0 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    000000718aba95f0 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    000000718aba9600 000000715acf2ab0 000000000000039a  .*.Zq...........  [ XXX, XXX ]
+    000000718aba9610 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    000000718aba9620 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    000000718aba9630 000000715b719fa8 0000000000000011  ..q[q...........  [ XXX, XXX ]
+    000000718aba9640 000000715b719f98 0000000000000002  ..q[q...........  [ XXX, XXX ]
+    000000718aba9650 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    000000718aba9660 0000000000000000 000000715acde000  ...........Zq...  [ XXX, XXX ]
+
+memory near x23 ([anon:.bss]):
+    000000718bdfe8b0 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    000000718bdfe8c0 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    000000718bdfe8d0 6c75616665642812 0000000000002974  .(default)......  [ XXX, XXX ]
+    000000718bdfe8e0 0000000000000000 0000000000000001  ................  [ XXX, XXX ]
+    000000718bdfe8f0 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    000000718bdfe900 0000000000000000 000000718be0cf00  ............q...  [ XXX, XXX ]
+    000000718bdfe910 000000718be0cf30 000000718be0cf30  0...q...0...q...  [ XXX, XXX ]
+    000000718bdfe920 000000718be08400 000000718be086b8  ....q.......q...  [ XXX, XXX ]
+    000000718bdfe930 000000718be086b8 0000000000000000  ....q...........  [ XXX, XXX ]
+    000000718bdfe940 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    000000718bdfe950 000000718be08800 000000718be089f8  ....q.......q...  [ XXX, XXX ]
+    000000718bdfe960 000000718be08b80 000000718be7b010  ....q.......q...  [ XXX, XXX ]
+    000000718bdfe970 000000718a17c010 000000000000018d  ....q...........  [ XXX, XXX ]
+    000000718bdfe980 00000071801564e0 0000000000000169  .d..q...i.......  [ XXX, XXX ]
+    000000718bdfe990 000000003f800000 0000000000000000  ...?............  [ XXX, XXX ]
+    000000718bdfe9a0 0000000000000000 000000718bc0c997  ............q...  [ XXX, XXX ]
+
+memory near x25 ([anon:.bss]):
+    000000718bdfdfe0 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    000000718bdfdff0 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    000000718bdfe000 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    000000718bdfe010 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    000000718bdfe020 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    000000718bdfe030 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    000000718bdfe040 0000000000000001 804443d04dffb7fe  ...........M.CD.  [ XXX, XXX ]
+    000000718bdfe050 000000718bdfe058 000000718bc00040  X...q...@...q...  [ XXX, XXX ]
+    000000718bdfe060 000000000000000c 000000718bc00000  ............q...  [ XXX, XXX ]
+    000000718bdfe070 0000000000206000 0000000000000000  .` .............  [ XXX, XXX ]
+    000000718bdfe080 000000718aba02c8 0000000040000041  ....q...A..@....  [ XXX, XXX ]
+    000000718bdfe090 000000718bc00700 000000718bc00320  ....q... ...q...  [ XXX, XXX ]
+    000000718bdfe0a0 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    000000718bdfe0b0 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    000000718bdfe0c0 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    000000718bdfe0d0 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+
+memory near x26 ([anon:stack_and_tls:14174]):
+    0000006ea7d38be0 b4000070386a31c8 b4000070386a91c0  .1j8p.....j8p...  [ XXX, XXX ]
+    0000006ea7d38bf0 b400006f5871ab38 b4000070386a34d8  8.qXo....4j8p...  [ XXX, XXX ]
+    0000006ea7d38c00 b400006f5871ab40 0000000000000000  @.qXo...........  [ XXX, XXX ]
+    0000006ea7d38c10 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    0000006ea7d38c20 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    0000006ea7d38c30 0000000000000000 0045000065510000  ..........Qe..E.  [ XXX, XXX ]
+    0000006ea7d38c40 3a6e65706f6c642a 72646e6162696c20  *dlopen: libandr  [ XXX, XXX ]
+    0000006ea7d38c50 00006f732e64696f 0000000000000000  oid.so..........  [ XXX, XXX ]
+    0000006ea7d38c60 000000718abce390 0000000000000000  ....q...........  [ XXX, XXX ]
+    0000006ea7d38c70 0000006ea7d38df0 00502af17ebb11a0  ....n......~.*P.  [ XXX, XXX ]
+    0000006ea7d38c80 b40000702869e7c0 b4000070386a31c0  ..i(p....1j8p...  [ XXX, XXX ]
+    0000006ea7d38c90 0000006ea7d38cb0 0000000000000000  ....n...........  [ XXX, XXX ]
+    0000006ea7d38ca0 0000000000000001 0050ef715b1626a8  .........&.[q.P.  [ XXX, XXX ]
+    0000006ea7d38cb0 b400006ff86ee500 00000000017d7841  ..n.o...Ax}.....  [ XXX, XXX ]
+    0000006ea7d38cc0 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    0000006ea7d38cd0 bf800000bf800000 0000000000000001  ................  [ XXX, XXX ]
+
+memory near x27 ([anon:.bss]):
+    000000718bdfdfe0 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    000000718bdfdff0 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    000000718bdfe000 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    000000718bdfe010 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    000000718bdfe020 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    000000718bdfe030 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    000000718bdfe040 0000000000000001 804443d04dffb7fe  ...........M.CD.  [ XXX, XXX ]
+    000000718bdfe050 000000718bdfe058 000000718bc00040  X...q...@...q...  [ XXX, XXX ]
+    000000718bdfe060 000000000000000c 000000718bc00000  ............q...  [ XXX, XXX ]
+    000000718bdfe070 0000000000206000 0000000000000000  .` .............  [ XXX, XXX ]
+    000000718bdfe080 000000718aba02c8 0000000040000041  ....q...A..@....  [ XXX, XXX ]
+    000000718bdfe090 000000718bc00700 000000718bc00320  ....q... ...q...  [ XXX, XXX ]
+    000000718bdfe0a0 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    000000718bdfe0b0 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    000000718bdfe0c0 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    000000718bdfe0d0 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+
+memory near x29 ([anon:stack_and_tls:14174]):
+    0000006ea7d37b40 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    0000006ea7d37b50 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    0000006ea7d37b60 0000006ea7d38cf0 000456718bc7eb14  ....n.......qV..  [ XXX, XXX ]
+    0000006ea7d37b70 0000000000000000 0000000000000020  ........ .......  [ XXX, XXX ]
+    0000006ea7d37b80 000000718aaad000 66c2d3427af291f7  ....q......zB..f  [ XXX, XXX ]
+    0000006ea7d37b90 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    0000006ea7d37ba0 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    0000006ea7d37bb0 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    0000006ea7d37bc0 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    0000006ea7d37bd0 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    0000006ea7d37be0 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    0000006ea7d37bf0 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    0000006ea7d37c00 000000715ad330df 000000000000002b  .0.Zq...+.......  [ XXX, XXX ]
+    0000006ea7d37c10 0000007180a06a40 0000000000000000  @j..q...........  [ XXX, XXX ]
+    0000006ea7d37c20 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    0000006ea7d37c30 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+
+memory near lr (/apex/com.android.runtime/bin/linker64):
+    000000718bc92e70 6f00e40094020dd4 aa0003f412800015  .......o........  [ XXX, XXX ]
+    000000718bc92e80 ad0103e0ad0003e0 ad0303e0ad0203e0  ................  [ XXX, XXX ]
+    000000718bc92e90 b90013f3b9000bf5 93407e6897ff989a  ............h~@.  [ XXX, XXX ]
+    000000718bc92ea0 b90017e0f9000fff 93407e81aa0803e0  .............~@.  [ XXX, XXX ]
+    000000718bc92eb0 528000c2910003e3 d400000152801e08  .......R...R....  [ XXX, XXX ]
+    000000718bc92ec0 4b0003f3b6f80080 b900001397fff012  .......K........  [ XXX, XXX ]
+    000000718bc92ed0 aa1f03e1528000c0 528015809401e976  ...R....v......R  [ XXX, XXX ]
+    000000718bc92ee0 aa0003f394020db8 94020db552801640  ........@..R....  [ XXX, XXX ]
+    000000718bc92ef0 aa0003f46f00e400 ad0103e0ad0003e0  ...o............  [ XXX, XXX ]
+    000000718bc92f00 ad0303e0ad0203e0 b90013f3b9000bf5  ................  [ XXX, XXX ]
+    000000718bc92f10 93407e6897ff987c b90017e0f9000fff  |...h~@.........  [ XXX, XXX ]
+    000000718bc92f20 93407e81aa0803e0 528000c2910003e3  .....~@........R  [ XXX, XXX ]
+    000000718bc92f30 d400000152801e08 4b0003f3b6f80080  ...R...........K  [ XXX, XXX ]
+    000000718bc92f40 b900001397ffeff4 97ffa4ad52800fe0  ...........R....  [ XXX, XXX ]
+    000000718bc92f50 39400008d503245f 39400029f940040a  _$....@9..@.).@9  [ XXX, XXX ]
+    000000718bc92f60 d341fd0cf940042b 9a8a01827200011f  +.@...A....r....  [ XXX, XXX ]
+
+memory near sp ([anon:stack_and_tls:14174]):
+    0000006ea7d37ac0 000000718aba9598 0000000000000000  ....q...........  [ XXX, XXX ]
+    0000006ea7d37ad0 000000718aaad000 66c2d3427af291f7  ....q......zB..f  [ XXX, XXX ]
+    0000006ea7d37ae0 0000000000000000 00000000ffffffff  ................  [ XXX, XXX ]
+    0000006ea7d37af0 000028e200000ff3 0000000000000000  .....(..........  [ XXX, XXX ]
+    0000006ea7d37b00 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    0000006ea7d37b10 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    0000006ea7d37b20 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    0000006ea7d37b30 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    0000006ea7d37b40 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    0000006ea7d37b50 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    0000006ea7d37b60 0000006ea7d38cf0 000456718bc7eb14  ....n.......qV..  [ XXX, XXX ]
+    0000006ea7d37b70 0000000000000000 0000000000000020  ........ .......  [ XXX, XXX ]
+    0000006ea7d37b80 000000718aaad000 66c2d3427af291f7  ....q......zB..f  [ XXX, XXX ]
+    0000006ea7d37b90 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    0000006ea7d37ba0 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+    0000006ea7d37bb0 0000000000000000 0000000000000000  ................  [ XXX, XXX ]
+
+memory near pc (/apex/com.android.runtime/bin/linker64):
+    000000718bc92ea0 b90017e0f9000fff 93407e81aa0803e0  .............~@.  [ XXX, XXX ]
+    000000718bc92eb0 528000c2910003e3 d400000152801e08  .......R...R....  [ XXX, XXX ]
+    000000718bc92ec0 4b0003f3b6f80080 b900001397fff012  .......K........  [ XXX, XXX ]
+    000000718bc92ed0 aa1f03e1528000c0 528015809401e976  ...R....v......R  [ XXX, XXX ]
+    000000718bc92ee0 aa0003f394020db8 94020db552801640  ........@..R....  [ XXX, XXX ]
+    000000718bc92ef0 aa0003f46f00e400 ad0103e0ad0003e0  ...o............  [ XXX, XXX ]
+    000000718bc92f00 ad0303e0ad0203e0 b90013f3b9000bf5  ................  [ XXX, XXX ]
+    000000718bc92f10 93407e6897ff987c b90017e0f9000fff  |...h~@.........  [ XXX, XXX ]
+    000000718bc92f20 93407e81aa0803e0 528000c2910003e3  .....~@........R  [ XXX, XXX ]
+    000000718bc92f30 d400000152801e08 4b0003f3b6f80080  ...R...........K  [ XXX, XXX ]
+    000000718bc92f40 b900001397ffeff4 97ffa4ad52800fe0  ...........R....  [ XXX, XXX ]
+    000000718bc92f50 39400008d503245f 39400029f940040a  _$....@9..@.).@9  [ XXX, XXX ]
+    000000718bc92f60 d341fd0cf940042b 9a8a01827200011f  +.@...A....r....  [ XXX, XXX ]
+    000000718bc92f70 7200013fd341fd2a eb0a005f9a8b014a  *.A.?..rJ..._...  [ XXX, XXX ]
+    000000718bc92f80 d503233f540001e1 910003fda9bf7bfd  ...T?#...{......  [ XXX, XXX ]
+    000000718bc92f90 7200011ff940080a 9a801540f940082b  ..@....r+.@.@...  [ XXX, XXX ]
+
+
+--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+Executable: /system/bin/app_process64
+Cmdline: net.dinglisch.android.taskerm
+pid: 4083, ppid: 1051, tid: 337, name: ExecuteJavaCode  >>> net.dinglisch.android.taskerm <<<
+uid: 10466
+tagged_addr_ctrl: 0000000000000001 (PR_TAGGED_ADDR_ENABLE)
+pac_enabled_keys: 000000000000000f (PR_PAC_APIAKEY, PR_PAC_APIBKEY, PR_PAC_APDAKEY, PR_PAC_APDBKEY)
+    x0  b4000070192d5ee0  x1  0000000000000080  x2  0000000000000002  x3  0000000000000000
+    x4  0000000000000000  x5  0000000000000000  x6  0000000000000000  x7  0000000000000020
+    x8  0000000000000062  x9  0000000000000000  x10 0000000002f80dd1  x11 0000000000000000
+    x12 0000000000000073  x13 000000670c0bb4c0  x14 0000000000000000  x15 00000000707e9230
+    x16 0000006eb51924a0  x17 000000716555fb00  x18 00000067052e8000  x19 b4000070192d5eb0
+    x20 0000000000000000  x21 0000000047000000  x22 0000000000fffff7  x23 0000000000000000
+    x24 0000000000000000  x25 b4000070192d6eb0  x26 000000670c0bc340  x27 0000006eb5371000
+    x28 b400006eb8650710  x29 000000670c0bb9c0
+    lr  0000006eb49ef3e8  sp  000000670c0bb990  pc  000000716555fb20  pst 0000000040001000
+    esr 0000000000000000  vg  0000000000000002
+16 total frames
+backtrace:
+      #00 pc 00000000000acb20  /apex/com.android.runtime/lib64/bionic/libc.so (syscall+32) (BuildId: f4fb08a93372e239e4aab3ef1865ae74)
+      #01 pc 000000000048c3e4  /apex/com.android.art/lib64/libart.so (art::Thread::Park(bool, long)+436) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #02 pc 000000000048bd9c  /apex/com.android.art/lib64/libart.so (art::Unsafe_park(_JNIEnv*, _jobject*, unsigned char, long) (.__uniq.319429422067363160645159987129209045680)+184) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #03 pc 0000000000ca1bfc  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (art_jni_trampoline+108)
+      #04 pc 00000000004835d4  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await+1108)
+      #05 pc 000000000046f3b8  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.LinkedBlockingQueue.take+120)
+      #06 pc 0000000000474b20  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.ThreadPoolExecutor.getTask+320)
+      #07 pc 0000000000475dbc  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.ThreadPoolExecutor.runWorker+508)
+      #08 pc 000000000047a728  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.ThreadPoolExecutor$Worker.run+56)
+      #09 pc 00000000003119d0  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.lang.Thread.run+64)
+      #10 pc 0000000000270cf4  /apex/com.android.art/lib64/libart.so (art_quick_invoke_stub+612) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #11 pc 000000000023ba68  /apex/com.android.art/lib64/libart.so (art::ArtMethod::Invoke(art::Thread*, unsigned int*, unsigned int, art::JValue*, char const*)+224) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #12 pc 000000000055c204  /apex/com.android.art/lib64/libart.so (art::Thread::CreateCallback(void*)+1400) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #13 pc 000000000055bc78  /apex/com.android.art/lib64/libart.so (art::Thread::CreateCallbackWithUffdGc(void*)+12) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #14 pc 0000000000094314  /apex/com.android.runtime/lib64/bionic/libc.so (__pthread_start(void*) (.__uniq.67847048707805468364044055584648682506)+180) (BuildId: f4fb08a93372e239e4aab3ef1865ae74)
+      #15 pc 0000000000083a14  /apex/com.android.runtime/lib64/bionic/libc.so (__start_thread+68) (BuildId: f4fb08a93372e239e4aab3ef1865ae74)
+
+--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+Executable: /system/bin/app_process64
+Cmdline: net.dinglisch.android.taskerm
+pid: 4083, ppid: 1051, tid: 341, name: ExecuteJavaCode  >>> net.dinglisch.android.taskerm <<<
+uid: 10466
+tagged_addr_ctrl: 0000000000000001 (PR_TAGGED_ADDR_ENABLE)
+pac_enabled_keys: 000000000000000f (PR_PAC_APIAKEY, PR_PAC_APIBKEY, PR_PAC_APDAKEY, PR_PAC_APDBKEY)
+    x0  b40000701ac1a130  x1  0000000000000080  x2  0000000000000002  x3  0000000000000000
+    x4  0000000000000000  x5  0000000000000000  x6  0000000000000000  x7  0000000000000020
+    x8  0000000000000062  x9  0000000000000000  x10 0000000000000000  x11 000000000000001e
+    x12 0000000000000073  x13 000000576ea7b710  x14 0000000000000000  x15 00000000707e9230
+    x16 0000006eb51924a0  x17 000000716555fb00  x18 000000576daac000  x19 b40000701ac1a100
+    x20 0000000000000000  x21 0000000047000000  x22 0000000000fffff7  x23 0000000000000000
+    x24 0000000000000000  x25 b40000701ac1b100  x26 000000576ea7c340  x27 0000006eb5371000
+    x28 b400006eb8650710  x29 000000576ea7b9c0
+    lr  0000006eb49ef3e8  sp  000000576ea7b990  pc  000000716555fb20  pst 0000000040001000
+    esr 0000000000000000  vg  0000000000000002
+16 total frames
+backtrace:
+      #00 pc 00000000000acb20  /apex/com.android.runtime/lib64/bionic/libc.so (syscall+32) (BuildId: f4fb08a93372e239e4aab3ef1865ae74)
+      #01 pc 000000000048c3e4  /apex/com.android.art/lib64/libart.so (art::Thread::Park(bool, long)+436) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #02 pc 000000000048bd9c  /apex/com.android.art/lib64/libart.so (art::Unsafe_park(_JNIEnv*, _jobject*, unsigned char, long) (.__uniq.319429422067363160645159987129209045680)+184) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #03 pc 0000000000ca1bfc  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (art_jni_trampoline+108)
+      #04 pc 00000000004835d4  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await+1108)
+      #05 pc 000000000046f3b8  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.LinkedBlockingQueue.take+120)
+      #06 pc 0000000000474b20  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.ThreadPoolExecutor.getTask+320)
+      #07 pc 0000000000475dbc  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.ThreadPoolExecutor.runWorker+508)
+      #08 pc 000000000047a728  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.ThreadPoolExecutor$Worker.run+56)
+      #09 pc 00000000003119d0  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.lang.Thread.run+64)
+      #10 pc 0000000000270cf4  /apex/com.android.art/lib64/libart.so (art_quick_invoke_stub+612) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #11 pc 000000000023ba68  /apex/com.android.art/lib64/libart.so (art::ArtMethod::Invoke(art::Thread*, unsigned int*, unsigned int, art::JValue*, char const*)+224) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #12 pc 000000000055c204  /apex/com.android.art/lib64/libart.so (art::Thread::CreateCallback(void*)+1400) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #13 pc 000000000055bc78  /apex/com.android.art/lib64/libart.so (art::Thread::CreateCallbackWithUffdGc(void*)+12) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #14 pc 0000000000094314  /apex/com.android.runtime/lib64/bionic/libc.so (__pthread_start(void*) (.__uniq.67847048707805468364044055584648682506)+180) (BuildId: f4fb08a93372e239e4aab3ef1865ae74)
+      #15 pc 0000000000083a14  /apex/com.android.runtime/lib64/bionic/libc.so (__start_thread+68) (BuildId: f4fb08a93372e239e4aab3ef1865ae74)
+
+--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+Executable: /system/bin/app_process64
+Cmdline: net.dinglisch.android.taskerm
+pid: 4083, ppid: 1051, tid: 342, name: ExecuteJavaCode  >>> net.dinglisch.android.taskerm <<<
+uid: 10466
+tagged_addr_ctrl: 0000000000000001 (PR_TAGGED_ADDR_ENABLE)
+pac_enabled_keys: 000000000000000f (PR_PAC_APIAKEY, PR_PAC_APIBKEY, PR_PAC_APDAKEY, PR_PAC_APDBKEY)
+    x0  b40000701ac11620  x1  0000000000000080  x2  0000000000000002  x3  0000000000000000
+    x4  0000000000000000  x5  0000000000000000  x6  0000000000000000  x7  0000000000000020
+    x8  0000000000000062  x9  0000000000000000  x10 0000000003e13281  x11 0000000000000000
+    x12 0000000000000073  x13 000000576d96b710  x14 0000000000000000  x15 00000000707e9230
+    x16 0000006eb51924a0  x17 000000716555fb00  x18 000000576b48c000  x19 b40000701ac115f0
+    x20 0000000000000000  x21 0000000047000000  x22 0000000000fffff7  x23 0000000000000000
+    x24 0000000000000000  x25 b40000701ac125f0  x26 000000576d96c340  x27 0000006eb5371000
+    x28 b400006eb8650710  x29 000000576d96b9c0
+    lr  0000006eb49ef3e8  sp  000000576d96b990  pc  000000716555fb20  pst 0000000040001000
+    esr 0000000000000000  vg  0000000000000002
+16 total frames
+backtrace:
+      #00 pc 00000000000acb20  /apex/com.android.runtime/lib64/bionic/libc.so (syscall+32) (BuildId: f4fb08a93372e239e4aab3ef1865ae74)
+      #01 pc 000000000048c3e4  /apex/com.android.art/lib64/libart.so (art::Thread::Park(bool, long)+436) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #02 pc 000000000048bd9c  /apex/com.android.art/lib64/libart.so (art::Unsafe_park(_JNIEnv*, _jobject*, unsigned char, long) (.__uniq.319429422067363160645159987129209045680)+184) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #03 pc 0000000000ca1bfc  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (art_jni_trampoline+108)
+      #04 pc 00000000004835d4  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await+1108)
+      #05 pc 000000000046f3b8  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.LinkedBlockingQueue.take+120)
+      #06 pc 0000000000474b20  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.ThreadPoolExecutor.getTask+320)
+      #07 pc 0000000000475dbc  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.ThreadPoolExecutor.runWorker+508)
+      #08 pc 000000000047a728  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.ThreadPoolExecutor$Worker.run+56)
+      #09 pc 00000000003119d0  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.lang.Thread.run+64)
+      #10 pc 0000000000270cf4  /apex/com.android.art/lib64/libart.so (art_quick_invoke_stub+612) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #11 pc 000000000023ba68  /apex/com.android.art/lib64/libart.so (art::ArtMethod::Invoke(art::Thread*, unsigned int*, unsigned int, art::JValue*, char const*)+224) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #12 pc 000000000055c204  /apex/com.android.art/lib64/libart.so (art::Thread::CreateCallback(void*)+1400) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #13 pc 000000000055bc78  /apex/com.android.art/lib64/libart.so (art::Thread::CreateCallbackWithUffdGc(void*)+12) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #14 pc 0000000000094314  /apex/com.android.runtime/lib64/bionic/libc.so (__pthread_start(void*) (.__uniq.67847048707805468364044055584648682506)+180) (BuildId: f4fb08a93372e239e4aab3ef1865ae74)
+      #15 pc 0000000000083a14  /apex/com.android.runtime/lib64/bionic/libc.so (__start_thread+68) (BuildId: f4fb08a93372e239e4aab3ef1865ae74)
+
+--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+Executable: /system/bin/app_process64
+Cmdline: net.dinglisch.android.taskerm
+pid: 4083, ppid: 1051, tid: 343, name: ExecuteJavaCode  >>> net.dinglisch.android.taskerm <<<
+uid: 10466
+tagged_addr_ctrl: 0000000000000001 (PR_TAGGED_ADDR_ENABLE)
+pac_enabled_keys: 000000000000000f (PR_PAC_APIAKEY, PR_PAC_APIBKEY, PR_PAC_APDAKEY, PR_PAC_APDBKEY)
+    x0  b40000701ac0fa50  x1  0000000000000080  x2  0000000000000002  x3  0000000000000000
+    x4  0000000000000000  x5  0000000000000000  x6  0000000000000000  x7  0000000000000020
+    x8  0000000000000062  x9  0000000000000000  x10 0000000003e76901  x11 0000000000000000
+    x12 0000000000000073  x13 000000576a5dd710  x14 0000000000000000  x15 00000000707e9230
+    x16 0000006eb51924a0  x17 000000716555fb00  x18 0000005769fb0000  x19 b40000701ac0fa20
+    x20 0000000000000000  x21 0000000047000000  x22 0000000000fffff7  x23 0000000000000000
+    x24 0000000000000000  x25 b40000701ac10a20  x26 000000576a5de340  x27 0000006eb5371000
+    x28 b400006eb8650710  x29 000000576a5dd9c0
+    lr  0000006eb49ef3e8  sp  000000576a5dd990  pc  000000716555fb20  pst 0000000040001000
+    esr 0000000000000000  vg  0000000000000002
+16 total frames
+backtrace:
+      #00 pc 00000000000acb20  /apex/com.android.runtime/lib64/bionic/libc.so (syscall+32) (BuildId: f4fb08a93372e239e4aab3ef1865ae74)
+      #01 pc 000000000048c3e4  /apex/com.android.art/lib64/libart.so (art::Thread::Park(bool, long)+436) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #02 pc 000000000048bd9c  /apex/com.android.art/lib64/libart.so (art::Unsafe_park(_JNIEnv*, _jobject*, unsigned char, long) (.__uniq.319429422067363160645159987129209045680)+184) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #03 pc 0000000000ca1bfc  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (art_jni_trampoline+108)
+      #04 pc 00000000004835d4  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await+1108)
+      #05 pc 000000000046f3b8  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.LinkedBlockingQueue.take+120)
+      #06 pc 0000000000474b20  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.ThreadPoolExecutor.getTask+320)
+      #07 pc 0000000000475dbc  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.ThreadPoolExecutor.runWorker+508)
+      #08 pc 000000000047a728  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.ThreadPoolExecutor$Worker.run+56)
+      #09 pc 00000000003119d0  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.lang.Thread.run+64)
+      #10 pc 0000000000270cf4  /apex/com.android.art/lib64/libart.so (art_quick_invoke_stub+612) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #11 pc 000000000023ba68  /apex/com.android.art/lib64/libart.so (art::ArtMethod::Invoke(art::Thread*, unsigned int*, unsigned int, art::JValue*, char const*)+224) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #12 pc 000000000055c204  /apex/com.android.art/lib64/libart.so (art::Thread::CreateCallback(void*)+1400) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #13 pc 000000000055bc78  /apex/com.android.art/lib64/libart.so (art::Thread::CreateCallbackWithUffdGc(void*)+12) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #14 pc 0000000000094314  /apex/com.android.runtime/lib64/bionic/libc.so (__pthread_start(void*) (.__uniq.67847048707805468364044055584648682506)+180) (BuildId: f4fb08a93372e239e4aab3ef1865ae74)
+      #15 pc 0000000000083a14  /apex/com.android.runtime/lib64/bionic/libc.so (__start_thread+68) (BuildId: f4fb08a93372e239e4aab3ef1865ae74)
+
+--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+Executable: /system/bin/app_process64
+Cmdline: net.dinglisch.android.taskerm
+pid: 4083, ppid: 1051, tid: 344, name: ExecuteJavaCode  >>> net.dinglisch.android.taskerm <<<
+uid: 10466
+tagged_addr_ctrl: 0000000000000001 (PR_TAGGED_ADDR_ENABLE)
+pac_enabled_keys: 000000000000000f (PR_PAC_APIAKEY, PR_PAC_APIBKEY, PR_PAC_APDAKEY, PR_PAC_APDBKEY)
+    x0  b40000701ac037a0  x1  0000000000000080  x2  0000000000000002  x3  0000000000000000
+    x4  0000000000000000  x5  0000000000000000  x6  0000000000000000  x7  0000000000000020
+    x8  0000000000000062  x9  0000000000000000  x10 0000000003ea57c9  x11 0000000000000000
+    x12 0000000000000073  x13 00000057694cd710  x14 0000000000000000  x15 00000000707e9230
+    x16 0000006eb51924a0  x17 000000716555fb00  x18 0000005768480000  x19 b40000701ac03770
+    x20 0000000000000000  x21 0000000047000000  x22 0000000000fffff7  x23 0000000000000000
+    x24 0000000000000000  x25 b40000701ac04770  x26 00000057694ce340  x27 0000006eb5371000
+    x28 b400006eb8650710  x29 00000057694cd9c0
+    lr  0000006eb49ef3e8  sp  00000057694cd990  pc  000000716555fb20  pst 0000000040001000
+    esr 0000000000000000  vg  0000000000000002
+16 total frames
+backtrace:
+      #00 pc 00000000000acb20  /apex/com.android.runtime/lib64/bionic/libc.so (syscall+32) (BuildId: f4fb08a93372e239e4aab3ef1865ae74)
+      #01 pc 000000000048c3e4  /apex/com.android.art/lib64/libart.so (art::Thread::Park(bool, long)+436) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #02 pc 000000000048bd9c  /apex/com.android.art/lib64/libart.so (art::Unsafe_park(_JNIEnv*, _jobject*, unsigned char, long) (.__uniq.319429422067363160645159987129209045680)+184) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #03 pc 0000000000ca1bfc  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (art_jni_trampoline+108)
+      #04 pc 00000000004835d4  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await+1108)
+      #05 pc 000000000046f3b8  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.LinkedBlockingQueue.take+120)
+      #06 pc 0000000000474b20  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.ThreadPoolExecutor.getTask+320)
+      #07 pc 0000000000475dbc  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.ThreadPoolExecutor.runWorker+508)
+      #08 pc 000000000047a728  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.ThreadPoolExecutor$Worker.run+56)
+      #09 pc 00000000003119d0  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.lang.Thread.run+64)
+      #10 pc 0000000000270cf4  /apex/com.android.art/lib64/libart.so (art_quick_invoke_stub+612) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #11 pc 000000000023ba68  /apex/com.android.art/lib64/libart.so (art::ArtMethod::Invoke(art::Thread*, unsigned int*, unsigned int, art::JValue*, char const*)+224) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #12 pc 000000000055c204  /apex/com.android.art/lib64/libart.so (art::Thread::CreateCallback(void*)+1400) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #13 pc 000000000055bc78  /apex/com.android.art/lib64/libart.so (art::Thread::CreateCallbackWithUffdGc(void*)+12) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #14 pc 0000000000094314  /apex/com.android.runtime/lib64/bionic/libc.so (__pthread_start(void*) (.__uniq.67847048707805468364044055584648682506)+180) (BuildId: f4fb08a93372e239e4aab3ef1865ae74)
+      #15 pc 0000000000083a14  /apex/com.android.runtime/lib64/bionic/libc.so (__start_thread+68) (BuildId: f4fb08a93372e239e4aab3ef1865ae74)
+
+--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+Executable: /system/bin/app_process64
+Cmdline: net.dinglisch.android.taskerm
+pid: 4083, ppid: 1051, tid: 347, name: ExecuteJavaCode  >>> net.dinglisch.android.taskerm <<<
+uid: 10466
+tagged_addr_ctrl: 0000000000000001 (PR_TAGGED_ADDR_ENABLE)
+pac_enabled_keys: 000000000000000f (PR_PAC_APIAKEY, PR_PAC_APIBKEY, PR_PAC_APDAKEY, PR_PAC_APDBKEY)
+    x0  b40000701abe7aa0  x1  0000000000000080  x2  0000000000000002  x3  0000000000000000
+    x4  0000000000000000  x5  0000000000000000  x6  0000000000000000  x7  0000000000000020
+    x8  0000000000000062  x9  0000000000000000  x10 0000000003fc3b69  x11 0000000000000000
+    x12 0000000000000073  x13 000000576713f710  x14 0000000000000000  x15 00000000707e9230
+    x16 0000006eb51924a0  x17 000000716555fb00  x18 0000005766f04000  x19 b40000701abe7a70
+    x20 0000000000000000  x21 0000000047000000  x22 0000000000fffff7  x23 0000000000000000
+    x24 0000000000000000  x25 b40000701abe8a70  x26 0000005767140340  x27 0000006eb5371000
+    x28 b400006eb8650710  x29 000000576713f9c0
+    lr  0000006eb49ef3e8  sp  000000576713f990  pc  000000716555fb20  pst 0000000040001000
+    esr 0000000000000000  vg  0000000000000002
+16 total frames
+backtrace:
+      #00 pc 00000000000acb20  /apex/com.android.runtime/lib64/bionic/libc.so (syscall+32) (BuildId: f4fb08a93372e239e4aab3ef1865ae74)
+      #01 pc 000000000048c3e4  /apex/com.android.art/lib64/libart.so (art::Thread::Park(bool, long)+436) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #02 pc 000000000048bd9c  /apex/com.android.art/lib64/libart.so (art::Unsafe_park(_JNIEnv*, _jobject*, unsigned char, long) (.__uniq.319429422067363160645159987129209045680)+184) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #03 pc 0000000000ca1bfc  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (art_jni_trampoline+108)
+      #04 pc 00000000004835d4  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await+1108)
+      #05 pc 000000000046f3b8  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.LinkedBlockingQueue.take+120)
+      #06 pc 0000000000474b20  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.ThreadPoolExecutor.getTask+320)
+      #07 pc 0000000000475dbc  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.ThreadPoolExecutor.runWorker+508)
+      #08 pc 000000000047a728  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.ThreadPoolExecutor$Worker.run+56)
+      #09 pc 00000000003119d0  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.lang.Thread.run+64)
+      #10 pc 0000000000270cf4  /apex/com.android.art/lib64/libart.so (art_quick_invoke_stub+612) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #11 pc 000000000023ba68  /apex/com.android.art/lib64/libart.so (art::ArtMethod::Invoke(art::Thread*, unsigned int*, unsigned int, art::JValue*, char const*)+224) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #12 pc 000000000055c204  /apex/com.android.art/lib64/libart.so (art::Thread::CreateCallback(void*)+1400) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #13 pc 000000000055bc78  /apex/com.android.art/lib64/libart.so (art::Thread::CreateCallbackWithUffdGc(void*)+12) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #14 pc 0000000000094314  /apex/com.android.runtime/lib64/bionic/libc.so (__pthread_start(void*) (.__uniq.67847048707805468364044055584648682506)+180) (BuildId: f4fb08a93372e239e4aab3ef1865ae74)
+      #15 pc 0000000000083a14  /apex/com.android.runtime/lib64/bionic/libc.so (__start_thread+68) (BuildId: f4fb08a93372e239e4aab3ef1865ae74)
+
+--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+Executable: /system/bin/app_process64
+Cmdline: net.dinglisch.android.taskerm
+pid: 4083, ppid: 1051, tid: 351, name: ExecuteJavaCode  >>> net.dinglisch.android.taskerm <<<
+uid: 10466
+tagged_addr_ctrl: 0000000000000001 (PR_TAGGED_ADDR_ENABLE)
+pac_enabled_keys: 000000000000000f (PR_PAC_APIAKEY, PR_PAC_APIBKEY, PR_PAC_APDAKEY, PR_PAC_APDBKEY)
+    x0  b4000070192d4310  x1  0000000000000080  x2  0000000000000002  x3  0000000000000000
+    x4  0000000000000000  x5  0000000000000000  x6  0000000000000000  x7  0000000000000020
+    x8  0000000000000062  x9  0000000000000000  x10 0000000003606029  x11 0000000000000000
+    x12 0000000000000073  x13 000000670bfab4c0  x14 0000000000000000  x15 00000000707e9230
+    x16 0000006eb51924a0  x17 000000716555fb00  x18 0000006702920000  x19 b4000070192d42e0
+    x20 0000000000000000  x21 0000000047000000  x22 0000000000fffff7  x23 0000000000000000
+    x24 0000000000000000  x25 b4000070192d52e0  x26 000000670bfac340  x27 0000006eb5371000
+    x28 b400006eb8650710  x29 000000670bfab9c0
+    lr  0000006eb49ef3e8  sp  000000670bfab990  pc  000000716555fb20  pst 0000000040001000
+    esr 0000000000000000  vg  0000000000000002
+16 total frames
+backtrace:
+      #00 pc 00000000000acb20  /apex/com.android.runtime/lib64/bionic/libc.so (syscall+32) (BuildId: f4fb08a93372e239e4aab3ef1865ae74)
+      #01 pc 000000000048c3e4  /apex/com.android.art/lib64/libart.so (art::Thread::Park(bool, long)+436) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #02 pc 000000000048bd9c  /apex/com.android.art/lib64/libart.so (art::Unsafe_park(_JNIEnv*, _jobject*, unsigned char, long) (.__uniq.319429422067363160645159987129209045680)+184) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #03 pc 0000000000ca1bfc  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (art_jni_trampoline+108)
+      #04 pc 00000000004835d4  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await+1108)
+      #05 pc 000000000046f3b8  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.LinkedBlockingQueue.take+120)
+      #06 pc 0000000000474b20  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.ThreadPoolExecutor.getTask+320)
+      #07 pc 0000000000475dbc  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.ThreadPoolExecutor.runWorker+508)
+      #08 pc 000000000047a728  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.ThreadPoolExecutor$Worker.run+56)
+      #09 pc 00000000003119d0  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.lang.Thread.run+64)
+      #10 pc 0000000000270cf4  /apex/com.android.art/lib64/libart.so (art_quick_invoke_stub+612) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #11 pc 000000000023ba68  /apex/com.android.art/lib64/libart.so (art::ArtMethod::Invoke(art::Thread*, unsigned int*, unsigned int, art::JValue*, char const*)+224) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #12 pc 000000000055c204  /apex/com.android.art/lib64/libart.so (art::Thread::CreateCallback(void*)+1400) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #13 pc 000000000055bc78  /apex/com.android.art/lib64/libart.so (art::Thread::CreateCallbackWithUffdGc(void*)+12) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #14 pc 0000000000094314  /apex/com.android.runtime/lib64/bionic/libc.so (__pthread_start(void*) (.__uniq.67847048707805468364044055584648682506)+180) (BuildId: f4fb08a93372e239e4aab3ef1865ae74)
+      #15 pc 0000000000083a14  /apex/com.android.runtime/lib64/bionic/libc.so (__start_thread+68) (BuildId: f4fb08a93372e239e4aab3ef1865ae74)
+
+--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+Executable: /system/bin/app_process64
+Cmdline: net.dinglisch.android.taskerm
+pid: 4083, ppid: 1051, tid: 352, name: ExecuteJavaCode  >>> net.dinglisch.android.taskerm <<<
+uid: 10466
+tagged_addr_ctrl: 0000000000000001 (PR_TAGGED_ADDR_ENABLE)
+pac_enabled_keys: 000000000000000f (PR_PAC_APIAKEY, PR_PAC_APIBKEY, PR_PAC_APDAKEY, PR_PAC_APDBKEY)
+    x0  b4000070192bbdb0  x1  0000000000000080  x2  0000000000000002  x3  0000000000000000
+    x4  0000000000000000  x5  0000000000000000  x6  0000000000000000  x7  0000000000000020
+    x8  0000000000000062  x9  0000000000000000  x10 0000000003690281  x11 0000000000000000
+    x12 0000000000000073  x13 000000670be9b4c0  x14 0000000000000000  x15 00000000707e9230
+    x16 0000006eb51924a0  x17 000000716555fb00  x18 0000006701764000  x19 b4000070192bbd80
+    x20 0000000000000000  x21 0000000047000000  x22 0000000000fffff7  x23 0000000000000000
+    x24 0000000000000000  x25 b4000070192bcd80  x26 000000670be9c340  x27 0000006eb5371000
+    x28 b400006eb8650710  x29 000000670be9b9c0
+    lr  0000006eb49ef3e8  sp  000000670be9b990  pc  000000716555fb20  pst 0000000040001000
+    esr 0000000000000000  vg  0000000000000002
+16 total frames
+backtrace:
+      #00 pc 00000000000acb20  /apex/com.android.runtime/lib64/bionic/libc.so (syscall+32) (BuildId: f4fb08a93372e239e4aab3ef1865ae74)
+      #01 pc 000000000048c3e4  /apex/com.android.art/lib64/libart.so (art::Thread::Park(bool, long)+436) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #02 pc 000000000048bd9c  /apex/com.android.art/lib64/libart.so (art::Unsafe_park(_JNIEnv*, _jobject*, unsigned char, long) (.__uniq.319429422067363160645159987129209045680)+184) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #03 pc 0000000000ca1bfc  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (art_jni_trampoline+108)
+      #04 pc 00000000004835d4  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await+1108)
+      #05 pc 000000000046f3b8  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.LinkedBlockingQueue.take+120)
+      #06 pc 0000000000474b20  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.ThreadPoolExecutor.getTask+320)
+      #07 pc 0000000000475dbc  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.ThreadPoolExecutor.runWorker+508)
+      #08 pc 000000000047a728  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.ThreadPoolExecutor$Worker.run+56)
+      #09 pc 00000000003119d0  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.lang.Thread.run+64)
+      #10 pc 0000000000270cf4  /apex/com.android.art/lib64/libart.so (art_quick_invoke_stub+612) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #11 pc 000000000023ba68  /apex/com.android.art/lib64/libart.so (art::ArtMethod::Invoke(art::Thread*, unsigned int*, unsigned int, art::JValue*, char const*)+224) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #12 pc 000000000055c204  /apex/com.android.art/lib64/libart.so (art::Thread::CreateCallback(void*)+1400) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #13 pc 000000000055bc78  /apex/com.android.art/lib64/libart.so (art::Thread::CreateCallbackWithUffdGc(void*)+12) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #14 pc 0000000000094314  /apex/com.android.runtime/lib64/bionic/libc.so (__pthread_start(void*) (.__uniq.67847048707805468364044055584648682506)+180) (BuildId: f4fb08a93372e239e4aab3ef1865ae74)
+      #15 pc 0000000000083a14  /apex/com.android.runtime/lib64/bionic/libc.so (__start_thread+68) (BuildId: f4fb08a93372e239e4aab3ef1865ae74)
+
+--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+Executable: /system/bin/app_process64
+Cmdline: net.dinglisch.android.taskerm
+pid: 4083, ppid: 1051, tid: 353, name: ExecuteJavaCode  >>> net.dinglisch.android.taskerm <<<
+uid: 10466
+tagged_addr_ctrl: 0000000000000001 (PR_TAGGED_ADDR_ENABLE)
+pac_enabled_keys: 000000000000000f (PR_PAC_APIAKEY, PR_PAC_APIBKEY, PR_PAC_APDAKEY, PR_PAC_APDBKEY)
+    x0  b4000070192c8060  x1  0000000000000080  x2  0000000000000002  x3  0000000000000000
+    x4  0000000000000000  x5  0000000000000000  x6  0000000000000000  x7  0000000000000020
+    x8  0000000000000062  x9  0000000000000000  x10 0000000003703f31  x11 0000000000000000
+    x12 0000000000000073  x13 000000670b7ab4c0  x14 0000000000000000  x15 00000000707e9230
+    x16 0000006eb51924a0  x17 000000716555fb00  x18 00000067003b8000  x19 b4000070192c8030
+    x20 0000000000000000  x21 0000000047000000  x22 0000000000fffff7  x23 0000000000000000
+    x24 0000000000000000  x25 b4000070192c9030  x26 000000670b7ac340  x27 0000006eb5371000
+    x28 b400006eb8650710  x29 000000670b7ab9c0
+    lr  0000006eb49ef3e8  sp  000000670b7ab990  pc  000000716555fb20  pst 0000000040001000
+    esr 0000000000000000  vg  0000000000000002
+16 total frames
+backtrace:
+      #00 pc 00000000000acb20  /apex/com.android.runtime/lib64/bionic/libc.so (syscall+32) (BuildId: f4fb08a93372e239e4aab3ef1865ae74)
+      #01 pc 000000000048c3e4  /apex/com.android.art/lib64/libart.so (art::Thread::Park(bool, long)+436) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #02 pc 000000000048bd9c  /apex/com.android.art/lib64/libart.so (art::Unsafe_park(_JNIEnv*, _jobject*, unsigned char, long) (.__uniq.319429422067363160645159987129209045680)+184) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #03 pc 0000000000ca1bfc  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (art_jni_trampoline+108)
+      #04 pc 00000000004835d4  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await+1108)
+      #05 pc 000000000046f3b8  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.LinkedBlockingQueue.take+120)
+      #06 pc 0000000000474b20  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.ThreadPoolExecutor.getTask+320)
+      #07 pc 0000000000475dbc  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.ThreadPoolExecutor.runWorker+508)
+      #08 pc 000000000047a728  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.ThreadPoolExecutor$Worker.run+56)
+      #09 pc 00000000003119d0  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.lang.Thread.run+64)
+      #10 pc 0000000000270cf4  /apex/com.android.art/lib64/libart.so (art_quick_invoke_stub+612) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #11 pc 000000000023ba68  /apex/com.android.art/lib64/libart.so (art::ArtMethod::Invoke(art::Thread*, unsigned int*, unsigned int, art::JValue*, char const*)+224) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #12 pc 000000000055c204  /apex/com.android.art/lib64/libart.so (art::Thread::CreateCallback(void*)+1400) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #13 pc 000000000055bc78  /apex/com.android.art/lib64/libart.so (art::Thread::CreateCallbackWithUffdGc(void*)+12) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #14 pc 0000000000094314  /apex/com.android.runtime/lib64/bionic/libc.so (__pthread_start(void*) (.__uniq.67847048707805468364044055584648682506)+180) (BuildId: f4fb08a93372e239e4aab3ef1865ae74)
+      #15 pc 0000000000083a14  /apex/com.android.runtime/lib64/bionic/libc.so (__start_thread+68) (BuildId: f4fb08a93372e239e4aab3ef1865ae74)
+
+--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+Executable: /system/bin/app_process64
+Cmdline: net.dinglisch.android.taskerm
+pid: 4083, ppid: 1051, tid: 354, name: ExecuteJavaCode  >>> net.dinglisch.android.taskerm <<<
+uid: 10466
+tagged_addr_ctrl: 0000000000000001 (PR_TAGGED_ADDR_ENABLE)
+pac_enabled_keys: 000000000000000f (PR_PAC_APIAKEY, PR_PAC_APIBKEY, PR_PAC_APDAKEY, PR_PAC_APDBKEY)
+    x0  b4000070192b32a0  x1  0000000000000080  x2  0000000000000002  x3  0000000000000000
+    x4  0000000000000000  x5  0000000000000000  x6  0000000000000000  x7  0000000000000020
+    x8  0000000000000062  x9  0000000000000000  x10 000000000372a7c9  x11 0000000000000000
+    x12 0000000000000073  x13 000000670b69b4c0  x14 0000000000000000  x15 00000000707e9230
+    x16 0000006eb51924a0  x17 000000716555fb00  x18 00000066ffbcc000  x19 b4000070192b3270
+    x20 0000000000000000  x21 0000000047000000  x22 0000000000fffff7  x23 0000000000000000
+    x24 0000000000000000  x25 b4000070192b4270  x26 000000670b69c340  x27 0000006eb5371000
+    x28 b400006eb8650710  x29 000000670b69b9c0
+    lr  0000006eb49ef3e8  sp  000000670b69b990  pc  000000716555fb20  pst 0000000040001000
+    esr 0000000000000000  vg  0000000000000002
+16 total frames
+backtrace:
+      #00 pc 00000000000acb20  /apex/com.android.runtime/lib64/bionic/libc.so (syscall+32) (BuildId: f4fb08a93372e239e4aab3ef1865ae74)
+      #01 pc 000000000048c3e4  /apex/com.android.art/lib64/libart.so (art::Thread::Park(bool, long)+436) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #02 pc 000000000048bd9c  /apex/com.android.art/lib64/libart.so (art::Unsafe_park(_JNIEnv*, _jobject*, unsigned char, long) (.__uniq.319429422067363160645159987129209045680)+184) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #03 pc 0000000000ca1bfc  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (art_jni_trampoline+108)
+      #04 pc 00000000004835d4  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await+1108)
+      #05 pc 000000000046f3b8  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.LinkedBlockingQueue.take+120)
+      #06 pc 0000000000474b20  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.ThreadPoolExecutor.getTask+320)
+      #07 pc 0000000000475dbc  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.ThreadPoolExecutor.runWorker+508)
+      #08 pc 000000000047a728  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.ThreadPoolExecutor$Worker.run+56)
+      #09 pc 00000000003119d0  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.lang.Thread.run+64)
+      #10 pc 0000000000270cf4  /apex/com.android.art/lib64/libart.so (art_quick_invoke_stub+612) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #11 pc 000000000023ba68  /apex/com.android.art/lib64/libart.so (art::ArtMethod::Invoke(art::Thread*, unsigned int*, unsigned int, art::JValue*, char const*)+224) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #12 pc 000000000055c204  /apex/com.android.art/lib64/libart.so (art::Thread::CreateCallback(void*)+1400) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #13 pc 000000000055bc78  /apex/com.android.art/lib64/libart.so (art::Thread::CreateCallbackWithUffdGc(void*)+12) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #14 pc 0000000000094314  /apex/com.android.runtime/lib64/bionic/libc.so (__pthread_start(void*) (.__uniq.67847048707805468364044055584648682506)+180) (BuildId: f4fb08a93372e239e4aab3ef1865ae74)
+      #15 pc 0000000000083a14  /apex/com.android.runtime/lib64/bionic/libc.so (__start_thread+68) (BuildId: f4fb08a93372e239e4aab3ef1865ae74)
+
+--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+Executable: /system/bin/app_process64
+Cmdline: net.dinglisch.android.taskerm
+pid: 4083, ppid: 1051, tid: 356, name: ExecuteJavaCode  >>> net.dinglisch.android.taskerm <<<
+uid: 10466
+tagged_addr_ctrl: 0000000000000001 (PR_TAGGED_ADDR_ENABLE)
+pac_enabled_keys: 000000000000000f (PR_PAC_APIAKEY, PR_PAC_APIBKEY, PR_PAC_APDAKEY, PR_PAC_APDBKEY)
+    x0  b4000070192afb00  x1  0000000000000080  x2  0000000000000002  x3  0000000000000000
+    x4  0000000000000000  x5  0000000000000000  x6  0000000000000000  x7  0000000000000020
+    x8  0000000000000062  x9  0000000000000000  x10 00000000038626c9  x11 0000000000000000
+    x12 0000000000000073  x13 000000670b58b4c0  x14 0000000000000000  x15 00000000707e9230
+    x16 0000006eb51924a0  x17 000000716555fb00  x18 00000066fdebc000  x19 b4000070192afad0
+    x20 0000000000000000  x21 0000000047000000  x22 0000000000fffff7  x23 0000000000000000
+    x24 0000000000000000  x25 b4000070192b0ad0  x26 000000670b58c340  x27 0000006eb5371000
+    x28 b400006eb8650710  x29 000000670b58b9c0
+    lr  0000006eb49ef3e8  sp  000000670b58b990  pc  000000716555fb20  pst 0000000040001000
+    esr 0000000000000000  vg  0000000000000002
+16 total frames
+backtrace:
+      #00 pc 00000000000acb20  /apex/com.android.runtime/lib64/bionic/libc.so (syscall+32) (BuildId: f4fb08a93372e239e4aab3ef1865ae74)
+      #01 pc 000000000048c3e4  /apex/com.android.art/lib64/libart.so (art::Thread::Park(bool, long)+436) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #02 pc 000000000048bd9c  /apex/com.android.art/lib64/libart.so (art::Unsafe_park(_JNIEnv*, _jobject*, unsigned char, long) (.__uniq.319429422067363160645159987129209045680)+184) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #03 pc 0000000000ca1bfc  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (art_jni_trampoline+108)
+      #04 pc 00000000004835d4  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await+1108)
+      #05 pc 000000000046f3b8  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.LinkedBlockingQueue.take+120)
+      #06 pc 0000000000474b20  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.ThreadPoolExecutor.getTask+320)
+      #07 pc 0000000000475dbc  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.ThreadPoolExecutor.runWorker+508)
+      #08 pc 000000000047a728  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.util.concurrent.ThreadPoolExecutor$Worker.run+56)
+      #09 pc 00000000003119d0  /data/misc/apexdata/com.android.art/dalvik-cache/arm64/boot.oat (java.lang.Thread.run+64)
+      #10 pc 0000000000270cf4  /apex/com.android.art/lib64/libart.so (art_quick_invoke_stub+612) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #11 pc 000000000023ba68  /apex/com.android.art/lib64/libart.so (art::ArtMethod::Invoke(art::Thread*, unsigned int*, unsigned int, art::JValue*, char const*)+224) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #12 pc 000000000055c204  /apex/com.android.art/lib64/libart.so (art::Thread::CreateCallback(void*)+1400) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #13 pc 000000000055bc78  /apex/com.android.art/lib64/libart.so (art::Thread::CreateCallbackWithUffdGc(void*)+12) (BuildId: a47994c420371ffbd05d16fc9a15ac9f)
+      #14 pc 0000000000094314  /apex/com.android.runtime/lib64/bionic/libc.so (__pthread_start(void*) (.__uniq.67847048707805468364044055584648682506)+180) (BuildId: f4fb08a93372e239e4aab3ef1865ae74)
+      #15 pc 0000000000083a14  /apex/com.android.runtime/lib64/bionic/libc.so (__star[[TRUNCATED]]
+

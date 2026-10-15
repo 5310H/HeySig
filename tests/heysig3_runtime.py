@@ -349,6 +349,11 @@ class Phone:
                                             if slot not in ('1','2','3','4','5','6'): raise ValueError('Configure noise program')
                                             self.globals['SIG3_AutoProgramSlot'] = slot
                         except (ValueError, KeyError): local['err'], local['errmsg'] = '1', 'Noise configuration/sample invalid'
+                    elif 'watch input normalized' in script:
+                        value = get('sig3_input')
+                        value = re.sub(r'(?i)^sig3\s*(?:=:=\s*|\s+)', '', value.strip()).strip()
+                        if not value or value.startswith('%'): local['err'], local['errmsg'] = '1', 'No watch input'
+                        else: put('sig3_input', value)
                     elif 'No command text supplied by event' in script:
                         value = get('sig3_input')
                         if value.startswith('%'): local['err'], local['errmsg'] = '1', 'No input'
